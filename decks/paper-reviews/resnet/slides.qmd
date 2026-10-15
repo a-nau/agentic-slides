@@ -1,0 +1,1917 @@
+---
+pagetitle: resnet
+sources:
+- https://arxiv.org/pdf/1512.03385v1
+description: He, Zhang, Ren & Sun, CVPR 2016 — the problem was that deeper nets fit the *training* set worse, and the fix adds no parameters wherever shapes match
+css:
+- ../../../quarto/themes/base.css
+- ../../../quarto/themes/agentic.css
+---
+
+<!-- paginate: true -->
+
+<a class="slide-id" id="aea5b6e2-0600-480f-bf7f-7aa5413773ca"></a>
+
+<!--
+  DECK BRIEF
+  Subject: He, Zhang, Ren & Sun, Deep Residual Learning for Image Recognition
+  (CVPR 2016), arXiv:1512.03385v1.
+  Audience: ML engineers who use residual connections daily and have never read
+  the original. Mixed seniority.
+  Reader promise: by the end they can say exactly what the degradation problem
+  was (a TRAINING-error result, not overfitting), walk y = F(x) + x term by term,
+  say which shortcut option ships and why, do the bottleneck arithmetic, name
+  the explanation the paper explicitly rules out, and separate what the paper
+  demonstrated from what it merely hypothesised.
+  Source of truth: the frozen PDF; section anchors via ar5iv.
+-->
+
+<!-- HOVER TOOLKIT — body-level tooltip card + affordance styles. Keep this block;
+     it is inert until an element carries data-tip. -->
+<style>
+.term { border-bottom: 1px dashed #45536a; cursor: help; }
+.finfo { display: inline-block; margin-left: 12px; padding: 1px 12px 2px; border: 1px solid #20304a; border-radius: 999px; color: #3b82f6; font-size: 0.42em; font-weight: 600; letter-spacing: 0.06em; vertical-align: middle; cursor: help; }
+.finfo:hover { border-color: #3b82f6; background: rgba(59,130,246,0.08); }
+.ev { color: #8f979e; font-size: 0.82em; }
+section .dq { border-left: 3px solid #3b82f6; background: rgba(59,130,246,0.05); border-radius: 0 8px 8px 0; padding: 6px 20px; margin: 16px 0; }
+section .dq p { margin: 6px 0; }
+section.fs-sm { font-size: 0.9em; }
+section.fs-xs { font-size: 0.76em; }
+section.fs-lg { font-size: 1.12em; }
+figure.credit { margin: 0; }
+figure.credit img { display: block; margin: 0 auto; border-radius: 6px; }
+figure.credit figcaption, p.credit { color: #666; font-size: 15px; margin: 6px 0 0; text-align: center; }
+.hotspot { position: absolute; top: 0; height: 100%; cursor: help; }
+section .figxs svg { width: 760px; height: 393px; }
+section .figxxs svg { width: 680px; height: 352px; }
+.hotspot:hover { background: rgba(59,130,246,0.16); outline: 1px solid #3b82f6; outline-offset: -1px; }
+span:has(> .hotspot) > img { display: block; }
+</style>
+<script>
+(function () {
+  if (document.getElementById('tipcard')) return;
+  const css = document.createElement('style');
+  css.textContent = `
+    #tipcard { position: fixed; display: none; max-width: 460px; background: #0a0c0f; border: 1px solid #2a2a2a; border-left: 3px solid #3b82f6; border-radius: 10px; padding: 12px 16px; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.65); pointer-events: none; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    #tipcard .tip-head { color: #3b82f6; font-size: 12px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; margin-bottom: 5px; }
+    #tipcard .tip-body { color: #d6d9dc; font-size: 15px; line-height: 1.5; font-weight: 400; }
+    body.tips-off #tipcard { display: none !important; }
+    body.tips-off [data-tip] { border-bottom-color: transparent !important; text-decoration: none !important; cursor: default !important; }
+    #tip-toggle { position: fixed; top: 12px; left: 56px; z-index: 9999; font: 600 12px/1 system-ui, sans-serif; letter-spacing: 0.05em; padding: 7px 14px; border-radius: 999px; border: 1px solid #2a2a2a; background: rgba(17,17,17,0.92); color: #3b82f6; cursor: pointer; opacity: 0.3; transition: opacity 0.15s ease; }
+    #tip-toggle:hover { opacity: 1; }
+    #tip-toggle.tips-off { text-decoration: line-through; }
+    @media print { #tip-toggle { display: none !important; } }`;
+  document.head.appendChild(css);
+  const card = document.createElement('div');
+  card.id = 'tipcard';
+  card.innerHTML = '<div class="tip-head"></div><div class="tip-body"></div>';
+  document.body.appendChild(card);
+  const btn = document.createElement('button');
+  btn.id = 'tip-toggle'; btn.type = 'button'; btn.textContent = 'Tips';
+  btn.title = 'Hover tooltips are on — click to disable';
+  btn.addEventListener('click', () => {
+    const off = document.body.classList.toggle('tips-off');
+    btn.classList.toggle('tips-off', off);
+    btn.textContent = off ? 'Tips off' : 'Tips';
+    btn.title = off ? 'Hover tooltips are off — click to enable' : 'Hover tooltips are on — click to disable';
+  });
+  document.body.appendChild(btn);
+  const head = card.firstChild, body = card.lastChild;
+  const place = (ev) => {
+    const pad = 16, r = card.getBoundingClientRect();
+    let x = ev.clientX + pad, y = ev.clientY + pad;
+    if (x + r.width > innerWidth - 10) x = ev.clientX - r.width - pad;
+    if (y + r.height > innerHeight - 10) y = ev.clientY - r.height - pad;
+    card.style.left = Math.max(8, x) + 'px'; card.style.top = Math.max(8, y) + 'px';
+  };
+  document.addEventListener('mousemove', (ev) => {
+    const t = ev.target.closest && ev.target.closest('[data-tip]');
+    if (t) {
+      head.textContent = t.getAttribute('data-tiphead') || 'Explanation';
+      body.textContent = t.getAttribute('data-tip');
+      card.style.display = 'block';
+      place(ev);
+    } else {
+      card.style.display = 'none';
+    }
+  });
+})();
+</script>
+
+<!-- _class: title paper -->
+
+<p class="kicker">Paper deep dive</p>
+
+# **He et al. (2016):** Deep Residual Learning for Image Recognition
+
+## Deeper nets fit the <em>training</em> set worse; an identity shortcut — free wherever shapes match — reverses that and takes **3.57%** top-5
+
+<p class="byline"><strong>He, Zhang, Ren &amp; Sun</strong> · Microsoft Research · CVPR 2016, arXiv Dec 2015</p>
+
+<p class="links"><a href="https://arxiv.org/abs/1512.03385">arXiv</a><a href="https://arxiv.org/pdf/1512.03385v1">PDF</a><a href="https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html">CVPR open access</a><a href="https://github.com/KaimingHe/deep-residual-networks">code</a><a href="https://ar5iv.labs.arxiv.org/html/1512.03385">section anchors</a></p>
+
+<p class="byline"><em>Underlines in review mode are fact-checked against the paper — hover one to open the explanation.</em></p>
+
+---
+
+<a class="slide-id" id="0ab4f673-ad0d-4e82-bb77-81bf0dc5eca6"></a>
+
+## TL;DR
+
+- **What it is** — a wiring rule: every few layers get an **identity shortcut** carrying their input around them.
+- **The trick** — a block computes `y = F(x) + x`, so the layers fit the **residual**; **doing nothing means driving F to zero**, which leaves the block close to an identity.
+- **A fair test** — the identity shortcut adds **no parameters**, so a residual net and its **plain twin** — the same VGG-style conv stack (Table 1), shortcuts removed — match on **depth, width, parameters and FLOPs** (multiply-adds per image). The deeper production nets add a **1x1 projection only between stages** ([slide 13](#13)); a **stage** is a run of blocks at one feature-map size, and at each stage boundary the design halves the map and doubles the channels.
+- **The numbers** — the reversal, in top-1 error (%): **plain-34 worse than plain-18** (28.54 vs 27.94 top-1), **ResNet-34 better than ResNet-18** (25.03 vs 27.88); an ensemble of six reaches **3.57%** <span class="term" data-tiphead="Top-5 error" data-tip="The share of test images whose true class is not among the model's five highest-scoring classes. Top-1 error counts an image as wrong whenever the single best guess is wrong.">top-5 error</span> and wins <span class="term" data-tiphead="ILSVRC" data-tip="The ImageNet Large Scale Visual Recognition Challenge, the yearly competition on the ImageNet benchmark. Its classification track ranks entries by top-5 error on a held-out test set scored by the organisers' server.">ILSVRC 2015</span>.
+- **Why it mattered** — residual connections went **universal**, transformers included; the *why* never settled.
+
+---
+
+<a class="slide-id" id="94c92635-198e-401c-a491-bfb8c4002c61"></a>
+
+<!-- _class: fs-sm -->
+
+## The result before the method — and the task it is measured on
+
+<div style="display:flex;justify-content:center;margin-top:0.2rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="860" height="445" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.msh-t{fill:#f0f0f0;font-weight:700}.msh-m{font-family:'JetBrains Mono',monospace}.msh-d{fill:#a0a0a0}.msh-g{fill:#3b82f6;font-weight:700}</style>
+<defs>
+<marker id="mg" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="msh-t" font-size="17">The task: one 224x224 crop in, a score over 1000 classes out</text>
+<g data-tiphead="The input" data-tip="One RGB image, a 224x224 crop. The models are trained on the 1.28 million ImageNet training images and evaluated on the 50k validation images; the final headline number comes from the 100k test images and is reported by the test server.">
+<rect x="40" y="52" width="252" height="248" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="62" y="80" class="msh-t" font-size="15">INPUT</text>
+<text x="62" y="243" class="msh-d" font-size="13">one RGB image, a 224x224 crop</text>
+<text x="62" y="264" class="msh-d" font-size="13">label: one of 1000 classes</text>
+<text x="62" y="285" class="msh-d" font-size="13">1.28 million training images</text>
+</g>
+<rect x="62" y="94" width="208" height="126" rx="6" fill="#1c2430" stroke="#3a4a5a" stroke-width="1.4"/>
+<rect x="63" y="171" width="206" height="48" fill="#232a20"/>
+<circle cx="228" cy="122" r="15" fill="#303a4a"/>
+<path d="M63,171 L118,127 L166,171 z" fill="#2f3a44"/>
+<path d="M140,171 L192,135 L241,171 z" fill="#3a4650"/>
+<path d="M300,176 L344,176" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#mg)"/>
+<g data-tiphead="The network" data-tip="ResNet-152: 152 layers, 11.3 billion FLOPs. The paper's framing is that this is 8 times deeper than VGG nets and still has lower complexity than VGG-16/19, which cost 15.3 and 19.6 billion FLOPs. Depth is cheap here because the layers are narrow and most 3x3 convolutions run inside bottleneck blocks at a quarter of the width, slide 14.">
+<rect x="352" y="52" width="244" height="248" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="372" y="80" class="msh-g" font-size="15">ResNet-152</text>
+<text x="372" y="252" class="msh-d" font-size="13">152 layers, 11.3 billion FLOPs</text>
+<text x="372" y="271" class="msh-d" font-size="13">8x deeper than VGG, yet cheaper:</text>
+<text x="372" y="290" class="msh-d" font-size="13">narrow layers, bottlenecks (slide 14)</text>
+</g>
+<rect x="414" y="94" width="120" height="28" rx="6" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="474" y="113" text-anchor="middle" class="msh-m" fill="#f0f0f0" font-size="12.5">residual block</text>
+<rect x="414" y="130" width="120" height="28" rx="6" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="474" y="149" text-anchor="middle" class="msh-m" fill="#f0f0f0" font-size="12.5">residual block</text>
+<rect x="414" y="166" width="120" height="28" rx="6" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="474" y="185" text-anchor="middle" class="msh-m" fill="#f0f0f0" font-size="12.5">x 48 more</text>
+<rect x="414" y="202" width="120" height="28" rx="6" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="474" y="221" text-anchor="middle" class="msh-m" fill="#f0f0f0" font-size="12.5">1000-way fc</text>
+<path d="M408,94 L396,94 L396,230 L408,230" stroke="#3fb950" stroke-width="1.8" fill="none"/>
+<path d="M604,176 L648,176" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#mg)"/>
+<g data-tiphead="The output" data-tip="A score for every one of the 1000 ImageNet classes. Top-1 error counts an image as wrong when the highest-scoring class is not the truth; top-5 error counts it as wrong only when the truth is outside the five highest-scoring classes. Lower is better in both cases.">
+<rect x="656" y="52" width="464" height="248" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="678" y="80" class="msh-t" font-size="15">OUTPUT — a score for each of 1000 classes</text>
+<text x="678" y="252" fill="#f0f0f0" font-size="13">top-1 error: the truth is not rank 1</text>
+<text x="678" y="272" fill="#f0f0f0" font-size="13">top-5 error: the truth is nowhere in this list</text>
+<text x="678" y="291" class="msh-d" font-size="12.5">every number on the next slides is one of these two</text>
+</g>
+<rect x="678" y="88" width="330" height="26" rx="4" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.4"/>
+<text x="692" y="106" fill="#f0f0f0" font-size="12.5">rank 1 — highest-scoring class</text>
+<rect x="678" y="118" width="290" height="26" rx="4" fill="#1a1a1a" stroke="#20304a" stroke-width="1.2"/>
+<text x="692" y="136" class="msh-d" font-size="12.5">rank 2</text>
+<rect x="678" y="148" width="256" height="26" rx="4" fill="#1a1a1a" stroke="#20304a" stroke-width="1.2"/>
+<text x="692" y="166" class="msh-d" font-size="12.5">rank 3</text>
+<rect x="678" y="178" width="228" height="26" rx="4" fill="#1a1a1a" stroke="#20304a" stroke-width="1.2"/>
+<text x="692" y="196" class="msh-d" font-size="12.5">rank 4</text>
+<rect x="678" y="208" width="204" height="26" rx="4" fill="#1a1a1a" stroke="#20304a" stroke-width="1.2"/>
+<text x="692" y="226" class="msh-d" font-size="12.5">rank 5</text>
+<g data-tiphead="Two protocols in one chart" data-tip="The 4.49% row is a single model scored on the 50k validation images. The other rows are test-set numbers reported by the evaluation server on the 100k test images. The paper reports both, and mixing them is the easiest mistake to make with this paper.">
+<rect x="40" y="316" width="1080" height="268" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="66" y="346" class="msh-g" font-size="15.5">ImageNet top-5 error — the leaderboard this paper entered</text>
+<text x="66" y="367" class="msh-d" font-size="12.5">Tables 4 and 5. Bars are test-set numbers from the evaluation server; the single-model row is validation.</text>
+</g>
+<text x="66" y="398" class="msh-d" font-size="13.5">VGG (ILSVRC'14) — ensemble, test</text>
+<rect x="420" y="386" width="549" height="16" rx="3" fill="#3a4a5a"/>
+<text x="979" y="399" class="msh-m" fill="#a0a0a0" font-size="13.5">7.32</text>
+<text x="66" y="430" class="msh-d" font-size="13.5">GoogLeNet (ILSVRC'14) — ensemble, test</text>
+<rect x="420" y="418" width="500" height="16" rx="3" fill="#3a4a5a"/>
+<text x="930" y="431" class="msh-m" fill="#a0a0a0" font-size="13.5">6.66</text>
+<text x="66" y="462" class="msh-d" font-size="13.5">BN-inception — ensemble, test</text>
+<rect x="420" y="450" width="362" height="16" rx="3" fill="#3a4a5a"/>
+<text x="792" y="463" class="msh-m" fill="#a0a0a0" font-size="13.5">4.82</text>
+<text x="66" y="494" class="msh-d" font-size="13.5">ResNet-152, single model (validation, Table 4)</text>
+<rect x="420" y="482" width="337" height="16" rx="3" fill="#1f3c6b"/>
+<text x="767" y="495" class="msh-m" fill="#93c5fd" font-size="13.5">4.49</text>
+<rect x="420" y="514" width="268" height="16" rx="3" fill="#3b82f6"/>
+<g data-tiphead="The headline bar" data-tip="3.57% top-5 error on the ImageNet test set, from an ensemble of six models of different depth — only two of them 152-layer at the time of submission. This entry won 1st place in ILSVRC 2015. It is not a single-model number.">
+<text x="66" y="526" fill="#f0f0f0" font-size="13.5" font-weight="700">ResNet ensemble of 6, test — ILSVRC'15 winner</text>
+<text x="698" y="527" class="msh-m" fill="#3b82f6" font-size="13.5" font-weight="700">3.57</text>
+</g>
+<text x="66" y="552" fill="#f0f0f0" font-size="13.5">The famous 3.57% is an ensemble on the test set; the best single model in the paper is 4.49% on validation.</text>
+<text x="66" y="572" class="msh-d" font-size="12.5">Everything after this slide is the argument for why depth was allowed to help at all, and the caveats the authors put on it themselves.</text>
+</svg>
+</div>
+
+*Both numbers are top-5 error on the same 1000-class task. The headline **3.57%** is an **ensemble of six models** of different depth — the paper does not say how their outputs are combined — scored on the test set and took **1st place at ILSVRC 2015**; the best **single** model — **ResNet-152**, 152 layers, **11.3 billion FLOPs** — is **4.49%** on validation (Tables 4 and 5, p. 6).*
+
+---
+
+<a class="slide-id" id="25989448-53b7-4e59-b5e6-b1f740738d1a"></a>
+
+## The core idea — ask the layers for the correction, not the answer
+
+<div class="columns-wide-left">
+<div>
+
+- **Why care:** **more layers made the network worse on its own training set**.
+- **What prior work does:** [batch normalisation (BN)](https://arxiv.org/abs/1502.03167) and <span class="term" data-tiphead="Normalized initialisation" data-tip="Background: drawing each layer's initial weights with a variance scaled to its number of inputs, so activations neither shrink nor blow up from layer to layer at the start of training. This paper initialises its weights as in He et al. 2015.">normalized initialisation</span> had largely solved **convergence**, meaning here that a deep net *starts* to train: its loss falls instead of stalling from the first iterations. The paper argues the remaining failure is therefore not signal propagation, and backs that on [slide 18](#18).
+- **What this paper does instead:** the block computes `H(x) = F(x) + x`, so layers learn only **the correction**.
+- **The enabling fact:** a deeper net can **copy a shallower one and pad with identity layers** — a good solution **provably exists**.
+- **Closest relative:** the concurrent [highway networks](https://arxiv.org/abs/1505.00387) gate their shortcuts with learned, data-dependent weights; this one is **ungated and parameter-free**.
+
+</div>
+<div>
+
+<figure class="credit"><img src="images/paper/fig2-block.png" width="340" data-tiphead="Figure 2 — the building block" data-tip="The paper's own drawing of one residual block: two weight layers compute F(x), the curved identity path carries x around them, and the two are added before the final ReLU. Slide 11 redraws it piece by piece."/><figcaption>Figure 2 from <a href="https://arxiv.org/abs/1512.03385">He et al. 2016</a>, p. 2</figcaption></figure>
+
+</div>
+</div>
+
+---
+
+<a class="slide-id" id="87285761-ef54-404f-b122-b5cb81cbd66e"></a>
+
+<!-- _class: fs-sm -->
+
+## The five Cs, in one look
+
+Five Cs — a standard first-pass checklist for a paper: Category, Context, Correctness, Contributions, Clarity.
+
+- **Category** — an **empirical architecture paper**: one wiring change, defended by ablations on two datasets.
+- **Context** — [VGG](https://arxiv.org/abs/1409.1556) and [GoogLeNet](https://arxiv.org/abs/1409.4842) (depth by hand), [batch norm](https://arxiv.org/abs/1502.03167) (convergence, assumed here), [highway nets](https://arxiv.org/abs/1505.00387) (gated shortcuts, no demonstrated gain past 100 layers).
+- **Correctness** — one construction plus **matched-parameter comparisons**; both hold. *Why* residuals are easier to fit stays a **hypothesis**.
+- **Contributions** — degradation as a **training-error** result; the identity shortcut; the **bottleneck** block; five 1st places — ILSVRC 2015 classification, ImageNet detection and localization, COCO detection and segmentation.
+- **Clarity** — very high: Figures 1, 2 and 5 carry the argument, and the authors state their own negative results.
+
+---
+
+<a class="slide-id" id="b3c3df89-7a35-4161-b6ab-58c601edff2b"></a>
+
+<!-- _class: fs-lg -->
+
+## Should you read further?
+
+- **Read the introduction and §4.1, the ImageNet experiments, if** you design or debug deep stacks — the reasoning that turns *"it got worse"* into a **falsifiable diagnosis** is the transferable part; the deck walks it on slides 7–10 and 16–18.
+- **Read §3, the method — residual learning, the shortcut, the network designs — with Figures 1, 2 and 5 if** you want just the mechanism: the **construction argument**, the block, and the shortcut options. That is the whole mechanism, on slides 10–15.
+- **Skip it if** you want to know *why* residuals help: this paper does not answer that (slides 18–19). Go to [ensembles of shallow paths](https://arxiv.org/abs/1605.06431), [shattered gradients](https://arxiv.org/abs/1702.08591) or [loss-surface visualisation](https://arxiv.org/abs/1712.09913) instead.
+
+---
+
+<a class="slide-id" id="3f6c0a2e-7d1b-4b7e-9c55-1a2f8e6d4b01"></a>
+
+<!-- _class: fs-sm -->
+
+## The paper's own Figure 1: at 56 layers the plain net is worse than at 20 — on the training set
+
+<p style="text-align:center; margin:0"><span style="position:relative; display:inline-block"><img src="images/paper/fig1-cifar-plain.png" width="900" style="border-radius:6px"/><span class="hotspot" data-tiphead="Left panel — training error" data-tip="Training error on CIFAR-10 for two plain networks. The red 56-layer curve stays above the yellow 20-layer curve for the entire run, so the deeper net fits the data it is optimised on worse. This panel alone rules out overfitting." style="left:0%; width:50%"></span><span class="hotspot" data-tiphead="Right panel — test error" data-tip="Test error for the same two runs. The ordering is unchanged: 56 layers above 20 layers. The paper's caption reads the right panel as a consequence of the left one: higher training error, and thus test error." style="left:50%; width:50%"></span></span></p>
+
+<p class="credit">Figure 1 from <a href="https://arxiv.org/abs/1512.03385">He et al. 2016</a> (arXiv 1512.03385, p. 1) — CIFAR-10, 20-layer and 56-layer plain networks, training error left, test error right.</p>
+
+- **Red sits above yellow in both panels** — the caption's own reading: the deeper network has **higher training error, and thus test error**
+- The **drop near 32k iterations** is the schedule, not the method — learning rate **divided by 10 at 32k and 48k** (§4.2); the [next slide](#8) redraws the panels, 20 layers in green and 56 in orange
+
+---
+
+<a class="slide-id" id="7a216ae6-9a5b-4ccc-bf1c-83a922a9ab36"></a>
+
+<!-- _class: fs-sm -->
+
+## Deeper plain nets do not overfit — they get worse on the data they are being trained on
+
+<div class="figxs">
+<div style="display:flex;justify-content:center;margin-top:0.2rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="860" height="445" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.degr-t{fill:#f0f0f0;font-weight:700}.degr-m{font-family:'JetBrains Mono',monospace}.degr-d{fill:#a0a0a0}.degr-ax{fill:#7a7a7a;font-size:12}.degr-c1{animation:degr-f1 8s linear infinite}.degr-c2{animation:degr-f2 8s linear infinite}.degr-c3{animation:degr-f3 8s linear infinite}.degr-l1{animation:degr-f1 8s linear infinite}.degr-l2{animation:degr-f2 8s linear infinite}.degr-l3{animation:degr-f3 8s linear infinite}.degr-call{animation:degr-f4 8s linear infinite}@keyframes degr-f1{0%,8%{opacity:0.25}18%{opacity:1}100%{opacity:1}}@keyframes degr-f2{0%,30%{opacity:0.25}40%{opacity:1}100%{opacity:1}}@keyframes degr-f3{0%,62%{opacity:0.25}72%{opacity:1}100%{opacity:1}}@keyframes degr-f4{0%,44%{opacity:0.25}52%{opacity:1}100%{opacity:1}}</style>
+<defs>
+<marker id="dg" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="110" y="40" class="degr-t" font-size="17">TRAINING error, CIFAR-10, plain nets</text>
+<text x="110" y="62" fill="#3b82f6" font-size="13.5" font-weight="600">the panel the whole paper turns on</text>
+<text x="680" y="40" class="degr-t" font-size="17">TEST error, same two runs</text>
+<text x="680" y="62" class="degr-d" font-size="13.5">same ordering, so it is not a generalisation gap</text>
+<path d="M110,80 L110,350 L540,350" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M680,80 L680,350 L1110,350" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M110,215 L540,215" stroke="#1e1e1e" stroke-width="1" fill="none"/>
+<path d="M680,215 L1110,215" stroke="#1e1e1e" stroke-width="1" fill="none"/>
+<text x="100" y="85" text-anchor="end" class="degr-ax">20</text>
+<text x="100" y="220" text-anchor="end" class="degr-ax">10</text>
+<text x="100" y="355" text-anchor="end" class="degr-ax">0</text>
+<text x="670" y="85" text-anchor="end" class="degr-ax">20</text>
+<text x="670" y="220" text-anchor="end" class="degr-ax">10</text>
+<text x="670" y="355" text-anchor="end" class="degr-ax">0</text>
+<text x="110" y="372" class="degr-ax">0</text>
+<text x="325" y="372" text-anchor="middle" class="degr-ax">3</text>
+<text x="540" y="372" text-anchor="middle" class="degr-ax">6</text>
+<text x="680" y="372" class="degr-ax">0</text>
+<text x="895" y="372" text-anchor="middle" class="degr-ax">3</text>
+<text x="1110" y="372" text-anchor="middle" class="degr-ax">6</text>
+<text x="325" y="390" text-anchor="middle" class="degr-ax">iterations (1e4)</text>
+<text x="895" y="390" text-anchor="middle" class="degr-ax">iterations (1e4)</text>
+<text x="52" y="215" text-anchor="middle" class="degr-ax" transform="rotate(-90 52 215)">error (%)</text>
+<text x="622" y="215" text-anchor="middle" class="degr-ax" transform="rotate(-90 622 215)">error (%)</text>
+<g data-tiphead="20-layer plain net, training error" data-tip="The shallower of the two. Its training error falls to the bottom of the panel: the solver fits this network well.">
+<path class="degr-c1" opacity="1" d="M117,80 L139,161 L167,208 L196,228 L225,239 L253,247 L282,254 L311,258 L339,262 L350,312 L397,320 L454,323 L465,328 L540,331" stroke="#3fb950" stroke-width="2.6" fill="none"/>
+<text class="degr-l1" opacity="1" x="548" y="335" fill="#3fb950" font-size="13.5" font-weight="700">20-layer</text>
+</g>
+<g data-tiphead="56-layer plain net, training error" data-tip="Nearly three times deeper and it never catches up. Its training error stays above the 20-layer curve for the whole run, so the extra capacity buys nothing.">
+<path class="degr-c2" opacity="1" d="M117,80 L139,134 L167,174 L196,195 L225,204 L253,212 L282,218 L311,222 L339,226 L350,269 L397,277 L454,281 L465,288 L540,291" stroke="#f0883e" stroke-width="2.6" fill="none"/>
+<text class="degr-l2" opacity="1" x="548" y="295" fill="#f0883e" font-size="13.5" font-weight="700">56-layer</text>
+</g>
+<g data-tiphead="20-layer plain net, test error" data-tip="Test error is higher than training error, as always. What matters is that the ordering between the two depths is the same in both panels.">
+<path class="degr-c3" opacity="1" d="M687,80 L709,134 L737,161 L766,174 L795,181 L823,188 L852,193 L881,196 L909,199 L920,223 L967,226 L1024,227 L1035,228 L1110,230" stroke="#3fb950" stroke-width="2.6" fill="none"/>
+<text class="degr-l3" opacity="1" x="1118" y="234" fill="#3fb950" font-size="13.5" font-weight="700">20</text>
+</g>
+<g data-tiphead="56-layer plain net, test error" data-tip="The paper's caption: the deeper network has higher training error, and thus test error. Test error is the consequence here, not the diagnosis.">
+<path class="degr-c3" opacity="1" d="M687,80 L709,114 L737,141 L766,154 L795,161 L823,166 L852,170 L881,173 L909,176 L920,196 L967,199 L1024,200 L1035,202 L1110,203" stroke="#f0883e" stroke-width="2.6" fill="none"/>
+<text class="degr-l3" opacity="1" x="1118" y="207" fill="#f0883e" font-size="13.5" font-weight="700">56</text>
+</g>
+<g class="degr-call" opacity="1" data-tiphead="The gap, in order" data-tip="The 20-layer curve lights up first, then the 56-layer curve settles above it, then the test panel repeats the ordering. The curve shapes are schematic; the ordering is the paper's."><path d="M300,300 C320,300 330,290 340,272" stroke="#3b82f6" stroke-width="2.2" fill="none" marker-end="url(#dg)"/>
+<text x="152" y="305" fill="#3b82f6" font-size="13.5" font-weight="700">deeper sits ABOVE shallower</text></g>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="Why this is not overfitting" data-tip="Overfitting means the model fits the training set too well and the test set worse. Here the deeper model fits the training set worse. Nothing about capacity or regularisation can explain a higher training error.">
+<rect x="40" y="410" width="1080" height="170" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="442" class="degr-t" font-size="16">Read the left panel first, and the argument is finished before the right panel starts</text>
+<text x="66" y="472" class="degr-d" font-size="13.5">An overfitting model drives TRAINING error down and TEST error up. The 56-layer plain net does the opposite: it is worse on the</text>
+<text x="66" y="496" class="degr-d" font-size="13.5">data it is being optimised on. More data, more augmentation and more regularisation are all answers to a problem this net does</text>
+<text x="66" y="520" class="degr-d" font-size="13.5">not have. The paper's word for it is degradation, and it calls the effect unexpected and not caused by overfitting.</text>
+<text x="66" y="552" fill="#3b82f6" font-size="13" font-weight="600">Redrawn from Figure 1 (CIFAR-10). Curve shapes are schematic; the paper prints no endpoint values on this figure.</text>
+</a>
+</svg>
+</div>
+</div>
+
+- The <span class="term" data-tiphead="The degradation problem" data-tip="With the network depth increasing, accuracy gets saturated and then degrades rapidly. The paper's point is that this shows up first as higher training error, which is why it cannot be overfitting.">degradation problem</span>: accuracy saturates, then **degrades rapidly** — and the paper says it is **not caused by overfitting**
+- This panel is [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html); the same effect appears on ImageNet at 18 and 34 layers — [slide 16](#16)
+- **One recipe for every depth**, not tuned per net: learning rate 0.1, divided by 10 at 32k and 48k iterations, stop at 64k (§4.2). On ImageNet, 3x the iterations did not close the gap either ([slide 18](#18))
+
+---
+
+<a class="slide-id" id="c64d3e0f-6c0f-4bea-ae15-8c14f759e7a1"></a>
+
+## Three failures look alike from a distance, and the paper is only about the third
+
+<div style="display:flex;justify-content:center;margin-top:0.4rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="980" height="507" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.thre-t{fill:#f0f0f0;font-weight:700}.thre-d{fill:#a0a0a0}.thre-ax{fill:#6e6e6e;font-size:11}.thre-v{fill:#8a8a8a;font-size:12}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="38" class="thre-t" font-size="17">One symptom on a loss curve, three different diagnoses — and three different fixes</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="Overfitting" data-tip="The model memorises the training set. Training error keeps falling, held-out error turns back up, and the gap between them widens. This is the failure ResNet is NOT about.">
+<rect x="40" y="58" width="345" height="512" rx="12" fill="#151515" stroke="#4a3520" stroke-width="1.6"/>
+<text x="64" y="92" fill="#f0883e" font-size="16" font-weight="700">1. Overfitting</text>
+<text x="64" y="114" class="thre-v">too much capacity for the data</text>
+<text x="64" y="330" fill="#f0f0f0" font-size="12.5">Training error keeps falling, held-out</text>
+<text x="64" y="352" fill="#f0f0f0" font-size="12.5">error turns back up. The gap is it.</text>
+<text x="64" y="374" class="thre-d" font-size="12.5">Fix: more data, augmentation, dropout.</text>
+<text x="64" y="440" fill="#f0883e" font-size="12.5" font-weight="700">Not what Figure 1 shows.</text>
+<text x="64" y="466" class="thre-d" font-size="12.5">Figure 1 has the deeper net WORSE on</text>
+<text x="64" y="488" class="thre-d" font-size="12.5">training data. No amount of regularising</text>
+<text x="64" y="510" class="thre-d" font-size="12.5">fixes a model that underfits.</text>
+</a>
+<path d="M72,160 L72,285 L352,285" stroke="#2a2a2a" stroke-width="1.4" fill="none"/>
+<path d="M72,172 L140,214 L200,242 L260,260 L352,272" stroke="#3fb950" stroke-width="2.4" fill="none"/>
+<path d="M72,178 L140,208 L200,222 L260,216 L352,198" stroke="#f0883e" stroke-width="2.4" fill="none"/>
+<text x="356" y="276" fill="#3fb950" font-size="11">train</text>
+<text x="356" y="202" fill="#f0883e" font-size="11">test</text>
+<text x="212" y="306" text-anchor="middle" class="thre-ax">iterations, error on the y axis</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="Vanishing or exploding gradients" data-tip="The signal dies on its way through the stack and the network never starts converging. The paper's introduction says this had been largely addressed by normalized initialization and intermediate normalization layers.">
+<rect x="407" y="58" width="345" height="512" rx="12" fill="#151515" stroke="#3a3a55" stroke-width="1.6"/>
+<text x="431" y="92" fill="#bc8cff" font-size="16" font-weight="700">2. Vanishing gradients</text>
+<text x="431" y="114" class="thre-v">the signal dies on the way through</text>
+<text x="431" y="330" fill="#f0f0f0" font-size="12.5">The net never starts converging at all.</text>
+<text x="431" y="352" class="thre-d" font-size="12.5">Fix: normalized init and BN. The intro</text>
+<text x="431" y="374" class="thre-d" font-size="12.5">calls this largely addressed already.</text>
+<text x="431" y="440" fill="#bc8cff" font-size="12.5" font-weight="700">Largely solved before this paper.</text>
+<text x="431" y="466" class="thre-d" font-size="12.5">Every plain and residual net here is</text>
+<text x="431" y="488" class="thre-d" font-size="12.5">trained with batch normalisation, and</text>
+<text x="431" y="510" class="thre-d" font-size="12.5">all of them converge. See slide 18.</text>
+</a>
+<path d="M439,160 L439,285 L719,285" stroke="#2a2a2a" stroke-width="1.4" fill="none"/>
+<path d="M439,174 L500,171 L560,173 L640,170 L719,172" stroke="#bc8cff" stroke-width="2.4" fill="none"/>
+<text x="579" y="200" text-anchor="middle" fill="#bc8cff" font-size="11">error never moves</text>
+<text x="579" y="306" text-anchor="middle" class="thre-ax">iterations, error on the y axis</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="Degradation" data-tip="The network converges perfectly happily, and still lands at a higher training error than a shallower version of itself. This is the failure the paper isolates and the one residual learning is aimed at.">
+<rect x="774" y="58" width="345" height="512" rx="12" fill="#151515" stroke="#20304a" stroke-width="1.6"/>
+<text x="798" y="92" fill="#3b82f6" font-size="16" font-weight="700">3. Degradation</text>
+<text x="798" y="114" class="thre-v">converges fine, converges worse</text>
+<text x="798" y="330" fill="#f0f0f0" font-size="12.5">The net converges, but the deeper one</text>
+<text x="798" y="352" fill="#f0f0f0" font-size="12.5">lands at HIGHER training error.</text>
+<text x="798" y="374" class="thre-d" font-size="12.5">Fix: nobody had one. Hence this paper.</text>
+<text x="798" y="440" fill="#3b82f6" font-size="12.5" font-weight="700">This is the paper's target.</text>
+<text x="798" y="466" class="thre-d" font-size="12.5">Saturation with depth might be dull.</text>
+<text x="798" y="488" class="thre-d" font-size="12.5">Getting rapidly worse while the solver</text>
+<text x="798" y="510" class="thre-d" font-size="12.5">is still working is not.</text>
+</a>
+<path d="M806,160 L806,285 L1086,285" stroke="#2a2a2a" stroke-width="1.4" fill="none"/>
+<path d="M806,172 L860,220 L920,246 L1000,262 L1086,270" stroke="#3fb950" stroke-width="2.4" fill="none"/>
+<path d="M806,172 L860,202 L920,220 L1000,232 L1086,238" stroke="#f0883e" stroke-width="2.4" fill="none"/>
+<text x="1090" y="274" fill="#3fb950" font-size="11">20</text>
+<text x="1090" y="242" fill="#f0883e" font-size="11">56</text>
+<text x="946" y="306" text-anchor="middle" class="thre-ax">both curves are TRAINING error</text>
+</svg>
+</div>
+
+---
+
+<a class="slide-id" id="f868eecd-0848-44b1-bde4-06dafa13e8c3"></a>
+
+## A deeper net can copy a shallower one and pad with identity layers — so the obstacle is the search, not the model
+
+<div style="display:flex;justify-content:center;margin-top:0.4rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="980" height="507" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.cons-t{fill:#f0f0f0;font-weight:700}.cons-d{fill:#a0a0a0}.cons-lb{fill:#7a7a7a;font-size:12}.cons-s1{animation:cons-s1 9s linear infinite}.cons-s2{animation:cons-s2 9s linear infinite}.cons-s3{animation:cons-s3 9s linear infinite}.cons-s4{animation:cons-s4 9s linear infinite}.cons-s5{animation:cons-s5 9s linear infinite}.cons-s6{animation:cons-s6 9s linear infinite}.cons-s7{animation:cons-s7 9s linear infinite}.cons-s8{animation:cons-s8 9s linear infinite}.cons-s9{animation:cons-s9 9s linear infinite}@keyframes cons-s1{0%,2%{opacity:0.25}6%{opacity:1}100%{opacity:1}}@keyframes cons-s2{0%,8%{opacity:0.25}12%{opacity:1}100%{opacity:1}}@keyframes cons-s3{0%,14%{opacity:0.25}18%{opacity:1}100%{opacity:1}}@keyframes cons-s4{0%,26%{opacity:0.25}30%{opacity:1}100%{opacity:1}}@keyframes cons-s5{0%,32%{opacity:0.25}36%{opacity:1}100%{opacity:1}}@keyframes cons-s6{0%,38%{opacity:0.25}42%{opacity:1}100%{opacity:1}}@keyframes cons-s7{0%,48%{opacity:0.25}52%{opacity:1}100%{opacity:1}}@keyframes cons-s8{0%,62%{opacity:0.4}66%{opacity:1}100%{opacity:1}}@keyframes cons-s9{0%,78%{opacity:0.4}82%{opacity:1}100%{opacity:1}}</style>
+<defs>
+<marker id="cg" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="36" class="cons-t" font-size="17">The constructed solution, drawn — and the reason it stays theoretical</text>
+<text x="80" y="76" fill="#3fb950" font-size="13.5" font-weight="700">shallower net</text>
+<g data-tiphead="A trained shallower network" data-tip="Take any network that has already been trained to some training error. Call that error E.">
+<rect x="80" y="88" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="165" y="114" text-anchor="middle" fill="#f0f0f0" font-size="13">learned layer</text>
+</g>
+<g data-tiphead="A trained shallower network" data-tip="Nothing special about these layers: they are whatever the shallower model happened to converge to.">
+<rect x="80" y="138" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="165" y="164" text-anchor="middle" fill="#f0f0f0" font-size="13">learned layer</text>
+</g>
+<g data-tiphead="A trained shallower network" data-tip="The stack is drawn with three layers only for the picture; the argument holds for any depth.">
+<rect x="80" y="188" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="165" y="214" text-anchor="middle" fill="#f0f0f0" font-size="13">learned layer</text>
+</g>
+<text x="165" y="258" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">training error E</text>
+<path d="M256,175 L324,175" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#cg)"/>
+<text x="330" y="76" fill="#3b82f6" font-size="13.5" font-weight="700">deeper counterpart</text>
+<g class="cons-s1" opacity="1" data-tiphead="The copied layers" data-tip="The first layers of the deeper model are copied verbatim from the learned shallower model. Nothing is retrained.">
+<rect x="330" y="88" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="415" y="114" text-anchor="middle" fill="#f0f0f0" font-size="13">copied layer</text>
+</g>
+<g class="cons-s2" opacity="1" data-tiphead="The copied layers" data-tip="Same weights, same order. The deeper model starts out reproducing the shallower model exactly.">
+<rect x="330" y="138" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="415" y="164" text-anchor="middle" fill="#f0f0f0" font-size="13">copied layer</text>
+</g>
+<g class="cons-s3" opacity="1" data-tiphead="The copied layers" data-tip="This is why the shallower model's solution space is a subspace of the deeper model's solution space.">
+<rect x="330" y="188" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="415" y="214" text-anchor="middle" fill="#f0f0f0" font-size="13">copied layer</text>
+</g>
+<g class="cons-s4" opacity="1" data-tiphead="The added layers are identity" data-tip="Every extra layer just passes its input through unchanged, so the deeper network computes exactly the same function as the shallower one.">
+<rect x="330" y="242" width="170" height="42" rx="8" fill="#10141a" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="415" y="268" text-anchor="middle" fill="#93c5fd" font-size="13">identity layer</text>
+</g>
+<g class="cons-s5" opacity="1" data-tiphead="The added layers are identity" data-tip="Add as many of these as you like. None of them can raise the training error, because none of them changes the output.">
+<rect x="330" y="292" width="170" height="42" rx="8" fill="#10141a" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="415" y="318" text-anchor="middle" fill="#93c5fd" font-size="13">identity layer</text>
+</g>
+<g class="cons-s6" opacity="1" data-tiphead="The added layers are identity" data-tip="Fitting an identity mapping with a stack of nonlinear layers is exactly what the paper suspects solvers find hard. One illustrative way to build it: a 3x3 kernel with a single centred 1 for its own channel, BN set to undo its own normalisation, and a ReLU that sees only non-negative inputs because they come from the previous ReLU.">
+<rect x="330" y="342" width="170" height="42" rx="8" fill="#10141a" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="415" y="368" text-anchor="middle" fill="#93c5fd" font-size="13">identity layer</text>
+</g>
+<text class="cons-s7" opacity="1" x="415" y="412" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="700">training error is still E</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="The constructed solution" data-tip="The paper: there exists a solution by construction to the deeper model, the added layers are identity mapping, and the other layers are copied from the learned shallower model.">
+<rect x="560" y="60" width="560" height="180" rx="12" fill="#151515" stroke="#20304a" stroke-width="1.6"/>
+<text x="586" y="94" fill="#3b82f6" font-size="15.5" font-weight="700">What the construction proves</text>
+<text x="586" y="126" class="cons-d" font-size="13.5">A deeper model is at least as expressive: the shallower model's</text>
+<text x="586" y="150" class="cons-d" font-size="13.5">solution space is a subspace of the deeper model's. So a deeper</text>
+<text x="586" y="174" class="cons-d" font-size="13.5">model should produce no higher training error than its shallower</text>
+<text x="586" y="198" class="cons-d" font-size="13.5">counterpart. Representational capacity cannot be the obstacle,</text>
+<text x="586" y="222" class="cons-d" font-size="13.5">because the good solution provably exists inside the deeper net.</text>
+</a>
+<a class="cons-s8" opacity="1" href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="What experiments find" data-tip="The paper: experiments show that our current solvers on hand are unable to find solutions that are comparably good or better than the constructed solution, or unable to do so in feasible time.">
+<rect x="560" y="258" width="560" height="150" rx="12" fill="#1a1113" stroke="#f85149" stroke-width="1.6"/>
+<text x="586" y="292" fill="#f85149" font-size="15.5" font-weight="700">What actually happens</text>
+<text x="586" y="324" class="cons-d" font-size="13.5">SGD does not find that solution. The paper is careful about the</text>
+<text x="586" y="348" class="cons-d" font-size="13.5">wording: solvers are unable to find solutions comparably good or</text>
+<text x="586" y="372" class="cons-d" font-size="13.5">better than the constructed one, or unable to do so in feasible</text>
+<text x="586" y="396" class="cons-d" font-size="13.5">time. Note that this is a claim about search, not about capacity.</text>
+</a>
+<a class="cons-s9" opacity="1" href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS1" target="_blank" data-tiphead="Why this motivates residual learning" data-tip="If the useful thing is hard to reach because it sits near an identity mapping, change the parameterisation so that identity is what you get when the weights are zero.">
+<rect x="40" y="446" width="1080" height="140" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="476" class="cons-t" font-size="16">The gap between those two boxes is the entire motivation for residual learning</text>
+<text x="66" y="502" class="cons-d" font-size="13.5">The good solution exists and the solver cannot reach it. The paper suspects solvers have difficulty approximating identity with</text>
+<text x="66" y="524" class="cons-d" font-size="13.5">several nonlinear layers. One way to see why (illustrative): conv, BN and ReLU copy their input only at one exact setting — a single</text>
+<text x="66" y="546" class="cons-d" font-size="13.5">centred 1 per channel in each 3x3 kernel, BN tuned to undo itself. The paper's response is to change the parameterisation instead,</text>
+<text x="66" y="568" class="cons-d" font-size="13.5">so that identity becomes the easy default: drive the weights toward zero and the block passes its input through.</text>
+</a>
+</svg>
+</div>
+
+---
+
+<a class="slide-id" id="e28a9901-f253-482e-93a3-dfe3c0ab5ed7"></a>
+
+<!-- _class: fs-sm -->
+
+## The fix is one wire: carry the input past the layers and add it back
+
+<div class="figxs">
+<div style="display:flex;justify-content:center;margin-top:0.2rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="860" height="445" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.bloc-t{fill:#f0f0f0;font-weight:700}.bloc-m{font-family:'JetBrains Mono',monospace;fill:#93c5fd}.bloc-d{fill:#a0a0a0}.bloc-dot-id{animation:bloc-id 4s linear infinite}.bloc-dot-res{animation:bloc-res 4s linear infinite}.bloc-sum{animation:bloc-sum 4s linear infinite}@keyframes bloc-id{0%{opacity:1;transform:translate(0,0)}14%{transform:translate(0,-102px)}80%{transform:translate(631px,-102px)}94%{opacity:1;transform:translate(631px,8px)}100%{opacity:0;transform:translate(631px,8px)}}@keyframes bloc-res{0%{opacity:1;transform:translate(0,0)}94%{opacity:1;transform:translate(556px,0)}100%{opacity:0;transform:translate(556px,0)}}@keyframes bloc-sum{0%,90%{stroke-width:2.4;fill:#1a1a1a}96%{stroke-width:6;fill:#163a22}100%{stroke-width:2.4;fill:#1a1a1a}}</style>
+<defs>
+<marker id="bg" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+<marker id="bb" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3fb950"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="36" class="bloc-t" font-size="17">Figure 2 redrawn — the identity path in green, the residual branch in blue</text>
+<path d="M95,262 L95,168 Q95,158 105,158 L716,158 Q726,158 726,168 L726,270" stroke="#3fb950" stroke-width="3" fill="none" marker-end="url(#bb)"/>
+<g data-tiphead="The identity shortcut" data-tip="The input is carried around the weight layers unchanged and added back. It holds no matrix, so it adds no parameter and no convolution: the paper says identity shortcut connections add neither extra parameter nor computational complexity.">
+<text x="410" y="140" text-anchor="middle" fill="#3fb950" font-size="14.5" font-weight="700">identity shortcut — x carried through unchanged, parameter-free</text>
+</g>
+<g data-tiphead="Block input x" data-tip="The input to this group of layers. It is used twice: once as the input to the weight layers and once, unmodified, on the shortcut.">
+<rect x="50" y="268" width="90" height="64" rx="10" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="95" y="308" text-anchor="middle" class="bloc-m" font-size="22">x</text>
+</g>
+<circle class="bloc-dot-res" cx="144" cy="300" r="7" fill="#3b82f6" opacity="0"/>
+<path d="M144,300 L166,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="First weight layer" data-tip="A convolution, with batch normalisation right after it. In the paper's notation this contributes the W1 in F = W2 sigma(W1 x); biases are omitted to simplify the notation.">
+<rect x="170" y="268" width="170" height="64" rx="10" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="255" y="294" text-anchor="middle" class="bloc-t" font-size="14">weight layer</text>
+<text x="255" y="317" text-anchor="middle" class="bloc-m" font-size="13">3x3 conv + BN</text>
+</a>
+<path d="M344,300 L366,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<g data-tiphead="Inner ReLU" data-tip="The sigma in F = W2 sigma(W1 x). This nonlinearity sits inside the residual branch, between the two weight layers.">
+<rect x="370" y="268" width="100" height="64" rx="10" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="420" y="306" text-anchor="middle" class="bloc-t" font-size="15">ReLU</text>
+</g>
+<path d="M474,300 L496,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="Second weight layer" data-tip="The W2 of the residual branch. Its output is what gets added to x, so it must have the same shape as x for the addition to be defined.">
+<rect x="500" y="268" width="170" height="64" rx="10" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="585" y="294" text-anchor="middle" class="bloc-t" font-size="14">weight layer</text>
+<text x="585" y="317" text-anchor="middle" class="bloc-m" font-size="13">3x3 conv + BN</text>
+</a>
+<path d="M674,300 L700,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<g data-tiphead="Element-wise addition" data-tip="Not a concatenation and not a gate. The two feature maps are added channel by channel, position by position, with no learned weight anywhere in the operation.">
+<circle class="bloc-sum" cx="726" cy="300" r="26" fill="#1a1a1a" stroke="#3fb950" stroke-width="2.4"/>
+<text x="726" y="309" text-anchor="middle" fill="#f0f0f0" font-size="24" font-weight="700">+</text>
+</g>
+<path d="M756,300 L778,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<g data-tiphead="Outer ReLU" data-tip="The paper adopts the second nonlinearity after the addition. That ordering is the one the same authors revisited a few months later in Identity Mappings in Deep Residual Networks.">
+<rect x="782" y="268" width="100" height="64" rx="10" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="832" y="306" text-anchor="middle" class="bloc-t" font-size="15">ReLU</text>
+</g>
+<path d="M886,300 L908,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<g data-tiphead="Block output" data-tip="The block computes H(x) = F(x) + x and passes it through the outer ReLU. The layers were asked to fit F, the residual, rather than H, the full mapping.">
+<rect x="912" y="268" width="208" height="64" rx="10" fill="#0d1117" stroke="#3fb950" stroke-width="2"/>
+<text x="1016" y="307" text-anchor="middle" class="bloc-m" font-size="17">ReLU(F(x) + x)</text>
+</g>
+<circle class="bloc-dot-id" cx="95" cy="262" r="7" fill="#3fb950" opacity="0"/>
+<path d="M170,346 L170,362 L670,362 L670,346" stroke="#3b82f6" stroke-width="1.8" fill="none"/>
+<text x="420" y="386" text-anchor="middle" fill="#3b82f6" font-size="14.5" font-weight="700">F(x) — the residual function; every parameter of the block is in here</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="Reading the block" data-tip="The block is defined in Section 3.2 of the paper as y = F(x, {Wi}) + x, where F is the residual mapping to be learned.">
+<rect x="40" y="406" width="530" height="176" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="64" y="438" class="bloc-t" font-size="15.5">Every piece, named</text>
+<text x="64" y="468" class="bloc-d" font-size="13">x — the block input, and the thing the shortcut carries</text>
+<text x="64" y="492" class="bloc-d" font-size="13">weight layer — a convolution with batch normalisation after it</text>
+<text x="64" y="516" class="bloc-d" font-size="13">F(x) — what the two weight layers compute, biases omitted</text>
+<text x="64" y="540" class="bloc-d" font-size="13">+ — element-wise addition of two feature maps, channel by channel</text>
+<text x="64" y="564" class="bloc-d" font-size="13">the second ReLU is applied after the addition, not before it</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="Why parameter-free matters" data-tip="Because the shortcut costs nothing, a plain net and a residual net can be built with identical depth, width, parameter count and FLOPs. Without that, the comparison in Table 2 would be confounded.">
+<rect x="590" y="406" width="530" height="176" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="614" y="438" fill="#3b82f6" font-size="15.5" font-weight="700">What the shortcut costs, and why that matters</text>
+<text x="614" y="468" class="bloc-d" font-size="13">Parameters added: none — there is no matrix on the identity path.</text>
+<text x="614" y="492" class="bloc-d" font-size="13">Computation added: one element-wise add per activation, which the</text>
+<text x="614" y="516" class="bloc-d" font-size="13">paper calls negligible next to the convolutions.</text>
+<text x="614" y="540" class="bloc-d" font-size="13">So plain and residual nets can be matched on depth, width, parameter</text>
+<text x="614" y="564" class="bloc-d" font-size="13">count and FLOPs — which is what makes the Table 2 comparison fair.</text>
+</a>
+</svg>
+</div>
+</div>
+
+- The layers fit the <span class="term" data-tiphead="Residual function" data-tip="Instead of asking a stack of layers for the mapping H(x) you want, you ask it for F(x) = H(x) - x and add x back afterwards. Doing nothing then means driving F toward zero, which the paper argues is easier for a solver than fitting an identity with nonlinear layers.">residual</span> `F(x) = H(x) - x`: **doing nothing means driving weights toward zero**, and the block **approaches** an identity
+- Close, not exact: each BN ends with a learned per-channel **scale and shift**, so zero conv weights leave `F` equal to the last BN's shift, not 0; and the outer ReLU keeps `x` only because `x` is a ReLU output, never negative
+- Why it should be easier — **preconditioning**, recasting a problem so the solver starts nearer the answer: if the best mapping is **closer to identity than to zero**, a **small perturbation of identity** is easier to find than an <span class="term" data-tiphead="Identity mapping" data-tip="A path that returns its input unchanged. On the shortcut it means the block input is simply copied forward: no weights, no gate, no multiplications.">identity mapping</span> rebuilt from conv, BN and ReLU. **Argued, not tested**: no run starts from the identity solution; Figure 7 is the only support ([slide 19](#19))
+
+---
+
+<a class="slide-id" id="6636d42f-be20-489e-8300-636b194e7683"></a>
+
+## Equation 1, term by term, with the shapes written out
+
+<div style="display:flex;justify-content:center;margin-top:0.4rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="980" height="507" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.form-t{fill:#f0f0f0;font-weight:700}.form-m{font-family:'JetBrains Mono',monospace}.form-d{fill:#a0a0a0}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="36" class="form-t" font-size="17">Equation 1 has three parts, and the one that does no work is the one that matters</text>
+<text x="1120" y="36" text-anchor="end" fill="#3b82f6" font-size="14" font-weight="700">Sec 3.2, Eqn (1)</text>
+<g data-tiphead="Block output y" data-tip="The output vector of the layers considered. It has the same shape as x, which is what lets these blocks be stacked without any glue between them.">
+<text x="379" y="120" class="form-m" fill="#3fb950" font-size="38" font-weight="700">y</text>
+<path d="M379,132 L402,132" stroke="#3fb950" stroke-width="3" fill="none"/>
+</g>
+<text x="419" y="120" class="form-m" fill="#f0f0f0" font-size="38">=</text>
+<g data-tiphead="Residual mapping F" data-tip="The function the stacked layers actually have to learn. The paper defines it as F(x) := H(x) - x, where H is the mapping you originally wanted.">
+<text x="464" y="120" class="form-m" fill="#3b82f6" font-size="38" font-weight="700">F(x, {Wi})</text>
+<path d="M464,132 L692,132" stroke="#3b82f6" stroke-width="3" fill="none"/>
+</g>
+<text x="714" y="120" class="form-m" fill="#f0f0f0" font-size="38">+</text>
+<g data-tiphead="The shortcut term x" data-tip="The block input itself, added back element-wise. It is not transformed, not gated and not scaled, which is why it costs nothing.">
+<text x="759" y="120" class="form-m" fill="#f0883e" font-size="38" font-weight="700">x</text>
+<path d="M759,132 L782,132" stroke="#f0883e" stroke-width="3" fill="none"/>
+</g>
+<path d="M390,136 L390,164 L220,164 L220,186" stroke="#3fb950" stroke-width="1.4" fill="none"/>
+<path d="M578,136 L578,164 L600,164 L600,186" stroke="#3b82f6" stroke-width="1.4" fill="none"/>
+<path d="M770,136 L770,164 L960,164 L960,186" stroke="#f0883e" stroke-width="1.4" fill="none"/>
+<g data-tiphead="Shape of y" data-tip="Because y must have the same shape as x, a stack of these blocks keeps one width and one map size all the way through a stage: a run of blocks at one feature-map size, conv2_x to conv5_x in Table 1.">
+<rect x="40" y="188" width="360" height="128" rx="10" fill="#151515" stroke="#2a4a66" stroke-width="1.6"/>
+<text x="62" y="218" fill="#3fb950" font-size="14.5" font-weight="700">y — what comes out</text>
+<text x="62" y="246" class="form-d" font-size="12.5">The sum, before the outer ReLU: ReLU(y) exits.</text>
+<text x="62" y="270" class="form-d" font-size="12.5">Same shape as x, so blocks stack directly.</text>
+<text x="62" y="294" class="form-d" font-size="12.5">One block, not the whole network.</text>
+</g>
+<g data-tiphead="What F contains" data-tip="F can be two or three layers. With one layer only, the paper notes the block is similar to a plain linear layer and it observed no advantage.">
+<rect x="420" y="188" width="360" height="128" rx="10" fill="#151515" stroke="#20304a" stroke-width="1.6"/>
+<text x="442" y="218" fill="#3b82f6" font-size="14.5" font-weight="700">F — where every weight lives</text>
+<text x="442" y="246" class="form-d" font-size="12.5">Two layers here: F = W2 . ReLU(W1 x), with</text>
+<text x="442" y="270" class="form-d" font-size="12.5">the biases omitted to simplify notation.</text>
+<text x="442" y="294" class="form-d" font-size="12.5">The Wi are the block's learnable weights.</text>
+</g>
+<g data-tiphead="Why the identity path is free" data-tip="There is no matrix on this path. Nothing is learned, nothing is multiplied, so the shortcut adds neither extra parameter nor computation complexity.">
+<rect x="800" y="188" width="320" height="128" rx="10" fill="#151515" stroke="#4a3520" stroke-width="1.6"/>
+<text x="822" y="218" fill="#f0883e" font-size="14.5" font-weight="700">x — carried, not computed</text>
+<text x="822" y="246" class="form-d" font-size="12.5">The input itself, unchanged. No matrix,</text>
+<text x="822" y="270" class="form-d" font-size="12.5">no gate, never closed. Hence zero extra</text>
+<text x="822" y="294" class="form-d" font-size="12.5">parameters and zero extra multiplies.</text>
+</g>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="The addition is element-wise" data-tip="Performed on two feature maps channel by channel. Every entry of F(x) is added to the entry of x at the same position and channel, so the two tensors must have identical shape.">
+<rect x="40" y="344" width="530" height="236" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="64" y="378" fill="#3b82f6" font-size="15.5" font-weight="700">Walking one block, shape by shape</text>
+<text x="64" y="404" class="form-d" font-size="13">block input x</text>
+<text x="530" y="404" text-anchor="end" class="form-m" fill="#93c5fd" font-size="13">56 x 56 x 64</text>
+<text x="64" y="428" class="form-d" font-size="13">after the first 3x3, 64</text>
+<text x="530" y="428" text-anchor="end" class="form-m" fill="#93c5fd" font-size="13">56 x 56 x 64</text>
+<text x="64" y="452" class="form-d" font-size="13">after the second 3x3, 64 — this is F(x)</text>
+<text x="530" y="452" text-anchor="end" class="form-m" fill="#93c5fd" font-size="13">56 x 56 x 64</text>
+<text x="64" y="476" class="form-d" font-size="13">the shortcut hands back x, untouched</text>
+<text x="530" y="476" text-anchor="end" class="form-m" fill="#f0883e" font-size="13">56 x 56 x 64</text>
+<text x="64" y="500" class="form-d" font-size="13">F(x) + x, one add per entry</text>
+<text x="530" y="500" text-anchor="end" class="form-m" fill="#3fb950" font-size="13">56 x 56 x 64</text>
+<text x="64" y="530" fill="#f0f0f0" font-size="13">Weights on the shortcut: none. Multiplies on the shortcut: none.</text>
+<text x="64" y="552" class="form-d" font-size="12.5">Shapes follow Table 1, conv2_x of the 34-layer net.</text>
+<text x="64" y="572" class="form-d" font-size="12.5">224x224 input, halved by the stride-2 conv1 and by max pooling.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="Equation 2, the mismatch case" data-tip="At a stage boundary the channel count doubles and the feature map halves, so x and F(x) no longer have the same shape and cannot be added. Equation 2 inserts a linear projection Ws on the shortcut, done by 1x1 convolutions with a stride of 2.">
+<rect x="590" y="344" width="530" height="236" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="614" y="378" class="form-t" font-size="15.5">When the shapes do not match</text>
+<text x="855" y="424" text-anchor="middle" class="form-m" fill="#f0f0f0" font-size="26">y = F(x, {Wi}) + Ws x</text>
+<text x="1096" y="452" text-anchor="end" fill="#3b82f6" font-size="12.5" font-weight="700">Eqn (2)</text>
+<text x="614" y="482" class="form-d" font-size="13">Eqn (1) needs x and F(x) the same shape. At each stage</text>
+<text x="614" y="506" class="form-d" font-size="13">boundary both change: channels double and the map halves,</text>
+<text x="614" y="530" class="form-d" font-size="13">56x56x64 → 28x28x128. Ws is then a 1x1 conv with stride 2.</text>
+<text x="614" y="560" fill="#f0f0f0" font-size="13">The paper: Ws is only used when matching dimensions.</text>
+</a>
+</svg>
+</div>
+
+---
+
+<a class="slide-id" id="d990427c-26ab-49e3-a9a4-ab53db06451e"></a>
+
+## Three ways to cross a stage boundary — and the best number is not the one that ships <span class="finfo" data-tiphead="Figure forensics" data-tip="Table 3 is 10-crop testing on the ImageNet validation set, reported without repeats or error bars. A, B and C are separated by fractions of a point — a margin the paper reads as showing projections are not essential, which is why it decides on cost. Option A is what Table 2 and every CIFAR model use; option B is what ResNet-50/101/152 ship with. Table 4 lists the same ResNet-34 B at 21.84 top-1: that is multi-scale testing, not a better model.">ⓘ forensics</span>
+
+<div style="display:flex;justify-content:center;margin-top:0.4rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="980" height="507" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.shor-t{fill:#f0f0f0;font-weight:700}.shor-m{font-family:'JetBrains Mono',monospace}.shor-d{fill:#a0a0a0}.shor-n{font-family:'JetBrains Mono',monospace;fill:#f0f0f0;font-size:14}</style>
+<defs>
+<marker id="sg" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3b82f6"/></marker>
+<marker id="sb" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3fb950"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="shor-t" font-size="17">One stage boundary, three wirings — measured on ResNet-34 with everything else held fixed</text>
+<g data-tiphead="Option A — zero-padded identity" data-tip="The shortcut still performs identity mapping, with extra zero entries padded for increasing dimensions, and across the stage boundary it is performed with a stride of 2. This option introduces no extra parameter. It is what Table 2 and Figure 4 use, and what every CIFAR-10 model in the paper uses.">
+<rect x="40" y="52" width="345" height="398" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="64" y="86" class="shor-t" font-size="16">A — pad with zeros</text>
+<text x="64" y="108" class="shor-d" font-size="12.5">parameter-free everywhere</text>
+<circle cx="175" cy="288" r="19" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="175" y="295" text-anchor="middle" fill="#f0f0f0" font-size="19" font-weight="700">+</text>
+<text x="175" y="326" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700">28x28x128 out</text>
+<text x="64" y="352" class="shor-d" font-size="12.5">Identity at stride 2 keeps every other</text>
+<text x="64" y="372" class="shor-d" font-size="12.5">position; the 64 new channels get zeros</text>
+<text x="64" y="392" class="shor-d" font-size="12.5">from it, so they have no residual learning.</text>
+<text x="64" y="414" fill="#7a7a7a" font-size="12">Table 3, ResNet-34 A · 10-crop, val</text>
+<text x="64" y="436" class="shor-d" font-size="13">top-1</text>
+<text x="150" y="436" class="shor-n">25.03</text>
+<text x="228" y="436" class="shor-d" font-size="13">top-5</text>
+<text x="314" y="436" class="shor-n">7.76</text>
+</g>
+<g data-tiphead="Block input" data-tip="The feature map arriving at this block: 56x56 positions, 64 channels.">
+<rect x="90" y="140" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="175" y="164" text-anchor="middle" fill="#f0f0f0" font-size="12.5">x, 56x56x64</text>
+</g>
+<g data-tiphead="The residual branch" data-tip="Two 3x3 convolutions; the first has a stride of 2, so the map halves to 28x28 while the width doubles to 128. Both changes break the shapes apart.">
+<rect x="90" y="208" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="175" y="232" text-anchor="middle" fill="#f0f0f0" font-size="11.5">two 3x3, 128; first stride 2</text>
+</g>
+<path d="M175,182 L175,204" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M175,250 L175,265" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M264,159 L330,159 L330,288 L198,288" stroke="#3fb950" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#sb)"/>
+<g data-tiphead="Option B — project only on mismatch" data-tip="The projection shortcut of Eqn 2 is used to match dimensions, done by 1x1 convolutions with a stride of 2 across the stage boundary; all other shortcuts stay identity. This is the option ResNet-50, ResNet-101 and ResNet-152 are built with.">
+<rect x="407" y="52" width="345" height="398" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="2"/>
+<text x="431" y="86" fill="#3b82f6" font-size="16" font-weight="700">B — project here only</text>
+<text x="431" y="108" class="shor-d" font-size="12.5">what the paper actually ships</text>
+<circle cx="542" cy="288" r="19" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="542" y="295" text-anchor="middle" fill="#f0f0f0" font-size="19" font-weight="700">+</text>
+<text x="542" y="326" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700">28x28x128 out</text>
+<text x="431" y="352" class="shor-d" font-size="12.5">1x1 projection only where dimensions</text>
+<text x="431" y="372" class="shor-d" font-size="12.5">increase, at stride 2. All other</text>
+<text x="431" y="392" class="shor-d" font-size="12.5">shortcuts identity: 3 projections.</text>
+<text x="431" y="414" fill="#7a7a7a" font-size="12">Table 3, ResNet-34 B · 10-crop, val</text>
+<text x="431" y="436" class="shor-d" font-size="13">top-1</text>
+<text x="517" y="436" class="shor-n">24.52</text>
+<text x="595" y="436" class="shor-d" font-size="13">top-5</text>
+<text x="681" y="436" class="shor-n">7.46</text>
+</g>
+<g data-tiphead="Block input" data-tip="The feature map arriving at this block: 56x56 positions, 64 channels.">
+<rect x="457" y="140" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="542" y="164" text-anchor="middle" fill="#f0f0f0" font-size="12.5">x, 56x56x64</text>
+</g>
+<g data-tiphead="The residual branch" data-tip="Two 3x3 convolutions; the first has a stride of 2, so the map halves to 28x28 while the width doubles to 128. Both changes break the shapes apart.">
+<rect x="457" y="208" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="542" y="232" text-anchor="middle" fill="#f0f0f0" font-size="11.5">two 3x3, 128; first stride 2</text>
+</g>
+<path d="M542,182 L542,204" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M542,250 L542,265" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M631,159 L697,159 L697,288 L565,288" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#sb)"/>
+<rect x="667" y="206" width="60" height="34" rx="7" fill="#10141a" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="697" y="228" text-anchor="middle" class="shor-m" fill="#93c5fd" font-size="12">1x1</text>
+<g data-tiphead="Option C — project everywhere" data-tip="All shortcuts are projections, including the ones where nothing changes shape. Best of the three by a fraction of a point, and the paper attributes even that to the extra parameters introduced by many, thirteen, projection shortcuts: ResNet-34 has 16 shortcuts, B already projects the 3 at stage boundaries, and C turns the other 13 into projections too.">
+<rect x="774" y="52" width="345" height="398" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="798" y="86" class="shor-t" font-size="16">C — project everywhere</text>
+<text x="798" y="108" class="shor-d" font-size="12.5">best number, not used</text>
+<circle cx="909" cy="288" r="19" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="909" y="295" text-anchor="middle" fill="#f0f0f0" font-size="19" font-weight="700">+</text>
+<text x="909" y="326" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700">28x28x128 out</text>
+<text x="798" y="352" class="shor-d" font-size="12.5">Every shortcut is a projection, even</text>
+<text x="798" y="372" class="shor-d" font-size="12.5">where nothing changes shape: all 16,</text>
+<text x="798" y="392" class="shor-d" font-size="12.5">13 more than B.</text>
+<text x="798" y="414" fill="#7a7a7a" font-size="12">Table 3, ResNet-34 C · 10-crop, val</text>
+<text x="798" y="436" class="shor-d" font-size="13">top-1</text>
+<text x="884" y="436" class="shor-n">24.19</text>
+<text x="962" y="436" class="shor-d" font-size="13">top-5</text>
+<text x="1048" y="436" class="shor-n">7.40</text>
+</g>
+<g data-tiphead="Block input" data-tip="The feature map arriving at this block: 56x56 positions, 64 channels.">
+<rect x="824" y="140" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="909" y="164" text-anchor="middle" fill="#f0f0f0" font-size="12.5">x, 56x56x64</text>
+</g>
+<g data-tiphead="The residual branch" data-tip="Two 3x3 convolutions; the first has a stride of 2, so the map halves to 28x28 while the width doubles to 128. Both changes break the shapes apart.">
+<rect x="824" y="208" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="909" y="232" text-anchor="middle" fill="#f0f0f0" font-size="11.5">two 3x3, 128; first stride 2</text>
+</g>
+<path d="M909,182 L909,204" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M909,250 L909,265" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M998,159 L1064,159 L1064,288 L932,288" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#sb)"/>
+<rect x="1034" y="206" width="60" height="34" rx="7" fill="#10141a" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="1064" y="228" text-anchor="middle" class="shor-m" fill="#93c5fd" font-size="12">1x1</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="Why B and not C" data-tip="The paper: the small differences among A/B/C indicate that projection shortcuts are not essential for addressing the degradation problem, so we do not use option C in the rest of this paper, to reduce memory/time complexity and model sizes.">
+<rect x="40" y="464" width="1080" height="122" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="492" class="shor-t" font-size="15.5">C scores best and B wins the paper — because the deciding criterion is cost, not accuracy</text>
+<text x="66" y="518" class="shor-d" font-size="13">All three beat plain-34 by a wide margin. B is slightly better than A — the paper argues because the zero-padded channels in A do no residual learning;</text>
+<text x="66" y="542" class="shor-d" font-size="13">C is only marginally better than B, which the paper puts down to the extra parameters in its thirteen projection shortcuts. ResNet-50/101/152 use B.</text>
+<text x="66" y="568" fill="#f0f0f0" font-size="13">Reported without repeats or error bars, these gaps are 0.33 to 0.84 points of top-1: the ranking A, B, C is suggestive, not established.</text>
+</a>
+</svg>
+</div>
+
+---
+
+<a class="slide-id" id="0e4e40a9-f090-4f38-b331-67366b096bd2"></a>
+
+<!-- _class: fs-sm -->
+
+## One more layer and 4x the width, at the two-layer block's price
+
+<div class="figxs">
+<div style="display:flex;justify-content:center;margin-top:0.2rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="860" height="445" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.bott-t{fill:#f0f0f0;font-weight:700}.bott-m{font-family:'JetBrains Mono',monospace}.bott-d{fill:#a0a0a0}</style>
+<defs>
+<marker id="ng" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3b82f6"/></marker>
+<marker id="nb" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3fb950"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="bott-t" font-size="17">Figure 5, both blocks, with the multiply-adds written out underneath</text>
+<g data-tiphead="The two-layer block" data-tip="The building block used in ResNet-34, shown in Figure 5 left. Two 3x3 convolutions operating on 56x56 feature maps with 64 channels.">
+<rect x="40" y="50" width="530" height="312" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="64" y="82" class="bott-t" font-size="15.5">Two-layer block — ResNet-18/34</text>
+<text x="64" y="103" class="bott-d" font-size="12.5">Figure 5, left. The width the 3x3 sees is the width between blocks.</text>
+<text x="305" y="126" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">in: 64-d</text>
+<circle cx="305" cy="286" r="18" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="305" y="293" text-anchor="middle" fill="#f0f0f0" font-size="18" font-weight="700">+</text>
+<text x="305" y="336" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">out: 64-d</text>
+</g>
+<g data-tiphead="First 3x3" data-tip="Sees 64 input channels and produces 64 output channels, on 56x56 feature maps.">
+<rect x="215" y="140" width="180" height="40" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="305" y="165" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="14">3x3, 64</text>
+</g>
+<g data-tiphead="Second 3x3" data-tip="Same shape again. Its output is what gets added to the shortcut, so it must match the block input exactly.">
+<rect x="215" y="200" width="180" height="40" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="305" y="225" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="14">3x3, 64</text>
+</g>
+<path d="M305,130 L305,136" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M305,184 L305,196" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ng)"/>
+<path d="M305,244 L305,264" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ng)"/>
+<path d="M305,132 L165,132 L165,286 L283,286" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#nb)"/>
+<g data-tiphead="The bottleneck block" data-tip="Figure 5 right. Three layers instead of two: the 1x1 layers are responsible for reducing and then increasing, restoring, dimensions, leaving the 3x3 layer a bottleneck with smaller input and output dimensions.">
+<rect x="590" y="50" width="530" height="312" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="614" y="82" fill="#3b82f6" font-size="15.5" font-weight="700">Bottleneck block — ResNet-50/101/152</text>
+<text x="614" y="103" class="bott-d" font-size="12.5">Figure 5, right. The 3x3 sees a quarter of the width between blocks.</text>
+<text x="800" y="126" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">in: 256-d</text>
+<text x="906" y="165" fill="#93c5fd" font-size="12">reduce 256 to 64</text>
+<text x="906" y="225" fill="#93c5fd" font-size="12">the narrow part</text>
+<text x="906" y="285" fill="#93c5fd" font-size="12">restore 64 to 256</text>
+<circle cx="800" cy="330" r="18" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="800" y="337" text-anchor="middle" fill="#f0f0f0" font-size="18" font-weight="700">+</text>
+</g>
+<g data-tiphead="1x1 down-projection" data-tip="Cuts the 256 incoming channels to 64. It is a pointwise convolution, so it costs in-channels times out-channels per position.">
+<rect x="710" y="140" width="180" height="40" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="800" y="165" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="14">1x1, 64</text>
+</g>
+<g data-tiphead="The bottleneck 3x3" data-tip="The expensive layer, now running on 64 channels instead of 256. This is where the whole saving comes from.">
+<rect x="710" y="200" width="180" height="40" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="800" y="225" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="14">3x3, 64</text>
+</g>
+<g data-tiphead="1x1 up-projection" data-tip="Restores the width to 256 so that the result can be added to the shortcut, which is still carrying a 256-channel tensor.">
+<rect x="710" y="260" width="180" height="40" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="800" y="285" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="14">1x1, 256</text>
+</g>
+<path d="M800,130 L800,136" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M800,184 L800,196" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ng)"/>
+<path d="M800,244 L800,256" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ng)"/>
+<path d="M800,304 L800,308" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ng)"/>
+<path d="M800,132 L660,132 L660,330 L778,330" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#nb)"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="The arithmetic behind similar time complexity" data-tip="Counting multiply-adds per output position: a 3x3 convolution costs 9 times in-channels times out-channels, a 1x1 convolution costs in-channels times out-channels. Squeezing the 3x3 down to 64 channels is what keeps the three-layer block affordable. The paper prints only the shapes and the phrase similar time complexity; the products in the right-hand column were multiplied out for this deck so the claim can be checked rather than taken on trust.">
+<rect x="40" y="376" width="1080" height="212" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="406" fill="#3b82f6" font-size="15.5" font-weight="700">The arithmetic, in multiply-adds per output position</text>
+<text x="66" y="434" fill="#7a7a7a" font-size="12.5">a 3x3 conv costs 9 x in x out; a 1x1 conv costs in x out</text>
+<text x="1094" y="434" text-anchor="end" fill="#d29922" font-size="12.5">totals derived for this deck — the paper prints the shapes, not the products</text>
+<text x="66" y="462" class="bott-d" font-size="13.5">two 3x3 layers at 64 channels</text>
+<text x="936" y="462" text-anchor="end" class="bott-m" fill="#f0f0f0" font-size="14">2 x 9 x 64 x 64</text>
+<text x="1094" y="462" text-anchor="end" class="bott-m" fill="#d29922" font-size="14">= 73,728</text>
+<text x="66" y="490" class="bott-d" font-size="13.5">bottleneck: 1x1 down, 3x3 narrow, 1x1 back up</text>
+<text x="936" y="490" text-anchor="end" class="bott-m" fill="#f0f0f0" font-size="14">256 x 64 + 9 x 64 x 64 + 64 x 256</text>
+<text x="1094" y="490" text-anchor="end" class="bott-m" fill="#d29922" font-size="14">= 69,632</text>
+<text x="66" y="518" class="bott-d" font-size="13.5">the same 3x3 pair run straight on 256 channels</text>
+<text x="936" y="518" text-anchor="end" class="bott-m" fill="#f85149" font-size="14">2 x 9 x 256 x 256</text>
+<text x="1094" y="518" text-anchor="end" class="bott-m" fill="#f85149" font-size="14">= 1,179,648</text>
+<text x="66" y="550" fill="#f0f0f0" font-size="13.5">73,728 against 69,632 — the three-layer block is the cheaper of the two. That is the paper's both designs have similar time complexity.</text>
+<text x="66" y="574" class="bott-d" font-size="13.5">1,179,648 is what the two-layer design would cost at the bottleneck's 256-d width — 16x the first line. The 1x1 pair avoids exactly that.</text>
+</a>
+</svg>
+</div>
+</div>
+
+- A <span class="term" data-tiphead="Bottleneck block" data-tip="A three-layer block of 1x1, 3x3, 1x1 convolutions. The 1x1 layers reduce and then restore the channel count so that the expensive 3x3 convolution runs on a narrower tensor.">bottleneck</span> is `1x1 → 3x3 → 1x1`. Figure 5 holds the **56x56 map and the 64-channel 3x3 fixed**; the bottleneck adds a layer and carries **4x the width, 256 channels, between blocks**
+- ResNet-50 swaps each of ResNet-34's **16** two-layer blocks for one: 16 × 3 + 2 = **50** layers, the +2 being the first 7x7 conv and the final fc layer. 101 and 152 stack more blocks per stage — **3-4-23-3** and **3-8-36-3** (Table 1)
+- Cost: **3.8 / 7.6 / 11.3 billion** <span class="term" data-tiphead="FLOPs" data-tip="Floating point operations for one forward pass on one image, counted here as multiply-adds. It is a proxy for compute cost, not a measured runtime.">FLOPs</span> against VGG-19's **19.6 billion**
+
+---
+
+<a class="slide-id" id="cd673cc0-e7d2-4785-98c9-d3ac5d4462c2"></a>
+
+## Identity is load-bearing here: a projection would sit on the two widest points of the block
+
+<div style="display:flex;justify-content:center;margin-top:0.4rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="980" height="507" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.bott-t{fill:#f0f0f0;font-weight:700}.bott-m{font-family:'JetBrains Mono',monospace}.bott-d{fill:#a0a0a0}</style>
+<defs>
+<marker id="ig" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3b82f6"/></marker>
+<marker id="ib" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3fb950"/></marker>
+<marker id="ir" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#f85149"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="bott-t" font-size="17">The same bottleneck twice, differing only in what sits on the shortcut</text>
+<g data-tiphead="Identity on a bottleneck shortcut" data-tip="The shortcut joins the 256-channel input to the 256-channel output. Left as identity it holds no weights at all, so the block costs exactly its three convolutions.">
+<rect x="40" y="50" width="530" height="330" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="64" y="82" fill="#3b82f6" font-size="15.5" font-weight="700">Identity shortcut — what the paper builds within a stage</text>
+<text x="305" y="112" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">256-d</text>
+<circle cx="305" cy="298" r="18" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="305" y="305" text-anchor="middle" fill="#f0f0f0" font-size="18" font-weight="700">+</text>
+<text x="305" y="344" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">256-d</text>
+<text x="64" y="364" fill="#93c5fd" font-size="13">weights on the shortcut: none — multiplies on the shortcut: none</text>
+</g>
+<g data-tiphead="1x1 down-projection" data-tip="Cuts the 256 incoming channels to 64 before the expensive 3x3 runs.">
+<rect x="215" y="124" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="305" y="148" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">1x1, 64</text>
+</g>
+<g data-tiphead="The bottleneck 3x3" data-tip="The expensive layer, running on the narrow 64-channel tensor.">
+<rect x="215" y="174" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="305" y="198" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">3x3, 64</text>
+</g>
+<g data-tiphead="1x1 up-projection" data-tip="Restores the width to 256 so the branch output matches what the shortcut is carrying.">
+<rect x="215" y="224" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="305" y="248" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">1x1, 256</text>
+</g>
+<path d="M305,116 L305,120" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M305,166 L305,170" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M305,216 L305,220" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M305,266 L305,276" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M305,118 L165,118 L165,298 L283,298" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#ib)"/>
+<g data-tiphead="Projection on a bottleneck shortcut" data-tip="A 1x1 convolution mapping 256 channels to 256 channels. The paper: if the identity shortcut is replaced with projection, one can show that the time complexity and model size are doubled, as the shortcut is connected to the two high-dimensional ends.">
+<rect x="590" y="50" width="530" height="330" rx="12" fill="#1a1113" stroke="#f85149" stroke-width="1.8"/>
+<text x="614" y="82" fill="#f85149" font-size="15.5" font-weight="700">Projection shortcut — what it would cost</text>
+<text x="855" y="112" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">256-d</text>
+<circle cx="855" cy="298" r="18" fill="#1a1a1a" stroke="#f85149" stroke-width="2"/>
+<text x="855" y="305" text-anchor="middle" fill="#f0f0f0" font-size="18" font-weight="700">+</text>
+<text x="855" y="344" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">256-d</text>
+<text x="614" y="364" fill="#f85149" font-size="13">one 1x1 mapping 256 channels to 256 — the widest matrix in sight</text>
+</g>
+<g data-tiphead="1x1 down-projection" data-tip="Unchanged from the block on the left. Only the shortcut differs between the two panels.">
+<rect x="765" y="124" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="855" y="148" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">1x1, 64</text>
+</g>
+<g data-tiphead="The bottleneck 3x3" data-tip="Unchanged from the block on the left. Only the shortcut differs between the two panels.">
+<rect x="765" y="174" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="855" y="198" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">3x3, 64</text>
+</g>
+<g data-tiphead="1x1 up-projection" data-tip="Unchanged from the block on the left. Only the shortcut differs between the two panels.">
+<rect x="765" y="224" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="855" y="248" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">1x1, 256</text>
+</g>
+<path d="M855,116 L855,120" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M855,166 L855,170" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M855,216 L855,220" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M855,266 L855,276" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M855,118 L715,118 L715,298 L833,298" stroke="#f85149" stroke-width="2" fill="none" marker-end="url(#ir)"/>
+<rect x="669" y="172" width="92" height="38" rx="8" fill="#2a1416" stroke="#f85149" stroke-width="1.8"/>
+<text x="715" y="196" text-anchor="middle" class="bott-m" fill="#f85149" font-size="13">1x1, 256</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="Where the shortcut sits decides everything" data-tip="On a two-layer block the shortcut connects 64-channel ends, so a projection there is sixteen times cheaper than on a bottleneck. The bottleneck moves its shortcut to the wide side of the block, and that is what makes identity load-bearing rather than merely elegant.">
+<rect x="40" y="398" width="1080" height="188" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="430" fill="#3b82f6" font-size="15.5" font-weight="700">Same arithmetic as the last slide, applied to the shortcut itself</text>
+<text x="66" y="462" class="bott-d" font-size="13.5">the three convolutions of the block</text>
+<text x="1094" y="462" text-anchor="end" class="bott-m" fill="#f0f0f0" font-size="14">256 x 64 + 9 x 64 x 64 + 64 x 256</text>
+<text x="66" y="490" class="bott-d" font-size="13.5">a projection on the bottleneck shortcut, 256 in and 256 out</text>
+<text x="1094" y="490" text-anchor="end" class="bott-m" fill="#f85149" font-size="14">256 x 256</text>
+<text x="66" y="518" class="bott-d" font-size="13.5">the same projection on a two-layer block, whose ends are 64-d</text>
+<text x="1094" y="518" text-anchor="end" class="bott-m" fill="#93c5fd" font-size="14">64 x 64</text>
+<text x="66" y="550" fill="#f0f0f0" font-size="13.5">The middle line is nearly the whole first line again. The paper: the time complexity and model size are doubled, as the shortcut is</text>
+<text x="66" y="572" class="bott-d" font-size="13.5">connected to the two high-dimensional ends. On a two-layer block the same choice is sixteen times cheaper and nobody would notice.</text>
+</a>
+</svg>
+</div>
+
+---
+
+<a class="slide-id" id="9b1e4d7c-2a60-4f3e-8d1a-5c7e0b9f6a02"></a>
+
+<!-- _class: fs-sm -->
+
+## The paper's own Figure 4: the same two depths, plain on the left, shortcuts added on the right
+
+<p style="text-align:center; margin:0"><span style="position:relative; display:inline-block"><img src="images/paper/fig4-imagenet-curves.png" width="940" style="border-radius:6px"/><span class="hotspot" data-tiphead="Left — plain-18 vs plain-34" data-tip="ImageNet training. Thin curves are training error, bold curves validation error on the center crops. The red 34-layer plain net sits above the cyan 18-layer one throughout the whole training procedure: degradation again, now at ImageNet scale." style="left:0%; width:49%"></span><span class="hotspot" data-tiphead="Right — ResNet-18 vs ResNet-34" data-tip="The same architectures with identity shortcuts added, zero-padded where the width grows, so no extra parameter. The order flips: ResNet-34 ends below ResNet-18 on both training and validation error. The reversal is the evidence." style="left:51%; width:49%"></span></span></p>
+
+<p class="credit">Figure 4 and Table 2 from <a href="https://arxiv.org/abs/1512.03385">He et al. 2016</a> (arXiv 1512.03385, p. 5) — thin = training error, bold = validation error of the center crops.</p>
+
+<div class="columns-wide-right">
+<div>
+
+<figure class="credit"><img src="images/paper/table2-top1.png" width="300" data-tiphead="Table 2" data-tip="Top-1 error in percent, 10-crop testing, ImageNet validation. Depth makes the plain net worse, 27.94 to 28.54, and the ResNet better, 27.88 to 25.03 — with no extra parameter on the residual side."/></figure>
+
+</div>
+<div>
+
+- **Left: 34 above 18. Right: 34 below 18** — identical depth, width and parameter count on both sides
+- Table 2 says the same in two columns: plain **27.94 → 28.54**, ResNet **27.88 → 25.03** top-1 (10-crop, validation)
+
+</div>
+</div>
+
+---
+
+<a class="slide-id" id="df1ab998-db19-4872-98d7-fb404aba8078"></a>
+
+<!-- _class: fs-sm -->
+
+## The evidence is the reversal, not the error rates <span class="finfo" data-tiphead="Figure forensics" data-tip="One run per configuration on ImageNet and no error bars anywhere in Table 2, so the 18-layer tie is a tie by eye, not by a test. The numbers are 10-crop testing on the validation set — a mild test-time ensemble, not comparable with the single-crop or test-server numbers elsewhere in the paper. The plain nets are the authors' own baselines, not third-party results.">ⓘ forensics</span>
+
+<div class="figxs">
+<div style="display:flex;justify-content:center;margin-top:0.2rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="860" height="445" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.imag-t{fill:#f0f0f0;font-weight:700}.imag-m{font-family:'JetBrains Mono',monospace}.imag-d{fill:#a0a0a0}.imag-ax{fill:#6e6e6e;font-size:11.5}.imag-c1{animation:imag-f1 10s linear infinite}.imag-l1{animation:imag-f1 10s linear infinite}.imag-c2{animation:imag-f2 10s linear infinite}.imag-l2{animation:imag-f2 10s linear infinite}.imag-c3{animation:imag-f3 10s linear infinite}.imag-l3{animation:imag-f3 10s linear infinite}.imag-c4{animation:imag-f4 10s linear infinite}.imag-l4{animation:imag-f4 10s linear infinite}@keyframes imag-f1{0%,6%{opacity:0.25}14%{opacity:1}100%{opacity:1}}@keyframes imag-f2{0%,26%{opacity:0.25}34%{opacity:1}100%{opacity:1}}@keyframes imag-f3{0%,50%{opacity:0.25}58%{opacity:1}100%{opacity:1}}@keyframes imag-f4{0%,72%{opacity:0.25}80%{opacity:1}100%{opacity:1}}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="100" y="36" class="imag-t" font-size="16.5">Plain nets on ImageNet — deeper is worse</text>
+<text x="100" y="58" fill="#f0883e" font-size="12.5">the same degradation as CIFAR-10, at 18 and 34 layers</text>
+<text x="660" y="36" class="imag-t" font-size="16.5">Same nets, shortcuts added — deeper is better</text>
+<text x="660" y="58" fill="#3b82f6" font-size="12.5">identical depth, width and parameter count; option A shortcuts</text>
+<path d="M100,80 L100,330 L540,330" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M660,80 L660,330 L1100,330" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M100,205 L540,205" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+<path d="M660,205 L1100,205" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+<text x="92" y="85" text-anchor="end" class="imag-ax">60</text>
+<text x="92" y="210" text-anchor="end" class="imag-ax">40</text>
+<text x="92" y="335" text-anchor="end" class="imag-ax">20</text>
+<text x="652" y="85" text-anchor="end" class="imag-ax">60</text>
+<text x="652" y="210" text-anchor="end" class="imag-ax">40</text>
+<text x="652" y="335" text-anchor="end" class="imag-ax">20</text>
+<text x="320" y="352" text-anchor="middle" class="imag-ax">iterations (1e4), error (%) on the y axis</text>
+<text x="880" y="352" text-anchor="middle" class="imag-ax">iterations (1e4), error (%) on the y axis</text>
+<g data-tiphead="plain-18" data-tip="Thin curve is training error, bold curve is validation error on the center crops. The steps are the learning rate being divided by ten when the error plateaus.">
+<path class="imag-c1" opacity="1" d="M109,80 L126,124 L153,155 L188,180 L223,196 L258,208 L294,218 L329,225 L360,230 L364,261 L399,271 L434,275 L448,278 L452,289 L496,294 L540,296" stroke="#3fb950" stroke-width="1.5" fill="none"/>
+<path class="imag-c1" opacity="1" d="M109,80 L126,111 L153,139 L188,164 L223,180 L258,189 L294,196 L329,200 L360,204 L364,246 L399,252 L434,255 L448,256 L452,266 L496,269 L540,270" stroke="#3fb950" stroke-width="3" fill="none"/>
+</g>
+<g data-tiphead="plain-34" data-tip="Both of its curves sit above plain-18 for the entire run. The paper: the 34-layer plain net has higher training error throughout the whole training procedure.">
+<path class="imag-c2" opacity="1" d="M109,80 L126,111 L153,142 L188,168 L223,183 L258,196 L294,205 L329,212 L360,218 L364,249 L399,258 L434,262 L448,265 L452,277 L496,281 L540,283" stroke="#f0883e" stroke-width="1.5" fill="none"/>
+<path class="imag-c2" opacity="1" d="M109,80 L126,102 L153,130 L188,155 L223,171 L258,180 L294,186 L329,191 L360,194 L364,238 L399,244 L434,247 L448,248 L452,261 L496,264 L540,266" stroke="#f0883e" stroke-width="3" fill="none"/>
+</g>
+<text class="imag-l1" opacity="1" x="548" y="274" fill="#3fb950" font-size="12.5" font-weight="700">18</text>
+<text class="imag-l2" opacity="1" x="548" y="252" fill="#f0883e" font-size="12.5" font-weight="700">34</text>
+<g data-tiphead="ResNet-18" data-tip="Comparably accurate to plain-18 in the end, but it converges faster. The paper: when the net is not overly deep, the current SGD solver is still able to find good solutions to the plain net.">
+<path class="imag-c3" opacity="1" d="M669,80 L686,130 L713,161 L748,186 L783,202 L818,214 L854,224 L889,231 L920,236 L924,268 L959,277 L994,281 L1008,284 L1012,296 L1056,300 L1100,302" stroke="#3fb950" stroke-width="1.5" fill="none"/>
+<path class="imag-c3" opacity="1" d="M669,80 L686,118 L713,146 L748,171 L783,186 L818,196 L854,202 L889,206 L920,210 L924,252 L959,258 L994,261 L1008,262 L1012,270 L1056,272 L1100,272" stroke="#3fb950" stroke-width="3" fill="none"/>
+</g>
+<g data-tiphead="ResNet-34" data-tip="Below ResNet-18 on both curves. The paper: the 34-layer ResNet exhibits considerably lower training error and is generalizable to the validation data.">
+<path class="imag-c4" opacity="1" d="M669,80 L686,136 L713,171 L748,199 L783,218 L818,230 L854,239 L889,247 L920,252 L924,283 L959,292 L994,298 L1008,300 L1012,312 L1056,318 L1100,319" stroke="#3b82f6" stroke-width="1.5" fill="none"/>
+<path class="imag-c4" opacity="1" d="M669,80 L686,124 L713,155 L748,183 L783,200 L818,211 L854,219 L889,224 L920,228 L924,268 L959,274 L994,277 L1008,278 L1012,288 L1056,290 L1100,291" stroke="#3b82f6" stroke-width="3" fill="none"/>
+</g>
+<text class="imag-l3" opacity="1" x="1108" y="276" fill="#3fb950" font-size="12.5" font-weight="700">18</text>
+<text class="imag-l4" opacity="1" x="1108" y="296" fill="#3b82f6" font-size="12.5" font-weight="700">34</text>
+<text x="100" y="372" class="imag-ax">thin = training error · bold = validation error (center crops) · redrawn from Figure 4, curve shapes schematic</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="Table 2" data-tip="Top-1 error in percent with 10-crop testing on the ImageNet validation set. In this table the ResNets have no extra parameter compared to their plain counterparts, because they use the zero-padded option A shortcuts.">
+<rect x="40" y="392" width="1080" height="192" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="422" fill="#3b82f6" font-size="15.5" font-weight="700">Table 2 — top-1 error (%), 10-crop testing, ImageNet validation · gaps in points of top-1</text>
+<text x="300" y="450" text-anchor="middle" class="imag-d" font-size="13">plain</text>
+<text x="440" y="450" text-anchor="middle" class="imag-d" font-size="13">ResNet</text>
+<text x="66" y="478" class="imag-d" font-size="13.5">18 layers</text>
+<text x="300" y="478" text-anchor="middle" class="imag-m" fill="#f0f0f0" font-size="15">27.94</text>
+<text x="440" y="478" text-anchor="middle" class="imag-m" fill="#f0f0f0" font-size="15">27.88</text>
+<text x="66" y="508" class="imag-d" font-size="13.5">34 layers</text>
+<text x="300" y="508" text-anchor="middle" class="imag-m" fill="#f0883e" font-size="15">28.54</text>
+<text x="440" y="508" text-anchor="middle" class="imag-m" fill="#3b82f6" font-size="15">25.03</text>
+<text x="66" y="540" class="imag-d" font-size="13.5">18 → 34 layers</text>
+<text class="imag-l2" opacity="1" x="300" y="540" text-anchor="middle" fill="#f0883e" font-size="13" font-weight="700">worse by 0.6</text>
+<text class="imag-l4" opacity="1" x="440" y="540" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="700">better by 2.8</text>
+<text x="560" y="450" fill="#f0f0f0" font-size="13.5">One column goes the wrong way and the other goes the right way. That</text>
+<text x="560" y="474" class="imag-d" font-size="13.5">reversal is the evidence — more than any single error rate in the table.</text>
+<text x="560" y="504" class="imag-d" font-size="13.5">Same depth, same width, same parameter count on both sides: these ResNets</text>
+<text x="560" y="528" class="imag-d" font-size="13.5">use zero-padded shortcuts, so nothing but the wiring differs.</text>
+<text x="560" y="558" class="imag-d" font-size="13.5">Against plain-34, ResNet-34 cuts top-1 error by 3.5 points, 28.54 → 25.03,</text>
+<text x="560" y="576" class="imag-d" font-size="13.5">which the paper traces to the successfully reduced training error.</text>
+</a>
+</svg>
+</div>
+</div>
+
+- **plain-34 is worse than plain-18; ResNet-34 is better than ResNet-18** — same depth, same width, same parameter count on both sides. Scope: option A, 18 and 34 layers; for bottleneck nets only a footnote says plain twins degrade too, with no numbers
+- At 18 layers the two are a tie: when the net is *not overly deep* SGD still finds good plain solutions, and the ResNet only **converges faster** — the paper's reading of Figure 4, *at the early stage*, with no number given
+- One run per network, no error bars: trust rests on the **size and direction** of the gaps, and on CIFAR-10 repeating them (paper's Figure 6: plain worse from 20 to 56 layers, ResNets better)
+
+---
+
+<a class="slide-id" id="5e00f2bb-4b68-48ef-b374-7396d48d90af"></a>
+
+<!-- _class: fs-sm -->
+
+## The paper spends a paragraph ruling out the answer everyone gives
+
+<div style="display:flex;justify-content:center;margin-top:0.2rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="860" height="445" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.notv-t{fill:#f0f0f0;font-weight:700}.notv-m{font-family:'JetBrains Mono',monospace}.notv-d{fill:#a0a0a0}.notv-b{fill:#f0f0f0;font-size:12}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="32" class="notv-t" font-size="17">Four independent observations, all pointing away from the same explanation</text>
+<g data-tiphead="The claim being ruled out" data-tip="The paper argues this optimization difficulty is unlikely to be caused by vanishing gradients, and gives four separate reasons. Vanishing gradients were the obstacle before this paper, and the introduction says they had been largely addressed by normalized initialization and intermediate normalization layers.">
+<rect x="40" y="48" width="1080" height="76" rx="12" fill="#1a1113" stroke="#f85149" stroke-width="1.8"/>
+<text x="66" y="82" fill="#f85149" font-size="11.5" font-weight="700">THE ANSWER MOST PEOPLE GIVE</text>
+<text x="66" y="108" fill="#c8c8c8" font-size="18">Deep plain nets fail because the gradient vanishes on the way back, and the shortcut gives it a highway</text>
+<path d="M62,101 L1004,101" stroke="#f85149" stroke-width="2.4"/>
+<text x="1094" y="86" text-anchor="end" fill="#f85149" font-size="13" font-weight="700">the paper: unlikely</text>
+</g>
+<g data-tiphead="Batch normalisation is already there" data-tip="Section 3.4: batch normalisation is adopted right after each convolution and before activation, in the plain networks as well as the residual ones. That is what keeps the forward signal alive.">
+<rect x="40" y="144" width="258" height="256" rx="11" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="62" y="176" class="notv-t" font-size="13.5">1. BN is already everywhere</text>
+<text x="62" y="206" class="notv-b">BN sits right after every</text>
+<text x="62" y="226" class="notv-b">convolution and before the</text>
+<text x="62" y="246" class="notv-b">activation — in the plain</text>
+<text x="62" y="266" class="notv-b">networks too, not only the</text>
+<text x="62" y="286" class="notv-b">residual ones.</text>
+<path d="M62,308 L276,308" stroke="#2a2a2a" stroke-width="1.2"/>
+<text x="62" y="334" fill="#3b82f6" font-size="12.5">which ensures forward</text>
+<text x="62" y="354" fill="#3b82f6" font-size="12.5">propagated signals to have</text>
+<text x="62" y="374" fill="#3b82f6" font-size="12.5">non-zero variances</text>
+</g>
+<g data-tiphead="The gradients were checked" data-tip="Section 4.1, in one sentence: the authors verify that the backward propagated gradients exhibit healthy norms with BN, and conclude that neither forward nor backward signals vanish. No plot, number or definition of healthy is given, so this is the weakest of the four observations.">
+<rect x="314" y="144" width="258" height="256" rx="11" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="336" y="176" class="notv-t" font-size="13.5">2. They say they looked</text>
+<text x="336" y="206" class="notv-b">One sentence in Section 4.1:</text>
+<text x="336" y="226" class="notv-b">the backward gradients were</text>
+<text x="336" y="246" class="notv-b">checked and found healthy.</text>
+<text x="336" y="266" class="notv-b">No plot, number or definition</text>
+<text x="336" y="286" fill="#f0883e" font-size="12">— the weakest of the four.</text>
+<path d="M336,308 L550,308" stroke="#2a2a2a" stroke-width="1.2"/>
+<text x="336" y="334" fill="#3b82f6" font-size="12.5">gradients exhibit healthy</text>
+<text x="336" y="354" fill="#3b82f6" font-size="12.5">norms, so neither forward</text>
+<text x="336" y="374" fill="#3b82f6" font-size="12.5">nor backward signals vanish</text>
+</g>
+<g data-tiphead="The plain net is not dead" data-tip="A network whose gradients had vanished would not learn at all. plain-34 reaches accuracy in the same range as VGG-16, which the paper reads as the solver working to some extent.">
+<rect x="588" y="144" width="258" height="256" rx="11" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="610" y="176" class="notv-t" font-size="13.5">3. plain-34 still learns</text>
+<text x="610" y="206" class="notv-b">A net with dead gradients</text>
+<text x="610" y="226" class="notv-b">would not train at all. This</text>
+<text x="610" y="246" class="notv-b">one reaches competitive</text>
+<text x="610" y="266" class="notv-b">accuracy — it is worse than</text>
+<text x="610" y="286" class="notv-b">plain-18, not broken.</text>
+<path d="M610,308 L824,308" stroke="#2a2a2a" stroke-width="1.2"/>
+<text x="610" y="334" fill="#3b82f6" font-size="12.5">Table 3, top-1 / top-5, 10-crop</text>
+<text x="610" y="358" class="notv-m" fill="#f0f0f0" font-size="13.5">plain-34: 28.54 / 10.02</text>
+<text x="610" y="380" class="notv-m" fill="#a0a0a0" font-size="13.5">VGG-16: 28.07 / 9.33</text>
+</g>
+<g data-tiphead="It is not impatience either" data-tip="Footnote 3: the authors experimented with three times more training iterations and still observed the degradation problem, so it cannot feasibly be addressed by simply training for longer.">
+<rect x="862" y="144" width="258" height="256" rx="11" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="884" y="176" class="notv-t" font-size="13.5">4. Not a patience problem</text>
+<text x="884" y="206" class="notv-b">Footnote 3 reports running</text>
+<text x="884" y="226" class="notv-b">the same experiment with</text>
+<text x="884" y="246" class="notv-b">three times the iterations.</text>
+<text x="884" y="266" class="notv-b">The degradation was still</text>
+<text x="884" y="286" class="notv-b">there at the end.</text>
+<path d="M884,308 L1098,308" stroke="#2a2a2a" stroke-width="1.2"/>
+<text x="884" y="334" fill="#3b82f6" font-size="12.5">this problem cannot be</text>
+<text x="884" y="354" fill="#3b82f6" font-size="12.5">feasibly addressed by simply</text>
+<text x="884" y="374" fill="#3b82f6" font-size="12.5">using more iterations</text>
+</g>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="What the paper offers instead" data-tip="Section 4.1 ends with a conjecture, not an explanation: the deep plain nets may have exponentially low convergence rates, which impact the reducing of the training error. The reason for such optimization difficulties will be studied in the future.">
+<rect x="40" y="422" width="1080" height="164" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="454" fill="#3b82f6" font-size="15.5" font-weight="700">So what does the paper put in its place? A conjecture, and an open question</text>
+<text x="66" y="482" class="notv-d" font-size="13.5">It conjectures that the deep plain nets may have exponentially low convergence rates, which impact the reducing of the training error,</text>
+<text x="66" y="504" class="notv-d" font-size="13.5">and then says plainly that the reason for such optimization difficulties will be studied in the future.</text>
+<text x="66" y="527" fill="#93c5fd" font-size="13">Read the conjecture as: training error keeps falling, but so slowly that no feasible schedule reaches the shallower net — footnote 3 tried 3x the iterations.</text>
+<text x="66" y="554" fill="#f0f0f0" font-size="13.5">Worth being blunt about: this paper demonstrates that residual learning fixes degradation. It does not explain why degradation</text>
+<text x="66" y="575" fill="#f0f0f0" font-size="13.5">happens, and it explicitly declines the explanation almost everyone repeats.</text>
+</a>
+</svg>
+</div>
+
+- <span class="term" data-tiphead="Batch normalisation" data-tip="Normalises each channel over the current mini-batch to zero mean and unit variance, then rescales with learned parameters. Here it is applied right after every convolution and before the activation.">Batch normalisation</span> is applied after **every** convolution in the plain nets too, so the forward signal is demonstrably alive
+- What replaces the explanation is a **conjecture** — <span class="term" data-tiphead="Exponentially low convergence rates" data-tip="The paper's phrase, not defined further. One plain reading: the training error keeps falling, but so slowly that no feasible schedule reaches the shallower net's error. Footnote 3 fits that reading: three times the iterations still left the degradation in place.">exponentially low convergence rates</span> — and an admission that the reason is still open. The paper does not say exponential in what. Longer training closing the gap would undercut it; 3x the iterations did not (footnote 3) — consistent, not proof
+
+---
+
+<a class="slide-id" id="67eb813c-8e19-4edf-ae61-e51a2493862c"></a>
+
+## Easier to fit the residual is a hypothesis with a correlation behind it, not a result
+
+<div style="display:flex;justify-content:center;margin-top:0.4rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="980" height="507" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.resp-t{fill:#f0f0f0;font-weight:700}.resp-d{fill:#a0a0a0}.resp-ax{fill:#6e6e6e;font-size:11.5}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="resp-t" font-size="17">Every layer of a ResNet moves the signal less than its plain equivalent does</text>
+<text x="90" y="66" fill="#3b82f6" font-size="13.5" font-weight="700">Standard deviation of layer responses on CIFAR-10, sorted by magnitude</text>
+<text x="90" y="84" class="resp-ax" font-size="11.5" style="font-size:11.5px">response = output of each 3x3 layer, after BN and before the ReLU or the addition</text>
+<path d="M90,90 L90,380 L600,380" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M90,283 L600,283" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+<path d="M90,187 L600,187" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+<text x="82" y="95" text-anchor="end" class="resp-ax">3</text>
+<text x="82" y="191" text-anchor="end" class="resp-ax">2</text>
+<text x="82" y="287" text-anchor="end" class="resp-ax">1</text>
+<text x="82" y="384" text-anchor="end" class="resp-ax">0</text>
+<text x="90" y="398" class="resp-ax">0</text>
+<text x="368" y="398" text-anchor="middle" class="resp-ax">60</text>
+<text x="600" y="398" text-anchor="middle" class="resp-ax">110</text>
+<text x="345" y="418" text-anchor="middle" class="resp-ax">rank: layers sorted by std, largest first — std on the y axis</text>
+<g data-tiphead="plain-20 and plain-56" data-tip="The two plain networks sit highest: every layer changes the signal by a lot. Residual nets sit visibly below them at the same depth.">
+<path d="M90,129 L109,177 L127,206 L146,235 L164,264 L183,293" stroke="#f0883e" stroke-width="2.4" fill="none"/>
+<path d="M90,148 L127,196 L164,225 L201,245 L238,264 L275,283 L313,303 L350,332" stroke="#f85149" stroke-width="2.4" fill="none"/>
+</g>
+<g data-tiphead="ResNet-20, ResNet-56, ResNet-110" data-tip="The residual networks sit lower, and the deeper the ResNet the lower it sits. The paper: when there are more layers, an individual layer of ResNets tends to modify the signal less.">
+<path d="M90,216 L109,254 L127,274 L146,293 L164,312 L183,341" stroke="#3fb950" stroke-width="2.4" fill="none"/>
+<path d="M90,235 L127,274 L164,293 L201,307 L238,322 L275,332 L313,346 L350,361" stroke="#3b82f6" stroke-width="2.4" fill="none"/>
+<path d="M90,264 L160,303 L229,322 L299,332 L368,341 L438,349 L507,356 L577,365 L600,370" stroke="#93c5fd" stroke-width="2.4" fill="none"/>
+</g>
+<text x="90" y="444" fill="#f0883e" font-size="12" font-weight="700">plain-20</text>
+<text x="180" y="444" fill="#f85149" font-size="12" font-weight="700">plain-56</text>
+<text x="270" y="444" fill="#3fb950" font-size="12" font-weight="700">ResNet-20</text>
+<text x="372" y="444" fill="#3b82f6" font-size="12" font-weight="700">ResNet-56</text>
+<text x="474" y="444" fill="#93c5fd" font-size="12" font-weight="700">ResNet-110</text>
+<text x="90" y="470" class="resp-ax">Redrawn from Figure 7, lower panel; curve shapes schematic.</text>
+<rect x="60" y="490" width="560" height="92" rx="12" fill="#151515" stroke="#f0883e" stroke-width="1.6"/>
+<text x="84" y="518" fill="#f0883e" font-size="12.5" font-weight="700">VERDICT: LITTLE WEIGHT ON ITS OWN</text>
+<text x="84" y="542" fill="#f0f0f0" font-size="13">Figure 7 shows the pattern the hypothesis predicts, but nothing</text>
+<text x="84" y="564" fill="#f0f0f0" font-size="13">rules out other causes. A consistency check, not a test.</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS1" target="_blank" data-tiphead="Hypothesis, support, and the gap between them" data-tip="Section 3.1 states the intuition as a hypothesis and Section 4.2 offers the response magnitudes as support. The paper never claims to have isolated the mechanism.">
+<rect x="640" y="52" width="480" height="374" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="664" y="86" class="resp-t" font-size="15.5">Argument by construction, evidence by correlation</text>
+<text x="664" y="114" fill="#3b82f6" font-size="12.5" font-weight="700">THE HYPOTHESIS, SEC 3.1</text>
+<text x="664" y="136" class="resp-d" font-size="13">The authors hypothesize that it is easier to optimize the</text>
+<text x="664" y="156" class="resp-d" font-size="13">residual mapping than the original, unreferenced mapping.</text>
+<text x="664" y="184" fill="#3b82f6" font-size="12.5" font-weight="700">THE SUPPORT, SEC 4.2</text>
+<text x="664" y="206" class="resp-d" font-size="13">In a ResNet, the second layer's response is F(x) itself.</text>
+<text x="664" y="226" class="resp-d" font-size="13">ResNets have generally smaller responses than their plain</text>
+<text x="664" y="246" class="resp-d" font-size="13">counterparts, and deeper ResNets smaller still. The chain:</text>
+<text x="664" y="266" fill="#93c5fd" font-size="13">small std of F(x) → F changes x little → near identity.</text>
+<text x="664" y="294" fill="#f0883e" font-size="12.5" font-weight="700">WHAT IT DOES NOT ESTABLISH</text>
+<text x="664" y="316" fill="#f0f0f0" font-size="12.5">There is no ablation in the paper that turns the mechanism off.</text>
+<text x="664" y="338" fill="#f0f0f0" font-size="13">BN's learned scale sets each std directly, so a small</text>
+<text x="664" y="358" fill="#f0f0f0" font-size="13">response is the solver picking a small scale: consistent</text>
+<text x="664" y="378" fill="#f0f0f0" font-size="13">with the hypothesis, not proof of it. The paper's own</text>
+<text x="664" y="398" fill="#f0f0f0" font-size="13">wording is hedged: hypothesize, then might.</text>
+</a>
+<a href="https://arxiv.org/abs/1605.06431" target="_blank" data-tiphead="Where the explanation went afterwards" data-tip="Veit, Wilber and Belongie argued a ResNet behaves like an ensemble of relatively shallow networks; Balduzzi et al. described shattered gradients in plain nets; Li et al. visualised skip connections smoothing the loss landscape. All of them postdate this paper.">
+<rect x="640" y="448" width="480" height="134" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="664" y="480" fill="#3b82f6" font-size="14.5" font-weight="700">The result held; the explanation did not settle</text>
+<text x="664" y="508" class="resp-d" font-size="13">Later accounts attribute the gain to ensembles of shallow</text>
+<text x="664" y="530" class="resp-d" font-size="13">paths, to gradients staying correlated rather than shattering,</text>
+<text x="664" y="552" class="resp-d" font-size="13">and to a smoother loss landscape. Slide 23 lists them with</text>
+<text x="664" y="574" class="resp-d" font-size="13">links; none of them existed when this paper was written.</text>
+</a>
+</svg>
+</div>
+
+---
+
+<a class="slide-id" id="b8dacc74-fabc-494e-a53f-4d02e3f980b8"></a>
+
+<!-- _class: fs-sm -->
+
+## The headline is an ensemble number; the best single model in the paper is a different one <span class="finfo" data-tiphead="Figure forensics" data-tip="3.57% is an ensemble of six models of different depth, scored on the 100k test images by the evaluation server. The best single model is 4.49%, on the 50k validation images. Tables 2 and 3 are 10-crop testing and comparable to neither. Four evaluation protocols appear in this paper, and only one of the paper's own rows, CIFAR-10 ResNet-110, carries a spread.">ⓘ forensics</span>
+
+<div style="display:flex;justify-content:center;margin-top:0.2rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="860" height="445" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.head-t{fill:#f0f0f0;font-weight:700}.head-m{font-family:'JetBrains Mono',monospace}.head-d{fill:#a0a0a0}.head-ax{fill:#6e6e6e;font-size:11.5}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="head-t" font-size="17">Two tables, two evaluation sets, two very different headline numbers</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="Table 4 — single models" data-tip="Error rates in percent of single-model results on the ImageNet validation set, except one VGG entry marked as reported on the test set. This is the table to quote when comparing one network against another. It uses the paper's best-results testing, fully-convolutional and averaged over multiple scales, so its numbers sit below Table 3's 10-crop numbers for the same models. Background: PReLU-net is the same authors' earlier ImageNet model, BN-inception is the Inception network trained with batch normalisation, and VGG (v5) is the final arXiv version of the VGG results.">
+<rect x="40" y="52" width="530" height="336" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="64" y="84" class="head-t" font-size="15.5">Table 4 — single model, validation set</text>
+<text x="64" y="106" class="head-ax">error rates (%) of single-model results; multi-scale testing</text>
+<text x="64" y="136" class="head-d" font-size="12.5">model</text>
+<text x="430" y="136" text-anchor="end" class="head-d" font-size="12.5">top-1</text>
+<text x="540" y="136" text-anchor="end" class="head-d" font-size="12.5">top-5</text>
+<text x="64" y="166" class="head-d" font-size="13">VGG (v5)</text>
+<text x="430" y="166" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">24.4</text>
+<text x="540" y="166" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">7.1</text>
+<text x="64" y="194" class="head-d" font-size="13">PReLU-net</text>
+<text x="430" y="194" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">21.59</text>
+<text x="540" y="194" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">5.71</text>
+<text x="64" y="222" class="head-d" font-size="13">BN-inception</text>
+<text x="430" y="222" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">21.99</text>
+<text x="540" y="222" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">5.81</text>
+<text x="64" y="250" class="head-d" font-size="13">ResNet-34 B</text>
+<text x="430" y="250" text-anchor="end" class="head-m" fill="#f0f0f0" font-size="14">21.84</text>
+<text x="540" y="250" text-anchor="end" class="head-m" fill="#f0f0f0" font-size="14">5.71</text>
+<text x="64" y="278" class="head-d" font-size="13">ResNet-50</text>
+<text x="430" y="278" text-anchor="end" class="head-m" fill="#f0f0f0" font-size="14">20.74</text>
+<text x="540" y="278" text-anchor="end" class="head-m" fill="#f0f0f0" font-size="14">5.25</text>
+<text x="64" y="306" class="head-d" font-size="13">ResNet-101</text>
+<text x="430" y="306" text-anchor="end" class="head-m" fill="#f0f0f0" font-size="14">19.87</text>
+<text x="540" y="306" text-anchor="end" class="head-m" fill="#f0f0f0" font-size="14">4.60</text>
+<text x="64" y="336" fill="#3b82f6" font-size="13" font-weight="700">ResNet-152</text>
+<text x="430" y="336" text-anchor="end" class="head-m" fill="#3b82f6" font-size="15">19.38</text>
+<text x="540" y="336" text-anchor="end" class="head-m" fill="#3b82f6" font-size="15">4.49</text>
+<text x="64" y="358" class="head-ax">the best single model in the paper; the paper calls it better than</text>
+<text x="64" y="376" class="head-ax">every previous ensemble — a validation-vs-test comparison</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="Table 5 — ensembles" data-tip="Error rates in percent of ensembles. The top-5 error is on the test set of ImageNet and reported by the test server. This is where the 3.57% headline comes from.">
+<rect x="590" y="52" width="530" height="336" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="614" y="84" fill="#3b82f6" font-size="15.5" font-weight="700">Table 5 — ensembles, TEST set</text>
+<text x="614" y="106" class="head-ax">top-5 error on the ImageNet test set, reported by the test server</text>
+<text x="614" y="136" class="head-d" font-size="12.5">method</text>
+<text x="1094" y="136" text-anchor="end" class="head-d" font-size="12.5">top-5 err. (test)</text>
+<text x="614" y="166" class="head-d" font-size="13">VGG (ILSVRC 14)</text>
+<text x="1094" y="166" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">7.32</text>
+<text x="614" y="194" class="head-d" font-size="13">GoogLeNet (ILSVRC 14)</text>
+<text x="1094" y="194" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">6.66</text>
+<text x="614" y="222" class="head-d" font-size="13">VGG (v5)</text>
+<text x="1094" y="222" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">6.8</text>
+<text x="614" y="250" class="head-d" font-size="13">PReLU-net</text>
+<text x="1094" y="250" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">4.94</text>
+<text x="614" y="278" class="head-d" font-size="13">BN-inception</text>
+<text x="1094" y="278" text-anchor="end" class="head-m" fill="#a0a0a0" font-size="14">4.82</text>
+<text x="614" y="312" fill="#3b82f6" font-size="14" font-weight="700">ResNet (ILSVRC 15)</text>
+<text x="1094" y="312" text-anchor="end" class="head-m" fill="#3b82f6" font-size="21" font-weight="700">3.57</text>
+<text x="614" y="346" class="head-ax">six models of different depth combined, only two of them 152-layer</text>
+<text x="614" y="364" class="head-ax">at the time of submission — this entry won 1st place in ILSVRC 2015</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="Four different evaluation protocols" data-tip="The paper reports 10-crop testing in Tables 2 and 3, single-model validation results in Table 4, ensemble test-server results in Table 5, and fully-convolutional multi-scale testing for its best results. Comparing across them without saying so is the easiest mistake to make with this paper.">
+<rect x="40" y="410" width="1080" height="176" rx="12" fill="#151515" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="442" fill="#3b82f6" font-size="15.5" font-weight="700">Whichever you quote, say which — this paper uses four different protocols</text>
+<text x="66" y="474" class="head-d" font-size="13.5">3.57% is an ENSEMBLE on the TEST set. The best single model in the paper is the 152-layer ResNet at 4.49% top-5 on validation.</text>
+<text x="66" y="500" class="head-d" font-size="13.5">Tables 2 and 3 are different again: 10-crop testing, used for the like-for-like comparison studies rather than for the headline.</text>
+<text x="66" y="526" class="head-d" font-size="13.5">Table 4 uses the best-results protocol, fully-convolutional with 5 scales averaged: ResNet-34 B is 24.52 in Table 3, 21.84 in Table 4.</text>
+<text x="66" y="558" fill="#f0f0f0" font-size="13.5">Before you compare any number in this paper to any other, check four things: validation or test, single or ensemble, 10-crop or</text>
+<text x="66" y="578" fill="#f0f0f0" font-size="13.5">multi-scale, top-1 or top-5. All four vary between tables.</text>
+</a>
+</svg>
+</div>
+
+- **3.57%** is six models combined, scored on the **test** set by the evaluation server; **4.49%** is the best single model, on **validation**
+- Tables 2 and 3 are neither: they use <span class="term" data-tiphead="10-crop testing" data-tip="The score for an image is averaged over ten fixed crops: the four corners, the centre, and the horizontal flips of all five. It is a mild test-time ensemble, so its numbers are not comparable to single-crop ones.">10-crop testing</span> for like-for-like comparison rather than for the headline
+
+---
+
+<a class="slide-id" id="d8877038-eee0-423b-8744-daa5ba6611e3"></a>
+
+<!-- _class: fs-sm -->
+
+## At 1202 layers it trains beautifully and generalises worse — and the authors say so first <span class="finfo" data-tiphead="Figure forensics" data-tip="ResNet-110 is the only configuration in the paper that is repeated: five runs, reported as best 6.43 with mean 6.61 plus or minus 0.16. The 1202-layer row is a single reported number, so 6.43 against 7.93 sets one run against the best of five. The paper's own reading is overfitting on a small dataset, and it notes no regularisation such as maxout or dropout was applied.">ⓘ forensics</span>
+
+<div style="display:flex;justify-content:center;margin-top:0.2rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="860" height="445" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.cifa-t{fill:#f0f0f0;font-weight:700}.cifa-m{font-family:'JetBrains Mono',monospace}.cifa-d{fill:#a0a0a0}.cifa-ax{fill:#6e6e6e;font-size:11.5}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="cifa-t" font-size="17">CIFAR-10 is where the paper pushes depth until it stops paying</text>
+<text x="90" y="66" fill="#3b82f6" font-size="13.5" font-weight="700">CIFAR-10, ResNets of 110 and 1202 layers</text>
+<path d="M90,90 L90,350 L600,350" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M90,220 L600,220" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+<text x="82" y="95" text-anchor="end" class="cifa-ax">20</text>
+<text x="82" y="224" text-anchor="end" class="cifa-ax">10</text>
+<text x="82" y="354" text-anchor="end" class="cifa-ax">0</text>
+<text x="90" y="368" class="cifa-ax">0</text>
+<text x="345" y="368" text-anchor="middle" class="cifa-ax">3</text>
+<text x="600" y="368" text-anchor="middle" class="cifa-ax">6</text>
+<text x="345" y="388" text-anchor="middle" class="cifa-ax">iterations (1e4), error (%) on the y axis</text>
+<g data-tiphead="ResNet-110" data-tip="Test error 6.43% on CIFAR-10, with 1.7M parameters. The paper runs this configuration five times and reports best and mean plus or minus standard deviation.">
+<path d="M98,90 L132,181 L175,220 L218,233 L260,242 L302,249 L345,254 L362,304 L430,318 L498,321 L515,342 L600,346" stroke="#3b82f6" stroke-width="1.8" fill="none" stroke-dasharray="6 4"/>
+<path d="M98,90 L132,155 L175,181 L218,194 L260,200 L302,207 L345,211 L362,251 L430,258 L498,260 L515,266 L600,266" stroke="#3b82f6" stroke-width="3" fill="none"/>
+</g>
+<g data-tiphead="ResNet-1202" data-tip="No optimisation difficulty at all: this network reaches a training error below 0.1%. Its test error is 7.93%, worse than the 110-layer net, with 19.4M parameters.">
+<path d="M103,90 L132,168 L175,214 L218,229 L260,240 L302,246 L345,251 L362,308 L430,321 L498,325 L515,345 L600,349" stroke="#f0883e" stroke-width="1.8" fill="none" stroke-dasharray="6 4"/>
+<path d="M103,90 L132,142 L175,168 L218,181 L260,188 L302,194 L345,198 L362,236 L430,241 L498,243 L515,246 L600,247" stroke="#f0883e" stroke-width="3" fill="none"/>
+</g>
+<path d="M90,414 L120,414" stroke="#3b82f6" stroke-width="3" fill="none"/><text x="128" y="418" fill="#3b82f6" font-size="12" font-weight="700">ResNet-110</text><path d="M216,414 L246,414" stroke="#f0883e" stroke-width="3" fill="none"/><text x="254" y="418" fill="#f0883e" font-size="12" font-weight="700">ResNet-1202</text><text x="360" y="418" class="cifa-ax">dashed = training error, bold = test error — redrawn from Figure 6, right panel; curve shapes schematic</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS2" target="_blank" data-tiphead="The authors' own concession" data-tip="The paper: the testing result of this 1202-layer network is worse than that of our 110-layer network, although both have similar training error. We argue that this is because of overfitting.">
+<rect x="640" y="52" width="480" height="346" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="664" y="86" fill="#3b82f6" font-size="15.5" font-weight="700">Depth stops paying, and the authors say so</text>
+<text x="664" y="118" class="cifa-d" font-size="13">Optimisation is fine: the 1202-layer net reaches a training</text>
+<text x="664" y="140" class="cifa-d" font-size="13">error below 0.1%. Both nets end with similar training error.</text>
+<text x="664" y="170" class="cifa-d" font-size="13">Generalisation is not: its test error is worse than the</text>
+<text x="664" y="192" class="cifa-d" font-size="13">110-layer net's, and the paper attributes that to overfitting</text>
+<text x="664" y="214" class="cifa-d" font-size="13">on a small dataset — 19.4M parameters for 50k images, with</text>
+<text x="664" y="236" class="cifa-d" font-size="13">no maxout and no dropout applied anywhere.</text>
+<text x="664" y="270" fill="#f0883e" font-size="12.5" font-weight="700">READ THE DIRECTION CAREFULLY</text>
+<text x="664" y="296" fill="#f0f0f0" font-size="13">This is the opposite failure to slide 8. Degradation means</text>
+<text x="664" y="318" fill="#f0f0f0" font-size="13">high TRAINING error. Here training error is essentially zero</text>
+<text x="664" y="340" fill="#f0f0f0" font-size="13">and only test error suffers, which is exactly what overfitting</text>
+<text x="664" y="362" fill="#f0f0f0" font-size="13">looks like — and the paper labels it as such.</text>
+<text x="664" y="386" class="cifa-ax">Left open: stronger regularisation may improve this.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS2" target="_blank" data-tiphead="Table 6" data-tip="Classification error on the CIFAR-10 test set, all methods with data augmentation. For ResNet-110 the paper runs it five times and shows best with mean and standard deviation in brackets.">
+<rect x="40" y="430" width="1080" height="156" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="66" y="462" class="cifa-t" font-size="15.5">Table 6 — CIFAR-10 test error (%), and where the curve turns around</text>
+<text x="66" y="486" class="cifa-d" font-size="13">layers</text>
+<text x="66" y="508" class="cifa-d" font-size="13">params</text>
+<text x="66" y="530" class="cifa-d" font-size="13">test error</text>
+<text x="270" y="486" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">20</text>
+<text x="270" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">0.27M</text>
+<text x="270" y="530" text-anchor="middle" class="cifa-m" fill="#f0f0f0" font-size="14">8.75</text>
+<text x="420" y="486" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">32</text>
+<text x="420" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">0.46M</text>
+<text x="420" y="530" text-anchor="middle" class="cifa-m" fill="#f0f0f0" font-size="14">7.51</text>
+<text x="570" y="486" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">44</text>
+<text x="570" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">0.66M</text>
+<text x="570" y="530" text-anchor="middle" class="cifa-m" fill="#f0f0f0" font-size="14">7.17</text>
+<text x="720" y="486" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">56</text>
+<text x="720" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">0.85M</text>
+<text x="720" y="530" text-anchor="middle" class="cifa-m" fill="#f0f0f0" font-size="14">6.97</text>
+<text x="870" y="486" text-anchor="middle" class="cifa-m" fill="#3b82f6" font-size="14">110</text>
+<text x="870" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">1.7M</text>
+<text x="870" y="530" text-anchor="middle" class="cifa-m" fill="#3b82f6" font-size="14">6.43</text>
+<text x="1030" y="486" text-anchor="middle" class="cifa-m" fill="#f0883e" font-size="14">1202</text>
+<text x="1030" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">19.4M</text>
+<text x="1030" y="530" text-anchor="middle" class="cifa-m" fill="#f0883e" font-size="14">7.93</text>
+<text x="66" y="554" class="cifa-ax">6n+2 layers: one 3x3 conv, then three stages of 2n 3x3 layers (16, 32, 64 filters on 32, 16, 8-pixel maps), then pooling and a 10-way fc; n = 3 to 200.</text>
+<text x="66" y="576" class="cifa-ax">All entries use data augmentation. The 110-layer row is the best of five runs; its mean is 6.61 with a standard deviation of 0.16.</text>
+</a>
+</svg>
+</div>
+
+- **One run, CIFAR-10 only:** 1202 is reported once, 110 as the best of five; against the 110-layer **mean, 6.61 ± 0.16**, 7.93 is still **1.3 points worse**. On ImageNet the paper stops at 152 layers
+
+---
+
+<a class="slide-id" id="cb8f8774-3d07-4a1f-8ff7-a78b3aff1fce"></a>
+
+<!-- _class: fs-sm -->
+
+## The backbone transfers to detection; the shortcut is not isolated <span class="finfo" data-tiphead="Figure forensics" data-tip="The attribution to representations rests on a same-implementation argument, not an ablation: same Faster R-CNN code, same region-proposal setup, same hyper-parameters, backbone swapped from VGG-16 to ResNet-101. Nothing isolates which part of the backbone carries the gain. The competition entries stack multi-scale testing, box refinement and ensembles on top, so those numbers are not the swap-only comparison.">ⓘ forensics</span>
+
+<div class="figxxs">
+<div style="display:flex;justify-content:center;margin-top:0.2rem">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" width="860" height="445" style="max-width:100%" font-family="Inter, sans-serif">
+<style>.tran-t{fill:#f0f0f0;font-weight:700}.tran-m{font-family:'JetBrains Mono',monospace}.tran-d{fill:#a0a0a0}.tran-ax{fill:#6e6e6e;font-size:11.5}.tran-g{fill:#7a7a7a;font-size:12.5}</style>
+<defs>
+<marker id="tg" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#4a4a4a"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="tran-t" font-size="17">The same detector twice, with the backbone replaced — and the head reattached</text>
+<text x="40" y="62" class="tran-ax">baseline Faster R-CNN; the paper: the detection implementation of using both models is the same, so the gains can only be attributed to better networks</text>
+<text x="60" y="100" fill="#7a7a7a" font-size="13" font-weight="700">with the old backbone</text>
+<rect x="60" y="112" width="110" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="115" y="143" text-anchor="middle" class="tran-g">image</text>
+<g data-tiphead="VGG-16 backbone" data-tip="The convolutional trunk used by the original Faster R-CNN. The detection pipeline around it is kept the same in this comparison.">
+<rect x="204" y="112" width="200" height="52" rx="8" fill="#1a1a1a" stroke="#f0883e" stroke-width="2"/>
+<text x="304" y="143" text-anchor="middle" fill="#f0883e" font-size="14" font-weight="700">VGG-16 trunk</text>
+</g>
+<rect x="438" y="112" width="210" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="543" y="136" text-anchor="middle" class="tran-g">shared conv</text>
+<text x="543" y="154" text-anchor="middle" class="tran-g">feature maps</text>
+<rect x="682" y="112" width="190" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="777" y="136" text-anchor="middle" class="tran-g">region proposal net</text>
+<text x="777" y="154" text-anchor="middle" class="tran-g">300 proposals</text>
+<rect x="906" y="112" width="190" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="1001" y="143" text-anchor="middle" class="tran-g">Fast R-CNN head</text>
+<path d="M174,138 L200,138" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M408,138 L434,138" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M652,138 L678,138" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M876,138 L902,138" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<text x="60" y="200" fill="#3b82f6" font-size="13" font-weight="700">with the new backbone — same detector code, head attached the NoC way</text>
+<rect x="60" y="212" width="110" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="115" y="243" text-anchor="middle" class="tran-g">image</text>
+<g data-tiphead="ResNet-101 backbone" data-tip="The same detection system with the trunk swapped. The paper notes ResNet has no hidden fully-connected layers, so it adopts the Networks on Conv feature maps idea to keep the two systems comparable.">
+<rect x="204" y="212" width="200" height="52" rx="8" fill="#0d1117" stroke="#3b82f6" stroke-width="2.4"/>
+<text x="304" y="243" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="700">ResNet-101 trunk</text>
+</g>
+<rect x="438" y="212" width="210" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="543" y="236" text-anchor="middle" class="tran-g">shared conv</text>
+<text x="543" y="254" text-anchor="middle" class="tran-g">feature maps</text>
+<rect x="682" y="212" width="190" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="777" y="236" text-anchor="middle" class="tran-g">region proposal net</text>
+<text x="777" y="254" text-anchor="middle" class="tran-g">300 proposals</text>
+<rect x="906" y="212" width="190" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="1001" y="243" text-anchor="middle" class="tran-g">Fast R-CNN head</text>
+<path d="M174,238 L200,238" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M408,238 L434,238" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M652,238 L678,238" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M876,238 L902,238" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<text x="304" y="290" text-anchor="middle" fill="#3b82f6" font-size="12.5" font-weight="700">the swapped component</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS3" target="_blank" data-tiphead="Tables 7 and 8" data-tip="Object detection mAP in percent using baseline Faster R-CNN, on the PASCAL VOC 2007 and 2012 test sets and on the COCO validation set. The paper says the gain is solely due to the learned representations.">
+<rect x="40" y="312" width="1080" height="274" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="344" fill="#3b82f6" font-size="15.5" font-weight="700">Tables 7 and 8 — baseline Faster R-CNN, backbone swapped</text>
+<text x="66" y="376" class="tran-d" font-size="12.5">benchmark and metric</text>
+<text x="700" y="376" text-anchor="end" class="tran-d" font-size="12.5">VGG-16</text>
+<text x="860" y="376" text-anchor="end" class="tran-d" font-size="12.5">ResNet-101</text>
+<text x="66" y="408" class="tran-d" font-size="13.5">PASCAL VOC 2007 test, trained on 07+12, mAP</text>
+<text x="700" y="408" text-anchor="end" class="tran-m" fill="#a0a0a0" font-size="14">73.2</text>
+<text x="860" y="408" text-anchor="end" class="tran-m" fill="#3b82f6" font-size="14">76.4</text>
+<text x="66" y="438" class="tran-d" font-size="13.5">PASCAL VOC 2012 test, trained on 07++12, mAP</text>
+<text x="700" y="438" text-anchor="end" class="tran-m" fill="#a0a0a0" font-size="14">70.4</text>
+<text x="860" y="438" text-anchor="end" class="tran-m" fill="#3b82f6" font-size="14">73.8</text>
+<text x="66" y="468" class="tran-d" font-size="13.5">COCO validation, mAP at IoU 0.5</text>
+<text x="700" y="468" text-anchor="end" class="tran-m" fill="#a0a0a0" font-size="14">41.5</text>
+<text x="860" y="468" text-anchor="end" class="tran-m" fill="#3b82f6" font-size="14">48.4</text>
+<text x="66" y="498" fill="#f0f0f0" font-size="13.5">COCO validation, mAP@[.5, .95] — over ten IoU thresholds</text>
+<text x="700" y="498" text-anchor="end" class="tran-m" fill="#a0a0a0" font-size="15">21.2</text>
+<text x="860" y="498" text-anchor="end" class="tran-m" fill="#3b82f6" font-size="15">27.2</text>
+<text x="890" y="498" fill="#3b82f6" font-size="12.5" font-weight="700">+6.0 absolute, 28% relative</text>
+<text x="66" y="534" fill="#f0f0f0" font-size="13.5">Same detection code, same hyper-parameters, same proposal setup: under that setup the paper says the gain is solely due to the</text>
+<text x="66" y="556" fill="#f0f0f0" font-size="13.5">learned representations. That isolates the backbone as a whole — depth, FLOPs and ImageNet accuracy change with it — not the shortcut.</text>
+<text x="66" y="578" class="tran-ax">These are the baseline rows. The competition entries add box refinement, global context and multi-scale testing on top of them.</text>
+</a>
+</svg>
+</div>
+</div>
+
+- Same [Faster R-CNN](https://arxiv.org/abs/1506.01497) code, same proposal setup, same hyper-parameters: the paper argues the gain is **solely due to the learned representations**
+- **Verdict:** a better backbone transfers; the swap is the **backbone as a whole**, not the shortcut — ResNet-101 is also deeper, cheaper (**7.6 vs 15.3 billion FLOPs**) and attached differently, via <span class="term" data-tiphead="Networks on Conv feature maps (NoC)" data-tip="ResNet has no hidden fully-connected layers to act as the per-region head. So conv1 to conv4_x, 91 conv layers, compute the shared feature maps at a stride of 16 pixels like VGG-16's 13 conv layers, and conv5_x runs on each region after RoI pooling, in the role of VGG-16's fc layers.">NoC</span>; no plain-101 detector is tested
+- **mAP** (mean average precision): precision averaged over recall levels and classes, a box counting as correct above 0.5 box overlap (IoU); **mAP@[.5, .95]** averages over ten IoU thresholds, 0.5 to 0.95, so it also rewards tight boxes
+- Competition entries built on them won **ImageNet detection, ImageNet localization, [COCO](https://cocodataset.org/) detection and COCO segmentation** at [ILSVRC 2015](https://www.image-net.org/challenges/LSVRC/2015/) — five 1st places with classification
+
+---
+
+<a class="slide-id" id="62fa1249-71d0-4c77-84ee-fc4bc5880534"></a>
+
+<!-- _class: fs-sm -->
+
+## Challenge the assumptions
+
+| claim | status |
+|---|---|
+| plain nets degrade on **training** error | **holds** — Figures 1 and 4 |
+| identity shortcuts reverse it | **holds**, single runs — Table 2 at matched parameter count (option A, 18/34 layers) and Figure 6 on CIFAR-10; bottleneck nets: one footnote, no numbers |
+| it is **not** vanishing gradients | **mostly holds** — BN throughout; the gradient-norm check is one sentence, no plot |
+| residuals are intrinsically easier to fit | **contested** — Figure 7 is a correlation; [ensembles](https://arxiv.org/abs/1605.06431) · [shattered gradients](https://arxiv.org/abs/1702.08591) · [loss surface](https://arxiv.org/abs/1712.09913) |
+| ReLU belongs after the addition | **revised** — [pre-activation](https://arxiv.org/abs/1603.05027), same authors |
+| depth always pays | **bounded on CIFAR-10** — one 1202-layer run overfits |
+
+- **Single runs, no error bars** — only CIFAR ResNet-110 is repeated (6.43 best, 6.61 ± 0.16); the ImageNet A/B/C margins come with no spread at all.
+
+---
+
+<a class="slide-id" id="20be3a17-15cd-4f97-be5b-dc02a2299b24"></a>
+
+<!-- _class: fs-sm -->
+
+## Steal list — three habits worth copying, and the gap each one closes
+
+- **Split "worse" into training-worse and test-worse** — the paper turns on it *(effort: free)*.
+  <span class="ev">A report with a single eval metric makes deeper-is-worse look like overfitting.</span>
+- **The construction argument as a debugging tool** — if the bigger model reproduces the smaller one exactly, failing to match it is an **optimisation bug, not a capacity limit** *(effort: hours)*.
+  <span class="ev">A recipe, not from the paper: (1) build the bigger model from the smaller one's trained weights, extra blocks set to identity; (2) check it reproduces the smaller model's training loss; (3) train the bigger one from scratch — ending above that loss is an optimisation gap. Rarely a required check before scaling up.</span>
+- **Cost-first ablation reading** — the paper takes option B over the better option C, judging a sub-point margin not worth the extra parameters *(effort: free)*.
+  <span class="ev">Results tables often bold the best cell without a second seed.</span>
+
+---
+
+<a class="slide-id" id="5c2e8f1a-3b7d-4e9a-a6c4-7d1f0b2e9a51"></a>
+
+## What to keep from this paper
+
+- **When a deeper model is worse, compare training error before anything else** — higher training error means an optimisation problem, and regularisation will not fix it.
+- **Build new layers so that doing nothing is the easy default** — wrap them in an identity shortcut, so added depth starts close to the shallower net.
+- **Keep shortcuts identity and project only where the shape changes** — in bottleneck blocks a projection on every shortcut would double cost and model size.
+- **Quote every number with its protocol** — split, single model or ensemble, crops, top-1 or top-5: the same ResNet-34 B is 24.52 or 21.84 top-1 depending on testing alone.
+- **A default for today — later practice, not this paper:** bottleneck blocks with identity shortcuts, a projection only between stages, and the last BN scale in each block initialised to zero so every block starts as an identity ([Goyal et al. 2017](https://arxiv.org/abs/1706.02677)); for very deep stacks, [pre-activation](https://arxiv.org/abs/1603.05027) ordering keeps the shortcut a pure identity.
+
+**If you do one thing:** when a bigger model is worse, check its training error before reaching for regularisation.
+
+---
+
+<a class="slide-id" id="151bc713-0cb4-4f1a-9df3-9df9c0e337a7"></a>
+
+## Discussion — open questions for the group
+
+<div class="dq">
+
+**The mechanism is still contested — does that change how skips should be used?**
+<span class="ev">If ResNets work as ensembles of shallow paths, depth budgets, pruning and early-exit designs all change.</span>
+
+</div>
+
+<div class="dq">
+
+**On CIFAR-10, one 1202-layer run did worse than 110 layers — overfitting, the paper argues. Where does depth stop paying on a given dataset?**
+<span class="ev">The best tested depth there was 110 layers. For a new dataset the crossover is unknown until measured.</span>
+
+</div>
+
+<div class="dq">
+
+**A, B and C differ by a fraction of a point. How many published ablation wins sit inside a margin like that?**
+<span class="ev">The paper read a sub-point margin as projections being non-essential and picked on cost.</span>
+
+</div>
+
+---
+
+<a class="slide-id" id="e7a3c9d2-6f14-4b8e-9d05-2c8b1f7e4a63"></a>
+
+<!-- _class: invert -->
+
+# Appendix
+
+Reference for review: every hover note and term, restated in print. Not presented. `sN` is the main-deck slide number; click it to jump there.
+
+---
+
+<a class="slide-id" id="47b19b45-d50f-4ddd-b92e-48d1c4964204"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 1/7: the task, the result, and the two failure modes (reviewable record)
+
+| on | element | what the hover says |
+|---|---|---|
+| [s4](#4) | **Figure 2 — the building block** | The paper's own drawing of one residual block: two weight layers compute F(x), the curved identity path carries x around them, and the two are added before the final ReLU. Slide 11 redraws it piece by piece. |
+| [s3](#3) | **The input** | One RGB image, a 224x224 crop. The models are trained on the 1.28 million ImageNet training images and evaluated on the 50k validation images; the final headline number comes from the 100k test images and is reported by the test server. |
+| [s3](#3) | **The network** | ResNet-152: 152 layers, 11.3 billion FLOPs. The paper's framing is that this is 8 times deeper than VGG nets and still has lower complexity than VGG-16/19, which cost 15.3 and 19.6 billion FLOPs. Depth is cheap here because the layers are narrow and most 3x3 convolutions run inside bottleneck blocks at a quarter of the width, slide 14. |
+| [s3](#3) | **The output** | A score for every one of the 1000 ImageNet classes. Top-1 error counts an image as wrong when the highest-scoring class is not the truth; top-5 error counts it as wrong only when the truth is outside the five highest-scoring classes. Lower is better in both cases. |
+| [s3](#3) | **The headline bar** | 3.57% top-5 error on the ImageNet test set, from an ensemble of six models of different depth — only two of them 152-layer at the time of submission. This entry won 1st place in ILSVRC 2015. It is not a single-model number. |
+| [s3](#3) | **Two protocols in one chart** | The 4.49% row is a single model scored on the 50k validation images. The other rows are test-set numbers reported by the evaluation server on the 100k test images. The paper reports both, and mixing them is the easiest mistake to make with this paper. |
+| [s7](#7) | **Left panel — training error** | Training error on CIFAR-10 for two plain networks. The red 56-layer curve stays above the yellow 20-layer curve for the entire run, so the deeper net fits the data it is optimised on worse. This panel alone rules out overfitting. |
+| [s7](#7) | **Right panel — test error** | Test error for the same two runs. The ordering is unchanged: 56 layers above 20 layers. The paper's caption reads the right panel as a consequence of the left one: higher training error, and thus test error. |
+| [s8](#8) | **20-layer plain net, training error** | The shallower of the two. Its training error falls to the bottom of the panel: the solver fits this network well. |
+| [s8](#8) | **56-layer plain net, training error** | Nearly three times deeper and it never catches up. Its training error stays above the 20-layer curve for the whole run, so the extra capacity buys nothing. |
+| [s8](#8) | **20-layer plain net, test error** | Test error is higher than training error, as always. What matters is that the ordering between the two depths is the same in both panels. |
+| [s8](#8) | **56-layer plain net, test error** | The paper's caption: the deeper network has higher training error, and thus test error. Test error is the consequence here, not the diagnosis. |
+| [s8](#8) | **The gap, in order** | The 20-layer curve lights up first, then the 56-layer curve settles above it, then the test panel repeats the ordering. The curve shapes are schematic; the ordering is the paper's. |
+| [s8](#8) | **Why this is not overfitting** | Overfitting means the model fits the training set too well and the test set worse. Here the deeper model fits the training set worse. Nothing about capacity or regularisation can explain a higher training error. |
+| [s9](#9) | **Overfitting** | The model memorises the training set. Training error keeps falling, held-out error turns back up, and the gap between them widens. This is the failure ResNet is NOT about. |
+| [s9](#9) | **Vanishing or exploding gradients** | The signal dies on its way through the stack and the network never starts converging. The paper's introduction says this had been largely addressed by normalized initialization and intermediate normalization layers. |
+| [s9](#9) | **Degradation** | The network converges perfectly happily, and still lands at a higher training error than a shallower version of itself. This is the failure the paper isolates and the one residual learning is aimed at. |
+
+---
+
+<a class="slide-id" id="163f708a-432e-4e75-9d08-72111ad64392"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 2/7: the constructed solution (reviewable record)
+
+| on | element | what the hover says |
+|---|---|---|
+| [s10](#10) | **A trained shallower network** | Take any network that has already been trained to some training error. Call that error E. |
+| [s10](#10) | **A trained shallower network** | Nothing special about these layers: they are whatever the shallower model happened to converge to. |
+| [s10](#10) | **A trained shallower network** | The stack is drawn with three layers only for the picture; the argument holds for any depth. |
+| [s10](#10) | **The copied layers** | The first layers of the deeper model are copied verbatim from the learned shallower model. Nothing is retrained. |
+| [s10](#10) | **The copied layers** | Same weights, same order. The deeper model starts out reproducing the shallower model exactly. |
+| [s10](#10) | **The copied layers** | This is why the shallower model's solution space is a subspace of the deeper model's solution space. |
+| [s10](#10) | **The added layers are identity** | Every extra layer just passes its input through unchanged, so the deeper network computes exactly the same function as the shallower one. |
+| [s10](#10) | **The added layers are identity** | Add as many of these as you like. None of them can raise the training error, because none of them changes the output. |
+| [s10](#10) | **The added layers are identity** | Fitting an identity mapping with a stack of nonlinear layers is exactly what the paper suspects solvers find hard. One illustrative way to build it: a 3x3 kernel with a single centred 1 for its own channel, BN set to undo its own normalisation, and a ReLU that sees only non-negative inputs because they come from the previous ReLU. |
+| [s10](#10) | **The constructed solution** | The paper: there exists a solution by construction to the deeper model, the added layers are identity mapping, and the other layers are copied from the learned shallower model. |
+| [s10](#10) | **What experiments find** | The paper: experiments show that our current solvers on hand are unable to find solutions that are comparably good or better than the constructed solution, or unable to do so in feasible time. |
+| [s10](#10) | **Why this motivates residual learning** | If the useful thing is hard to reach because it sits near an identity mapping, change the parameterisation so that identity is what you get when the weights are zero. |
+
+---
+
+<a class="slide-id" id="ea4b3be9-b53c-483c-9fe6-0904ea8868eb"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 3/7: the residual block and Equation 1 (reviewable record)
+
+| on | element | what the hover says |
+|---|---|---|
+| [s11](#11) | **The identity shortcut** | The input is carried around the weight layers unchanged and added back. It holds no matrix, so it adds no parameter and no convolution: the paper says identity shortcut connections add neither extra parameter nor computational complexity. |
+| [s11](#11) | **Block input x** | The input to this group of layers. It is used twice: once as the input to the weight layers and once, unmodified, on the shortcut. |
+| [s11](#11) | **First weight layer** | A convolution, with batch normalisation right after it. In the paper's notation this contributes the W1 in F = W2 sigma(W1 x); biases are omitted to simplify the notation. |
+| [s11](#11) | **Inner ReLU** | The sigma in F = W2 sigma(W1 x). This nonlinearity sits inside the residual branch, between the two weight layers. |
+| [s11](#11) | **Second weight layer** | The W2 of the residual branch. Its output is what gets added to x, so it must have the same shape as x for the addition to be defined. |
+| [s11](#11) | **Element-wise addition** | Not a concatenation and not a gate. The two feature maps are added channel by channel, position by position, with no learned weight anywhere in the operation. |
+| [s11](#11) | **Outer ReLU** | The paper adopts the second nonlinearity after the addition. That ordering is the one the same authors revisited a few months later in Identity Mappings in Deep Residual Networks. |
+| [s11](#11) | **Block output** | The block computes H(x) = F(x) + x and passes it through the outer ReLU. The layers were asked to fit F, the residual, rather than H, the full mapping. |
+| [s11](#11) | **Reading the block** | The block is defined in Section 3.2 of the paper as y = F(x, {Wi}) + x, where F is the residual mapping to be learned. |
+| [s11](#11) | **Why parameter-free matters** | Because the shortcut costs nothing, a plain net and a residual net can be built with identical depth, width, parameter count and FLOPs. Without that, the comparison in Table 2 would be confounded. |
+| [s12](#12) | **Block output y** | The output vector of the layers considered. It has the same shape as x, which is what lets these blocks be stacked without any glue between them. |
+| [s12](#12) | **Residual mapping F** | The function the stacked layers actually have to learn. The paper defines it as F(x) := H(x) - x, where H is the mapping you originally wanted. |
+| [s12](#12) | **The shortcut term x** | The block input itself, added back element-wise. It is not transformed, not gated and not scaled, which is why it costs nothing. |
+| [s12](#12) | **Shape of y** | Because y must have the same shape as x, a stack of these blocks keeps one width and one map size all the way through a stage: a run of blocks at one feature-map size, conv2_x to conv5_x in Table 1. |
+| [s12](#12) | **What F contains** | F can be two or three layers. With one layer only, the paper notes the block is similar to a plain linear layer and it observed no advantage. |
+| [s12](#12) | **Why the identity path is free** | There is no matrix on this path. Nothing is learned, nothing is multiplied, so the shortcut adds neither extra parameter nor computation complexity. |
+| [s12](#12) | **The addition is element-wise** | Performed on two feature maps channel by channel. Every entry of F(x) is added to the entry of x at the same position and channel, so the two tensors must have identical shape. |
+| [s12](#12) | **Equation 2, the mismatch case** | At a stage boundary the channel count doubles and the feature map halves, so x and F(x) no longer have the same shape and cannot be added. Equation 2 inserts a linear projection Ws on the shortcut, done by 1x1 convolutions with a stride of 2. |
+
+---
+
+<a class="slide-id" id="ae3c26e2-c945-48b8-a47f-2d6ac10f9dcc"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 4/7: the three shortcut options and the bottleneck (reviewable record)
+
+| on | element | what the hover says |
+|---|---|---|
+| [s13](#13) | **Option A — zero-padded identity** | The shortcut still performs identity mapping, with extra zero entries padded for increasing dimensions, and across the stage boundary it is performed with a stride of 2. This option introduces no extra parameter. It is what Table 2 and Figure 4 use, and what every CIFAR-10 model in the paper uses. |
+| [s13](#13) | **Block input** | The feature map arriving at this block: 56x56 positions, 64 channels. |
+| [s13](#13) | **The residual branch** | Two 3x3 convolutions; the first has a stride of 2, so the map halves to 28x28 while the width doubles to 128. Both changes break the shapes apart. |
+| [s13](#13) | **Option B — project only on mismatch** | The projection shortcut of Eqn 2 is used to match dimensions, done by 1x1 convolutions with a stride of 2 across the stage boundary; all other shortcuts stay identity. This is the option ResNet-50, ResNet-101 and ResNet-152 are built with. |
+| [s13](#13) | **Block input** | The feature map arriving at this block: 56x56 positions, 64 channels. |
+| [s13](#13) | **The residual branch** | Two 3x3 convolutions; the first has a stride of 2, so the map halves to 28x28 while the width doubles to 128. Both changes break the shapes apart. |
+| [s13](#13) | **Option C — project everywhere** | All shortcuts are projections, including the ones where nothing changes shape. Best of the three by a fraction of a point, and the paper attributes even that to the extra parameters introduced by many, thirteen, projection shortcuts: ResNet-34 has 16 shortcuts, B already projects the 3 at stage boundaries, and C turns the other 13 into projections too. |
+| [s13](#13) | **Block input** | The feature map arriving at this block: 56x56 positions, 64 channels. |
+| [s13](#13) | **The residual branch** | Two 3x3 convolutions; the first has a stride of 2, so the map halves to 28x28 while the width doubles to 128. Both changes break the shapes apart. |
+| [s13](#13) | **Why B and not C** | The paper: the small differences among A/B/C indicate that projection shortcuts are not essential for addressing the degradation problem, so we do not use option C in the rest of this paper, to reduce memory/time complexity and model sizes. |
+| [s14](#14) | **The two-layer block** | The building block used in ResNet-34, shown in Figure 5 left. Two 3x3 convolutions operating on 56x56 feature maps with 64 channels. |
+| [s14](#14) | **First 3x3** | Sees 64 input channels and produces 64 output channels, on 56x56 feature maps. |
+| [s14](#14) | **Second 3x3** | Same shape again. Its output is what gets added to the shortcut, so it must match the block input exactly. |
+| [s14](#14) | **The bottleneck block** | Figure 5 right. Three layers instead of two: the 1x1 layers are responsible for reducing and then increasing, restoring, dimensions, leaving the 3x3 layer a bottleneck with smaller input and output dimensions. |
+| [s14](#14) | **1x1 down-projection** | Cuts the 256 incoming channels to 64. It is a pointwise convolution, so it costs in-channels times out-channels per position. |
+| [s14](#14) | **The bottleneck 3x3** | The expensive layer, now running on 64 channels instead of 256. This is where the whole saving comes from. |
+| [s14](#14) | **1x1 up-projection** | Restores the width to 256 so that the result can be added to the shortcut, which is still carrying a 256-channel tensor. |
+| [s14](#14) | **The arithmetic behind similar time complexity** | Counting multiply-adds per output position: a 3x3 convolution costs 9 times in-channels times out-channels, a 1x1 convolution costs in-channels times out-channels. Squeezing the 3x3 down to 64 channels is what keeps the three-layer block affordable. The paper prints only the shapes and the phrase similar time complexity; the products in the right-hand column were multiplied out for this deck so the claim can be checked rather than taken on trust. |
+
+---
+
+<a class="slide-id" id="8f72dd6e-4857-4541-bdd4-1b10be2aac65"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 5/7: identity on a bottleneck, and the ImageNet reversal (reviewable record)
+
+| on | element | what the hover says |
+|---|---|---|
+| [s15](#15) | **Identity on a bottleneck shortcut** | The shortcut joins the 256-channel input to the 256-channel output. Left as identity it holds no weights at all, so the block costs exactly its three convolutions. |
+| [s15](#15) | **1x1 down-projection** | Cuts the 256 incoming channels to 64 before the expensive 3x3 runs. |
+| [s15](#15) | **The bottleneck 3x3** | The expensive layer, running on the narrow 64-channel tensor. |
+| [s15](#15) | **1x1 up-projection** | Restores the width to 256 so the branch output matches what the shortcut is carrying. |
+| [s15](#15) | **Projection on a bottleneck shortcut** | A 1x1 convolution mapping 256 channels to 256 channels. The paper: if the identity shortcut is replaced with projection, one can show that the time complexity and model size are doubled, as the shortcut is connected to the two high-dimensional ends. |
+| [s15](#15) | **1x1 down-projection** | Unchanged from the block on the left. Only the shortcut differs between the two panels. |
+| [s15](#15) | **The bottleneck 3x3** | Unchanged from the block on the left. Only the shortcut differs between the two panels. |
+| [s15](#15) | **1x1 up-projection** | Unchanged from the block on the left. Only the shortcut differs between the two panels. |
+| [s15](#15) | **Where the shortcut sits decides everything** | On a two-layer block the shortcut connects 64-channel ends, so a projection there is sixteen times cheaper than on a bottleneck. The bottleneck moves its shortcut to the wide side of the block, and that is what makes identity load-bearing rather than merely elegant. |
+| [s16](#16) | **Left — plain-18 vs plain-34** | ImageNet training. Thin curves are training error, bold curves validation error on the center crops. The red 34-layer plain net sits above the cyan 18-layer one throughout the whole training procedure: degradation again, now at ImageNet scale. |
+| [s16](#16) | **Right — ResNet-18 vs ResNet-34** | The same architectures with identity shortcuts added, zero-padded where the width grows, so no extra parameter. The order flips: ResNet-34 ends below ResNet-18 on both training and validation error. The reversal is the evidence. |
+| [s16](#16) | **Table 2** | Top-1 error in percent, 10-crop testing, ImageNet validation. Depth makes the plain net worse, 27.94 to 28.54, and the ResNet better, 27.88 to 25.03 — with no extra parameter on the residual side. |
+| [s17](#17) | **plain-18** | Thin curve is training error, bold curve is validation error on the center crops. The steps are the learning rate being divided by ten when the error plateaus. |
+| [s17](#17) | **plain-34** | Both of its curves sit above plain-18 for the entire run. The paper: the 34-layer plain net has higher training error throughout the whole training procedure. |
+| [s17](#17) | **ResNet-18** | Comparably accurate to plain-18 in the end, but it converges faster. The paper: when the net is not overly deep, the current SGD solver is still able to find good solutions to the plain net. |
+| [s17](#17) | **ResNet-34** | Below ResNet-18 on both curves. The paper: the 34-layer ResNet exhibits considerably lower training error and is generalizable to the validation data. |
+| [s17](#17) | **Table 2** | Top-1 error in percent with 10-crop testing on the ImageNet validation set. In this table the ResNets have no extra parameter compared to their plain counterparts, because they use the zero-padded option A shortcuts. |
+
+---
+
+<a class="slide-id" id="0935b531-0865-4267-86ac-021a6cba69e4"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 6/7: ruling out vanishing gradients, and the response magnitudes (reviewable record)
+
+| on | element | what the hover says |
+|---|---|---|
+| [s18](#18) | **The claim being ruled out** | The paper argues this optimization difficulty is unlikely to be caused by vanishing gradients, and gives four separate reasons. Vanishing gradients were the obstacle before this paper, and the introduction says they had been largely addressed by normalized initialization and intermediate normalization layers. |
+| [s18](#18) | **Batch normalisation is already there** | Section 3.4: batch normalisation is adopted right after each convolution and before activation, in the plain networks as well as the residual ones. That is what keeps the forward signal alive. |
+| [s18](#18) | **The gradients were checked** | Section 4.1, in one sentence: the authors verify that the backward propagated gradients exhibit healthy norms with BN, and conclude that neither forward nor backward signals vanish. No plot, number or definition of healthy is given, so this is the weakest of the four observations. |
+| [s18](#18) | **The plain net is not dead** | A network whose gradients had vanished would not learn at all. plain-34 reaches accuracy in the same range as VGG-16, which the paper reads as the solver working to some extent. |
+| [s18](#18) | **It is not impatience either** | Footnote 3: the authors experimented with three times more training iterations and still observed the degradation problem, so it cannot feasibly be addressed by simply training for longer. |
+| [s18](#18) | **What the paper offers instead** | Section 4.1 ends with a conjecture, not an explanation: the deep plain nets may have exponentially low convergence rates, which impact the reducing of the training error. The reason for such optimization difficulties will be studied in the future. |
+| [s19](#19) | **plain-20 and plain-56** | The two plain networks sit highest: every layer changes the signal by a lot. Residual nets sit visibly below them at the same depth. |
+| [s19](#19) | **ResNet-20, ResNet-56, ResNet-110** | The residual networks sit lower, and the deeper the ResNet the lower it sits. The paper: when there are more layers, an individual layer of ResNets tends to modify the signal less. |
+| [s19](#19) | **Hypothesis, support, and the gap between them** | Section 3.1 states the intuition as a hypothesis and Section 4.2 offers the response magnitudes as support. The paper never claims to have isolated the mechanism. |
+| [s19](#19) | **Where the explanation went afterwards** | Veit, Wilber and Belongie argued a ResNet behaves like an ensemble of relatively shallow networks; Balduzzi et al. described shattered gradients in plain nets; Li et al. visualised skip connections smoothing the loss landscape. All of them postdate this paper. |
+
+---
+
+<a class="slide-id" id="a371c72f-44fa-42d7-bf70-b2447a4b4708"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 7/7: provenance, the 1202-layer limit, and transfer (reviewable record)
+
+| on | element | what the hover says |
+|---|---|---|
+| [s20](#20) | **Table 4 — single models** | Error rates in percent of single-model results on the ImageNet validation set, except one VGG entry marked as reported on the test set. This is the table to quote when comparing one network against another. It uses the paper's best-results testing, fully-convolutional and averaged over multiple scales, so its numbers sit below Table 3's 10-crop numbers for the same models. Background: PReLU-net is the same authors' earlier ImageNet model, BN-inception is the Inception network trained with batch normalisation, and VGG (v5) is the final arXiv version of the VGG results. |
+| [s20](#20) | **Table 5 — ensembles** | Error rates in percent of ensembles. The top-5 error is on the test set of ImageNet and reported by the test server. This is where the 3.57% headline comes from. |
+| [s20](#20) | **Four different evaluation protocols** | The paper reports 10-crop testing in Tables 2 and 3, single-model validation results in Table 4, ensemble test-server results in Table 5, and fully-convolutional multi-scale testing for its best results. Comparing across them without saying so is the easiest mistake to make with this paper. |
+| [s21](#21) | **ResNet-110** | Test error 6.43% on CIFAR-10, with 1.7M parameters. The paper runs this configuration five times and reports best and mean plus or minus standard deviation. |
+| [s21](#21) | **ResNet-1202** | No optimisation difficulty at all: this network reaches a training error below 0.1%. Its test error is 7.93%, worse than the 110-layer net, with 19.4M parameters. |
+| [s21](#21) | **The authors' own concession** | The paper: the testing result of this 1202-layer network is worse than that of our 110-layer network, although both have similar training error. We argue that this is because of overfitting. |
+| [s21](#21) | **Table 6** | Classification error on the CIFAR-10 test set, all methods with data augmentation. For ResNet-110 the paper runs it five times and shows best with mean and standard deviation in brackets. |
+| [s22](#22) | **VGG-16 backbone** | The convolutional trunk used by the original Faster R-CNN. The detection pipeline around it is kept the same in this comparison. |
+| [s22](#22) | **ResNet-101 backbone** | The same detection system with the trunk swapped. The paper notes ResNet has no hidden fully-connected layers, so it adopts the Networks on Conv feature maps idea to keep the two systems comparable. |
+| [s22](#22) | **Tables 7 and 8** | Object detection mAP in percent using baseline Faster R-CNN, on the PASCAL VOC 2007 and 2012 test sets and on the COCO validation set. The paper says the gain is solely due to the learned representations. |
+
+---
+
+<a class="slide-id" id="b4d1e8a2-9c37-4f5b-8e61-3a7c2d9f0b14"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — term hover notes 1/2: the task, the method and its cost (reviewable record)
+
+| on | element | what the hover says |
+|---|---|---|
+| [s2](#2) | **Top-5 error** | The share of test images whose true class is not among the model's five highest-scoring classes. Top-1 error counts an image as wrong whenever the single best guess is wrong. |
+| [s2](#2) | **ILSVRC** | The ImageNet Large Scale Visual Recognition Challenge, the yearly competition on the ImageNet benchmark. Its classification track ranks entries by top-5 error on a held-out test set scored by the organisers' server. |
+| [s4](#4) | **Normalized initialisation** | Background: drawing each layer's initial weights with a variance scaled to its number of inputs, so activations neither shrink nor blow up from layer to layer at the start of training. This paper initialises its weights as in He et al. 2015. |
+| [s8](#8) | **The degradation problem** | With the network depth increasing, accuracy gets saturated and then degrades rapidly. The paper's point is that this shows up first as higher training error, which is why it cannot be overfitting. |
+| [s11](#11) | **Residual function** | Instead of asking a stack of layers for the mapping H(x) you want, you ask it for F(x) = H(x) - x and add x back afterwards. Doing nothing then means driving F toward zero, which the paper argues is easier for a solver than fitting an identity with nonlinear layers. |
+| [s11](#11) | **Identity mapping** | A path that returns its input unchanged. On the shortcut it means the block input is simply copied forward: no weights, no gate, no multiplications. |
+
+---
+
+<a class="slide-id" id="c9e2f7b3-1d48-4a6c-9f72-4b8d3e0a1c25"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — term hover notes 2/2: cost, evidence and transfer (reviewable record)
+
+| on | element | what the hover says |
+|---|---|---|
+| [s14](#14) | **Bottleneck block** | A three-layer block of 1x1, 3x3, 1x1 convolutions. The 1x1 layers reduce and then restore the channel count so that the expensive 3x3 convolution runs on a narrower tensor. |
+| [s14](#14) | **FLOPs** | Floating point operations for one forward pass on one image, counted here as multiply-adds. It is a proxy for compute cost, not a measured runtime. |
+| [s18](#18) | **Batch normalisation** | Normalises each channel over the current mini-batch to zero mean and unit variance, then rescales with learned parameters. Here it is applied right after every convolution and before the activation. |
+| [s18](#18) | **Exponentially low convergence rates** | The paper's phrase, not defined further. One plain reading: the training error keeps falling, but so slowly that no feasible schedule reaches the shallower net's error. Footnote 3 fits that reading: three times the iterations still left the degradation in place. |
+| [s20](#20) | **10-crop testing** | The score for an image is averaged over ten fixed crops: the four corners, the centre, and the horizontal flips of all five. It is a mild test-time ensemble, so its numbers are not comparable to single-crop ones. |
+| [s22](#22) | **Networks on Conv feature maps (NoC)** | ResNet has no hidden fully-connected layers to act as the per-region head. So conv1 to conv4_x, 91 conv layers, compute the shared feature maps at a stride of 16 pixels like VGG-16's 13 conv layers, and conv5_x runs on each region after RoI pooling, in the role of VGG-16's fc layers. |
+
+---
+
+<a class="slide-id" id="d1f3a8c4-2e59-4b7d-8a83-5c9e4f1b2d36"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — forensics chips: what each evidence slide cannot show (reviewable record)
+
+| on | element | what the hover says |
+|---|---|---|
+| [s13](#13) | **Figure forensics** | Table 3 is 10-crop testing on the ImageNet validation set, reported without repeats or error bars. A, B and C are separated by fractions of a point — a margin the paper reads as showing projections are not essential, which is why it decides on cost. Option A is what Table 2 and every CIFAR model use; option B is what ResNet-50/101/152 ship with. Table 4 lists the same ResNet-34 B at 21.84 top-1: that is multi-scale testing, not a better model. |
+| [s17](#17) | **Figure forensics** | One run per configuration on ImageNet and no error bars anywhere in Table 2, so the 18-layer tie is a tie by eye, not by a test. The numbers are 10-crop testing on the validation set — a mild test-time ensemble, not comparable with the single-crop or test-server numbers elsewhere in the paper. The plain nets are the authors' own baselines, not third-party results. |
+| [s20](#20) | **Figure forensics** | 3.57% is an ensemble of six models of different depth, scored on the 100k test images by the evaluation server. The best single model is 4.49%, on the 50k validation images. Tables 2 and 3 are 10-crop testing and comparable to neither. Four evaluation protocols appear in this paper, and only one of the paper's own rows, CIFAR-10 ResNet-110, carries a spread. |
+| [s21](#21) | **Figure forensics** | ResNet-110 is the only configuration in the paper that is repeated: five runs, reported as best 6.43 with mean 6.61 plus or minus 0.16. The 1202-layer row is a single reported number, so 6.43 against 7.93 sets one run against the best of five. The paper's own reading is overfitting on a small dataset, and it notes no regularisation such as maxout or dropout was applied. |
+| [s22](#22) | **Figure forensics** | The attribution to representations rests on a same-implementation argument, not an ablation: same Faster R-CNN code, same region-proposal setup, same hyper-parameters, backbone swapped from VGG-16 to ResNet-101. Nothing isolates which part of the backbone carries the gain. The competition entries stack multi-scale testing, box refinement and ensembles on top, so those numbers are not the swap-only comparison. |
+
+---
+
+<a class="slide-id" id="03439199-340b-4fc7-bec4-7ca513d7258d"></a>
+
+<!-- _class: fs-lg -->
+
+## Appendix — glossary 1/2 (reviewable record)
+
+| term | plain-language meaning |
+|---|---|
+| degradation problem · [s8](#8) | accuracy saturates then falls as depth grows, visible first in **training** error |
+| residual function F · [s11](#11) | what the layers must learn once you subtract the input: `F(x) = H(x) - x` |
+| identity mapping · [s11](#11) | a path that returns its input unchanged — no weights, no multiplications |
+| projection shortcut · [s13](#13) | a `1x1` convolution on the shortcut, used only to match a changed channel count and map size |
+| bottleneck block · [s14](#14) | `1x1 → 3x3 → 1x1`; the outer layers shrink then restore width so the `3x3` runs narrow |
+
+---
+
+<a class="slide-id" id="9b56b933-f45f-4aac-a49e-9c5e4e8da07d"></a>
+
+<!-- _class: fs-lg -->
+
+## Appendix — glossary 2/2 (reviewable record)
+
+| term | plain-language meaning |
+|---|---|
+| batch normalisation · [s18](#18) | per-channel normalisation over the mini-batch, applied after every convolution here |
+| top-1 / top-5 error · [s2](#2) | share of images where the best guess is wrong / where the truth is outside the best five |
+| 10-crop testing · [s20](#20) | average the scores over four corners, the centre, and all five horizontal flips |
+| FLOPs · [s14](#14) | multiply-adds for one forward pass on one image — a compute proxy, not a measured runtime |
+| mAP@[.5, .95] · [s22](#22) | detection precision averaged over classes and over ten box-overlap thresholds |
+
+---
+
+<a class="slide-id" id="39f75a3d-5b99-4182-8e02-abe00286ebe8"></a>
+
+<!-- _class: lead -->
+
+# Questions
+
+[📄 arXiv](https://arxiv.org/abs/1512.03385) · [📕 read it end to end](https://arxiv.org/pdf/1512.03385v1) · [🔗 section anchors](https://ar5iv.labs.arxiv.org/html/1512.03385) · [💻 reference implementation](https://github.com/KaimingHe/deep-residual-networks) · [📄 the sequel that revised the ordering](https://arxiv.org/abs/1603.05027)
+
+<!-- sr:review-include -->
+<script src="../../_assets/review.js"></script>
+<link rel="stylesheet" href="../../_assets/review.css">
+
+
+<script>
+(function () {
+  var CSS = [
+    ".slide-permalink{position:absolute;left:2.4rem;bottom:1.6rem;width:3.4rem;",
+    "height:1.9rem;z-index:50;cursor:pointer;text-decoration:none}",
+    ".slide-permalink::after{content:'\\1F517';position:absolute;left:3rem;",
+    "bottom:.1rem;font-size:.8rem;opacity:0;transition:opacity .15s}",
+    ".slide-permalink:hover::after{opacity:.6}",
+    "#slide-permalink-toast{position:fixed;left:50%;top:1.4rem;",
+    "transform:translateX(-50%);background:rgba(18,18,18,.94);color:#fff;",
+    "border:1px solid #3b82f6;border-radius:6px;padding:.4rem .85rem;",
+    "z-index:10000;font:500 .8rem/1 system-ui,sans-serif;opacity:0;",
+    "transition:opacity .2s;pointer-events:none}",
+    "#slide-permalink-toast.show{opacity:1}"
+  ].join("");
+  function permalink(uuid) {
+    return location.origin + location.pathname + location.search + "#" + uuid;
+  }
+  function toast(msg) {
+    var t = document.getElementById("slide-permalink-toast");
+    if (!t) {
+      t = document.createElement("div");
+      t.id = "slide-permalink-toast";
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(t._h);
+    t._h = setTimeout(function () { t.classList.remove("show"); }, 1600);
+  }
+  function copy(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).then(
+        function () { return true; }, function () { return false; });
+    }
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return Promise.resolve(ok);
+    } catch (e) { return Promise.resolve(false); }
+  }
+  function onClick(e, uuid) {
+    e.preventDefault();
+    e.stopPropagation();
+    var url = permalink(uuid);
+    // replaceState (not location.hash=) so bespoke doesn't re-navigate. This
+    // alone puts the permalink in the address bar, so feedback shouldn't wait on
+    // the clipboard (which can hang without permission).
+    history.replaceState(null, "", url);
+    toast("Permalink copied");
+    copy(url);
+  }
+  function init() {
+    var style = document.createElement("style");
+    style.textContent = CSS;
+    document.head.appendChild(style);
+    var sections = document.querySelectorAll("section");
+    for (var i = 0; i < sections.length; i += 1) {
+      var sec = sections[i];
+      var anchor = sec.querySelector("a.slide-id");
+      if (!anchor) continue;
+      var hot = document.createElement("a");
+      hot.className = "slide-permalink";
+      hot.href = "#" + anchor.id;  // right-click "Copy link" + no-JS fallback
+      hot.title = "Copy a permanent link to this slide";
+      hot.addEventListener("click", (function (id) {
+        return function (e) { onClick(e, id); };
+      })(anchor.id));
+      sec.appendChild(hot);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>

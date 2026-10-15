@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.pipe-t{fill:#f0f0f0;font-weight:700}.pipe-m{font-family:'JetBrains Mono',monospace}.pipe-d{fill:#a0a0a0}.pipe-hd{fill:#3b82f6;font-weight:700;letter-spacing:.05em}@keyframes pipe-a-s0{0.0%{opacity:0.25}0.0%{opacity:0.25}1.5%{opacity:1}13.5%{opacity:1}15.0%{opacity:0.25}100.0%{opacity:0.25}}.pipe-a-s0{animation:pipe-a-s0 10s linear infinite}@keyframes pipe-a-s1{0.0%{opacity:0.25}15.0%{opacity:0.25}16.5%{opacity:1}28.5%{opacity:1}30.0%{opacity:0.25}100.0%{opacity:0.25}}.pipe-a-s1{animation:pipe-a-s1 10s linear infinite}@keyframes pipe-a-s2{0.0%{opacity:0.25}30.0%{opacity:0.25}31.5%{opacity:1}43.5%{opacity:1}45.0%{opacity:0.25}100.0%{opacity:0.25}}.pipe-a-s2{animation:pipe-a-s2 10s linear infinite}@keyframes pipe-a-s3{0.0%{opacity:0.25}45.0%{opacity:0.25}46.5%{opacity:1}56.5%{opacity:1}58.0%{opacity:0.25}100.0%{opacity:0.25}}.pipe-a-s3{animation:pipe-a-s3 10s linear infinite}@keyframes pipe-a-s4{0.0%{opacity:0.25}58.0%{opacity:0.25}59.5%{opacity:1}68.5%{opacity:1}70.0%{opacity:0.25}100.0%{opacity:0.25}}.pipe-a-s4{animation:pipe-a-s4 10s linear infinite}@keyframes pipe-a-back{0.0%{transform:translate(0,0);opacity:0}71.9%{transform:translate(0,0);opacity:0}72.0%{transform:translate(0,0);opacity:1}72.6%{transform:translate(0,26px);opacity:1}90.9%{transform:translate(-854px,26px);opacity:1}98.0%{transform:translate(-854px,-302px);opacity:1}98.5%{transform:translate(-854px,-302px);opacity:0}100.0%{transform:translate(-854px,-302px);opacity:0}}.pipe-a-back{animation:pipe-a-back 10s linear infinite}</style>
+<defs>
+<marker id="pg" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#3b82f6"/></marker>
+<marker id="pr" markerWidth="14" markerHeight="12" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L12,5 L0,10 z" fill="#f85149"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="18" y="28" class="pipe-hd" font-size="16">ONE PIXEL, END TO END &#8212; Figure 2 in the order it executes</text>
+<text x="1142" y="28" text-anchor="end" class="pipe-d" font-size="14">every stage links to its section</text>
+<path d="M384,160 L394,160" stroke="#3b82f6" stroke-width="2.4" marker-end="url(#pg)" fill="none"/>
+<path d="M764,160 L774,160" stroke="#3b82f6" stroke-width="2.4" marker-end="url(#pg)" fill="none"/>
+<path d="M574,368 L584,368" stroke="#3b82f6" stroke-width="2.4" marker-end="url(#pg)" fill="none"/>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4" target="_blank" data-tiphead="1 &#183; March a ray and sample it" data-tip="One camera ray per pixel: r(t) = o + t d, where o is the camera centre and d the unit direction through that pixel. The span between the near and far bounds is cut into equal bins and one sample is drawn at random inside each, so across training steps the MLP is queried at continuous positions rather than on a fixed grid.">
+<rect x="18" y="44" width="362" height="244" rx="12" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="42" y="72" class="pipe-hd" font-size="15">1 &#183; SAMPLE THE RAY</text>
+<text x="356" y="72" text-anchor="end" class="pipe-d" font-size="13">Fig. 2 (a)</text>
+<path d="M56,120 L350,120" stroke="#3b82f6" stroke-width="1.6"/>
+<path d="M46,112 L46,128 L58,120 z" fill="#3b82f6"/>
+<circle cx="106" cy="120" r="5" fill="#93c5fd"/>
+<circle cx="156" cy="120" r="5" fill="#93c5fd"/>
+<circle cx="206" cy="120" r="5" fill="#93c5fd"/>
+<circle cx="256" cy="120" r="5" fill="#93c5fd"/>
+<circle cx="306" cy="120" r="5" fill="#93c5fd"/>
+<text x="42" y="102" class="pipe-d" font-size="14">camera</text>
+<text x="352" y="102" text-anchor="end" class="pipe-d" font-size="14">far bound</text>
+<text x="42" y="158" class="pipe-m" fill="#93c5fd" font-size="16">r(t) = o + t d</text>
+<text x="42" y="192" class="pipe-t" font-size="15">Five numbers per sample</text>
+<text x="42" y="216" class="pipe-d" font-size="14">position (x, y, z) and the</text>
+<text x="42" y="238" class="pipe-d" font-size="14">direction (&#952;, &#966;), held as a</text>
+<text x="42" y="260" class="pipe-d" font-size="14">Cartesian unit vector d</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.SS1" target="_blank" data-tiphead="2 &#183; Positional encoding" data-tip="Each of the three coordinates of x and each of the three components of d is replaced by a ladder of sines and cosines at doubling frequencies. Nothing is learned here: it is a fixed lift into a higher-dimensional space, and it is what lets the MLP fit sharp edges instead of a blur.">
+<rect x="398" y="44" width="362" height="244" rx="12" fill="#1a1a1a" stroke="#f0883e" stroke-width="2"/>
+<text x="422" y="72" fill="#f0883e" font-weight="700" font-size="15">2 &#183; ENCODE, NO LEARNING</text>
+<text x="736" y="72" text-anchor="end" class="pipe-d" font-size="13">not in Fig. 2</text>
+<path d="M422,124 q13,-26 26,0 q13,26 26,0 q13,-26 26,0 q13,26 26,0" stroke="#f0883e" stroke-width="1.8" fill="none"/>
+<path d="M552,124 q6.5,-26 13,0 q6.5,26 13,0 q6.5,-26 13,0 q6.5,26 13,0 q6.5,-26 13,0 q6.5,26 13,0" stroke="#f0883e" stroke-width="1.8" fill="none"/>
+<path d="M672,124 q3.2,-26 6.5,0 q3.2,26 6.5,0 q3.2,-26 6.5,0 q3.2,26 6.5,0 q3.2,-26 6.5,0 q3.2,26 6.5,0 q3.2,-26 6.5,0 q3.2,26 6.5,0" stroke="#f0883e" stroke-width="1.8" fill="none"/>
+<text x="422" y="158" class="pipe-m" fill="#f0883e" font-size="15">sin, cos at 2^0 .. 2^(L-1)</text>
+<text x="422" y="192" class="pipe-t" font-size="15">&#947;(x): 3 &#8594; 60 numbers</text>
+<text x="422" y="214" class="pipe-d" font-size="14">L = 10, carries texture</text>
+<text x="422" y="244" class="pipe-t" font-size="15">&#947;(d): 3 &#8594; 24 numbers</text>
+<text x="422" y="266" class="pipe-d" font-size="14">L = 4, appearance drift</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S3" target="_blank" data-tiphead="3 &#183; The MLP is the scene" data-tip="Eight fully-connected ReLU layers of 256 channels see the encoded position alone and emit the density plus a 256-wide feature. Only then is the encoded direction concatenated, and one 128-channel layer turns that into RGB. Density cannot depend on where you stand; colour can.">
+<rect x="778" y="44" width="362" height="244" rx="12" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="802" y="72" fill="#3fb950" font-weight="700" font-size="15">3 &#183; MLP F&#920; &#8212; THE SCENE</text>
+<text x="1116" y="72" text-anchor="end" class="pipe-d" font-size="13">Fig. 2 (b)</text>
+<g data-tiphead="The trunk" data-tip="Eight fully-connected layers of 256 channels with ReLU activations, applied to the encoded position only.">
+<rect x="802" y="88" width="314" height="38" rx="7" fill="#0d1117" stroke="#3fb950" stroke-width="1.4"/>
+<text x="959" y="112" text-anchor="middle" class="pipe-t" font-size="15">8 layers of 256, ReLU</text>
+</g>
+<path d="M959,126 L959,140" stroke="#3fb950" stroke-width="2" marker-end="url(#pg)" fill="none"/>
+<g data-tiphead="Density head" data-tip="Volume density, produced from the encoded position before the viewing direction has entered the network at all.">
+<rect x="802" y="146" width="150" height="52" rx="7" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="877" y="166" text-anchor="middle" class="pipe-t" font-size="15">&#963; density</text>
+<text x="877" y="185" text-anchor="middle" class="pipe-d" font-size="14">from x only</text>
+</g>
+<g data-tiphead="Feature vector" data-tip="A 256-wide hidden feature emitted alongside the density and carried forward to the colour head.">
+<rect x="966" y="146" width="150" height="52" rx="7" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="1041" y="166" text-anchor="middle" class="pipe-t" font-size="15">feature</text>
+<text x="1041" y="185" text-anchor="middle" class="pipe-d" font-size="14">256 wide</text>
+</g>
+<text x="802" y="214" class="pipe-d" font-size="14">concatenate &#947;(d), then:</text>
+<g data-tiphead="Colour head" data-tip="One fully-connected layer of 128 channels sees the feature together with the encoded viewing direction and outputs the emitted RGB.">
+<rect x="802" y="224" width="314" height="38" rx="7" fill="#0d1117" stroke="#bc8cff" stroke-width="1.4"/>
+<text x="959" y="248" text-anchor="middle" class="pipe-t" font-size="15">1 layer of 128 &#8594; RGB c</text>
+</g>
+<text x="802" y="278" class="pipe-d" font-size="14">colour may vary with d</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4.E3" target="_blank" data-tiphead="4 &#183; Composite the samples into one colour" data-tip="The samples along the ray are folded into a single RGB value by the quadrature form of the volume rendering integral. It is ordinary alpha compositing: each sample contributes its colour scaled by how opaque it is and by how much light was still travelling when the ray arrived.">
+<rect x="18" y="316" width="551" height="150" rx="12" fill="#1a1a1a" stroke="#bc8cff" stroke-width="2"/>
+<text x="42" y="344" fill="#bc8cff" font-weight="700" font-size="15">4 &#183; VOLUME RENDER &#8212; ONE PIXEL COMES OUT</text>
+<text x="545" y="344" text-anchor="end" class="pipe-d" font-size="13">Fig. 2 (c)</text>
+<text x="42" y="382" class="pipe-m" fill="#f0f0f0" font-size="19">&#264;(r) = &#931; T&#7522; &#945;&#7522; c&#7522;</text>
+<text x="42" y="416" class="pipe-m" fill="#bc8cff" font-size="15">&#945;&#7522; = 1 - e^(-&#963;&#7522;&#948;&#7522;) is how opaque one slab is</text>
+<text x="42" y="440" class="pipe-m" fill="#bc8cff" font-size="15">T&#7522; = &#928; (1 - &#945;&#11002;) is how much light still arrives</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.E6" target="_blank" data-tiphead="5 &#183; Compare with the photograph" data-tip="The rendered colour is compared with the colour that pixel actually has in its training photograph. Squared error, summed over a batch of 4096 rays drawn from all training photographs, for the coarse and the fine render alike. That is the entire training signal.">
+<rect x="589" y="316" width="551" height="150" rx="12" fill="#1a1a1a" stroke="#f85149" stroke-width="2"/>
+<text x="613" y="344" fill="#f85149" font-weight="700" font-size="15">5 &#183; PHOTOMETRIC LOSS &#8212; THE ONLY SUPERVISION</text>
+<text x="1116" y="344" text-anchor="end" class="pipe-d" font-size="13">Fig. 2 (d)</text>
+<g data-tiphead="The rendered colour" data-tip="What the current weights predict this pixel should look like from this camera.">
+<rect x="613" y="358" width="150" height="52" rx="7" fill="#0d1117" stroke="#93c5fd" stroke-width="1.4"/>
+<text x="688" y="379" text-anchor="middle" class="pipe-t" font-size="15">&#264;(r)</text>
+<text x="688" y="398" text-anchor="middle" class="pipe-d" font-size="14">rendered</text>
+</g>
+<g data-tiphead="The observed colour" data-tip="The colour that pixel already has in the training photograph. No annotation, no preprocessing, no 3D anything.">
+<rect x="777" y="358" width="150" height="52" rx="7" fill="#0d1117" stroke="#f85149" stroke-width="1.4"/>
+<text x="852" y="379" text-anchor="middle" class="pipe-t" font-size="15">C(r)</text>
+<text x="852" y="398" text-anchor="middle" class="pipe-d" font-size="14">the photo</text>
+</g>
+<text x="951" y="382" class="pipe-m" fill="#f0f0f0" font-size="16">&#8214;&#264;-C&#8214;&#178;</text>
+<text x="613" y="432" class="pipe-d" font-size="14">4096 rays per step, from all photos; coarse render scored too</text>
+<text x="613" y="454" class="pipe-d" font-size="14">Eq. 6, and nothing else enters the objective</text>
+</a>
+<path d="M864,470 L864,496 L10,496 L10,168 L14,168" stroke="#f85149" stroke-width="2.6" stroke-dasharray="9 6" marker-end="url(#pr)" fill="none"/>
+<g data-tiphead="The backward pass" data-tip="The forward pass runs steps 1 to 5; the error then travels this dashed path in reverse. Photometric error differentiates through the compositing sum, through the MLP outputs and into every weight. This dashed path is the only reason the density field ever becomes correct geometry.">
+<rect x="150" y="472" width="600" height="28" rx="6" fill="#111111"/>
+<text x="450" y="492" text-anchor="middle" fill="#f85149" font-weight="700" font-size="16">&#8706;L / &#8706;&#920; flows back through the quadrature into the weights</text>
+</g>
+<rect class="pipe-a-s0" x="18" y="44" width="362" height="244" rx="12" fill="rgba(255,255,255,0.03)" stroke="#3b82f6" stroke-width="3" opacity="0.25" pointer-events="none"/>
+<rect class="pipe-a-s1" x="398" y="44" width="362" height="244" rx="12" fill="rgba(255,255,255,0.03)" stroke="#f0883e" stroke-width="3" opacity="0.25" pointer-events="none"/>
+<rect class="pipe-a-s2" x="778" y="44" width="362" height="244" rx="12" fill="rgba(255,255,255,0.03)" stroke="#3fb950" stroke-width="3" opacity="0.25" pointer-events="none"/>
+<rect class="pipe-a-s3" x="18" y="316" width="551" height="150" rx="12" fill="rgba(255,255,255,0.03)" stroke="#bc8cff" stroke-width="3" opacity="0.25" pointer-events="none"/>
+<rect class="pipe-a-s4" x="589" y="316" width="551" height="150" rx="12" fill="rgba(255,255,255,0.03)" stroke="#f85149" stroke-width="3" opacity="0.25" pointer-events="none"/>
+<circle class="pipe-a-back" cx="864" cy="470" r="7" fill="#f85149" opacity="0" pointer-events="none"/>
+<rect x="18" y="510" width="1122" height="74" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="42" y="540" class="pipe-t" font-size="17">Nothing in this diagram ever sees 3D ground truth</text>
+<text x="42" y="568" class="pipe-d" font-size="15">No meshes, no depth maps, no voxel targets, no point clouds. The inputs are posed photographs; the loss is measured in pixels.</text>
+</svg>

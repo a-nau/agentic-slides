@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<defs>
+<marker id="ra" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#f0883e"/></marker>
+<marker id="rb" markerWidth="10" markerHeight="10" refX="1" refY="4" orient="auto"><path d="M9,0 L0,4 L9,8 z" fill="#f0883e"/></marker>
+</defs>
+<style>@keyframes an-relu-draw{0%{stroke-dashoffset:1000}55%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}@keyframes an-relu-pop1{0%,12%{opacity:0}17%,100%{opacity:1}}@keyframes an-relu-pop2{0%,44%{opacity:0}50%,100%{opacity:1}}@keyframes an-relu-late{0%,58%{opacity:0}66%,100%{opacity:1}}.an-relu-c{stroke-dasharray:1000;animation:an-relu-draw 9s linear infinite}.an-relu-p1{animation:an-relu-pop1 9s linear infinite}.an-relu-p2{animation:an-relu-pop2 9s linear infinite}.an-relu-l{animation:an-relu-late 9s linear infinite}.relu-rl-ax{fill:#8a8a8a;font-size:14px}.relu-rl-cap{fill:#8a8a8a;font-size:14px}.relu-rl-l{fill:#f0f0f0;font-weight:700;font-size:15px}.relu-rl-g{fill:#93c5fd;font-weight:700;font-size:15px}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">ReLU's evidence is a stopwatch, not a scoreboard</text>
+<text x="24" y="58" class="relu-rl-cap">Figure 1 redrawn. Left: the curves redrawn schematically — only the 25% threshold and the six-fold gap are measured. Right: the paper’s own Figure 1.</text>
+<path d="M90,86 L90,420 L700,420" fill="none" stroke="#3a3a3a" stroke-width="2"/>
+<path d="M90,340 L700,340" fill="none" stroke="#4a4a4a" stroke-width="1.5" stroke-dasharray="5 5"/>
+<text x="596" y="330" class="relu-rl-ax">25% training error</text>
+<text x="110" y="411" class="relu-rl-ax" font-size="12">both curves schematic, not traced from the paper</text>
+<text x="90" y="76" class="relu-rl-ax">training error, high at the top</text>
+<text x="596" y="440" class="relu-rl-ax">training epochs →</text>
+<path class="an-relu-c" pathLength="1000" stroke-dashoffset="0" d="M90,112 C122,286 152,330 182,340 C310,366 520,388 700,398" fill="none" stroke="#3b82f6" stroke-width="3"/>
+<path class="an-relu-c" pathLength="1000" stroke-dashoffset="0" d="M90,112 C210,178 310,252 404,302 C474,328 524,336 562,340 C622,346 662,350 700,354" fill="none" stroke="#8a8a8a" stroke-width="2.5"/>
+<circle class="an-relu-p1" opacity="1" cx="182" cy="340" r="6" fill="#3b82f6"/>
+<circle class="an-relu-p2" opacity="1" cx="562" cy="340" r="6" fill="#8a8a8a"/>
+<path d="M400,116 L444,116" stroke="#3b82f6" stroke-width="3"/>
+<text x="456" y="121" class="relu-rl-g">ReLU  f(x) = max(0, x)</text>
+<path d="M400,146 L444,146" stroke="#8a8a8a" stroke-width="2.5"/>
+<text x="456" y="151" class="relu-rl-ax">tanh — saturating, the 2012 default</text>
+<g class="an-relu-l" opacity="1"><path d="M190,378 L554,378" fill="none" stroke="#f0883e" stroke-width="2" marker-end="url(#ra)" marker-start="url(#rb)"/>
+<text x="372" y="402" fill="#f0883e" font-size="15" font-weight="700" text-anchor="middle">six times fewer epochs</text></g>
+<rect x="740" y="86" width="396" height="334" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<a href="https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html" target="_blank" data-tiphead="What Figure 1 actually measures" data-tip="Epochs to reach 25% training error on CIFAR-10 with a four-layer conv net. Not ImageNet, not test accuracy. Learning rates were tuned separately for each network to make training as fast as possible, and no regularisation of any kind was used. One curve per condition, no seeds, no error bars; the paper concedes the size of the effect varies with architecture.">
+<text x="762" y="118" fill="#3b82f6" font-size="15" font-weight="700">Figure 1 from Krizhevsky et al. 2012</text>
+<rect x="766" y="130" width="344" height="258" rx="6" fill="#ffffff"/>
+<image href="images/paper/fig1-relu-vs-tanh.png" x="770" y="134" width="336" height="250" preserveAspectRatio="xMidYMid meet"/>
+<text x="762" y="408" class="relu-rl-cap" font-size="12">solid ReLU · dashed tanh · epochs vs training error</text>
+</a>
+<rect x="24" y="452" width="1112" height="124" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="46" y="482" fill="#3b82f6" font-size="16" font-weight="700">Why it mattered in 2012, and why it is still used in 2026</text>
+<text x="46" y="512" class="relu-rl-cap">Then: the argument was purely wall-clock. The authors say outright they could not have experimented with networks this large using saturating units.</text>
+<text x="46" y="538" class="relu-rl-cap">Now: rectifiers and their smooth descendants are the default, but for a reason this paper never tests — gradients that survive many layers of depth.</text>
+<text x="46" y="564" class="relu-rl-cap">The 2012 speed argument has largely been absorbed by better hardware; the optimisation argument is what kept the unit alive.</text>
+</svg>

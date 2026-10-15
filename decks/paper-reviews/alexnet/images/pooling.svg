@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.pool-po-cap{fill:#8a8a8a;font-size:14px}.pool-po-h{fill:#f0f0f0;font-weight:700;font-size:16px}.pool-po-w{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">Same stride, wider window — and one shared column per pair</text>
+<text x="24" y="58" class="pool-po-cap">A pooling layer is a grid of units spaced s pixels apart, each summarising a z × z neighbourhood. Set s &lt; z and consecutive windows share input.</text>
+<text x="80" y="100" class="pool-po-h">s = 2, z = 2 — the traditional choice</text>
+<rect x="80" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="124" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="168" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="212" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="256" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="300" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="344" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="388" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="432" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="80" y="190" width="88" height="32" rx="6" fill="#111824" stroke="#3b82f6" stroke-width="2"/>
+<rect x="168" y="232" width="88" height="32" rx="6" fill="#111824" stroke="#3b82f6" stroke-width="2"/>
+<rect x="256" y="274" width="88" height="32" rx="6" fill="#111824" stroke="#3b82f6" stroke-width="2"/>
+<rect x="344" y="316" width="88" height="32" rx="6" fill="#111824" stroke="#3b82f6" stroke-width="2"/>
+<text x="124" y="212" class="pool-po-w" fill="#93c5fd" text-anchor="middle">z = 2</text>
+<text x="80" y="382" class="pool-po-cap">Four windows, eight columns read, no column read twice.</text>
+<path d="M558,96 L558,392" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="640" y="100" class="pool-po-h">s = 2, z = 3 — what AlexNet uses</text>
+<rect x="640" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="684" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="728" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="772" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="816" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="860" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="904" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="948" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="992" y="124" width="44" height="44" fill="#1a1a1a" stroke="#2a2a2a"/>
+<rect x="640" y="190" width="132" height="32" rx="6" fill="#241a10" stroke="#f0883e" stroke-width="2"/>
+<rect x="728" y="232" width="132" height="32" rx="6" fill="#241a10" stroke="#f0883e" stroke-width="2"/>
+<rect x="816" y="274" width="132" height="32" rx="6" fill="#241a10" stroke="#f0883e" stroke-width="2"/>
+<rect x="904" y="316" width="132" height="32" rx="6" fill="#241a10" stroke="#f0883e" stroke-width="2"/>
+<text x="706" y="212" class="pool-po-w" fill="#f0883e" text-anchor="middle">z = 3</text>
+<path d="M728,178 L728,352" stroke="#f0883e" stroke-width="1.2" stroke-dasharray="4 5" opacity="0.6"/>
+<path d="M772,178 L772,352" stroke="#f0883e" stroke-width="1.2" stroke-dasharray="4 5" opacity="0.6"/>
+<text x="640" y="382" class="pool-po-cap">Four windows, nine columns read, every neighbouring pair shares one.</text>
+<rect x="24" y="414" width="1112" height="158" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="46" y="446" fill="#3b82f6" font-size="16" font-weight="700">What the overlap bought, and what happened to it</text>
+<text x="46" y="478" class="pool-po-cap">Reported: 0.4% top-1 and 0.3% top-5 lower error than s = 2, z = 2 — a clean comparison, because both settings produce output of equivalent dimensions.</text>
+<text x="46" y="506" class="pool-po-cap">The authors also note, without a number, that models with overlapping pooling were slightly harder to overfit.</text>
+<text x="46" y="534" class="pool-po-cap">It is the smallest reported gain of any ingredient in the paper, and the one nobody argues about today: strided convolutions and global average</text>
+<text x="46" y="560" class="pool-po-cap">pooling took over most of the job; one overlapping 3×3/2 max-pool survives mainly as a downsampling step in some stems, e.g. ResNet (background).</text>
+</svg>

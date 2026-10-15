@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.crit-cr-cap{fill:#8a8a8a;font-size:14px}.crit-cr-cl{fill:#f0f0f0;font-weight:700;font-size:16px}.crit-cr-hd{fill:#3b82f6;font-size:14px;font-weight:700;letter-spacing:0.06em}.crit-cr-sh{fill:#c8cdd2;font-size:14px}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">Five claims, and what each one is actually standing on</text>
+<text x="24" y="58" class="crit-cr-cap">None of these is wrong. All of them are asserted more strongly than the experiment behind them supports.</text>
+<text x="40" y="118" class="crit-cr-hd">THE CLAIM</text>
+<text x="350" y="118" class="crit-cr-hd">WHAT IS ACTUALLY SHOWN</text>
+<text x="790" y="118" class="crit-cr-hd">WHAT WOULD SETTLE IT</text>
+<path d="M24,130 L1136,130" stroke="#2a2a2a" stroke-width="1.5"/>
+<g data-tiphead="Depth" data-tip="A deletion experiment shows the layers are not redundant. It is not evidence about the direction of the depth-accuracy curve, which is what the sentence is usually quoted for.">
+<text x="40" y="162" class="crit-cr-cl">depth is essential</text>
+<text x="350" y="152" class="crit-cr-sh">One middle layer deleted costs about 2% top-1;</text>
+<text x="350" y="172" class="crit-cr-sh">each conv layer is under 1% of the parameters.</text>
+<text x="790" y="152" class="crit-cr-cap">A depth sweep with re-tuning, seeds and</text>
+<text x="790" y="172" class="crit-cr-cap">error bars — VGG and ResNet ran it later.</text>
+</g>
+<path d="M24,196 L1136,196" stroke="#1e1e1e" stroke-width="1"/>
+<g data-tiphead="The two-GPU split" data-tip="The baseline is a net with half as many kernels per conv layer, except the last conv and fc layers, left at full size. That makes 1.7% understate the two-GPU net's gain and overstate the split's own: read it as the gain of a bigger net, not of the split topology (slide 10).">
+<text x="40" y="230" class="crit-cr-cl">the two-GPU split helps</text>
+<text x="350" y="220" class="crit-cr-sh">1.7% top-1 against a one-GPU net with half</text>
+<text x="350" y="240" class="crit-cr-sh">the kernels per convolutional layer.</text>
+<text x="790" y="220" class="crit-cr-cap">The same full-width net on one card —</text>
+<text x="790" y="240" class="crit-cr-cap">the baseline differs in kernels, not just in topology.</text>
+</g>
+<path d="M24,264 L1136,264" stroke="#1e1e1e" stroke-width="1"/>
+<g data-tiphead="Local response normalization" data-tip="Four hyper-parameters chosen on a validation set, then a gain reported against the version without them. Later work could not reproduce a benefit on ILSVRC at all.">
+<text x="40" y="298" class="crit-cr-cl">LRN aids generalization</text>
+<text x="350" y="288" class="crit-cr-sh">1.4% top-1, with k, n, α and β themselves</text>
+<text x="350" y="308" class="crit-cr-sh">selected on a validation set.</text>
+<text x="790" y="288" class="crit-cr-cap">Repeated runs with k, n, α and β</text>
+<text x="790" y="308" class="crit-cr-cap">fixed in advance, with error bars.</text>
+</g>
+<path d="M24,332 L1136,332" stroke="#1e1e1e" stroke-width="1"/>
+<g data-tiphead="ReLU" data-tip="The entire ReLU experiment lives on CIFAR-10 with a four-layer network. The paper never measures what the choice of nonlinearity does to ImageNet accuracy.">
+<text x="40" y="366" class="crit-cr-cl">ReLU is the better unit</text>
+<text x="350" y="356" class="crit-cr-sh">Six times fewer epochs to 25% training error</text>
+<text x="350" y="376" class="crit-cr-sh">on a four-layer CIFAR-10 network.</text>
+<text x="790" y="356" class="crit-cr-cap">An ImageNet accuracy comparison at</text>
+<text x="790" y="376" class="crit-cr-cap">matched compute — never run here.</text>
+</g>
+<path d="M24,400 L1136,400" stroke="#1e1e1e" stroke-width="1"/>
+<g data-tiphead="The headline" data-tip="The abstract puts 15.3% next to the runner-up's 26.2%. Both are ensembles — the runner-up averages several Fisher-vector classifiers — but two of the seven networks also trained on twelve times more data.">
+<text x="40" y="434" class="crit-cr-cl">it beat everyone</text>
+<text x="350" y="424" class="crit-cr-sh">15.3% top-5 from seven networks, two with</text>
+<text x="350" y="444" class="crit-cr-sh">extra data and an extra convolutional layer.</text>
+<text x="790" y="424" class="crit-cr-cap">A single CNN at 18.2% (val) still beats the</text>
+<text x="790" y="444" class="crit-cr-cap">26.2% (test) runner-up, itself an ensemble.</text>
+</g>
+<rect x="24" y="474" width="1112" height="104" rx="12" fill="#0d1117" stroke="#f0883e" stroke-width="1.5"/>
+<text x="46" y="504" fill="#f0883e" font-size="16" font-weight="700">And the authors' own importance order (§3.1–3.4) has aged badly</text>
+<text x="46" y="534" class="crit-cr-cap">Sections 3.1 to 3.4 are sorted, in the authors' words, by their estimation of importance, most important first. The two-GPU split is second, LRN third.</text>
+<text x="46" y="560" class="crit-cr-cap">Dropout and the crop augmentation — the two things the paper calls necessary — sit in a later section, and neither is given an error number.</text>
+</svg>

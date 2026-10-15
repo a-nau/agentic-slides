@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.sqrt-t{fill:#f0f0f0;font-weight:700}.sqrt-m{font-family:'JetBrains Mono',monospace}.sqrt-d{fill:#a0a0a0}</style>
+<defs>
+<marker id="ao" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#f0883e"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="580" y="52" text-anchor="middle" fill="#f0883e" font-size="16" font-weight="700">The argument for the scaling (paper footnote 4), step by step</text>
+<path d="M280,135 L316,135" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)" fill="none"/>
+<path d="M570,135 L606,135" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)" fill="none"/>
+<path d="M860,135 L896,135" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)" fill="none"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="Step 1: d_k grows" data-tip="d_k is the width of a single query or key vector. The base model uses 64 per head, but the ablation in Table 3 row A also runs a single head at the full 512.">
+<rect x="30" y="80" width="250" height="110" rx="10" fill="#151515" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="52" y="106" class="sqrt-t" font-size="14.5">d_k grows</text>
+<text x="52" y="132" class="sqrt-d" font-size="11.5">queries and keys have d_k</text>
+<text x="52" y="150" class="sqrt-d" font-size="11.5">components; 64 per head here,</text>
+<text x="52" y="168" class="sqrt-d" font-size="11.5">but a full-width head uses 512.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS1" target="_blank" data-tiphead="Step 2: dot products grow" data-tip="Footnote 4 of the paper: if the components of q and k are independent with mean 0 and variance 1, their dot product has mean 0 and variance d_k. Typical magnitude therefore grows like the square root of d_k.">
+<rect x="320" y="80" width="250" height="110" rx="10" fill="#151515" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="342" y="106" class="sqrt-t" font-size="14.5">dot products grow</text>
+<text x="342" y="132" class="sqrt-d" font-size="11.5">with mean-0, variance-1</text>
+<text x="342" y="150" class="sqrt-d" font-size="11.5">components q . k has mean 0</text>
+<text x="342" y="168" class="sqrt-d" font-size="11.5">and variance d_k.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E1" target="_blank" data-tiphead="Step 3: the softmax saturates" data-tip="Exponentiating scores that are tens of units apart makes one weight essentially 1 and the rest essentially 0. The row stops being a distribution over positions and becomes a hard pick.">
+<rect x="610" y="80" width="250" height="110" rx="10" fill="#151515" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="632" y="106" class="sqrt-t" font-size="14.5">the softmax saturates</text>
+<text x="632" y="132" class="sqrt-d" font-size="11.5">one score dominates the row,</text>
+<text x="632" y="150" class="sqrt-d" font-size="11.5">so the weights collapse onto</text>
+<text x="632" y="168" class="sqrt-d" font-size="11.5">a single position.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS1" target="_blank" data-tiphead="Step 4: gradients vanish" data-tip="The paper suspects that for large d_k the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients. That is the concrete failure being avoided.">
+<rect x="900" y="80" width="250" height="110" rx="10" fill="#151515" stroke="#f85149" stroke-width="1.6"/>
+<text x="922" y="106" fill="#f85149" font-size="14.5" font-weight="700">gradients vanish</text>
+<text x="922" y="132" class="sqrt-d" font-size="11.5">a saturated softmax has</text>
+<text x="922" y="150" class="sqrt-d" font-size="11.5">extremely small gradients, so</text>
+<text x="922" y="168" class="sqrt-d" font-size="11.5">the layer stops learning.</text>
+</a>
+<text x="330" y="282" text-anchor="middle" fill="#f0883e" font-size="13.5" font-weight="700">unscaled: softmax of the raw dot products</text>
+<text x="830" y="282" text-anchor="middle" fill="#3b82f6" font-size="13.5" font-weight="700">scaled: same scores, each divided by 8</text>
+<path d="M120,462 L560,462" stroke="#444" stroke-width="1.4"/>
+<path d="M620,462 L1060,462" stroke="#444" stroke-width="1.4"/>
+<text x="112" y="306" text-anchor="end" class="sqrt-d" font-size="11">1</text>
+<text x="112" y="466" text-anchor="end" class="sqrt-d" font-size="11">0</text>
+<text x="612" y="306" text-anchor="end" class="sqrt-d" font-size="11">1</text>
+<text x="612" y="466" text-anchor="end" class="sqrt-d" font-size="11">0</text>
+<rect x="150" y="302" width="56" height="158" rx="3" fill="#f0883e"/>
+<rect x="226" y="454" width="56" height="6" rx="3" fill="#f0883e" opacity="0.55"/>
+<rect x="302" y="454" width="56" height="6" rx="3" fill="#f0883e" opacity="0.55"/>
+<rect x="378" y="454" width="56" height="6" rx="3" fill="#f0883e" opacity="0.55"/>
+<rect x="454" y="454" width="56" height="6" rx="3" fill="#f0883e" opacity="0.55"/>
+<rect x="650" y="362" width="56" height="98" rx="3" fill="#3b82f6"/>
+<rect x="726" y="398" width="56" height="62" rx="3" fill="#3b82f6" opacity="0.85"/>
+<rect x="802" y="420" width="56" height="40" rx="3" fill="#3b82f6" opacity="0.7"/>
+<rect x="878" y="434" width="56" height="26" rx="3" fill="#3b82f6" opacity="0.55"/>
+<rect x="954" y="444" width="56" height="16" rx="3" fill="#3b82f6" opacity="0.4"/>
+<text x="330" y="486" text-anchor="middle" class="sqrt-d" font-size="11.5">one weight near 1, the rest near 0 - almost no gradient</text>
+<text x="830" y="486" text-anchor="middle" class="sqrt-d" font-size="11.5">a usable spread of weights - gradient still flows</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS1" target="_blank" data-tiphead="The fix" data-tip="Dividing by the square root of d_k is the only difference between scaled dot-product attention and the classic dot-product attention it is built on.">
+<rect x="30" y="500" width="1100" height="72" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="52" y="528" class="sqrt-t" font-size="14.5">The fix: divide every score by sqrt(d_k) before the softmax. With d_k = 64 that is a division by 8.</text>
+<text x="52" y="554" class="sqrt-d" font-size="12.5">Britz et al. (2017), a large sweep of translation architectures: additive attention outperforms dot-product without scaling at large d_k.</text>
+</a>
+<text x="1130" y="252" text-anchor="end" fill="#f0883e" font-size="11.5">bar heights illustrative</text>
+</svg>

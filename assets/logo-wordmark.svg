@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 64" width="330" height="64">
+  <title>agentic-slides</title>
+  <g transform="translate(0 2)">
+  <path d="M38 14 H11 a6 6 0 0 0 -6 6 v26 a6 6 0 0 0 6 6 h40 a6 6 0 0 0 6 -6 V30" fill="none" stroke="#3b82f6" stroke-width="3.5" stroke-linecap="round"/>
+  <rect x="13" y="27" width="20" height="3.5" rx="1.75" fill="#93c5fd" opacity=".7"/>
+  <rect x="13" y="35" width="28" height="3.5" rx="1.75" fill="#93c5fd" opacity=".45"/>
+  <path d="M50 4 C51.5 13 53 14.5 62 16 C53 17.5 51.5 19 50 28 C48.5 19 47 17.5 38 16 C47 14.5 48.5 13 50 4Z" fill="#3b82f6"/>
+  <circle cx="40" cy="5" r="2" fill="#93c5fd"/>
+  </g>
+  <text x="76" y="43" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="-0.5" fill="#f0f0f0">agentic<tspan fill="#3b82f6">·</tspan><tspan font-weight="400" fill="#a0a0a0">slides</tspan></text>
+</svg>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.form-t{fill:#f0f0f0;font-weight:700}.form-m{font-family:'JetBrains Mono',monospace}.form-d{fill:#a0a0a0}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="36" class="form-t" font-size="17">Equation 1 has three parts, and the one that does no work is the one that matters</text>
+<text x="1120" y="36" text-anchor="end" fill="#3b82f6" font-size="14" font-weight="700">Sec 3.2, Eqn (1)</text>
+<g data-tiphead="Block output y" data-tip="The output vector of the layers considered. It has the same shape as x, which is what lets these blocks be stacked without any glue between them.">
+<text x="379" y="120" class="form-m" fill="#3fb950" font-size="38" font-weight="700">y</text>
+<path d="M379,132 L402,132" stroke="#3fb950" stroke-width="3" fill="none"/>
+</g>
+<text x="419" y="120" class="form-m" fill="#f0f0f0" font-size="38">=</text>
+<g data-tiphead="Residual mapping F" data-tip="The function the stacked layers actually have to learn. The paper defines it as F(x) := H(x) - x, where H is the mapping you originally wanted.">
+<text x="464" y="120" class="form-m" fill="#3b82f6" font-size="38" font-weight="700">F(x, {Wi})</text>
+<path d="M464,132 L692,132" stroke="#3b82f6" stroke-width="3" fill="none"/>
+</g>
+<text x="714" y="120" class="form-m" fill="#f0f0f0" font-size="38">+</text>
+<g data-tiphead="The shortcut term x" data-tip="The block input itself, added back element-wise. It is not transformed, not gated and not scaled, which is why it costs nothing.">
+<text x="759" y="120" class="form-m" fill="#f0883e" font-size="38" font-weight="700">x</text>
+<path d="M759,132 L782,132" stroke="#f0883e" stroke-width="3" fill="none"/>
+</g>
+<path d="M390,136 L390,164 L220,164 L220,186" stroke="#3fb950" stroke-width="1.4" fill="none"/>
+<path d="M578,136 L578,164 L600,164 L600,186" stroke="#3b82f6" stroke-width="1.4" fill="none"/>
+<path d="M770,136 L770,164 L960,164 L960,186" stroke="#f0883e" stroke-width="1.4" fill="none"/>
+<g data-tiphead="Shape of y" data-tip="Because y must have the same shape as x, a stack of these blocks keeps one width and one map size all the way through a stage: a run of blocks at one feature-map size, conv2_x to conv5_x in Table 1.">
+<rect x="40" y="188" width="360" height="128" rx="10" fill="#151515" stroke="#2a4a66" stroke-width="1.6"/>
+<text x="62" y="218" fill="#3fb950" font-size="14.5" font-weight="700">y — what comes out</text>
+<text x="62" y="246" class="form-d" font-size="12.5">The sum, before the outer ReLU: ReLU(y) exits.</text>
+<text x="62" y="270" class="form-d" font-size="12.5">Same shape as x, so blocks stack directly.</text>
+<text x="62" y="294" class="form-d" font-size="12.5">One block, not the whole network.</text>
+</g>
+<g data-tiphead="What F contains" data-tip="F can be two or three layers. With one layer only, the paper notes the block is similar to a plain linear layer and it observed no advantage.">
+<rect x="420" y="188" width="360" height="128" rx="10" fill="#151515" stroke="#20304a" stroke-width="1.6"/>
+<text x="442" y="218" fill="#3b82f6" font-size="14.5" font-weight="700">F — where every weight lives</text>
+<text x="442" y="246" class="form-d" font-size="12.5">Two layers here: F = W2 . ReLU(W1 x), with</text>
+<text x="442" y="270" class="form-d" font-size="12.5">the biases omitted to simplify notation.</text>
+<text x="442" y="294" class="form-d" font-size="12.5">The Wi are the block's learnable weights.</text>
+</g>
+<g data-tiphead="Why the identity path is free" data-tip="There is no matrix on this path. Nothing is learned, nothing is multiplied, so the shortcut adds neither extra parameter nor computation complexity.">
+<rect x="800" y="188" width="320" height="128" rx="10" fill="#151515" stroke="#4a3520" stroke-width="1.6"/>
+<text x="822" y="218" fill="#f0883e" font-size="14.5" font-weight="700">x — carried, not computed</text>
+<text x="822" y="246" class="form-d" font-size="12.5">The input itself, unchanged. No matrix,</text>
+<text x="822" y="270" class="form-d" font-size="12.5">no gate, never closed. Hence zero extra</text>
+<text x="822" y="294" class="form-d" font-size="12.5">parameters and zero extra multiplies.</text>
+</g>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="The addition is element-wise" data-tip="Performed on two feature maps channel by channel. Every entry of F(x) is added to the entry of x at the same position and channel, so the two tensors must have identical shape.">
+<rect x="40" y="344" width="530" height="236" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="64" y="378" fill="#3b82f6" font-size="15.5" font-weight="700">Walking one block, shape by shape</text>
+<text x="64" y="404" class="form-d" font-size="13">block input x</text>
+<text x="530" y="404" text-anchor="end" class="form-m" fill="#93c5fd" font-size="13">56 x 56 x 64</text>
+<text x="64" y="428" class="form-d" font-size="13">after the first 3x3, 64</text>
+<text x="530" y="428" text-anchor="end" class="form-m" fill="#93c5fd" font-size="13">56 x 56 x 64</text>
+<text x="64" y="452" class="form-d" font-size="13">after the second 3x3, 64 — this is F(x)</text>
+<text x="530" y="452" text-anchor="end" class="form-m" fill="#93c5fd" font-size="13">56 x 56 x 64</text>
+<text x="64" y="476" class="form-d" font-size="13">the shortcut hands back x, untouched</text>
+<text x="530" y="476" text-anchor="end" class="form-m" fill="#f0883e" font-size="13">56 x 56 x 64</text>
+<text x="64" y="500" class="form-d" font-size="13">F(x) + x, one add per entry</text>
+<text x="530" y="500" text-anchor="end" class="form-m" fill="#3fb950" font-size="13">56 x 56 x 64</text>
+<text x="64" y="530" fill="#f0f0f0" font-size="13">Weights on the shortcut: none. Multiplies on the shortcut: none.</text>
+<text x="64" y="552" class="form-d" font-size="12.5">Shapes follow Table 1, conv2_x of the 34-layer net.</text>
+<text x="64" y="572" class="form-d" font-size="12.5">224x224 input, halved by the stride-2 conv1 and by max pooling.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="Equation 2, the mismatch case" data-tip="At a stage boundary the channel count doubles and the feature map halves, so x and F(x) no longer have the same shape and cannot be added. Equation 2 inserts a linear projection Ws on the shortcut, done by 1x1 convolutions with a stride of 2.">
+<rect x="590" y="344" width="530" height="236" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="614" y="378" class="form-t" font-size="15.5">When the shapes do not match</text>
+<text x="855" y="424" text-anchor="middle" class="form-m" fill="#f0f0f0" font-size="26">y = F(x, {Wi}) + Ws x</text>
+<text x="1096" y="452" text-anchor="end" fill="#3b82f6" font-size="12.5" font-weight="700">Eqn (2)</text>
+<text x="614" y="482" class="form-d" font-size="13">Eqn (1) needs x and F(x) the same shape. At each stage</text>
+<text x="614" y="506" class="form-d" font-size="13">boundary both change: channels double and the map halves,</text>
+<text x="614" y="530" class="form-d" font-size="13">56x56x64 → 28x28x128. Ws is then a 1x1 conv with stride 2.</text>
+<text x="614" y="560" fill="#f0f0f0" font-size="13">The paper: Ws is only used when matching dimensions.</text>
+</a>
+</svg>

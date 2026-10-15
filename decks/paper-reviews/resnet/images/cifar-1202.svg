@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.cifa-t{fill:#f0f0f0;font-weight:700}.cifa-m{font-family:'JetBrains Mono',monospace}.cifa-d{fill:#a0a0a0}.cifa-ax{fill:#6e6e6e;font-size:11.5}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="cifa-t" font-size="17">CIFAR-10 is where the paper pushes depth until it stops paying</text>
+<text x="90" y="66" fill="#3b82f6" font-size="13.5" font-weight="700">CIFAR-10, ResNets of 110 and 1202 layers</text>
+<path d="M90,90 L90,350 L600,350" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M90,220 L600,220" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+<text x="82" y="95" text-anchor="end" class="cifa-ax">20</text>
+<text x="82" y="224" text-anchor="end" class="cifa-ax">10</text>
+<text x="82" y="354" text-anchor="end" class="cifa-ax">0</text>
+<text x="90" y="368" class="cifa-ax">0</text>
+<text x="345" y="368" text-anchor="middle" class="cifa-ax">3</text>
+<text x="600" y="368" text-anchor="middle" class="cifa-ax">6</text>
+<text x="345" y="388" text-anchor="middle" class="cifa-ax">iterations (1e4), error (%) on the y axis</text>
+<g data-tiphead="ResNet-110" data-tip="Test error 6.43% on CIFAR-10, with 1.7M parameters. The paper runs this configuration five times and reports best and mean plus or minus standard deviation.">
+<path d="M98,90 L132,181 L175,220 L218,233 L260,242 L302,249 L345,254 L362,304 L430,318 L498,321 L515,342 L600,346" stroke="#3b82f6" stroke-width="1.8" fill="none" stroke-dasharray="6 4"/>
+<path d="M98,90 L132,155 L175,181 L218,194 L260,200 L302,207 L345,211 L362,251 L430,258 L498,260 L515,266 L600,266" stroke="#3b82f6" stroke-width="3" fill="none"/>
+</g>
+<g data-tiphead="ResNet-1202" data-tip="No optimisation difficulty at all: this network reaches a training error below 0.1%. Its test error is 7.93%, worse than the 110-layer net, with 19.4M parameters.">
+<path d="M103,90 L132,168 L175,214 L218,229 L260,240 L302,246 L345,251 L362,308 L430,321 L498,325 L515,345 L600,349" stroke="#f0883e" stroke-width="1.8" fill="none" stroke-dasharray="6 4"/>
+<path d="M103,90 L132,142 L175,168 L218,181 L260,188 L302,194 L345,198 L362,236 L430,241 L498,243 L515,246 L600,247" stroke="#f0883e" stroke-width="3" fill="none"/>
+</g>
+<path d="M90,414 L120,414" stroke="#3b82f6" stroke-width="3" fill="none"/><text x="128" y="418" fill="#3b82f6" font-size="12" font-weight="700">ResNet-110</text><path d="M216,414 L246,414" stroke="#f0883e" stroke-width="3" fill="none"/><text x="254" y="418" fill="#f0883e" font-size="12" font-weight="700">ResNet-1202</text><text x="360" y="418" class="cifa-ax">dashed = training error, bold = test error — redrawn from Figure 6, right panel; curve shapes schematic</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS2" target="_blank" data-tiphead="The authors' own concession" data-tip="The paper: the testing result of this 1202-layer network is worse than that of our 110-layer network, although both have similar training error. We argue that this is because of overfitting.">
+<rect x="640" y="52" width="480" height="346" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="664" y="86" fill="#3b82f6" font-size="15.5" font-weight="700">Depth stops paying, and the authors say so</text>
+<text x="664" y="118" class="cifa-d" font-size="13">Optimisation is fine: the 1202-layer net reaches a training</text>
+<text x="664" y="140" class="cifa-d" font-size="13">error below 0.1%. Both nets end with similar training error.</text>
+<text x="664" y="170" class="cifa-d" font-size="13">Generalisation is not: its test error is worse than the</text>
+<text x="664" y="192" class="cifa-d" font-size="13">110-layer net's, and the paper attributes that to overfitting</text>
+<text x="664" y="214" class="cifa-d" font-size="13">on a small dataset — 19.4M parameters for 50k images, with</text>
+<text x="664" y="236" class="cifa-d" font-size="13">no maxout and no dropout applied anywhere.</text>
+<text x="664" y="270" fill="#f0883e" font-size="12.5" font-weight="700">READ THE DIRECTION CAREFULLY</text>
+<text x="664" y="296" fill="#f0f0f0" font-size="13">This is the opposite failure to slide 8. Degradation means</text>
+<text x="664" y="318" fill="#f0f0f0" font-size="13">high TRAINING error. Here training error is essentially zero</text>
+<text x="664" y="340" fill="#f0f0f0" font-size="13">and only test error suffers, which is exactly what overfitting</text>
+<text x="664" y="362" fill="#f0f0f0" font-size="13">looks like — and the paper labels it as such.</text>
+<text x="664" y="386" class="cifa-ax">Left open: stronger regularisation may improve this.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS2" target="_blank" data-tiphead="Table 6" data-tip="Classification error on the CIFAR-10 test set, all methods with data augmentation. For ResNet-110 the paper runs it five times and shows best with mean and standard deviation in brackets.">
+<rect x="40" y="430" width="1080" height="156" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="66" y="462" class="cifa-t" font-size="15.5">Table 6 — CIFAR-10 test error (%), and where the curve turns around</text>
+<text x="66" y="486" class="cifa-d" font-size="13">layers</text>
+<text x="66" y="508" class="cifa-d" font-size="13">params</text>
+<text x="66" y="530" class="cifa-d" font-size="13">test error</text>
+<text x="270" y="486" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">20</text>
+<text x="270" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">0.27M</text>
+<text x="270" y="530" text-anchor="middle" class="cifa-m" fill="#f0f0f0" font-size="14">8.75</text>
+<text x="420" y="486" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">32</text>
+<text x="420" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">0.46M</text>
+<text x="420" y="530" text-anchor="middle" class="cifa-m" fill="#f0f0f0" font-size="14">7.51</text>
+<text x="570" y="486" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">44</text>
+<text x="570" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">0.66M</text>
+<text x="570" y="530" text-anchor="middle" class="cifa-m" fill="#f0f0f0" font-size="14">7.17</text>
+<text x="720" y="486" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">56</text>
+<text x="720" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">0.85M</text>
+<text x="720" y="530" text-anchor="middle" class="cifa-m" fill="#f0f0f0" font-size="14">6.97</text>
+<text x="870" y="486" text-anchor="middle" class="cifa-m" fill="#3b82f6" font-size="14">110</text>
+<text x="870" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">1.7M</text>
+<text x="870" y="530" text-anchor="middle" class="cifa-m" fill="#3b82f6" font-size="14">6.43</text>
+<text x="1030" y="486" text-anchor="middle" class="cifa-m" fill="#f0883e" font-size="14">1202</text>
+<text x="1030" y="508" text-anchor="middle" class="cifa-m" fill="#a0a0a0" font-size="14">19.4M</text>
+<text x="1030" y="530" text-anchor="middle" class="cifa-m" fill="#f0883e" font-size="14">7.93</text>
+<text x="66" y="554" class="cifa-ax">6n+2 layers: one 3x3 conv, then three stages of 2n 3x3 layers (16, 32, 64 filters on 32, 16, 8-pixel maps), then pooling and a 10-way fc; n = 3 to 200.</text>
+<text x="66" y="576" class="cifa-ax">All entries use data augmentation. The 110-layer row is the best of five runs; its mean is 6.61 with a standard deviation of 0.16.</text>
+</a>
+</svg>

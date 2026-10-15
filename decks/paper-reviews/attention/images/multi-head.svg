@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.mult-t{fill:#f0f0f0;font-weight:700}.mult-m{font-family:'JetBrains Mono',monospace}.mult-d{fill:#a0a0a0}.mult-hd{fill:#3b82f6;font-weight:700;letter-spacing:.06em}</style>
+<defs>
+<marker id="ag" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="260" y="96" text-anchor="middle" class="mult-hd" font-size="15">Multi-Head Attention</text>
+<text x="260" y="114" text-anchor="middle" class="mult-d" font-size="11.5">Figure 2, right panel, redrawn</text>
+<path d="M105,530 L105,512" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M240,530 L240,512" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M375,530 L375,512" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M105,464 L105,446" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M240,464 L240,446" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M375,464 L375,446" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M50,446 L470,446" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M110,446 L110,432" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M245,446 L245,432" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M410,446 L410,432" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M110,374 L110,340" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M245,374 L245,340" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M410,374 L410,340" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M260,292 L260,262" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M260,214 L260,190" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<text x="327" y="406" text-anchor="middle" class="mult-d" font-size="18">...</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="V, the value input" data-tip="The raw 512-wide input of the positions being read, Y on slide 11, before any projection. The per-head matrix W_i^V is the only value projection.">
+<rect x="60" y="530" width="90" height="36" rx="8" fill="#1a1a1a" stroke="#bc8cff" stroke-width="2"/>
+<text x="105" y="554" text-anchor="middle" class="mult-t" font-size="16">V = Y</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="K, the key input" data-tip="The raw 512-wide input of the positions being read, Y on slide 11, before any projection. Which tensor this is depends on which of the three usages the layer is: see the three-places slide.">
+<rect x="195" y="530" width="90" height="36" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="240" y="554" text-anchor="middle" class="mult-t" font-size="16">K = Y</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="Q, the query input" data-tip="The raw 512-wide input of the reading positions, X on slide 11, not yet projected. The per-head matrix W_i^Q is the only query projection.">
+<rect x="330" y="530" width="90" height="36" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="375" y="554" text-anchor="middle" class="mult-t" font-size="16">Q = X</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="Per-head linear projections" data-tip="Each of Q, K and V is projected h times with different learned matrices, from 512 down to 64. These are the W matrices in the head formula.">
+<rect x="60" y="464" width="90" height="48" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="105" y="484" text-anchor="middle" class="mult-t" font-size="14">Linear</text>
+<text x="105" y="501" text-anchor="middle" class="mult-m" fill="#93c5fd" font-size="10">512 to 64</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="Per-head linear projections" data-tip="h separate 512-by-64 matrices per input, so each head sees its own learned subspace rather than the raw representation.">
+<rect x="195" y="464" width="90" height="48" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="240" y="484" text-anchor="middle" class="mult-t" font-size="14">Linear</text>
+<text x="240" y="501" text-anchor="middle" class="mult-m" fill="#93c5fd" font-size="10">512 to 64</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="Per-head linear projections" data-tip="The projections are what make multi-head attention more than an average: each head can read a different learned view of the same tensor.">
+<rect x="330" y="464" width="90" height="48" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="375" y="484" text-anchor="middle" class="mult-t" font-size="14">Linear</text>
+<text x="375" y="501" text-anchor="middle" class="mult-m" fill="#93c5fd" font-size="10">512 to 64</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS1" target="_blank" data-tiphead="One head" data-tip="A complete scaled dot-product attention, but at width 64 instead of 512. Its cost is one eighth of a full-width head, which is why eight of them cost about the same.">
+<rect x="50" y="374" width="120" height="58" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="110" y="396" text-anchor="middle" class="mult-t" font-size="13.5">head 1</text>
+<text x="110" y="416" text-anchor="middle" class="mult-m" fill="#93c5fd" font-size="10">d_k = 64</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS1" target="_blank" data-tiphead="One head" data-tip="Heads run in parallel and never see each other until the concatenation, so they can specialise. Figure 5 of the paper shows heads whose behaviour seems related to the structure of the sentence.">
+<rect x="185" y="374" width="120" height="58" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="245" y="396" text-anchor="middle" class="mult-t" font-size="13.5">head 2</text>
+<text x="245" y="416" text-anchor="middle" class="mult-m" fill="#93c5fd" font-size="10">d_k = 64</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="One head" data-tip="The base model uses h = 8. Table 3 row A varies h from 1 to 32 at constant compute and finds 8 and 16 best.">
+<rect x="350" y="374" width="120" height="58" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="410" y="396" text-anchor="middle" class="mult-t" font-size="13.5">head 8</text>
+<text x="410" y="416" text-anchor="middle" class="mult-m" fill="#93c5fd" font-size="10">d_k = 64</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="Concat" data-tip="The h head outputs of width d_v are laid side by side, giving h times d_v = 512 columns again.">
+<rect x="50" y="292" width="420" height="48" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="260" y="312" text-anchor="middle" class="mult-t" font-size="14.5">Concat</text>
+<text x="260" y="329" text-anchor="middle" class="mult-m" fill="#93c5fd" font-size="10.5">8 x 64 = 512 columns</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="Output projection W^O" data-tip="A final learned 512-by-512 matrix that mixes the concatenated heads back into one representation. Without it the heads would remain in disjoint slices of the vector.">
+<rect x="140" y="214" width="240" height="48" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="260" y="234" text-anchor="middle" class="mult-t" font-size="14.5">Linear</text>
+<text x="260" y="251" text-anchor="middle" class="mult-m" fill="#93c5fd" font-size="10.5">W^O, 512 to 512</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Sub-layer output" data-tip="512 dimensions per position, the same width as every other sub-layer output and every embedding, so the residual addition always lines up.">
+<rect x="140" y="142" width="240" height="48" rx="9" fill="#0d1117" stroke="#93c5fd" stroke-width="1.8"/>
+<text x="260" y="162" text-anchor="middle" class="mult-t" font-size="14.5">sub-layer output</text>
+<text x="260" y="179" text-anchor="middle" class="mult-m" fill="#93c5fd" font-size="10.5">n x 512</text>
+</a>
+<text x="560" y="108" class="mult-t" font-size="17">MultiHead(Q, K, V) = Concat(head_1, ..., head_h) W^O</text>
+<text x="560" y="140" class="mult-d" font-size="17">where head_i = Attention(Q W_i^Q, K W_i^K, V W_i^V)</text>
+<text x="560" y="170" class="mult-d" font-size="13">Here Q, K, V are the raw inputs X, Y, Y: each is projected once, per head.</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="Why the cost stays flat" data-tip="Because each head is narrower by exactly the factor h, the total work across all heads is about the work of one full-width head. The paper states the total computational cost is similar to that of single-head attention with full dimensionality.">
+<rect x="560" y="188" width="580" height="134" rx="10" fill="#151515" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="582" y="214" fill="#3b82f6" font-size="14.5" font-weight="700">Eight heads cost about one full-width head</text>
+<text x="582" y="242" class="mult-d" font-size="13">h = 8 heads, each d_k = d_v = 512 / 8 = 64. Equal in two senses:</text>
+<text x="582" y="264" class="mult-d" font-size="13">weights: eight 512 x 64 projections per input = one 512 x 512;</text>
+<text x="582" y="286" class="mult-d" font-size="13">score FLOPs: eight products Q_i K_i^T at width 64 = one at 512.</text>
+<text x="582" y="308" class="mult-d" font-size="13">Not equal: 8 softmaxes and 8 n x n weight matrices instead of 1.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="What the extra heads buy" data-tip="Multi-head attention lets the model jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.">
+<rect x="560" y="338" width="580" height="112" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="582" y="364" class="mult-t" font-size="14.5">What the extra heads buy (example illustrative)</text>
+<text x="582" y="392" class="mult-d" font-size="13">A verb needs its subject and its object. One head gives one</text>
+<text x="582" y="414" class="mult-d" font-size="13">weighted average, so a 50/50 split returns a blur of both words.</text>
+<text x="582" y="436" class="mult-d" font-size="13">Two heads can each take one, kept apart in separate concat slices.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S6.T3" target="_blank" data-tiphead="What the ablation shows" data-tip="Table 3 rows A vary the number of heads while keeping the amount of computation constant. Single-head attention is 0.9 BLEU worse than the best setting, and quality also drops off with too many heads.">
+<rect x="560" y="466" width="580" height="112" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="582" y="492" class="mult-t" font-size="14.5">What the ablation shows (Table 3, rows A)</text>
+<text x="582" y="520" class="mult-d" font-size="13">Compute held constant, h varied: h = 1 gives 24.9 BLEU,</text>
+<text x="582" y="542" class="mult-d" font-size="13">h = 8 gives 25.8, h = 16 also 25.8, h = 32 drops to 25.4.</text>
+<text x="582" y="564" class="mult-d" font-size="13">Not monotonic; and h = 1 also widens d_k to 512, two changes at once.</text>
+</a>
+</svg>

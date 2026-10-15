@@ -1,0 +1,11 @@
+/* @theme custom */
+
+@import 'default';
+
+section {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+section.lead h1 {
+  font-size: 2.5em;
+}

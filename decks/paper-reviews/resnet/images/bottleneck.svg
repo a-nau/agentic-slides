@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.bott-t{fill:#f0f0f0;font-weight:700}.bott-m{font-family:'JetBrains Mono',monospace}.bott-d{fill:#a0a0a0}</style>
+<defs>
+<marker id="ng" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3b82f6"/></marker>
+<marker id="nb" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3fb950"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="bott-t" font-size="17">Figure 5, both blocks, with the multiply-adds written out underneath</text>
+<g data-tiphead="The two-layer block" data-tip="The building block used in ResNet-34, shown in Figure 5 left. Two 3x3 convolutions operating on 56x56 feature maps with 64 channels.">
+<rect x="40" y="50" width="530" height="312" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="64" y="82" class="bott-t" font-size="15.5">Two-layer block — ResNet-18/34</text>
+<text x="64" y="103" class="bott-d" font-size="12.5">Figure 5, left. The width the 3x3 sees is the width between blocks.</text>
+<text x="305" y="126" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">in: 64-d</text>
+<circle cx="305" cy="286" r="18" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="305" y="293" text-anchor="middle" fill="#f0f0f0" font-size="18" font-weight="700">+</text>
+<text x="305" y="336" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">out: 64-d</text>
+</g>
+<g data-tiphead="First 3x3" data-tip="Sees 64 input channels and produces 64 output channels, on 56x56 feature maps.">
+<rect x="215" y="140" width="180" height="40" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="305" y="165" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="14">3x3, 64</text>
+</g>
+<g data-tiphead="Second 3x3" data-tip="Same shape again. Its output is what gets added to the shortcut, so it must match the block input exactly.">
+<rect x="215" y="200" width="180" height="40" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="305" y="225" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="14">3x3, 64</text>
+</g>
+<path d="M305,130 L305,136" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M305,184 L305,196" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ng)"/>
+<path d="M305,244 L305,264" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ng)"/>
+<path d="M305,132 L165,132 L165,286 L283,286" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#nb)"/>
+<g data-tiphead="The bottleneck block" data-tip="Figure 5 right. Three layers instead of two: the 1x1 layers are responsible for reducing and then increasing, restoring, dimensions, leaving the 3x3 layer a bottleneck with smaller input and output dimensions.">
+<rect x="590" y="50" width="530" height="312" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="614" y="82" fill="#3b82f6" font-size="15.5" font-weight="700">Bottleneck block — ResNet-50/101/152</text>
+<text x="614" y="103" class="bott-d" font-size="12.5">Figure 5, right. The 3x3 sees a quarter of the width between blocks.</text>
+<text x="800" y="126" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">in: 256-d</text>
+<text x="906" y="165" fill="#93c5fd" font-size="12">reduce 256 to 64</text>
+<text x="906" y="225" fill="#93c5fd" font-size="12">the narrow part</text>
+<text x="906" y="285" fill="#93c5fd" font-size="12">restore 64 to 256</text>
+<circle cx="800" cy="330" r="18" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="800" y="337" text-anchor="middle" fill="#f0f0f0" font-size="18" font-weight="700">+</text>
+</g>
+<g data-tiphead="1x1 down-projection" data-tip="Cuts the 256 incoming channels to 64. It is a pointwise convolution, so it costs in-channels times out-channels per position.">
+<rect x="710" y="140" width="180" height="40" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="800" y="165" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="14">1x1, 64</text>
+</g>
+<g data-tiphead="The bottleneck 3x3" data-tip="The expensive layer, now running on 64 channels instead of 256. This is where the whole saving comes from.">
+<rect x="710" y="200" width="180" height="40" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="800" y="225" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="14">3x3, 64</text>
+</g>
+<g data-tiphead="1x1 up-projection" data-tip="Restores the width to 256 so that the result can be added to the shortcut, which is still carrying a 256-channel tensor.">
+<rect x="710" y="260" width="180" height="40" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="800" y="285" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="14">1x1, 256</text>
+</g>
+<path d="M800,130 L800,136" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M800,184 L800,196" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ng)"/>
+<path d="M800,244 L800,256" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ng)"/>
+<path d="M800,304 L800,308" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ng)"/>
+<path d="M800,132 L660,132 L660,330 L778,330" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#nb)"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="The arithmetic behind similar time complexity" data-tip="Counting multiply-adds per output position: a 3x3 convolution costs 9 times in-channels times out-channels, a 1x1 convolution costs in-channels times out-channels. Squeezing the 3x3 down to 64 channels is what keeps the three-layer block affordable. The paper prints only the shapes and the phrase similar time complexity; the products in the right-hand column were multiplied out for this deck so the claim can be checked rather than taken on trust.">
+<rect x="40" y="376" width="1080" height="212" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="406" fill="#3b82f6" font-size="15.5" font-weight="700">The arithmetic, in multiply-adds per output position</text>
+<text x="66" y="434" fill="#7a7a7a" font-size="12.5">a 3x3 conv costs 9 x in x out; a 1x1 conv costs in x out</text>
+<text x="1094" y="434" text-anchor="end" fill="#d29922" font-size="12.5">totals derived for this deck — the paper prints the shapes, not the products</text>
+<text x="66" y="462" class="bott-d" font-size="13.5">two 3x3 layers at 64 channels</text>
+<text x="936" y="462" text-anchor="end" class="bott-m" fill="#f0f0f0" font-size="14">2 x 9 x 64 x 64</text>
+<text x="1094" y="462" text-anchor="end" class="bott-m" fill="#d29922" font-size="14">= 73,728</text>
+<text x="66" y="490" class="bott-d" font-size="13.5">bottleneck: 1x1 down, 3x3 narrow, 1x1 back up</text>
+<text x="936" y="490" text-anchor="end" class="bott-m" fill="#f0f0f0" font-size="14">256 x 64 + 9 x 64 x 64 + 64 x 256</text>
+<text x="1094" y="490" text-anchor="end" class="bott-m" fill="#d29922" font-size="14">= 69,632</text>
+<text x="66" y="518" class="bott-d" font-size="13.5">the same 3x3 pair run straight on 256 channels</text>
+<text x="936" y="518" text-anchor="end" class="bott-m" fill="#f85149" font-size="14">2 x 9 x 256 x 256</text>
+<text x="1094" y="518" text-anchor="end" class="bott-m" fill="#f85149" font-size="14">= 1,179,648</text>
+<text x="66" y="550" fill="#f0f0f0" font-size="13.5">73,728 against 69,632 — the three-layer block is the cheaper of the two. That is the paper's both designs have similar time complexity.</text>
+<text x="66" y="574" class="bott-d" font-size="13.5">1,179,648 is what the two-layer design would cost at the bottleneck's 256-d width — 16x the first line. The 1x1 pair avoids exactly that.</text>
+</a>
+</svg>

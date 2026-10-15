@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.resu-rs-cap{fill:#8a8a8a;font-size:14px}.resu-rs-lb{fill:#f0f0f0;font-weight:700;font-size:15px}.resu-rs-val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">Which number is the result? Only two bars are the network in Figure 2</text>
+<text x="24" y="58" class="resu-rs-cap">Bars are top-5 error, lower is better. Same scale on both sides, so the two competitions can be compared by eye.</text>
+<rect x="24" y="80" width="532" height="418" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="46" y="112" fill="#3b82f6" font-size="15" font-weight="700">ILSVRC-2010 — the clean comparison, all test error</text>
+<text x="46" y="134" class="resu-rs-cap">The only year whose test labels are public, so this is where</text>
+<text x="46" y="154" class="resu-rs-cap">nearly every experiment in the paper is run.</text>
+<text x="46" y="196" class="resu-rs-lb">best entry of the 2010 contest · test</text>
+<text x="46" y="216" class="resu-rs-cap">six averaged sparse-coding models · top-1 47.1%</text>
+<rect x="46" y="226" width="282" height="24" rx="4" fill="#3a3a3a"/>
+<text x="340" y="244" class="resu-rs-val" fill="#a0a0a0">28.2%</text>
+<text x="46" y="288" class="resu-rs-lb">best published since</text>
+<text x="46" y="308" class="resu-rs-cap">two classifiers on Fisher vectors · top-1 45.7%</text>
+<rect x="46" y="318" width="257" height="24" rx="4" fill="#3a3a3a"/>
+<text x="315" y="336" class="resu-rs-val" fill="#a0a0a0">25.7%</text>
+<text x="46" y="380" class="resu-rs-lb">this CNN — the model in Figure 2</text>
+<text x="46" y="400" class="resu-rs-cap">one network, ten-patch test averaging · top-1 37.5%</text>
+<rect x="46" y="410" width="170" height="24" rx="4" fill="#3b82f6"/>
+<text x="228" y="428" class="resu-rs-val" fill="#93c5fd">17.0%</text>
+<text x="46" y="466" class="resu-rs-cap">Without the ten-patch averaging these become 39.0% and 18.3%</text>
+<text x="46" y="486" class="resu-rs-cap">— the headline already contains a test-time trick.</text>
+<rect x="580" y="80" width="556" height="418" rx="12" fill="#0d1117" stroke="#f0883e" stroke-width="1.5"/>
+<text x="602" y="112" fill="#f0883e" font-size="15" font-weight="700">ILSVRC-2012 — what the winning 15.3% is made of</text>
+<text x="602" y="134" class="resu-rs-cap">Test labels not public; the paper finds val and test within 0.1%.</text>
+<text x="602" y="170" class="resu-rs-lb">second-best entry of the contest · test</text>
+<rect x="602" y="180" width="262" height="22" rx="4" fill="#3a3a3a"/>
+<text x="876" y="197" class="resu-rs-val" fill="#a0a0a0">26.2%</text>
+<text x="602" y="232" class="resu-rs-lb">1 CNN — the model this paper describes · val</text>
+<rect x="602" y="242" width="182" height="22" rx="4" fill="#f0883e"/>
+<text x="796" y="259" class="resu-rs-val" fill="#f0883e">18.2%</text>
+<text x="602" y="294" class="resu-rs-lb">1 CNN* — sixth conv layer, pre-trained · val</text>
+<text x="602" y="314" class="resu-rs-cap">on the 15M-image Fall 2011 release, then fine-tuned</text>
+<rect x="602" y="324" width="166" height="22" rx="4" fill="#3a3a3a"/>
+<text x="780" y="341" class="resu-rs-val" fill="#a0a0a0">16.6%</text>
+<text x="602" y="376" class="resu-rs-lb">5 CNNs averaged · val (test also 16.4%)</text>
+<rect x="602" y="386" width="164" height="22" rx="4" fill="#3a3a3a"/>
+<text x="778" y="403" class="resu-rs-val" fill="#a0a0a0">16.4%</text>
+<text x="602" y="438" class="resu-rs-lb">7 CNNs* — the competition entry · test (val 15.4%)</text>
+<text x="602" y="458" class="resu-rs-cap">the five above plus two of the pre-trained networks</text>
+<rect x="602" y="468" width="153" height="22" rx="4" fill="#3b82f6"/>
+<text x="767" y="485" class="resu-rs-val" fill="#93c5fd">15.3%</text>
+<rect x="24" y="508" width="1112" height="70" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="46" y="538" class="resu-rs-cap">The abstract quotes both. 37.5% / 17.0% (2010 test) belong to the eight-layer network in Figure 2; 15.3% (2012 test) is an ensemble of seven networks,</text>
+<text x="46" y="564" class="resu-rs-cap">two with a sixth conv layer and pre-training on about twelve times more images (15M vs 1.2M). The same single network scores 18.2% on 2012 validation.</text>
+</svg>

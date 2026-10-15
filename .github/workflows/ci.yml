@@ -1,0 +1,30 @@
+# Unit tests on every push and pull request: the editable-PPTX exporter, the
+# export server and source-review ingest (pytest) and the browser layers (node --test). Read-only.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: 22
+      - name: Python deps (exact versions, hash-checked)
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -q --require-hashes -r scripts/pptx_export/requirements.lock
+      - run: .venv/bin/python -m pytest -q scripts/pptx_export/tests source-review/tests
+      - run: .venv/bin/python -m playwright install chromium
+      - run: node --test scripts/*.test.js
+        env:
+          PYTHON: .venv/bin/python

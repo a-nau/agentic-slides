@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.resp-t{fill:#f0f0f0;font-weight:700}.resp-d{fill:#a0a0a0}.resp-ax{fill:#6e6e6e;font-size:11.5}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="resp-t" font-size="17">Every layer of a ResNet moves the signal less than its plain equivalent does</text>
+<text x="90" y="66" fill="#3b82f6" font-size="13.5" font-weight="700">Standard deviation of layer responses on CIFAR-10, sorted by magnitude</text>
+<text x="90" y="84" class="resp-ax" font-size="11.5" style="font-size:11.5px">response = output of each 3x3 layer, after BN and before the ReLU or the addition</text>
+<path d="M90,90 L90,380 L600,380" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M90,283 L600,283" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+<path d="M90,187 L600,187" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+<text x="82" y="95" text-anchor="end" class="resp-ax">3</text>
+<text x="82" y="191" text-anchor="end" class="resp-ax">2</text>
+<text x="82" y="287" text-anchor="end" class="resp-ax">1</text>
+<text x="82" y="384" text-anchor="end" class="resp-ax">0</text>
+<text x="90" y="398" class="resp-ax">0</text>
+<text x="368" y="398" text-anchor="middle" class="resp-ax">60</text>
+<text x="600" y="398" text-anchor="middle" class="resp-ax">110</text>
+<text x="345" y="418" text-anchor="middle" class="resp-ax">rank: layers sorted by std, largest first — std on the y axis</text>
+<g data-tiphead="plain-20 and plain-56" data-tip="The two plain networks sit highest: every layer changes the signal by a lot. Residual nets sit visibly below them at the same depth.">
+<path d="M90,129 L109,177 L127,206 L146,235 L164,264 L183,293" stroke="#f0883e" stroke-width="2.4" fill="none"/>
+<path d="M90,148 L127,196 L164,225 L201,245 L238,264 L275,283 L313,303 L350,332" stroke="#f85149" stroke-width="2.4" fill="none"/>
+</g>
+<g data-tiphead="ResNet-20, ResNet-56, ResNet-110" data-tip="The residual networks sit lower, and the deeper the ResNet the lower it sits. The paper: when there are more layers, an individual layer of ResNets tends to modify the signal less.">
+<path d="M90,216 L109,254 L127,274 L146,293 L164,312 L183,341" stroke="#3fb950" stroke-width="2.4" fill="none"/>
+<path d="M90,235 L127,274 L164,293 L201,307 L238,322 L275,332 L313,346 L350,361" stroke="#3b82f6" stroke-width="2.4" fill="none"/>
+<path d="M90,264 L160,303 L229,322 L299,332 L368,341 L438,349 L507,356 L577,365 L600,370" stroke="#93c5fd" stroke-width="2.4" fill="none"/>
+</g>
+<text x="90" y="444" fill="#f0883e" font-size="12" font-weight="700">plain-20</text>
+<text x="180" y="444" fill="#f85149" font-size="12" font-weight="700">plain-56</text>
+<text x="270" y="444" fill="#3fb950" font-size="12" font-weight="700">ResNet-20</text>
+<text x="372" y="444" fill="#3b82f6" font-size="12" font-weight="700">ResNet-56</text>
+<text x="474" y="444" fill="#93c5fd" font-size="12" font-weight="700">ResNet-110</text>
+<text x="90" y="470" class="resp-ax">Redrawn from Figure 7, lower panel; curve shapes schematic.</text>
+<rect x="60" y="490" width="560" height="92" rx="12" fill="#151515" stroke="#f0883e" stroke-width="1.6"/>
+<text x="84" y="518" fill="#f0883e" font-size="12.5" font-weight="700">VERDICT: LITTLE WEIGHT ON ITS OWN</text>
+<text x="84" y="542" fill="#f0f0f0" font-size="13">Figure 7 shows the pattern the hypothesis predicts, but nothing</text>
+<text x="84" y="564" fill="#f0f0f0" font-size="13">rules out other causes. A consistency check, not a test.</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS1" target="_blank" data-tiphead="Hypothesis, support, and the gap between them" data-tip="Section 3.1 states the intuition as a hypothesis and Section 4.2 offers the response magnitudes as support. The paper never claims to have isolated the mechanism.">
+<rect x="640" y="52" width="480" height="374" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="664" y="86" class="resp-t" font-size="15.5">Argument by construction, evidence by correlation</text>
+<text x="664" y="114" fill="#3b82f6" font-size="12.5" font-weight="700">THE HYPOTHESIS, SEC 3.1</text>
+<text x="664" y="136" class="resp-d" font-size="13">The authors hypothesize that it is easier to optimize the</text>
+<text x="664" y="156" class="resp-d" font-size="13">residual mapping than the original, unreferenced mapping.</text>
+<text x="664" y="184" fill="#3b82f6" font-size="12.5" font-weight="700">THE SUPPORT, SEC 4.2</text>
+<text x="664" y="206" class="resp-d" font-size="13">In a ResNet, the second layer's response is F(x) itself.</text>
+<text x="664" y="226" class="resp-d" font-size="13">ResNets have generally smaller responses than their plain</text>
+<text x="664" y="246" class="resp-d" font-size="13">counterparts, and deeper ResNets smaller still. The chain:</text>
+<text x="664" y="266" fill="#93c5fd" font-size="13">small std of F(x) → F changes x little → near identity.</text>
+<text x="664" y="294" fill="#f0883e" font-size="12.5" font-weight="700">WHAT IT DOES NOT ESTABLISH</text>
+<text x="664" y="316" fill="#f0f0f0" font-size="12.5">There is no ablation in the paper that turns the mechanism off.</text>
+<text x="664" y="338" fill="#f0f0f0" font-size="13">BN's learned scale sets each std directly, so a small</text>
+<text x="664" y="358" fill="#f0f0f0" font-size="13">response is the solver picking a small scale: consistent</text>
+<text x="664" y="378" fill="#f0f0f0" font-size="13">with the hypothesis, not proof of it. The paper's own</text>
+<text x="664" y="398" fill="#f0f0f0" font-size="13">wording is hedged: hypothesize, then might.</text>
+</a>
+<a href="https://arxiv.org/abs/1605.06431" target="_blank" data-tiphead="Where the explanation went afterwards" data-tip="Veit, Wilber and Belongie argued a ResNet behaves like an ensemble of relatively shallow networks; Balduzzi et al. described shattered gradients in plain nets; Li et al. visualised skip connections smoothing the loss landscape. All of them postdate this paper.">
+<rect x="640" y="448" width="480" height="134" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="664" y="480" fill="#3b82f6" font-size="14.5" font-weight="700">The result held; the explanation did not settle</text>
+<text x="664" y="508" class="resp-d" font-size="13">Later accounts attribute the gain to ensembles of shallow</text>
+<text x="664" y="530" class="resp-d" font-size="13">paths, to gradients staying correlated rather than shattering,</text>
+<text x="664" y="552" class="resp-d" font-size="13">and to a smoother loss landscape. Slide 23 lists them with</text>
+<text x="664" y="574" class="resp-d" font-size="13">links; none of them existed when this paper was written.</text>
+</a>
+</svg>

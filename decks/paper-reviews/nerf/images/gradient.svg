@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.grad-t{fill:#f0f0f0;font-weight:700}.grad-m{font-family:'JetBrains Mono',monospace}.grad-d{fill:#a0a0a0}.grad-hd{fill:#3b82f6;font-weight:700;letter-spacing:.05em}</style>
+<defs>
+<marker id="gg" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#3b82f6"/></marker>
+<marker id="gr" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#f85149"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="18" y="28" class="grad-hd" font-size="16">WHERE THE GRADIENT COMES FROM &#8212; there is no 3D supervision</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.E6" target="_blank"><text x="1142" y="28" text-anchor="end" class="grad-d" font-size="14">Sec. 5.3, Eq. 6</text></a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.SS3" target="_blank" data-tiphead="The supervision signal" data-tip="Every training step picks 4096 rays at random from the pool of all pixels in all training photographs. Each ray is rendered twice, coarse and fine, and both renders are scored against the same single number: the colour that pixel already has in the photograph.">
+<rect x="18" y="44" width="1122" height="204" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="42" y="74" class="grad-t" font-size="17">One training step, drawn honestly</text>
+<g data-tiphead="The data" data-tip="The training photographs, each with a known camera pose. Rays are drawn from the pool of all pixels in all training images, not one image at a time.">
+<rect x="42" y="92" width="176" height="84" rx="8" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="130" y="120" text-anchor="middle" class="grad-t" font-size="15">all training photos</text>
+<text x="130" y="142" text-anchor="middle" class="grad-d" font-size="14">each with a known pose</text>
+<text x="130" y="162" text-anchor="middle" class="grad-d" font-size="14">4096 random pixels</text>
+</g>
+<path d="M224,134 L258,134" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#gg)" fill="none"/>
+<g data-tiphead="The forward pass" data-tip="Every chosen ray is marched, encoded, pushed through the MLP and composited, twice: once through the coarse network and once through the fine one.">
+<rect x="268" y="92" width="176" height="84" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="356" y="120" text-anchor="middle" class="grad-t" font-size="15">render those rays</text>
+<text x="356" y="142" text-anchor="middle" class="grad-d" font-size="14">MLP then quadrature</text>
+<text x="356" y="162" text-anchor="middle" class="grad-d" font-size="14">coarse and fine</text>
+</g>
+<path d="M450,134 L484,134" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#gg)" fill="none"/>
+<g data-tiphead="The comparison" data-tip="Total squared error between rendered and true pixel colours, for both the coarse and the fine render. That is Equation 6 in full.">
+<rect x="494" y="92" width="220" height="84" rx="8" fill="#1a1a1a" stroke="#f85149" stroke-width="1.8"/>
+<text x="604" y="118" text-anchor="middle" class="grad-t" font-size="15">compare, per pixel</text>
+<text x="604" y="144" text-anchor="middle" class="grad-m" fill="#f85149" font-size="15">&#8214;&#264;&#7580;-C&#8214;&#178; + &#8214;&#264;&#7584;-C&#8214;&#178;</text>
+<text x="604" y="165" text-anchor="middle" class="grad-d" font-size="14">total squared error</text>
+</g>
+<path d="M720,134 L754,134" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#gg)" fill="none"/>
+<g data-tiphead="The objective" data-tip="One scalar, measured entirely in image space. Nothing in it refers to a surface, a depth or an occupancy.">
+<rect x="764" y="92" width="176" height="84" rx="8" fill="#0d1117" stroke="#93c5fd" stroke-width="1.6"/>
+<text x="852" y="128" text-anchor="middle" class="grad-t" font-size="15">one scalar loss</text>
+<text x="852" y="152" text-anchor="middle" class="grad-d" font-size="14">measured in pixels</text>
+</g>
+<path d="M946,134 L980,134" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#gg)" fill="none"/>
+<g data-tiphead="The update" data-tip="Adam, with a learning rate that decays exponentially over the run, applied to the weights of both networks.">
+<rect x="990" y="92" width="126" height="84" rx="8" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="1053" y="128" text-anchor="middle" class="grad-t" font-size="15">Adam step</text>
+<text x="1053" y="152" text-anchor="middle" class="grad-d" font-size="14">on &#920;</text>
+</g>
+<path d="M1053,184 L1053,212 L356,212 L356,186" stroke="#f85149" stroke-width="2.6" stroke-dasharray="9 6" marker-end="url(#gr)" fill="none"/>
+<text x="705" y="234" text-anchor="middle" fill="#f85149" font-size="16" font-weight="700">&#8706;L / &#8706;&#920; back through the quadrature</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4" target="_blank" data-tiphead="Why the chain rule survives the renderer" data-tip="The sample positions are constants once drawn, and everything after them is a sum of products of smooth functions. So the derivative of the pixel error with respect to every density and colour the MLP produced exists, and from there ordinary backpropagation carries it into the weights.">
+<rect x="18" y="264" width="551" height="168" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="42" y="294" class="grad-t" font-size="17">Why the error can reach the weights</text>
+<text x="42" y="324" class="grad-d" font-size="15">Sample positions are constants for the step. Everything after</text>
+<text x="42" y="346" class="grad-d" font-size="15">them is sums, products and exponentials of the MLP outputs.</text>
+<text x="42" y="374" class="grad-d" font-size="15">So the derivative of the loss with respect to each &#963; and each</text>
+<text x="42" y="396" class="grad-d" font-size="15">c exists in closed form, and backpropagation does the rest.</text>
+<text x="42" y="422" fill="#93c5fd" font-size="15" font-weight="700">Geometry is learned as a by-product of matching pixels.</text>
+</a>
+<rect x="589" y="264" width="551" height="168" rx="10" fill="#0d1117" stroke="#f85149" stroke-width="1.6"/>
+<text x="613" y="294" fill="#f85149" font-size="17" font-weight="700">What is never in the loss</text>
+<text x="613" y="324" class="grad-d" font-size="15">&#215;&#160; depth maps or laser scans</text>
+<text x="613" y="350" class="grad-d" font-size="15">&#215;&#160; meshes, point clouds, voxel occupancy targets</text>
+<text x="613" y="376" class="grad-d" font-size="15">&#215;&#160; silhouettes, masks or background plates</text>
+<text x="613" y="400" class="grad-d" font-size="15">&#215;&#160; any regulariser on the shape of the density field</text>
+<text x="613" y="422" fill="#93c5fd" font-size="15" font-weight="700">The abstract says it: the only input is posed images.</text>
+<rect x="18" y="448" width="1122" height="134" rx="10" fill="#151515" stroke="#3fb950" stroke-width="1.8"/>
+<text x="42" y="478" class="grad-t" font-size="17">The consequence readers underrate</text>
+<text x="42" y="506" class="grad-d" font-size="15">Nothing tells the network where surfaces are. What pushes it to a coherent 3D shape is that one density field has to explain</text>
+<text x="42" y="528" class="grad-d" font-size="15">every training photograph at once. That is an argument, not a proof: the paper shows only that quality falls as views are cut.</text>
+<text x="42" y="558" fill="#93c5fd" font-size="15" font-weight="700">Table 2: 31.01 PSNR with 100 views, 29.79 with 50, 27.78 with 25. Multi-view consistency is not a loss term here.</text>
+</svg>

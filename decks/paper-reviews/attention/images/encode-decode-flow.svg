@@ -1,0 +1,241 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.flow-tok{fill:#f0f0f0;font-size:15px;font-weight:600}.flow-m{font-family:'JetBrains Mono',monospace}.flow-d{fill:#a0a0a0}.flow-enc-l{animation:flow-enc-l 26s linear infinite}.flow-enc-o0{animation:flow-enc-o0 26s linear infinite}.flow-enc-o1{animation:flow-enc-o1 26s linear infinite}.flow-enc-o2{animation:flow-enc-o2 26s linear infinite}.flow-enc-o3{animation:flow-enc-o3 26s linear infinite}.flow-enc-o4{animation:flow-enc-o4 26s linear infinite}.flow-enc-o5{animation:flow-enc-o5 26s linear infinite}.flow-x0{animation:flow-x0 26s linear infinite}.flow-xo0{animation:flow-xo0 26s linear infinite}.flow-x1{animation:flow-x1 26s linear infinite}.flow-xo1{animation:flow-xo1 26s linear infinite}.flow-x2{animation:flow-x2 26s linear infinite}.flow-xo2{animation:flow-xo2 26s linear infinite}.flow-x3{animation:flow-x3 26s linear infinite}.flow-xo3{animation:flow-xo3 26s linear infinite}.flow-x4{animation:flow-x4 26s linear infinite}.flow-xo4{animation:flow-xo4 26s linear infinite}.flow-x5{animation:flow-x5 26s linear infinite}.flow-xo5{animation:flow-xo5 26s linear infinite}.flow-in0{animation:flow-in0 26s linear infinite}.flow-in1{animation:flow-in1 26s linear infinite}.flow-in2{animation:flow-in2 26s linear infinite}.flow-in3{animation:flow-in3 26s linear infinite}.flow-in4{animation:flow-in4 26s linear infinite}.flow-in5{animation:flow-in5 26s linear infinite}.flow-cur0{animation:flow-cur0 26s linear infinite}.flow-cur1{animation:flow-cur1 26s linear infinite}.flow-cur2{animation:flow-cur2 26s linear infinite}.flow-cur3{animation:flow-cur3 26s linear infinite}.flow-cur4{animation:flow-cur4 26s linear infinite}.flow-cur5{animation:flow-cur5 26s linear infinite}.flow-ar0{animation:flow-ar0 26s linear infinite}.flow-out0{animation:flow-out0 26s linear infinite}.flow-ar1{animation:flow-ar1 26s linear infinite}.flow-out1{animation:flow-out1 26s linear infinite}.flow-ar2{animation:flow-ar2 26s linear infinite}.flow-out2{animation:flow-out2 26s linear infinite}.flow-ar3{animation:flow-ar3 26s linear infinite}.flow-out3{animation:flow-out3 26s linear infinite}.flow-ar4{animation:flow-ar4 26s linear infinite}.flow-out4{animation:flow-out4 26s linear infinite}.flow-ar5{animation:flow-ar5 26s linear infinite}.flow-out5{animation:flow-out5 26s linear infinite}.flow-mv0{animation:flow-mv0 26s linear infinite}.flow-mv1{animation:flow-mv1 26s linear infinite}.flow-mv2{animation:flow-mv2 26s linear infinite}.flow-mv3{animation:flow-mv3 26s linear infinite}.flow-mv4{animation:flow-mv4 26s linear infinite}.flow-st0{animation:flow-st0 26s linear infinite}.flow-st1{animation:flow-st1 26s linear infinite}.flow-st2{animation:flow-st2 26s linear infinite}.flow-st3{animation:flow-st3 26s linear infinite}.flow-st4{animation:flow-st4 26s linear infinite}.flow-st5{animation:flow-st5 26s linear infinite}.flow-st-f{animation:flow-st-f 26s linear infinite}.flow-st-e{animation:flow-st-e 26s linear infinite}.flow-lg0{animation:flow-lg0 26s linear infinite}.flow-lg1{animation:flow-lg1 26s linear infinite}.flow-lg2{animation:flow-lg2 26s linear infinite}.flow-lg3{animation:flow-lg3 26s linear infinite}@keyframes flow-enc-l{0.00%{opacity:0}3.08%{opacity:0}5.38%{opacity:1}13.85%{opacity:1}16.15%{opacity:.3}97.69%{opacity:.3}100.00%{opacity:0}}@keyframes flow-enc-o0{0.00%{opacity:0}7.69%{opacity:0}8.85%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-enc-o1{0.00%{opacity:0}7.69%{opacity:0}8.85%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-enc-o2{0.00%{opacity:0}7.69%{opacity:0}8.85%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-enc-o3{0.00%{opacity:0}7.69%{opacity:0}8.85%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-enc-o4{0.00%{opacity:0}7.69%{opacity:0}8.85%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-enc-o5{0.00%{opacity:0}7.69%{opacity:0}8.85%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-x0{0.00%{opacity:0}21.15%{opacity:0}22.31%{opacity:1}28.85%{opacity:1}30.00%{opacity:0}100.00%{opacity:0}}@keyframes flow-xo0{0.00%{opacity:0}21.15%{opacity:0}22.31%{opacity:1}28.85%{opacity:1}30.00%{opacity:0}100.00%{opacity:0}}@keyframes flow-x1{0.00%{opacity:0}34.23%{opacity:0}35.38%{opacity:1}41.92%{opacity:1}43.08%{opacity:0}100.00%{opacity:0}}@keyframes flow-xo1{0.00%{opacity:0}34.23%{opacity:0}35.38%{opacity:1}41.92%{opacity:1}43.08%{opacity:0}100.00%{opacity:0}}@keyframes flow-x2{0.00%{opacity:0}47.31%{opacity:0}48.46%{opacity:1}55.00%{opacity:1}56.15%{opacity:0}100.00%{opacity:0}}@keyframes flow-xo2{0.00%{opacity:0}47.31%{opacity:0}48.46%{opacity:1}55.00%{opacity:1}56.15%{opacity:0}100.00%{opacity:0}}@keyframes flow-x3{0.00%{opacity:0}60.38%{opacity:0}61.54%{opacity:1}68.08%{opacity:1}69.23%{opacity:0}100.00%{opacity:0}}@keyframes flow-xo3{0.00%{opacity:0}60.38%{opacity:0}61.54%{opacity:1}68.08%{opacity:1}69.23%{opacity:0}100.00%{opacity:0}}@keyframes flow-x4{0.00%{opacity:0}73.46%{opacity:0}74.62%{opacity:1}81.15%{opacity:1}82.31%{opacity:0}100.00%{opacity:0}}@keyframes flow-xo4{0.00%{opacity:0}73.46%{opacity:0}74.62%{opacity:1}81.15%{opacity:1}82.31%{opacity:0}100.00%{opacity:0}}@keyframes flow-x5{0.00%{opacity:0}86.54%{opacity:0}87.69%{opacity:1}94.23%{opacity:1}95.38%{opacity:0}100.00%{opacity:0}}@keyframes flow-xo5{0.00%{opacity:0}86.54%{opacity:0}87.69%{opacity:1}94.23%{opacity:1}95.38%{opacity:0}100.00%{opacity:0}}@keyframes flow-in0{0.00%{opacity:0}15.38%{opacity:0}16.54%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-in1{0.00%{opacity:0}29.62%{opacity:0}30.77%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-in2{0.00%{opacity:0}42.69%{opacity:0}43.85%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-in3{0.00%{opacity:0}55.77%{opacity:0}56.92%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-in4{0.00%{opacity:0}68.85%{opacity:0}70.00%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-in5{0.00%{opacity:0}81.92%{opacity:0}83.08%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-cur0{0.00%{opacity:0}16.92%{opacity:0}18.08%{opacity:1}28.85%{opacity:1}30.00%{opacity:0}100.00%{opacity:0}}@keyframes flow-cur1{0.00%{opacity:0}30.00%{opacity:0}31.15%{opacity:1}41.92%{opacity:1}43.08%{opacity:0}100.00%{opacity:0}}@keyframes flow-cur2{0.00%{opacity:0}43.08%{opacity:0}44.23%{opacity:1}55.00%{opacity:1}56.15%{opacity:0}100.00%{opacity:0}}@keyframes flow-cur3{0.00%{opacity:0}56.15%{opacity:0}57.31%{opacity:1}68.08%{opacity:1}69.23%{opacity:0}100.00%{opacity:0}}@keyframes flow-cur4{0.00%{opacity:0}69.23%{opacity:0}70.38%{opacity:1}81.15%{opacity:1}82.31%{opacity:0}100.00%{opacity:0}}@keyframes flow-cur5{0.00%{opacity:0}82.31%{opacity:0}83.46%{opacity:1}94.23%{opacity:1}95.38%{opacity:0}100.00%{opacity:0}}@keyframes flow-ar0{0.00%{opacity:0}25.00%{opacity:0}26.15%{opacity:1}28.85%{opacity:1}30.00%{opacity:0}100.00%{opacity:0}}@keyframes flow-out0{0.00%{opacity:0}25.00%{opacity:0}26.15%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-ar1{0.00%{opacity:0}38.08%{opacity:0}39.23%{opacity:1}41.92%{opacity:1}43.08%{opacity:0}100.00%{opacity:0}}@keyframes flow-out1{0.00%{opacity:0}38.08%{opacity:0}39.23%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-ar2{0.00%{opacity:0}51.15%{opacity:0}52.31%{opacity:1}55.00%{opacity:1}56.15%{opacity:0}100.00%{opacity:0}}@keyframes flow-out2{0.00%{opacity:0}51.15%{opacity:0}52.31%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-ar3{0.00%{opacity:0}64.23%{opacity:0}65.38%{opacity:1}68.08%{opacity:1}69.23%{opacity:0}100.00%{opacity:0}}@keyframes flow-out3{0.00%{opacity:0}64.23%{opacity:0}65.38%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-ar4{0.00%{opacity:0}77.31%{opacity:0}78.46%{opacity:1}81.15%{opacity:1}82.31%{opacity:0}100.00%{opacity:0}}@keyframes flow-out4{0.00%{opacity:0}77.31%{opacity:0}78.46%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-ar5{0.00%{opacity:0}90.38%{opacity:0}91.54%{opacity:1}94.23%{opacity:1}95.38%{opacity:0}100.00%{opacity:0}}@keyframes flow-out5{0.00%{opacity:0}90.38%{opacity:0}91.54%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-mv0{0.00%{opacity:0;transform:translate(0px,0px)}26.92%{opacity:0;transform:translate(0px,0px)}27.12%{opacity:1;transform:translate(0px,0px)}29.42%{opacity:1;transform:translate(126px,-142px)}29.62%{opacity:0;transform:translate(126px,-142px)}100.00%{opacity:0;transform:translate(126px,-142px)}}@keyframes flow-mv1{0.00%{opacity:0;transform:translate(0px,0px)}40.00%{opacity:0;transform:translate(0px,0px)}40.19%{opacity:1;transform:translate(0px,0px)}42.50%{opacity:1;transform:translate(126px,-142px)}42.69%{opacity:0;transform:translate(126px,-142px)}100.00%{opacity:0;transform:translate(126px,-142px)}}@keyframes flow-mv2{0.00%{opacity:0;transform:translate(0px,0px)}53.08%{opacity:0;transform:translate(0px,0px)}53.27%{opacity:1;transform:translate(0px,0px)}55.58%{opacity:1;transform:translate(126px,-142px)}55.77%{opacity:0;transform:translate(126px,-142px)}100.00%{opacity:0;transform:translate(126px,-142px)}}@keyframes flow-mv3{0.00%{opacity:0;transform:translate(0px,0px)}66.15%{opacity:0;transform:translate(0px,0px)}66.35%{opacity:1;transform:translate(0px,0px)}68.65%{opacity:1;transform:translate(126px,-142px)}68.85%{opacity:0;transform:translate(126px,-142px)}100.00%{opacity:0;transform:translate(126px,-142px)}}@keyframes flow-mv4{0.00%{opacity:0;transform:translate(0px,0px)}79.23%{opacity:0;transform:translate(0px,0px)}79.42%{opacity:1;transform:translate(0px,0px)}81.73%{opacity:1;transform:translate(126px,-142px)}81.92%{opacity:0;transform:translate(126px,-142px)}100.00%{opacity:0;transform:translate(126px,-142px)}}@keyframes flow-st0{0.00%{opacity:0}16.92%{opacity:0}17.50%{opacity:1}28.85%{opacity:1}29.42%{opacity:0}100.00%{opacity:0}}@keyframes flow-st1{0.00%{opacity:0}30.00%{opacity:0}30.58%{opacity:1}41.92%{opacity:1}42.50%{opacity:0}100.00%{opacity:0}}@keyframes flow-st2{0.00%{opacity:0}43.08%{opacity:0}43.65%{opacity:1}55.00%{opacity:1}55.58%{opacity:0}100.00%{opacity:0}}@keyframes flow-st3{0.00%{opacity:0}56.15%{opacity:0}56.73%{opacity:1}68.08%{opacity:1}68.65%{opacity:0}100.00%{opacity:0}}@keyframes flow-st4{0.00%{opacity:0}69.23%{opacity:0}69.81%{opacity:1}81.15%{opacity:1}81.73%{opacity:0}100.00%{opacity:0}}@keyframes flow-st5{0.00%{opacity:0}82.31%{opacity:0}82.88%{opacity:1}94.23%{opacity:1}94.81%{opacity:0}100.00%{opacity:0}}@keyframes flow-st-f{0.00%{opacity:0}95.00%{opacity:0}95.58%{opacity:1}97.69%{opacity:1}100.00%{opacity:0}}@keyframes flow-st-e{0.00%{opacity:0}1.15%{opacity:0}1.73%{opacity:1}15.77%{opacity:1}16.35%{opacity:0}100.00%{opacity:0}}@keyframes flow-lg0{0.00%{opacity:0.3}1.15%{opacity:0.3}1.92%{opacity:1}15.77%{opacity:1}16.54%{opacity:0.3}100.00%{opacity:0.3}}@keyframes flow-lg1{0.00%{opacity:0.3}17.31%{opacity:0.3}18.08%{opacity:1}21.15%{opacity:1}21.92%{opacity:0.3}30.38%{opacity:0.3}31.15%{opacity:1}34.23%{opacity:1}35.00%{opacity:0.3}43.46%{opacity:0.3}44.23%{opacity:1}47.31%{opacity:1}48.08%{opacity:0.3}56.54%{opacity:0.3}57.31%{opacity:1}60.38%{opacity:1}61.15%{opacity:0.3}69.62%{opacity:0.3}70.38%{opacity:1}73.46%{opacity:1}74.23%{opacity:0.3}82.69%{opacity:0.3}83.46%{opacity:1}86.54%{opacity:1}87.31%{opacity:0.3}100.00%{opacity:0.3}}@keyframes flow-lg2{0.00%{opacity:0.3}21.15%{opacity:0.3}21.92%{opacity:1}25.00%{opacity:1}25.77%{opacity:0.3}34.23%{opacity:0.3}35.00%{opacity:1}38.08%{opacity:1}38.85%{opacity:0.3}47.31%{opacity:0.3}48.08%{opacity:1}51.15%{opacity:1}51.92%{opacity:0.3}60.38%{opacity:0.3}61.15%{opacity:1}64.23%{opacity:1}65.00%{opacity:0.3}73.46%{opacity:0.3}74.23%{opacity:1}77.31%{opacity:1}78.08%{opacity:0.3}86.54%{opacity:0.3}87.31%{opacity:1}90.38%{opacity:1}91.15%{opacity:0.3}100.00%{opacity:0.3}}@keyframes flow-lg3{0.00%{opacity:0.3}25.00%{opacity:0.3}25.77%{opacity:1}29.23%{opacity:1}30.00%{opacity:0.3}38.08%{opacity:0.3}38.85%{opacity:1}42.31%{opacity:1}43.08%{opacity:0.3}51.15%{opacity:0.3}51.92%{opacity:1}55.38%{opacity:1}56.15%{opacity:0.3}64.23%{opacity:0.3}65.00%{opacity:1}68.46%{opacity:1}69.23%{opacity:0.3}77.31%{opacity:0.3}78.08%{opacity:1}81.54%{opacity:1}82.31%{opacity:0.3}90.38%{opacity:0.3}91.15%{opacity:1}94.62%{opacity:1}95.38%{opacity:0.3}100.00%{opacity:0.3}}@media (prefers-reduced-motion: reduce){[class*="flow-"]{animation:none !important}}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<defs><marker id="flow-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3fb950"/></marker></defs>
+<rect x="20" y="14" width="820" height="160" rx="12" fill="#0d1117" stroke="#20304a" stroke-width="1.6"/>
+<rect x="20" y="194" width="820" height="392" rx="12" fill="#0d1117" stroke="#1f3b2a" stroke-width="1.6"/>
+<text transform="translate(46,94) rotate(-90)" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="700" letter-spacing=".12em">ENCODER</text>
+<text transform="translate(46,330) rotate(-90)" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700" letter-spacing=".12em">DECODER</text>
+<g class="flow-enc-l" opacity=".3">
+<line x1="124" y1="62" x2="124" y2="118" stroke="#3b82f6" stroke-width="1.8"/>
+<line x1="124" y1="62" x2="250" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="124" y1="62" x2="376" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="124" y1="62" x2="502" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="124" y1="62" x2="628" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="124" y1="62" x2="754" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="250" y1="62" x2="124" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="250" y1="62" x2="250" y2="118" stroke="#3b82f6" stroke-width="1.8"/>
+<line x1="250" y1="62" x2="376" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="250" y1="62" x2="502" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="250" y1="62" x2="628" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="250" y1="62" x2="754" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="376" y1="62" x2="124" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="376" y1="62" x2="250" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="376" y1="62" x2="376" y2="118" stroke="#3b82f6" stroke-width="1.8"/>
+<line x1="376" y1="62" x2="502" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="376" y1="62" x2="628" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="376" y1="62" x2="754" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="502" y1="62" x2="124" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="502" y1="62" x2="250" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="502" y1="62" x2="376" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="502" y1="62" x2="502" y2="118" stroke="#3b82f6" stroke-width="1.8"/>
+<line x1="502" y1="62" x2="628" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="502" y1="62" x2="754" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="628" y1="62" x2="124" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="628" y1="62" x2="250" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="628" y1="62" x2="376" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="628" y1="62" x2="502" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="628" y1="62" x2="628" y2="118" stroke="#3b82f6" stroke-width="1.8"/>
+<line x1="628" y1="62" x2="754" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="754" y1="62" x2="124" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="754" y1="62" x2="250" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="754" y1="62" x2="376" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="754" y1="62" x2="502" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="754" y1="62" x2="628" y2="118" stroke="#3b82f6" stroke-width="1.1"/>
+<line x1="754" y1="62" x2="754" y2="118" stroke="#3b82f6" stroke-width="1.8"/>
+</g>
+<rect x="72" y="30" width="104" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="124" y="52" text-anchor="middle" class="flow-tok">The</text>
+<rect x="198" y="30" width="104" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="250" y="52" text-anchor="middle" class="flow-tok">law</text>
+<rect x="324" y="30" width="104" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="376" y="52" text-anchor="middle" class="flow-tok">will</text>
+<rect x="450" y="30" width="104" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="502" y="52" text-anchor="middle" class="flow-tok">never</text>
+<rect x="576" y="30" width="104" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="628" y="52" text-anchor="middle" class="flow-tok">be</text>
+<rect x="702" y="30" width="104" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="754" y="52" text-anchor="middle" class="flow-tok">perfect</text>
+<rect x="72" y="118" width="104" height="34" rx="6" fill="none" stroke="#20304a" stroke-dasharray="4 3"/>
+<g class="flow-enc-o0" opacity="1"><rect x="72" y="118" width="104" height="34" rx="6" fill="#3b82f6" fill-opacity=".22" stroke="#3b82f6" stroke-width="1.6"/><text x="124" y="141" text-anchor="middle" class="flow-tok flow-m" font-size="14">The'</text></g>
+<rect x="198" y="118" width="104" height="34" rx="6" fill="none" stroke="#20304a" stroke-dasharray="4 3"/>
+<g class="flow-enc-o1" opacity="1"><rect x="198" y="118" width="104" height="34" rx="6" fill="#3b82f6" fill-opacity=".22" stroke="#3b82f6" stroke-width="1.6"/><text x="250" y="141" text-anchor="middle" class="flow-tok flow-m" font-size="14">law'</text></g>
+<rect x="324" y="118" width="104" height="34" rx="6" fill="none" stroke="#20304a" stroke-dasharray="4 3"/>
+<g class="flow-enc-o2" opacity="1"><rect x="324" y="118" width="104" height="34" rx="6" fill="#3b82f6" fill-opacity=".22" stroke="#3b82f6" stroke-width="1.6"/><text x="376" y="141" text-anchor="middle" class="flow-tok flow-m" font-size="14">will'</text></g>
+<rect x="450" y="118" width="104" height="34" rx="6" fill="none" stroke="#20304a" stroke-dasharray="4 3"/>
+<g class="flow-enc-o3" opacity="1"><rect x="450" y="118" width="104" height="34" rx="6" fill="#3b82f6" fill-opacity=".22" stroke="#3b82f6" stroke-width="1.6"/><text x="502" y="141" text-anchor="middle" class="flow-tok flow-m" font-size="14">never'</text></g>
+<rect x="576" y="118" width="104" height="34" rx="6" fill="none" stroke="#20304a" stroke-dasharray="4 3"/>
+<g class="flow-enc-o4" opacity="1"><rect x="576" y="118" width="104" height="34" rx="6" fill="#3b82f6" fill-opacity=".22" stroke="#3b82f6" stroke-width="1.6"/><text x="628" y="141" text-anchor="middle" class="flow-tok flow-m" font-size="14">be'</text></g>
+<rect x="702" y="118" width="104" height="34" rx="6" fill="none" stroke="#20304a" stroke-dasharray="4 3"/>
+<g class="flow-enc-o5" opacity="1"><rect x="702" y="118" width="104" height="34" rx="6" fill="#3b82f6" fill-opacity=".22" stroke="#3b82f6" stroke-width="1.6"/><text x="754" y="141" text-anchor="middle" class="flow-tok flow-m" font-size="14">perfect'</text></g>
+<g class="flow-x0" opacity="0">
+<line x1="124" y1="152" x2="138" y2="276" stroke="#bc8cff" stroke-width="4.5" stroke-opacity="1" stroke-linecap="round"/>
+<line x1="250" y1="152" x2="124" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="376" y1="152" x2="124" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="502" y1="152" x2="124" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="628" y1="152" x2="124" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="754" y1="152" x2="124" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<rect x="69" y="115" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/>
+</g>
+<g class="flow-xo0" opacity="0"><line x1="138" y1="276" x2="138" y2="418" stroke="#bc8cff" stroke-width="4.5" stroke-linecap="round"/><rect x="69" y="417" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/></g>
+<g class="flow-x1" opacity="0">
+<line x1="124" y1="152" x2="250" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="250" y1="152" x2="264" y2="276" stroke="#bc8cff" stroke-width="4.5" stroke-opacity="1" stroke-linecap="round"/>
+<line x1="376" y1="152" x2="250" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="502" y1="152" x2="250" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="628" y1="152" x2="250" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="754" y1="152" x2="250" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<rect x="195" y="115" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/>
+</g>
+<g class="flow-xo1" opacity="0"><line x1="264" y1="276" x2="264" y2="418" stroke="#bc8cff" stroke-width="4.5" stroke-linecap="round"/><rect x="195" y="417" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/></g>
+<g class="flow-x2" opacity="1">
+<line x1="124" y1="152" x2="376" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="250" y1="152" x2="376" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="376" y1="152" x2="390" y2="276" stroke="#bc8cff" stroke-width="4.5" stroke-opacity="1" stroke-linecap="round"/>
+<line x1="502" y1="152" x2="376" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="628" y1="152" x2="376" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="754" y1="152" x2="376" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<rect x="321" y="115" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/>
+</g>
+<g class="flow-xo2" opacity="1"><line x1="390" y1="276" x2="390" y2="418" stroke="#bc8cff" stroke-width="4.5" stroke-linecap="round"/><rect x="321" y="417" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/></g>
+<g class="flow-x3" opacity="0">
+<line x1="124" y1="152" x2="502" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="250" y1="152" x2="502" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="376" y1="152" x2="502" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="502" y1="152" x2="516" y2="276" stroke="#bc8cff" stroke-width="4.5" stroke-opacity="1" stroke-linecap="round"/>
+<line x1="628" y1="152" x2="502" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="754" y1="152" x2="502" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<rect x="447" y="115" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/>
+</g>
+<g class="flow-xo3" opacity="0"><line x1="516" y1="276" x2="516" y2="418" stroke="#bc8cff" stroke-width="4.5" stroke-linecap="round"/><rect x="447" y="417" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/></g>
+<g class="flow-x4" opacity="0">
+<line x1="124" y1="152" x2="628" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="250" y1="152" x2="628" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="376" y1="152" x2="628" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="502" y1="152" x2="628" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="628" y1="152" x2="628" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="754" y1="152" x2="642" y2="276" stroke="#bc8cff" stroke-width="4.5" stroke-opacity="1" stroke-linecap="round"/>
+<rect x="699" y="115" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/>
+</g>
+<g class="flow-xo4" opacity="0"><line x1="642" y1="276" x2="642" y2="418" stroke="#bc8cff" stroke-width="4.5" stroke-linecap="round"/><rect x="573" y="417" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/></g>
+<g class="flow-x5" opacity="0">
+<line x1="124" y1="152" x2="754" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="250" y1="152" x2="754" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="376" y1="152" x2="754" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="502" y1="152" x2="754" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<line x1="628" y1="152" x2="768" y2="276" stroke="#bc8cff" stroke-width="4.5" stroke-opacity="1" stroke-linecap="round"/>
+<line x1="754" y1="152" x2="754" y2="276" stroke="#bc8cff" stroke-width="1.3" stroke-opacity="0.55" stroke-linecap="round"/>
+<rect x="573" y="115" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/>
+</g>
+<g class="flow-xo5" opacity="0"><line x1="768" y1="276" x2="768" y2="418" stroke="#bc8cff" stroke-width="4.5" stroke-linecap="round"/><rect x="699" y="417" width="110" height="40" rx="8" fill="none" stroke="#bc8cff" stroke-width="2.5"/></g>
+<rect x="72" y="278" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<rect x="198" y="278" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<rect x="324" y="278" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<rect x="450" y="278" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<rect x="576" y="278" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<rect x="702" y="278" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<g class="flow-in0" opacity="1"><rect x="72" y="278" width="104" height="34" rx="6" fill="#101824" stroke="#30363d"/><text x="124" y="300" text-anchor="middle" class="flow-tok flow-m" fill="#93c5fd">&lt;s&gt;</text></g>
+<g class="flow-in1" opacity="1"><rect x="198" y="278" width="104" height="34" rx="6" fill="#101824" stroke="#30363d"/><text x="250" y="300" text-anchor="middle" class="flow-tok" fill="#f0f0f0">Das</text></g>
+<g class="flow-in2" opacity="1"><rect x="324" y="278" width="104" height="34" rx="6" fill="#101824" stroke="#30363d"/><text x="376" y="300" text-anchor="middle" class="flow-tok" fill="#f0f0f0">Gesetz</text></g>
+<g class="flow-in3" opacity="0"><rect x="450" y="278" width="104" height="34" rx="6" fill="#101824" stroke="#30363d"/><text x="502" y="300" text-anchor="middle" class="flow-tok" fill="#f0f0f0">wird</text></g>
+<g class="flow-in4" opacity="0"><rect x="576" y="278" width="104" height="34" rx="6" fill="#101824" stroke="#30363d"/><text x="628" y="300" text-anchor="middle" class="flow-tok" fill="#f0f0f0">nie</text></g>
+<g class="flow-in5" opacity="0"><rect x="702" y="278" width="104" height="34" rx="6" fill="#101824" stroke="#30363d"/><text x="754" y="300" text-anchor="middle" class="flow-tok" fill="#f0f0f0">perfekt</text></g>
+<g class="flow-cur0" opacity="0">
+<rect x="69" y="275" width="110" height="40" rx="8" fill="none" stroke="#f0883e" stroke-width="2.5"/>
+</g>
+<g class="flow-cur1" opacity="0">
+<rect x="195" y="275" width="110" height="40" rx="8" fill="none" stroke="#f0883e" stroke-width="2.5"/>
+<path d="M242,312 C242,351 132,351 132,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+</g>
+<g class="flow-cur2" opacity="1">
+<rect x="321" y="275" width="110" height="40" rx="8" fill="none" stroke="#f0883e" stroke-width="2.5"/>
+<path d="M368,312 C368,364 132,364 132,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+<path d="M368,312 C368,351 258,351 258,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+</g>
+<g class="flow-cur3" opacity="0">
+<rect x="447" y="275" width="110" height="40" rx="8" fill="none" stroke="#f0883e" stroke-width="2.5"/>
+<path d="M494,312 C494,377 132,377 132,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+<path d="M494,312 C494,364 258,364 258,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+<path d="M494,312 C494,351 384,351 384,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+</g>
+<g class="flow-cur4" opacity="0">
+<rect x="573" y="275" width="110" height="40" rx="8" fill="none" stroke="#f0883e" stroke-width="2.5"/>
+<path d="M620,312 C620,390 132,390 132,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+<path d="M620,312 C620,377 258,377 258,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+<path d="M620,312 C620,364 384,364 384,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+<path d="M620,312 C620,351 510,351 510,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+</g>
+<g class="flow-cur5" opacity="0">
+<rect x="699" y="275" width="110" height="40" rx="8" fill="none" stroke="#f0883e" stroke-width="2.5"/>
+<path d="M746,312 C746,403 132,403 132,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+<path d="M746,312 C746,390 258,390 258,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+<path d="M746,312 C746,377 384,377 384,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+<path d="M746,312 C746,364 510,364 510,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+<path d="M746,312 C746,351 636,351 636,312" fill="none" stroke="#f0883e" stroke-width="2"/>
+</g>
+<rect x="72" y="420" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<rect x="198" y="420" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<rect x="324" y="420" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<rect x="450" y="420" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<rect x="576" y="420" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<rect x="702" y="420" width="104" height="34" rx="6" fill="none" stroke="#2d333b" stroke-dasharray="4 3"/>
+<g class="flow-ar0" opacity="0"><line x1="124" y1="318" x2="124" y2="416" stroke="#3fb950" stroke-width="2" marker-end="url(#flow-ag)"/></g>
+<g class="flow-out0" opacity="1"><rect x="72" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="1.6"/><text x="124" y="442" text-anchor="middle" class="flow-tok">Das</text></g>
+<g class="flow-ar1" opacity="0"><line x1="250" y1="386" x2="250" y2="416" stroke="#3fb950" stroke-width="2" marker-end="url(#flow-ag)"/></g>
+<g class="flow-out1" opacity="1"><rect x="198" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="1.6"/><text x="250" y="442" text-anchor="middle" class="flow-tok">Gesetz</text></g>
+<g class="flow-ar2" opacity="1"><line x1="376" y1="386" x2="376" y2="416" stroke="#3fb950" stroke-width="2" marker-end="url(#flow-ag)"/></g>
+<g class="flow-out2" opacity="1"><rect x="324" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="1.6"/><text x="376" y="442" text-anchor="middle" class="flow-tok">wird</text></g>
+<g class="flow-ar3" opacity="0"><line x1="502" y1="386" x2="502" y2="416" stroke="#3fb950" stroke-width="2" marker-end="url(#flow-ag)"/></g>
+<g class="flow-out3" opacity="0"><rect x="450" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="1.6"/><text x="502" y="442" text-anchor="middle" class="flow-tok">nie</text></g>
+<g class="flow-ar4" opacity="0"><line x1="628" y1="386" x2="628" y2="416" stroke="#3fb950" stroke-width="2" marker-end="url(#flow-ag)"/></g>
+<g class="flow-out4" opacity="0"><rect x="576" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="1.6"/><text x="628" y="442" text-anchor="middle" class="flow-tok">perfekt</text></g>
+<g class="flow-ar5" opacity="0"><line x1="754" y1="386" x2="754" y2="416" stroke="#3fb950" stroke-width="2" marker-end="url(#flow-ag)"/></g>
+<g class="flow-out5" opacity="0"><rect x="702" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="1.6"/><text x="754" y="442" text-anchor="middle" class="flow-tok">sein</text></g>
+<g class="flow-mv0" opacity="0"><rect x="72" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="2"/><text x="124" y="442" text-anchor="middle" class="flow-tok">Das</text></g>
+<g class="flow-mv1" opacity="0"><rect x="198" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="2"/><text x="250" y="442" text-anchor="middle" class="flow-tok">Gesetz</text></g>
+<g class="flow-mv2" opacity="0"><rect x="324" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="2"/><text x="376" y="442" text-anchor="middle" class="flow-tok">wird</text></g>
+<g class="flow-mv3" opacity="0"><rect x="450" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="2"/><text x="502" y="442" text-anchor="middle" class="flow-tok">nie</text></g>
+<g class="flow-mv4" opacity="0"><rect x="576" y="420" width="104" height="34" rx="6" fill="#0f1f16" stroke="#3fb950" stroke-width="2"/><text x="628" y="442" text-anchor="middle" class="flow-tok">perfekt</text></g>
+<text x="70" y="486" class="flow-d" font-size="12.5">top row: what the decoder has so far, starting from &lt;s&gt;; bottom row: the German it has written</text>
+<text class="flow-st0" opacity="0" x="70" y="520" font-size="14" font-weight="700" fill="#f0f0f0">Decoder step 1 of 6: writing <tspan fill="#3fb950">Das</tspan>, reading mostly <tspan fill="#bc8cff">The</tspan></text>
+<text class="flow-st1" opacity="0" x="70" y="520" font-size="14" font-weight="700" fill="#f0f0f0">Decoder step 2 of 6: writing <tspan fill="#3fb950">Gesetz</tspan>, reading mostly <tspan fill="#bc8cff">law</tspan></text>
+<text class="flow-st2" opacity="1" x="70" y="520" font-size="14" font-weight="700" fill="#f0f0f0">Decoder step 3 of 6: writing <tspan fill="#3fb950">wird</tspan>, reading mostly <tspan fill="#bc8cff">will</tspan></text>
+<text class="flow-st3" opacity="0" x="70" y="520" font-size="14" font-weight="700" fill="#f0f0f0">Decoder step 4 of 6: writing <tspan fill="#3fb950">nie</tspan>, reading mostly <tspan fill="#bc8cff">never</tspan></text>
+<text class="flow-st4" opacity="0" x="70" y="520" font-size="14" font-weight="700" fill="#f0f0f0">Decoder step 5 of 6: writing <tspan fill="#3fb950">perfekt</tspan>, reading mostly <tspan fill="#bc8cff">perfect</tspan></text>
+<text class="flow-st5" opacity="0" x="70" y="520" font-size="14" font-weight="700" fill="#f0f0f0">Decoder step 6 of 6: writing <tspan fill="#3fb950">sein</tspan>, reading mostly <tspan fill="#bc8cff">be</tspan></text>
+<text class="flow-st-f" opacity="0" x="70" y="520" font-size="14" font-weight="700" fill="#f0f0f0">Done: six steps for six German words, one encoder pass</text>
+<text class="flow-st-e" opacity="0" x="70" y="520" font-size="14" font-weight="700" fill="#f0f0f0">Encoder: one step for all six English words</text>
+<text x="70" y="552" fill="#f0883e" font-size="11.5">Illustrative: the German words and attention strengths are not from the paper. One layer and one of eight heads shown;</text>
+<text x="70" y="570" fill="#f0883e" font-size="11.5">the model stacks six encoder and six decoder layers and decodes with beam search over 4 candidates, not one greedy word.</text>
+<rect x="858" y="14" width="282" height="572" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="878" y="44" class="flow-d" font-size="12" font-weight="700" letter-spacing=".08em">WHAT HAPPENS, IN ORDER</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS3" target="_blank" class="flow-lg0" data-tiphead="Encoder self-attention, one sentence" data-tip="Keys, values and queries all come from the previous encoder layer, so each position attends to all positions of the layer below. The encoder maps the sentence to one vector per word; given those, the decoder then generates the output one word at a time.">
+<rect x="870" y="70" width="258" height="132" rx="9" fill="#141414" stroke="#3b82f6" stroke-width="1.6"/>
+<circle cx="892" cy="90" r="11" fill="#3b82f6"/><text x="892" y="95" text-anchor="middle" font-size="13" font-weight="700" fill="#0d1117">1</text>
+<text x="910" y="95" font-size="14" font-weight="700" fill="#3b82f6">Encoder self-attention</text>
+<text x="882" y="120" class="flow-d" font-size="12.5">Every English word looks at every</text>
+<text x="882" y="138" class="flow-d" font-size="12.5">English word, all six at once. Out</text>
+<text x="882" y="156" class="flow-d" font-size="12.5">comes one vector per word (The',</text>
+<text x="882" y="174" class="flow-d" font-size="12.5">law', ...), kept for the whole</text>
+<text x="882" y="192" class="flow-d" font-size="12.5">translation.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS3" target="_blank" class="flow-lg1" data-tiphead="Masked self-attention, one step" data-tip="Each decoder position attends to all decoder positions up to and including itself. In training a mask sets the scores of later positions to minus infinity; when generating, later words do not exist yet.">
+<rect x="870" y="216" width="258" height="96" rx="9" fill="#141414" stroke="#f0883e" stroke-width="1.6"/>
+<circle cx="892" cy="236" r="11" fill="#f0883e"/><text x="892" y="241" text-anchor="middle" font-size="13" font-weight="700" fill="#0d1117">2</text>
+<text x="910" y="241" font-size="14" font-weight="700" fill="#f0883e">Masked self-attention</text>
+<text x="882" y="266" class="flow-d" font-size="12.5">The decoder's newest position looks</text>
+<text x="882" y="284" class="flow-d" font-size="12.5">at the German written so far, itself</text>
+<text x="882" y="302" class="flow-d" font-size="12.5">included, never ahead.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS3" target="_blank" class="flow-lg2" data-tiphead="Encoder-decoder attention, one step" data-tip="Queries come from the previous decoder layer; keys and values come from the output of the encoder, so every decoder position can attend over all positions of the English sentence.">
+<rect x="870" y="326" width="258" height="114" rx="9" fill="#141414" stroke="#bc8cff" stroke-width="1.6"/>
+<circle cx="892" cy="346" r="11" fill="#bc8cff"/><text x="892" y="351" text-anchor="middle" font-size="13" font-weight="700" fill="#0d1117">3</text>
+<text x="910" y="351" font-size="14" font-weight="700" fill="#bc8cff">Encoder-decoder attention</text>
+<text x="882" y="376" class="flow-d" font-size="12.5">Its query searches the encoder</text>
+<text x="882" y="394" class="flow-d" font-size="12.5">output for what to translate next.</text>
+<text x="882" y="412" class="flow-d" font-size="12.5">Thick line: the English word it</text>
+<text x="882" y="430" class="flow-d" font-size="12.5">reads most, into the word written.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3" target="_blank" class="flow-lg3" data-tiphead="Next word, fed back" data-tip="The model is auto-regressive: at each step it consumes the previously generated symbols as additional input when generating the next. The paper decodes with beam search of size 4 rather than one greedy word.">
+<rect x="870" y="454" width="258" height="96" rx="9" fill="#141414" stroke="#3fb950" stroke-width="1.6"/>
+<circle cx="892" cy="474" r="11" fill="#3fb950"/><text x="892" y="479" text-anchor="middle" font-size="13" font-weight="700" fill="#0d1117">4</text>
+<text x="910" y="479" font-size="14" font-weight="700" fill="#3fb950">Next word</text>
+<text x="882" y="504" class="flow-d" font-size="12.5">It writes one German word, which</text>
+<text x="882" y="522" class="flow-d" font-size="12.5">is fed back in as the next input.</text>
+<text x="882" y="540" class="flow-d" font-size="12.5">Repeat until the sentence is done.</text>
+</a>
+</svg>

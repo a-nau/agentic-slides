@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+  <defs>
+    <marker id="fg" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3b82f6"/></marker>
+    <marker id="fb" markerWidth="10" markerHeight="10" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3fb950"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+  <style>.t{fill:#f0f0f0;font-weight:700}.m{font-family:'JetBrains Mono',monospace;fill:#93c5fd}.d{fill:#a0a0a0}.n{fill:#3b82f6;font-weight:700}.life{stroke:#2a2a2a;stroke-width:1.5}</style>
+  <text x="40" y="44" class="t" font-size="18">One request, end to end: the cache decision sits in the middle</text>
+  <g class="d" font-size="14" text-anchor="middle">
+    <a href="https://your.gitlab/org/repo/-/blob/COMMIT/src/cli.py" target="_blank"><rect x="70" y="74" width="180" height="44" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/><text x="160" y="102" class="t" font-size="15">CLI</text></a>
+    <a href="https://your.gitlab/org/repo/-/blob/COMMIT/src/parser.py" target="_blank"><rect x="330" y="74" width="180" height="44" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/><text x="420" y="102" class="t" font-size="15">Parser</text></a>
+    <a href="https://your.gitlab/org/repo/-/blob/COMMIT/src/engine.py" target="_blank"><rect x="590" y="74" width="180" height="44" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/><text x="680" y="102" class="t" font-size="15">Engine</text></a>
+    <a href="https://your.gitlab/org/repo/-/blob/COMMIT/src/infra/store.py" target="_blank"><rect x="850" y="74" width="180" height="44" rx="9" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.5"/><text x="940" y="102" class="t" font-size="15">Store</text></a>
+  </g>
+  <line x1="160" y1="118" x2="160" y2="556" class="life"/>
+  <line x1="420" y1="118" x2="420" y2="556" class="life"/>
+  <line x1="680" y1="118" x2="680" y2="556" class="life"/>
+  <line x1="940" y1="118" x2="940" y2="556" class="life"/>
+  <text x="60" y="158" class="n" font-size="14">1</text>
+  <path d="M160,170 L420,170" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#fg)"/>
+  <text x="290" y="162" text-anchor="middle" class="d" font-size="13">parse(source)</text>
+  <text x="60" y="218" class="n" font-size="14">2</text>
+  <path d="M420,230 L680,230" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#fg)"/>
+  <text x="550" y="222" text-anchor="middle" class="d" font-size="13">run(ast)</text>
+  <text x="60" y="278" class="n" font-size="14">3</text>
+  <path d="M680,290 L940,290" fill="none" stroke="#3fb950" stroke-width="2" marker-end="url(#fb)"/>
+  <text x="810" y="282" text-anchor="middle" class="d" font-size="13">Store.get(key)</text>
+  <text x="60" y="338" class="n" font-size="14">4</text>
+  <path d="M940,350 L680,350" fill="none" stroke="#3fb950" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#fb)"/>
+  <text x="810" y="342" text-anchor="middle" class="d" font-size="13">miss -> compute</text>
+  <text x="60" y="398" class="n" font-size="14">5</text>
+  <path d="M680,410 L940,410" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#fg)"/>
+  <text x="810" y="402" text-anchor="middle" class="d" font-size="13">Store.put(key, artifact)</text>
+  <text x="60" y="458" class="n" font-size="14">6</text>
+  <path d="M680,470 L160,470" fill="none" stroke="#3fb950" stroke-width="2" marker-end="url(#fb)"/>
+  <text x="420" y="462" text-anchor="middle" class="d" font-size="13">Report (diagnostics + results)</text>
+  <rect x="40" y="506" width="990" height="62" rx="10" fill="#0d1117" stroke="#2a2a2a"/>
+  <text x="60" y="532" class="d" font-size="13.5">Cache hits short-circuit step <tspan class="n">4</tspan>. Cache misses compute once, then Store.put makes the next run cheap.</text>
+  <text x="60" y="554" class="d" font-size="13.5">That single Store boundary is the reason the Engine can be tested without real filesystem writes.</text>
+</svg>

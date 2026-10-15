@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.scal-t{fill:#f0f0f0;font-weight:700}.scal-m{font-family:'JetBrains Mono',monospace}.scal-d{fill:#a0a0a0}.scal-hd{fill:#3b82f6;font-weight:700;letter-spacing:.06em}</style>
+<defs>
+<marker id="ag" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+<marker id="av" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#bc8cff"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="258" y="96" text-anchor="middle" class="scal-hd" font-size="15">Scaled Dot-Product Attention</text>
+<text x="258" y="114" text-anchor="middle" class="scal-d" font-size="11.5">Figure 2, left panel, redrawn</text>
+<path d="M148,536 L148,508" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M238,536 L238,508" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M193,460 L193,444" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M193,396 L193,380" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M193,332 L193,316" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M193,268 L193,244" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M258,196 L258,174" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M368,536 L368,244" stroke="#bc8cff" stroke-width="2.2" marker-end="url(#av)" fill="none"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS3" target="_blank" data-tiphead="Q, the queries" data-tip="One row per position that is doing the looking. Each row is a learned linear projection of that position s current representation, of width d_k = 64 inside a head.">
+<rect x="110" y="536" width="76" height="36" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="148" y="560" text-anchor="middle" class="scal-t" font-size="17">Q</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS3" target="_blank" data-tiphead="K, the keys" data-tip="One row per position that can be looked at. A key is the advertisement a position offers: the query is compared against it to decide how much attention that position gets.">
+<rect x="200" y="536" width="76" height="36" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="238" y="560" text-anchor="middle" class="scal-t" font-size="17">K</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS3" target="_blank" data-tiphead="V, the values" data-tip="The content that actually gets read out and summed. Values have width d_v, which the paper sets equal to d_k = 64. Keys decide how much, values decide what.">
+<rect x="330" y="536" width="76" height="36" rx="8" fill="#1a1a1a" stroke="#bc8cff" stroke-width="2"/>
+<text x="368" y="560" text-anchor="middle" class="scal-t" font-size="17">V</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E1" target="_blank" data-tiphead="MatMul: Q times K transposed" data-tip="One dot product per query-key pair. With n positions the result is an n by n matrix of raw compatibility scores, computed for all pairs at once as a single matrix multiply.">
+<rect x="110" y="460" width="166" height="44" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="193" y="480" text-anchor="middle" class="scal-t" font-size="14.5">MatMul</text>
+<text x="193" y="496" text-anchor="middle" class="scal-m" fill="#93c5fd" font-size="10.5">Q x K^T</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS1" target="_blank" data-tiphead="Scale" data-tip="Divide every score by the square root of d_k. This is the only difference between this attention and plain dot-product attention, and it exists to keep the softmax out of its saturated region.">
+<rect x="110" y="396" width="166" height="44" rx="9" fill="#1a1a1a" stroke="#f0883e" stroke-width="2"/>
+<text x="193" y="416" text-anchor="middle" class="scal-t" font-size="14.5">Scale</text>
+<text x="193" y="432" text-anchor="middle" class="scal-m" fill="#f0883e" font-size="10.5">/ sqrt(d_k)</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS3" target="_blank" data-tiphead="Mask, optional" data-tip="Used only in decoder self-attention. Every score that corresponds to an illegal connection is set to minus infinity here, before the softmax, so its weight comes out as exactly zero.">
+<rect x="110" y="332" width="166" height="44" rx="9" fill="#1a1a1a" stroke="#f85149" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="193" y="352" text-anchor="middle" class="scal-t" font-size="14.5">Mask (opt.)</text>
+<text x="193" y="368" text-anchor="middle" class="scal-m" fill="#f85149" font-size="10.5">illegal = -inf</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E1" target="_blank" data-tiphead="SoftMax" data-tip="Applied along each row, so the n scores for one query become n non-negative weights that sum to one. This is what makes attention a soft, differentiable lookup instead of a hard pick.">
+<rect x="110" y="268" width="166" height="44" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="193" y="288" text-anchor="middle" class="scal-t" font-size="14.5">SoftMax</text>
+<text x="193" y="304" text-anchor="middle" class="scal-m" fill="#93c5fd" font-size="10.5">rows sum to 1</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E1" target="_blank" data-tiphead="MatMul: weights times V" data-tip="The weighted sum. Output row i is the average of all value rows, weighted by row i of the softmax. The softmax couples the scores within a row, but only this product carries content from other positions into row i.">
+<rect x="110" y="196" width="296" height="48" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="258" y="218" text-anchor="middle" class="scal-t" font-size="14.5">MatMul</text>
+<text x="258" y="235" text-anchor="middle" class="scal-m" fill="#93c5fd" font-size="10.5">weights x V</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS2" target="_blank" data-tiphead="Head output" data-tip="One d_v-wide vector per position. Inside multi-head attention this is one of h such outputs, which are concatenated and projected back to 512 dimensions.">
+<rect x="180" y="130" width="156" height="44" rx="9" fill="#0d1117" stroke="#93c5fd" stroke-width="1.8"/>
+<text x="258" y="150" text-anchor="middle" class="scal-t" font-size="14.5">head output</text>
+<text x="258" y="166" text-anchor="middle" class="scal-m" fill="#93c5fd" font-size="10.5">n x d_v</text>
+</a>
+<text x="470" y="176" class="scal-t" font-size="24">Attention(Q, K, V)</text>
+<text x="726" y="176" class="scal-d" font-size="24">=</text>
+<text x="758" y="176" fill="#3b82f6" font-size="24" font-weight="700">softmax</text>
+<text x="862" y="182" class="scal-d" font-size="34">(</text>
+<text x="936" y="162" text-anchor="middle" fill="#3fb950" font-size="22" font-weight="700">Q K</text>
+<text x="960" y="152" fill="#3fb950" font-size="14" font-weight="700">T</text>
+<path d="M894,172 L980,172" stroke="#a0a0a0" stroke-width="1.6"/>
+<text x="910" y="200" fill="#f0883e" font-size="24" font-weight="700">&#8730;</text>
+<path d="M926,182 L958,182" stroke="#f0883e" stroke-width="1.6"/>
+<text x="928" y="200" fill="#f0883e" font-size="21" font-weight="700" font-style="italic">d</text>
+<text x="942" y="205" fill="#f0883e" font-size="14" font-weight="700">k</text>
+<text x="986" y="182" class="scal-d" font-size="34">)</text>
+<text x="1016" y="176" fill="#bc8cff" font-size="24" font-weight="700" font-style="italic">V</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E1" target="_blank"><text x="1136" y="176" text-anchor="end" class="scal-d" font-size="15">Eq. 1</text></a>
+<text x="470" y="230" class="scal-d" font-size="12.5">Two matrix multiplies, one divide, one softmax. No recurrence, no convolution.</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E1" target="_blank" data-tiphead="Q K transposed" data-tip="The compatibility function. Dot product rather than a small feed-forward network, because it can be run as one highly optimised matrix multiply.">
+<rect x="450" y="268" width="690" height="64" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="472" y="292" font-size="15"><tspan class="scal-m" fill="#3fb950" font-weight="700">Q K^T</tspan><tspan dx="18" fill="#f0f0f0">every query dotted with every key: an n x n table of raw scores</tspan></text>
+<text x="472" y="316" class="scal-d" font-size="12.5">score[i][j] says how strongly position i wants to read from position j</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS1" target="_blank" data-tiphead="Divide by the square root of d_k" data-tip="The scaling factor. It is the whole difference between this and classic dot-product attention, and the paper attributes it to the variance of the dot product growing with d_k.">
+<rect x="450" y="344" width="690" height="64" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="472" y="368" font-size="15"><tspan class="scal-m" fill="#f0883e" font-weight="700">/ sqrt(d_k)</tspan><tspan dx="18" fill="#f0f0f0">shrink the scores before the softmax sees them</tspan></text>
+<text x="472" y="392" class="scal-d" font-size="12.5">d_k = 64 in the base model, so every score is divided by 8</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E1" target="_blank" data-tiphead="softmax" data-tip="Applied row-wise. It converts scores into a distribution, which is what makes the read-out an average rather than a hard selection.">
+<rect x="450" y="420" width="690" height="64" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="472" y="444" font-size="15"><tspan class="scal-m" fill="#3b82f6" font-weight="700">softmax</tspan><tspan dx="18" fill="#f0f0f0">each row becomes a probability distribution over positions</tspan></text>
+<text x="472" y="468" class="scal-d" font-size="12.5">the n weights in row i are non-negative and sum to 1: a soft, differentiable lookup</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2" target="_blank" data-tiphead="Times V" data-tip="The read-out. The paper defines attention as a weighted sum of the values, where the weight on each value comes from the compatibility of the query with the matching key.">
+<rect x="450" y="496" width="690" height="64" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="472" y="520" font-size="15"><tspan class="scal-m" fill="#bc8cff" font-weight="700">x V</tspan><tspan dx="18" fill="#f0f0f0">the weights average the value rows: output row i is that average</tspan></text>
+<text x="472" y="544" class="scal-d" font-size="12.5">softmax only reweights row i; this product is what copies other positions' content in</text>
+</a>
+</svg>

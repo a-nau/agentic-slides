@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.path-t{fill:#f0f0f0;font-weight:700}.path-m{font-family:'JetBrains Mono',monospace}.path-d{fill:#a0a0a0}.path-c{fill:#f0f0f0;font-family:'JetBrains Mono',monospace;font-size:12.5px}.path-anim{animation-duration:9s;animation-iteration-count:infinite;animation-timing-function:ease-in-out}.path-dA{animation-name:path-dA}.path-dR{animation-name:path-dR}.path-dC{animation-name:path-dC}@keyframes path-dA{0%,5%{transform:translate(0,0);opacity:1}8%{transform:translate(87px,-48px)}11%{transform:translate(175px,-64px)}14%{transform:translate(262px,-48px)}17%,90%{transform:translate(350px,0);opacity:1}94%,100%{transform:translate(350px,0);opacity:0}}@keyframes path-dR{0%,5%{transform:translate(0,0);opacity:1}15%,18%{transform:translate(70px,0)}28%,31%{transform:translate(140px,0)}41%,44%{transform:translate(210px,0)}54%,57%{transform:translate(280px,0)}67%,90%{transform:translate(350px,0);opacity:1}94%,100%{transform:translate(350px,0);opacity:0}}@keyframes path-dC{0%,5%{transform:translate(0,0);opacity:1}10%{transform:translate(35px,-24px)}15%,18%{transform:translate(70px,0)}24%{transform:translate(175px,-56px)}30%,33%{transform:translate(280px,0)}38%{transform:translate(315px,-24px)}43%,90%{transform:translate(350px,0);opacity:1}94%,100%{transform:translate(350px,0);opacity:0}}</style>
+<defs>
+<marker id="ao" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#f0883e"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="30" y="66" fill="#f0f0f0" font-size="15" font-weight="700">How far must a signal travel between two positions?</text>
+<text x="30" y="130" fill="#3b82f6" font-size="13.5" font-weight="700">self-attention: any pair, one hop</text>
+<path d="M60,168 Q235,104 410,168" stroke="#3b82f6" stroke-width="2.4" fill="none"/>
+<path d="M60,170 Q130,138 200,170" stroke="#3b82f6" stroke-width="1.2" fill="none" opacity="0.35"/>
+<path d="M130,170 Q235,132 340,170" stroke="#3b82f6" stroke-width="1.2" fill="none" opacity="0.35"/>
+<path d="M200,170 Q305,138 410,170" stroke="#3b82f6" stroke-width="1.2" fill="none" opacity="0.35"/>
+<circle cx="60" cy="176" r="8" fill="#3b82f6"/>
+<circle cx="130" cy="176" r="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<circle cx="200" cy="176" r="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<circle cx="270" cy="176" r="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<circle cx="340" cy="176" r="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<circle cx="410" cy="176" r="8" fill="#3b82f6"/>
+<text x="440" y="181" fill="#3b82f6" font-size="14" font-weight="700">1 hop</text>
+<text x="30" y="246" fill="#f0883e" font-size="13.5" font-weight="700">recurrent: the signal walks the chain</text>
+<path d="M70,292 L120,292" stroke="#f0883e" stroke-width="2" marker-end="url(#ao)" fill="none"/>
+<path d="M140,292 L190,292" stroke="#f0883e" stroke-width="2" marker-end="url(#ao)" fill="none"/>
+<path d="M210,292 L260,292" stroke="#f0883e" stroke-width="2" marker-end="url(#ao)" fill="none"/>
+<path d="M280,292 L330,292" stroke="#f0883e" stroke-width="2" marker-end="url(#ao)" fill="none"/>
+<path d="M350,292 L400,292" stroke="#f0883e" stroke-width="2" marker-end="url(#ao)" fill="none"/>
+<circle cx="60" cy="292" r="8" fill="#f0883e"/>
+<circle cx="130" cy="292" r="8" fill="#1a1a1a" stroke="#f0883e" stroke-width="2"/>
+<circle cx="200" cy="292" r="8" fill="#1a1a1a" stroke="#f0883e" stroke-width="2"/>
+<circle cx="270" cy="292" r="8" fill="#1a1a1a" stroke="#f0883e" stroke-width="2"/>
+<circle cx="340" cy="292" r="8" fill="#1a1a1a" stroke="#f0883e" stroke-width="2"/>
+<circle cx="410" cy="292" r="8" fill="#f0883e"/>
+<text x="440" y="297" fill="#f0883e" font-size="14" font-weight="700">O(n) hops</text>
+<text x="30" y="362" fill="#3fb950" font-size="13.5" font-weight="700">convolutional: a stack of kernels</text>
+<path d="M130,400 Q235,344 340,400" stroke="#3fb950" stroke-width="2.2" fill="none"/>
+<path d="M60,402 Q95,378 130,402" stroke="#3fb950" stroke-width="1.6" fill="none" opacity="0.6"/>
+<path d="M130,402 Q165,378 200,402" stroke="#3fb950" stroke-width="1.6" fill="none" opacity="0.6"/>
+<path d="M270,402 Q305,378 340,402" stroke="#3fb950" stroke-width="1.6" fill="none" opacity="0.6"/>
+<path d="M340,402 Q375,378 410,402" stroke="#3fb950" stroke-width="1.6" fill="none" opacity="0.6"/>
+<circle cx="60" cy="408" r="8" fill="#3fb950"/>
+<circle cx="130" cy="408" r="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<circle cx="200" cy="408" r="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<circle cx="270" cy="408" r="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<circle cx="340" cy="408" r="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<circle cx="410" cy="408" r="8" fill="#3fb950"/>
+<text x="440" y="413" fill="#3fb950" font-size="14" font-weight="700">O(log_k n) layers</text>
+<circle class="path-anim path-dA" cx="60" cy="176" r="5" fill="#f0f0f0" stroke="#3b82f6" stroke-width="2"/><circle class="path-anim path-dR" cx="60" cy="292" r="5" fill="#f0f0f0" stroke="#f0883e" stroke-width="2"/><circle class="path-anim path-dC" cx="60" cy="408" r="5" fill="#f0f0f0" stroke="#3fb950" stroke-width="2"/>
+<text x="560" y="90" class="path-d" font-size="13">Table 1, redrawn. The highlighted column is the paper's argument.</text>
+<rect x="552" y="102" width="596" height="230" rx="8" fill="none" stroke="#2a2a2a" stroke-width="1.4"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S4.T1" target="_blank" data-tiphead="Maximum path length" data-tip="The length of the path a forward or backward signal must travel between two positions. The paper argues the shorter these paths, the easier long-range dependencies are to learn, which is why this column carries the case for self-attention.">
+<rect x="1000" y="106" width="144" height="222" rx="8" fill="#101824" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="1072" y="128" text-anchor="middle" fill="#3b82f6" font-size="12.5" font-weight="700">Maximum</text>
+<text x="1072" y="145" text-anchor="middle" fill="#3b82f6" font-size="12.5" font-weight="700">Path Length</text>
+<text x="1072" y="187" text-anchor="middle" class="path-m" fill="#3b82f6" font-size="13" font-weight="700">O(1)</text>
+<text x="1072" y="231" text-anchor="middle" class="path-m" fill="#f0883e" font-size="13">O(n)</text>
+<text x="1072" y="275" text-anchor="middle" class="path-m" fill="#3fb950" font-size="13">O(log_k(n))</text>
+<text x="1072" y="319" text-anchor="middle" class="path-m" fill="#a0a0a0" font-size="13">O(n/r)</text>
+</a>
+<path d="M560,160 L1140,160" stroke="#2a2a2a" stroke-width="1.2"/>
+<path d="M560,204 L1140,204" stroke="#2a2a2a" stroke-width="1.2"/>
+<path d="M560,248 L1140,248" stroke="#2a2a2a" stroke-width="1.2"/>
+<path d="M560,292 L1140,292" stroke="#2a2a2a" stroke-width="1.2"/>
+<text x="570" y="136" class="path-d" font-size="12.5" font-weight="700">Layer Type</text>
+<text x="770" y="128" class="path-d" font-size="12.5" font-weight="700">Complexity</text>
+<text x="770" y="145" class="path-d" font-size="12.5" font-weight="700">per Layer</text>
+<text x="900" y="128" class="path-d" font-size="12.5" font-weight="700">Sequential</text>
+<text x="900" y="145" class="path-d" font-size="12.5" font-weight="700">Operations</text>
+<text x="570" y="187" class="path-t" font-size="12.5">Self-Attention</text>
+<text x="770" y="187" class="path-c">O(n^2 . d)</text>
+<text x="900" y="187" class="path-c">O(1)</text>
+<text x="570" y="231" class="path-t" font-size="12.5">Recurrent</text>
+<text x="770" y="231" class="path-c">O(n . d^2)</text>
+<text x="900" y="231" class="path-c">O(n)</text>
+<text x="570" y="275" class="path-t" font-size="12.5">Convolutional</text>
+<text x="770" y="275" class="path-c">O(k . n . d^2)</text>
+<text x="900" y="275" class="path-c">O(1)</text>
+<text x="570" y="319" class="path-t" font-size="12.5">Self-Attention (restricted)</text>
+<text x="770" y="319" class="path-c">O(r . n . d)</text>
+<text x="900" y="319" class="path-c">O(1)</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S4" target="_blank" data-tiphead="The verdict" data-tip="Section 4 lists three desiderata: total complexity per layer, how much can be parallelised, and the path length between long-range dependencies. Only the third distinguishes self-attention sharply from both alternatives.">
+<rect x="20" y="464" width="1124" height="112" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="44" y="492" class="path-t" font-size="15">Maximum path length is the column that carries the argument</text>
+<text x="44" y="518" class="path-d" font-size="13">Complexity and parallelism both matter, but the paper's stated motive is learning long-range dependencies: the shorter</text>
+<text x="44" y="540" class="path-d" font-size="13">the path a signal travels forward and backward, the easier those dependencies are to learn. Self-attention makes it O(1).</text>
+<text x="44" y="562" fill="#f0883e" font-size="13">Caveat from the same table: O(n^2 . d) is worse than recurrent O(n . d^2) once n exceeds d, and the paper only flags a fix as future work.</text>
+</a>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.pers-t{fill:#f0f0f0;font-weight:700}.pers-m{font-family:'JetBrains Mono',monospace}.pers-d{fill:#a0a0a0}.pers-hd{fill:#3b82f6;font-weight:700;letter-spacing:.05em}</style>
+<defs>
+<marker id="pg1" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#3b82f6"/></marker>
+<marker id="pr1" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#f85149"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="18" y="28" class="pers-hd" font-size="16">FIRST WHAT IT DOES &#8212; THEN WHAT THAT COSTS YOU</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S3" target="_blank"><text x="1142" y="28" text-anchor="end" class="pers-d" font-size="14">Sec. 3 and Sec. 5.3</text></a>
+
+<rect x="18" y="44" width="1122" height="212" rx="12" fill="#151515" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="42" y="76" class="pers-t" font-size="18">1 &#183; A NeRF is a function you query &#8212; it never takes an image as input</text>
+<g data-tiphead="The query" data-tip="Five numbers: a point anywhere in the scene volume and the direction you are looking from. Continuous, so there is no grid and no resolution limit.">
+<rect x="42" y="100" width="212" height="76" rx="8" fill="#1a1a1a" stroke="#f0883e" stroke-width="1.6"/>
+<text x="148" y="132" text-anchor="middle" class="pers-t" font-size="16">ask: (x, y, z, &#952;, &#966;)</text>
+<text x="148" y="156" text-anchor="middle" class="pers-d" font-size="14">a point, and a direction</text>
+</g>
+<path d="M260,138 L286,138" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#pg1)" fill="none"/>
+<g data-tiphead="The function itself" data-tip="One fully-connected network, no convolutions: eight 256-channel layers for density, one 128-channel layer for colour. Two copies of it are trained, a coarse and a fine one; at about 0.6 million parameters each in 32-bit floats, the pair comes to the paper's 5 MB.">
+<rect x="296" y="100" width="230" height="76" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="411" y="132" text-anchor="middle" class="pers-t" font-size="16">the MLP F&#920;</text>
+<text x="411" y="156" text-anchor="middle" class="pers-d" font-size="14">coarse + fine: 5 MB in all</text>
+</g>
+<path d="M532,138 L558,138" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#pg1)" fill="none"/>
+<g data-tiphead="The answer" data-tip="Volume density at that point, and the RGB colour it emits toward the direction you asked about. One point, one answer.">
+<rect x="568" y="100" width="212" height="76" rx="8" fill="#0d1117" stroke="#93c5fd" stroke-width="1.8"/>
+<text x="674" y="132" text-anchor="middle" class="pers-t" font-size="16">get: (RGB, &#963;)</text>
+<text x="674" y="156" text-anchor="middle" class="pers-d" font-size="14">colour and density there</text>
+</g>
+<path d="M786,138 L812,138" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#pg1)" fill="none"/>
+<g data-tiphead="Who does the asking" data-tip="A volume renderer. For every pixel it marches a ray, asks the coarse network at 64 points and the fine network at 192 points along it, 256 queries in all, and integrates the answers into one colour. The network never sees a picture.">
+<rect x="822" y="100" width="296" height="76" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.6"/>
+<text x="970" y="132" text-anchor="middle" class="pers-t" font-size="16">a renderer asks 256 times</text>
+<text x="970" y="156" text-anchor="middle" class="pers-d" font-size="14">64 coarse + 192 fine &#8594; one pixel</text>
+</g>
+<text x="42" y="212" class="pers-d" font-size="16">Read &#8220;network&#8221; here as <tspan class="pers-t">file format for a scene</tspan>, not as a model that has learned about scenes in general.</text>
+<text x="42" y="238" class="pers-d" font-size="16">The direction is two angles (&#952;, &#966;) in the 5D count, fed to the network as a 3D unit vector d: same information.</text>
+
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.SS3" target="_blank" data-tiphead="The paper's own sentence" data-tip="Section 5.3 opens with it: we optimize a separate neural continuous volume representation network for each scene. Every fit starts from random weights.">
+<rect x="18" y="272" width="1122" height="308" rx="12" fill="#151515" stroke="#f85149" stroke-width="1.8"/>
+<text x="42" y="304" class="pers-t" font-size="18">2 &#183; Those weights are <tspan fill="#f85149">one scene</tspan> &#8212; fitting is the reconstruction, so it happens again every time</text>
+<g data-tiphead="Scene A" data-tip="One hundred posed renderings of the Lego bulldozer, optimised from scratch for one to two days on a single V100.">
+<rect x="42" y="326" width="336" height="150" rx="10" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="210" y="358" text-anchor="middle" class="pers-t" font-size="16">Lego: 100 posed photos</text>
+<path d="M210,372 L210,398" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#pg1)" fill="none"/>
+<text x="210" y="424" text-anchor="middle" class="pers-d" font-size="15">optimise from scratch</text>
+<text x="210" y="454" text-anchor="middle" fill="#93c5fd" font-size="16" font-weight="700">&#920;&#8321; &#8212; the Lego scene</text>
+</g>
+<g data-tiphead="Scene B" data-tip="A handheld forward-facing capture of a fern with poses recovered by COLMAP. A completely separate run: nothing from the Lego fit is reused, not even as an initialisation.">
+<rect x="412" y="326" width="336" height="150" rx="10" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="580" y="358" text-anchor="middle" class="pers-t" font-size="16">Fern: a handheld capture</text>
+<path d="M580,372 L580,398" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#pg1)" fill="none"/>
+<text x="580" y="424" text-anchor="middle" class="pers-d" font-size="15">optimise from scratch</text>
+<text x="580" y="454" text-anchor="middle" fill="#93c5fd" font-size="16" font-weight="700">&#920;&#8322; &#8212; unrelated weights</text>
+</g>
+<g data-tiphead="Your scene" data-tip="Same story, and there is no warm start available, because there is no pretrained NeRF to warm start from.">
+<rect x="782" y="326" width="336" height="150" rx="10" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="950" y="358" text-anchor="middle" class="pers-t" font-size="16">your scene</text>
+<path d="M950,372 L950,398" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#pg1)" fill="none"/>
+<text x="950" y="424" text-anchor="middle" class="pers-d" font-size="15">optimise from scratch</text>
+<text x="950" y="454" text-anchor="middle" fill="#93c5fd" font-size="16" font-weight="700">&#920;&#8323; &#8212; pay it all again</text>
+</g>
+<path d="M378,400 L412,400" stroke="#f85149" stroke-width="2.4" stroke-dasharray="8 5" marker-end="url(#pr1)" fill="none"/>
+<path d="M748,400 L782,400" stroke="#f85149" stroke-width="2.4" stroke-dasharray="8 5" marker-end="url(#pr1)" fill="none"/>
+<text x="580" y="522" text-anchor="middle" fill="#f85149" font-size="18" font-weight="700">Nothing transfers. There is no pretrained NeRF to download.</text>
+<text x="580" y="554" text-anchor="middle" class="pers-d" font-size="16">What you buy for that: all capacity spent on one scene, and 5 MB of weights instead of LLFF's over 15 GB of grids.</text>
+</a>
+</svg>

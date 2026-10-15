@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+  <defs>
+    <marker id="hg" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+    <marker id="hb" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3fb950"/></marker>
+    <marker id="hm" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#666"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+  <style>.t{fill:#f0f0f0;font-weight:700}.m{font-family:'JetBrains Mono',monospace;fill:#93c5fd}.d{fill:#a0a0a0}.lbl{fill:#f0f0f0;font-weight:600}</style>
+  <a href="https://your.gitlab/org/repo/-/blob/COMMIT/src/cli.py" target="_blank">
+    <rect x="80" y="28" width="1000" height="74" rx="12" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="580" y="60" text-anchor="middle" class="t" font-size="22">Forge CLI — command surface <tspan fill="#3fb950" font-size="15" font-weight="500">(forge run)</tspan></text>
+    <text x="580" y="86" text-anchor="middle" class="d" font-size="14.5">parses args · loads config · wires the pipeline · streams results back to the terminal</text>
+  </a>
+  <path d="M300,102 L300,166" fill="none" stroke="#666" stroke-width="2" marker-end="url(#hm)"/>
+  <path d="M860,102 L860,166" fill="none" stroke="#666" stroke-width="2" marker-end="url(#hm)"/>
+  <a href="https://your.gitlab/org/repo/-/blob/COMMIT/src/parser.py" target="_blank">
+    <rect x="80" y="168" width="300" height="150" rx="14" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="230" y="210" text-anchor="middle" class="t" font-size="23">Parser</text>
+    <text x="230" y="240" text-anchor="middle" class="m" font-size="14">parse(source) -> AST</text>
+    <text x="230" y="270" text-anchor="middle" class="d" font-size="14">turns raw input into a</text>
+    <text x="230" y="290" text-anchor="middle" class="d" font-size="14">typed, validated tree</text>
+  </a>
+  <a href="https://your.gitlab/org/repo/-/blob/COMMIT/src/engine.py" target="_blank">
+    <rect x="780" y="168" width="300" height="150" rx="14" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="930" y="210" text-anchor="middle" class="t" font-size="23">Engine</text>
+    <text x="930" y="240" text-anchor="middle" class="m" font-size="14">Engine.run(ast)</text>
+    <text x="930" y="270" text-anchor="middle" class="d" font-size="14">pure decisions:</text>
+    <text x="930" y="290" text-anchor="middle" class="d" font-size="14">plan, execute, report</text>
+  </a>
+  <path d="M380,203 C540,170 620,170 780,203" fill="none" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#hg)"/>
+  <text x="580" y="130" text-anchor="middle" class="lbl" font-size="15">typed build plan</text>
+  <text x="580" y="150" text-anchor="middle" fill="#666" font-size="13" font-family="JetBrains Mono, monospace">Program</text>
+  <path d="M780,283 C620,338 540,338 380,283" fill="none" stroke="#3fb950" stroke-width="2.5" marker-end="url(#hb)"/>
+  <text x="580" y="330" text-anchor="middle" class="lbl" font-size="15">diagnostics · partial results</text>
+  <text x="580" y="350" text-anchor="middle" fill="#666" font-size="13" font-family="JetBrains Mono, monospace">Report</text>
+  <a href="https://your.gitlab/org/repo/-/blob/COMMIT/src/infra/store.py" target="_blank">
+    <rect x="410" y="436" width="340" height="120" rx="14" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+    <text x="580" y="476" text-anchor="middle" class="t" font-size="21">Store</text>
+    <text x="580" y="504" text-anchor="middle" class="m" font-size="14">cache + artifact sink</text>
+    <text x="580" y="532" text-anchor="middle" class="d" font-size="14">memoizes work, persists outputs</text>
+  </a>
+  <path d="M930,318 C930,418 820,438 752,468" fill="none" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#hg)"/>
+  <text x="900" y="398" text-anchor="middle" class="lbl" font-size="14">artifacts</text>
+  <path d="M410,476 C250,458 230,418 230,320" fill="none" stroke="#666" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#hm)"/>
+  <text x="150" y="400" text-anchor="end" class="d" font-size="14">cache hits</text>
+</svg>

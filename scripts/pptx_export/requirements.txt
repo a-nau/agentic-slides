@@ -1,0 +1,14 @@
+# Deps for the export server + editable-pptx exporter (scripts/export.sh <deck> pptx).
+# Install via scripts/setup.sh, from the hash-pinned requirements.lock generated from this file.
+# Extraction drives the system Chrome (channel="chrome"); no playwright browser download needed.
+python-pptx>=1.0
+lxml
+svgpathtools
+playwright
+pillow
+pytest
+fonttools
+pypdf
+pyyaml  # quarto/scripts/marp2qmd.py (edit-pane preview of Marp-sourced decks)
+pymupdf  # source-review/ingest.py, the annotate scripts, source-review tests
+beautifulsoup4  # source-review/ingest.py (HTML sources)

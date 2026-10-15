@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.whyn-t{fill:#f0f0f0;font-weight:700}.whyn-m{font-family:'JetBrains Mono',monospace}.whyn-d{fill:#a0a0a0}.whyn-cl0{animation:whyn-cl0 10s linear infinite}.whyn-cl1{animation:whyn-cl1 10s linear infinite}.whyn-cl2{animation:whyn-cl2 10s linear infinite}.whyn-cl3{animation:whyn-cl3 10s linear infinite}.whyn-cl4{animation:whyn-cl4 10s linear infinite}.whyn-clf{animation:whyn-clf 10s linear infinite}.whyn-crf{animation:whyn-crf 10s linear infinite}.whyn-crw{animation:whyn-crw 10s linear infinite}.whyn-h0{animation:whyn-h0 10s linear infinite}.whyn-h1{animation:whyn-h1 10s linear infinite}.whyn-h2{animation:whyn-h2 10s linear infinite}.whyn-h3{animation:whyn-h3 10s linear infinite}.whyn-h4{animation:whyn-h4 10s linear infinite}.whyn-p0{animation:whyn-p0 10s linear infinite}.whyn-p1{animation:whyn-p1 10s linear infinite}.whyn-p2{animation:whyn-p2 10s linear infinite}.whyn-p3{animation:whyn-p3 10s linear infinite}.whyn-lines{animation:whyn-lines 10s linear infinite}.whyn-z0{animation:whyn-z0 10s linear infinite}.whyn-z1{animation:whyn-z1 10s linear infinite}.whyn-z2{animation:whyn-z2 10s linear infinite}.whyn-z3{animation:whyn-z3 10s linear infinite}.whyn-z4{animation:whyn-z4 10s linear infinite}@keyframes whyn-cl0{0.00%{opacity:0}6.00%{opacity:0}7.50%{opacity:1}21.00%{opacity:1}21.50%{opacity:0}100.00%{opacity:0}}@keyframes whyn-cl1{0.00%{opacity:0}21.00%{opacity:0}22.50%{opacity:1}36.00%{opacity:1}36.50%{opacity:0}100.00%{opacity:0}}@keyframes whyn-cl2{0.00%{opacity:0}36.00%{opacity:0}37.50%{opacity:1}51.00%{opacity:1}51.50%{opacity:0}100.00%{opacity:0}}@keyframes whyn-cl3{0.00%{opacity:0}51.00%{opacity:0}52.50%{opacity:1}66.00%{opacity:1}66.50%{opacity:0}100.00%{opacity:0}}@keyframes whyn-cl4{0.00%{opacity:0}66.00%{opacity:0}67.50%{opacity:1}81.00%{opacity:1}81.50%{opacity:0}100.00%{opacity:0}}@keyframes whyn-clf{0.00%{opacity:0.0}81.00%{opacity:0.0}84.00%{opacity:1.0}94.00%{opacity:1.0}97.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-crf{0.00%{opacity:0.0}12.00%{opacity:0.0}15.00%{opacity:1.0}94.00%{opacity:1.0}97.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-crw{0.00%{opacity:0}21.00%{opacity:0}24.00%{opacity:1}81.00%{opacity:1}84.00%{opacity:0}100.00%{opacity:0}}@keyframes whyn-h0{0.00%{opacity:0.0}6.00%{opacity:0.0}9.00%{opacity:1.0}93.00%{opacity:1.0}96.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-h1{0.00%{opacity:0.0}21.00%{opacity:0.0}24.00%{opacity:1.0}93.00%{opacity:1.0}96.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-h2{0.00%{opacity:0.0}36.00%{opacity:0.0}39.00%{opacity:1.0}93.00%{opacity:1.0}96.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-h3{0.00%{opacity:0.0}51.00%{opacity:0.0}54.00%{opacity:1.0}93.00%{opacity:1.0}96.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-h4{0.00%{opacity:0.0}66.00%{opacity:0.0}69.00%{opacity:1.0}93.00%{opacity:1.0}96.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-p0{0.00%{opacity:0;transform:translate(0px,0px)}11.50%{opacity:0;transform:translate(0px,0px)}12.50%{opacity:1;transform:translate(0px,0px)}19.50%{opacity:1;transform:translate(18px,0px)}20.50%{opacity:0;transform:translate(18px,0px)}100.00%{opacity:0;transform:translate(18px,0px)}}@keyframes whyn-p1{0.00%{opacity:0;transform:translate(0px,0px)}26.50%{opacity:0;transform:translate(0px,0px)}27.50%{opacity:1;transform:translate(0px,0px)}34.50%{opacity:1;transform:translate(18px,0px)}35.50%{opacity:0;transform:translate(18px,0px)}100.00%{opacity:0;transform:translate(18px,0px)}}@keyframes whyn-p2{0.00%{opacity:0;transform:translate(0px,0px)}41.50%{opacity:0;transform:translate(0px,0px)}42.50%{opacity:1;transform:translate(0px,0px)}49.50%{opacity:1;transform:translate(18px,0px)}50.50%{opacity:0;transform:translate(18px,0px)}100.00%{opacity:0;transform:translate(18px,0px)}}@keyframes whyn-p3{0.00%{opacity:0;transform:translate(0px,0px)}56.50%{opacity:0;transform:translate(0px,0px)}57.50%{opacity:1;transform:translate(0px,0px)}64.50%{opacity:1;transform:translate(18px,0px)}65.50%{opacity:0;transform:translate(18px,0px)}100.00%{opacity:0;transform:translate(18px,0px)}}@keyframes whyn-lines{0.00%{opacity:0}6.00%{opacity:0}9.00%{opacity:1}18.00%{opacity:1}24.00%{opacity:.7}93.00%{opacity:.7}96.00%{opacity:0}100.00%{opacity:0}}@keyframes whyn-z0{0.00%{opacity:0.0}12.00%{opacity:0.0}15.00%{opacity:1.0}93.00%{opacity:1.0}96.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-z1{0.00%{opacity:0.0}12.00%{opacity:0.0}15.00%{opacity:1.0}93.00%{opacity:1.0}96.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-z2{0.00%{opacity:0.0}12.00%{opacity:0.0}15.00%{opacity:1.0}93.00%{opacity:1.0}96.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-z3{0.00%{opacity:0.0}12.00%{opacity:0.0}15.00%{opacity:1.0}93.00%{opacity:1.0}96.00%{opacity:0.0}100.00%{opacity:0.0}}@keyframes whyn-z4{0.00%{opacity:0.0}12.00%{opacity:0.0}15.00%{opacity:1.0}93.00%{opacity:1.0}96.00%{opacity:0.0}100.00%{opacity:0.0}}@media (prefers-reduced-motion: reduce){[class*="whyn-"]{animation:none !important}}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<defs><marker id="whyn-ao" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#f0883e"/></marker><marker id="whyn-ag" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker><marker id="whyn-ad" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#666"/></marker></defs>
+<rect x="40" y="14" width="530" height="290" rx="12" fill="#0d1117" stroke="#4a3520" stroke-width="1.6"/>
+<rect x="610" y="14" width="510" height="290" rx="12" fill="#0d1117" stroke="#20304a" stroke-width="1.6"/>
+<text x="62" y="46" fill="#f0883e" font-size="13" font-weight="700" letter-spacing=".06em">RECURRENT LAYER: ONE POSITION PER STEP</text>
+<text x="632" y="46" fill="#3b82f6" font-size="13" font-weight="700" letter-spacing=".06em">SELF-ATTENTION: ALL POSITIONS IN ONE STEP</text>
+<text x="62" y="76" class="whyn-cl0 whyn-m" fill="#f0883e" font-size="13.5" opacity="0">step 1 of 5 ...</text>
+<text x="62" y="76" class="whyn-cl1 whyn-m" fill="#f0883e" font-size="13.5" opacity="0">step 2 of 5 ...</text>
+<text x="62" y="76" class="whyn-cl2 whyn-m" fill="#f0883e" font-size="13.5" opacity="0">step 3 of 5 ...</text>
+<text x="62" y="76" class="whyn-cl3 whyn-m" fill="#f0883e" font-size="13.5" opacity="0">step 4 of 5 ...</text>
+<text x="62" y="76" class="whyn-cl4 whyn-m" fill="#f0883e" font-size="13.5" opacity="0">step 5 of 5 ...</text>
+<text x="62" y="76" class="whyn-clf whyn-m" fill="#f0883e" font-size="13.5" font-weight="700" opacity="1">5 sequential steps</text>
+<text x="632" y="76" class="whyn-crf whyn-m" fill="#3b82f6" font-size="13.5" font-weight="700" opacity="1">1 step for all 5 positions</text>
+<text x="1098" y="76" text-anchor="end" class="whyn-crw" fill="#8f979e" font-size="12" opacity="0">done; the recurrent side is still going</text>
+<path d="M101,226 L101,166" stroke="#666" stroke-width="1.8" marker-end="url(#whyn-ad)" fill="none"/>
+<rect x="71" y="228" width="60" height="28" rx="14" fill="#161b22" stroke="#30363d"/><text x="101" y="247" text-anchor="middle" class="whyn-m whyn-d" font-size="13">x_1</text>
+<path d="M203,226 L203,166" stroke="#666" stroke-width="1.8" marker-end="url(#whyn-ad)" fill="none"/>
+<rect x="173" y="228" width="60" height="28" rx="14" fill="#161b22" stroke="#30363d"/><text x="203" y="247" text-anchor="middle" class="whyn-m whyn-d" font-size="13">x_2</text>
+<path d="M305,226 L305,166" stroke="#666" stroke-width="1.8" marker-end="url(#whyn-ad)" fill="none"/>
+<rect x="275" y="228" width="60" height="28" rx="14" fill="#161b22" stroke="#30363d"/><text x="305" y="247" text-anchor="middle" class="whyn-m whyn-d" font-size="13">x_3</text>
+<path d="M407,226 L407,166" stroke="#666" stroke-width="1.8" marker-end="url(#whyn-ad)" fill="none"/>
+<rect x="377" y="228" width="60" height="28" rx="14" fill="#161b22" stroke="#30363d"/><text x="407" y="247" text-anchor="middle" class="whyn-m whyn-d" font-size="13">x_4</text>
+<path d="M509,226 L509,166" stroke="#666" stroke-width="1.8" marker-end="url(#whyn-ad)" fill="none"/>
+<rect x="479" y="228" width="60" height="28" rx="14" fill="#161b22" stroke="#30363d"/><text x="509" y="247" text-anchor="middle" class="whyn-m whyn-d" font-size="13">x_5</text>
+<path d="M142,135 L158,135" stroke="#f0883e" stroke-width="2.4" marker-end="url(#whyn-ao)" fill="none"/>
+<path d="M244,135 L260,135" stroke="#f0883e" stroke-width="2.4" marker-end="url(#whyn-ao)" fill="none"/>
+<path d="M346,135 L362,135" stroke="#f0883e" stroke-width="2.4" marker-end="url(#whyn-ao)" fill="none"/>
+<path d="M448,135 L464,135" stroke="#f0883e" stroke-width="2.4" marker-end="url(#whyn-ao)" fill="none"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S1" target="_blank" data-tiphead="Hidden state h_1" data-tip="A recurrent model generates a sequence of hidden states, where the state at position t is a function of the state at t-1 and the input at t.">
+<rect x="61" y="108" width="80" height="54" rx="9" fill="#1a1a1a" stroke="#4a3520" stroke-width="2"/>
+<rect class="whyn-h0" x="61" y="108" width="80" height="54" rx="9" fill="#f0883e" fill-opacity=".16" stroke="#f0883e" stroke-width="2.2" opacity="1"/>
+<text x="101" y="141" text-anchor="middle" class="whyn-m whyn-t" font-size="16">h_1</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S1" target="_blank" data-tiphead="Hidden state h_2" data-tip="This state cannot be computed until h_1 exists. The dependency is on the previous step, not on the previous layer.">
+<rect x="163" y="108" width="80" height="54" rx="9" fill="#1a1a1a" stroke="#4a3520" stroke-width="2"/>
+<rect class="whyn-h1" x="163" y="108" width="80" height="54" rx="9" fill="#f0883e" fill-opacity=".16" stroke="#f0883e" stroke-width="2.2" opacity="1"/>
+<text x="203" y="141" text-anchor="middle" class="whyn-m whyn-t" font-size="16">h_2</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S1" target="_blank" data-tiphead="Hidden state h_3" data-tip="Because the chain is serial, the only parallelism left is across examples, and memory constraints limit that batching as sequences get longer.">
+<rect x="265" y="108" width="80" height="54" rx="9" fill="#1a1a1a" stroke="#4a3520" stroke-width="2"/>
+<rect class="whyn-h2" x="265" y="108" width="80" height="54" rx="9" fill="#f0883e" fill-opacity=".16" stroke="#f0883e" stroke-width="2.2" opacity="1"/>
+<text x="305" y="141" text-anchor="middle" class="whyn-m whyn-t" font-size="16">h_3</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S1" target="_blank" data-tiphead="Hidden state h_4" data-tip="Factorisation tricks and conditional computation have improved the constant factor, but the paper notes the fundamental constraint of sequential computation remains.">
+<rect x="367" y="108" width="80" height="54" rx="9" fill="#1a1a1a" stroke="#4a3520" stroke-width="2"/>
+<rect class="whyn-h3" x="367" y="108" width="80" height="54" rx="9" fill="#f0883e" fill-opacity=".16" stroke="#f0883e" stroke-width="2.2" opacity="1"/>
+<text x="407" y="141" text-anchor="middle" class="whyn-m whyn-t" font-size="16">h_4</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S1" target="_blank" data-tiphead="Hidden state h_5" data-tip="The last state is n steps away from the first, which is also why the maximum path length of a recurrent layer is O(n).">
+<rect x="469" y="108" width="80" height="54" rx="9" fill="#1a1a1a" stroke="#4a3520" stroke-width="2"/>
+<rect class="whyn-h4" x="469" y="108" width="80" height="54" rx="9" fill="#f0883e" fill-opacity=".16" stroke="#f0883e" stroke-width="2.2" opacity="1"/>
+<text x="509" y="141" text-anchor="middle" class="whyn-m whyn-t" font-size="16">h_5</text>
+</a>
+<g class="whyn-p0" opacity="0"><circle cx="143" cy="135" r="6" fill="#ffd8b0" stroke="#f0883e" stroke-width="2"/></g>
+<g class="whyn-p1" opacity="0"><circle cx="245" cy="135" r="6" fill="#ffd8b0" stroke="#f0883e" stroke-width="2"/></g>
+<g class="whyn-p2" opacity="0"><circle cx="347" cy="135" r="6" fill="#ffd8b0" stroke="#f0883e" stroke-width="2"/></g>
+<g class="whyn-p3" opacity="0"><circle cx="449" cy="135" r="6" fill="#ffd8b0" stroke="#f0883e" stroke-width="2"/></g>
+<text x="62" y="286" class="whyn-d" font-size="12.5">h_t needs h_(t-1) first: n positions cost n steps, one after another</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2" target="_blank" data-tiphead="One sub-layer, all positions" data-tip="Self-attention plus the position-wise feed-forward network process every position of the sequence in the same step, so the only serial dimension left is depth.">
+<g class="whyn-lines" opacity=".7">
+<line x1="661" y1="226" x2="661" y2="164" stroke="#3b82f6" stroke-width="1.8"/>
+<line x1="661" y1="226" x2="763" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="661" y1="226" x2="865" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="661" y1="226" x2="967" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="661" y1="226" x2="1069" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="763" y1="226" x2="661" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="763" y1="226" x2="763" y2="164" stroke="#3b82f6" stroke-width="1.8"/>
+<line x1="763" y1="226" x2="865" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="763" y1="226" x2="967" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="763" y1="226" x2="1069" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="865" y1="226" x2="661" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="865" y1="226" x2="763" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="865" y1="226" x2="865" y2="164" stroke="#3b82f6" stroke-width="1.8"/>
+<line x1="865" y1="226" x2="967" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="865" y1="226" x2="1069" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="967" y1="226" x2="661" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="967" y1="226" x2="763" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="967" y1="226" x2="865" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="967" y1="226" x2="967" y2="164" stroke="#3b82f6" stroke-width="1.8"/>
+<line x1="967" y1="226" x2="1069" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="1069" y1="226" x2="661" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="1069" y1="226" x2="763" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="1069" y1="226" x2="865" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="1069" y1="226" x2="967" y2="164" stroke="#3b82f6" stroke-width="1.2"/>
+<line x1="1069" y1="226" x2="1069" y2="164" stroke="#3b82f6" stroke-width="1.8"/>
+</g>
+<rect x="616" y="164" width="498" height="62" fill="#000" fill-opacity="0"/>
+</a>
+<rect x="631" y="228" width="60" height="28" rx="14" fill="#161b22" stroke="#30363d"/><text x="661" y="247" text-anchor="middle" class="whyn-m whyn-d" font-size="13">x_1</text>
+<rect x="733" y="228" width="60" height="28" rx="14" fill="#161b22" stroke="#30363d"/><text x="763" y="247" text-anchor="middle" class="whyn-m whyn-d" font-size="13">x_2</text>
+<rect x="835" y="228" width="60" height="28" rx="14" fill="#161b22" stroke="#30363d"/><text x="865" y="247" text-anchor="middle" class="whyn-m whyn-d" font-size="13">x_3</text>
+<rect x="937" y="228" width="60" height="28" rx="14" fill="#161b22" stroke="#30363d"/><text x="967" y="247" text-anchor="middle" class="whyn-m whyn-d" font-size="13">x_4</text>
+<rect x="1039" y="228" width="60" height="28" rx="14" fill="#161b22" stroke="#30363d"/><text x="1069" y="247" text-anchor="middle" class="whyn-m whyn-d" font-size="13">x_5</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Output z_1" data-tip="Every output position is a weighted sum over all input positions, so it depends on the whole sequence but on no other output.">
+<rect x="621" y="108" width="80" height="54" rx="9" fill="#1a1a1a" stroke="#20304a" stroke-width="2"/>
+<rect class="whyn-z0" x="621" y="108" width="80" height="54" rx="9" fill="#3b82f6" fill-opacity=".18" stroke="#3b82f6" stroke-width="2.2" opacity="1"/>
+<text x="661" y="141" text-anchor="middle" class="whyn-m whyn-t" font-size="16">z_1</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Output z_2" data-tip="No output waits for another output, so the whole row is one matrix multiply on the GPU.">
+<rect x="723" y="108" width="80" height="54" rx="9" fill="#1a1a1a" stroke="#20304a" stroke-width="2"/>
+<rect class="whyn-z1" x="723" y="108" width="80" height="54" rx="9" fill="#3b82f6" fill-opacity=".18" stroke="#3b82f6" stroke-width="2.2" opacity="1"/>
+<text x="763" y="141" text-anchor="middle" class="whyn-m whyn-t" font-size="16">z_2</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Output z_3" data-tip="Serialisation moves from the sequence axis to the depth axis: N = 6 layers, not n positions.">
+<rect x="825" y="108" width="80" height="54" rx="9" fill="#1a1a1a" stroke="#20304a" stroke-width="2"/>
+<rect class="whyn-z2" x="825" y="108" width="80" height="54" rx="9" fill="#3b82f6" fill-opacity=".18" stroke="#3b82f6" stroke-width="2.2" opacity="1"/>
+<text x="865" y="141" text-anchor="middle" class="whyn-m whyn-t" font-size="16">z_3</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Output z_4" data-tip="Order is not implied by the computation at all, which is exactly why positional encodings have to be added at the bottom of the stack.">
+<rect x="927" y="108" width="80" height="54" rx="9" fill="#1a1a1a" stroke="#20304a" stroke-width="2"/>
+<rect class="whyn-z3" x="927" y="108" width="80" height="54" rx="9" fill="#3b82f6" fill-opacity=".18" stroke="#3b82f6" stroke-width="2.2" opacity="1"/>
+<text x="967" y="141" text-anchor="middle" class="whyn-m whyn-t" font-size="16">z_4</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Output z_5" data-tip="The last position is one hop from the first, which is the O(1) maximum path length of Table 1.">
+<rect x="1029" y="108" width="80" height="54" rx="9" fill="#1a1a1a" stroke="#20304a" stroke-width="2"/>
+<rect class="whyn-z4" x="1029" y="108" width="80" height="54" rx="9" fill="#3b82f6" fill-opacity=".18" stroke="#3b82f6" stroke-width="2.2" opacity="1"/>
+<text x="1069" y="141" text-anchor="middle" class="whyn-m whyn-t" font-size="16">z_5</text>
+</a>
+<text x="632" y="286" class="whyn-d" font-size="12.5">every z reads every x in one sub-layer; no z waits for another z</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S1" target="_blank" data-tiphead="The cost of recurrence" data-tip="The introduction names this as the fundamental constraint: aligning positions to steps in computation time precludes parallelization within training examples.">
+<rect x="40" y="320" width="530" height="100" rx="10" fill="#151515" stroke="#4a3520" stroke-width="1.6"/>
+<text x="64" y="346" fill="#f0883e" font-size="14.5" font-weight="700">O(n) sequential operations</text>
+<text x="64" y="370" class="whyn-d" font-size="12.5">The paper: this inherently sequential nature precludes</text>
+<text x="64" y="390" class="whyn-d" font-size="12.5">parallelization within training examples, which becomes</text>
+<text x="64" y="410" class="whyn-d" font-size="12.5">critical at longer sequence lengths.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S4" target="_blank" data-tiphead="What attention buys" data-tip="Table 1 gives a self-attention layer a constant number of sequentially executed operations, against O(n) for a recurrent layer.">
+<rect x="610" y="320" width="510" height="100" rx="10" fill="#151515" stroke="#20304a" stroke-width="1.6"/>
+<text x="634" y="346" fill="#3b82f6" font-size="14.5" font-weight="700">O(1) sequential operations</text>
+<text x="634" y="370" class="whyn-d" font-size="12.5">In training, and always in the encoder, every position is</text>
+<text x="634" y="390" class="whyn-d" font-size="12.5">computed in the same step: long sentences add no sequential</text>
+<text x="634" y="410" class="whyn-d" font-size="12.5">steps. At inference the decoder still writes one token per step.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S4" target="_blank" data-tiphead="The trade" data-tip="Self-attention buys parallelism and short paths, and pays for them with a cost that is quadratic in the sequence length. The paper argues that is the right side of the trade for sentence-length inputs.">
+<rect x="40" y="442" width="1080" height="140" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="64" y="470" class="whyn-t" font-size="15">The trade the paper is making</text>
+<text x="64" y="498" class="whyn-d" font-size="13">Win: a new state of the art in translation quality after training for as little as twelve hours on eight P100 GPUs.</text>
+<text x="64" y="520" class="whyn-d" font-size="13">Cost per layer (Table 1): self-attention scores all n x n pairs, each a d-wide dot product: O(n^2 . d). A recurrent layer</text>
+<text x="64" y="542" class="whyn-d" font-size="13">runs n steps, each a d x d matrix times a vector: O(n . d^2). Here d is the model width d_model = 512, not the 64-wide d_k.</text>
+<text x="64" y="564" class="whyn-d" font-size="13">So attention is the cheaper layer while sentence length n stays below 512; the paper says this is "most often" so, but quotes no lengths.</text>
+</a>
+</svg>

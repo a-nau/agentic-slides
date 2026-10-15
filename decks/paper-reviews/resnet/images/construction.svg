@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.cons-t{fill:#f0f0f0;font-weight:700}.cons-d{fill:#a0a0a0}.cons-lb{fill:#7a7a7a;font-size:12}.cons-s1{animation:cons-s1 9s linear infinite}.cons-s2{animation:cons-s2 9s linear infinite}.cons-s3{animation:cons-s3 9s linear infinite}.cons-s4{animation:cons-s4 9s linear infinite}.cons-s5{animation:cons-s5 9s linear infinite}.cons-s6{animation:cons-s6 9s linear infinite}.cons-s7{animation:cons-s7 9s linear infinite}.cons-s8{animation:cons-s8 9s linear infinite}.cons-s9{animation:cons-s9 9s linear infinite}@keyframes cons-s1{0%,2%{opacity:0.25}6%{opacity:1}100%{opacity:1}}@keyframes cons-s2{0%,8%{opacity:0.25}12%{opacity:1}100%{opacity:1}}@keyframes cons-s3{0%,14%{opacity:0.25}18%{opacity:1}100%{opacity:1}}@keyframes cons-s4{0%,26%{opacity:0.25}30%{opacity:1}100%{opacity:1}}@keyframes cons-s5{0%,32%{opacity:0.25}36%{opacity:1}100%{opacity:1}}@keyframes cons-s6{0%,38%{opacity:0.25}42%{opacity:1}100%{opacity:1}}@keyframes cons-s7{0%,48%{opacity:0.25}52%{opacity:1}100%{opacity:1}}@keyframes cons-s8{0%,62%{opacity:0.4}66%{opacity:1}100%{opacity:1}}@keyframes cons-s9{0%,78%{opacity:0.4}82%{opacity:1}100%{opacity:1}}</style>
+<defs>
+<marker id="cg" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="36" class="cons-t" font-size="17">The constructed solution, drawn — and the reason it stays theoretical</text>
+<text x="80" y="76" fill="#3fb950" font-size="13.5" font-weight="700">shallower net</text>
+<g data-tiphead="A trained shallower network" data-tip="Take any network that has already been trained to some training error. Call that error E.">
+<rect x="80" y="88" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="165" y="114" text-anchor="middle" fill="#f0f0f0" font-size="13">learned layer</text>
+</g>
+<g data-tiphead="A trained shallower network" data-tip="Nothing special about these layers: they are whatever the shallower model happened to converge to.">
+<rect x="80" y="138" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="165" y="164" text-anchor="middle" fill="#f0f0f0" font-size="13">learned layer</text>
+</g>
+<g data-tiphead="A trained shallower network" data-tip="The stack is drawn with three layers only for the picture; the argument holds for any depth.">
+<rect x="80" y="188" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="165" y="214" text-anchor="middle" fill="#f0f0f0" font-size="13">learned layer</text>
+</g>
+<text x="165" y="258" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">training error E</text>
+<path d="M256,175 L324,175" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#cg)"/>
+<text x="330" y="76" fill="#3b82f6" font-size="13.5" font-weight="700">deeper counterpart</text>
+<g class="cons-s1" opacity="1" data-tiphead="The copied layers" data-tip="The first layers of the deeper model are copied verbatim from the learned shallower model. Nothing is retrained.">
+<rect x="330" y="88" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="415" y="114" text-anchor="middle" fill="#f0f0f0" font-size="13">copied layer</text>
+</g>
+<g class="cons-s2" opacity="1" data-tiphead="The copied layers" data-tip="Same weights, same order. The deeper model starts out reproducing the shallower model exactly.">
+<rect x="330" y="138" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="415" y="164" text-anchor="middle" fill="#f0f0f0" font-size="13">copied layer</text>
+</g>
+<g class="cons-s3" opacity="1" data-tiphead="The copied layers" data-tip="This is why the shallower model's solution space is a subspace of the deeper model's solution space.">
+<rect x="330" y="188" width="170" height="42" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="415" y="214" text-anchor="middle" fill="#f0f0f0" font-size="13">copied layer</text>
+</g>
+<g class="cons-s4" opacity="1" data-tiphead="The added layers are identity" data-tip="Every extra layer just passes its input through unchanged, so the deeper network computes exactly the same function as the shallower one.">
+<rect x="330" y="242" width="170" height="42" rx="8" fill="#10141a" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="415" y="268" text-anchor="middle" fill="#93c5fd" font-size="13">identity layer</text>
+</g>
+<g class="cons-s5" opacity="1" data-tiphead="The added layers are identity" data-tip="Add as many of these as you like. None of them can raise the training error, because none of them changes the output.">
+<rect x="330" y="292" width="170" height="42" rx="8" fill="#10141a" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="415" y="318" text-anchor="middle" fill="#93c5fd" font-size="13">identity layer</text>
+</g>
+<g class="cons-s6" opacity="1" data-tiphead="The added layers are identity" data-tip="Fitting an identity mapping with a stack of nonlinear layers is exactly what the paper suspects solvers find hard. One illustrative way to build it: a 3x3 kernel with a single centred 1 for its own channel, BN set to undo its own normalisation, and a ReLU that sees only non-negative inputs because they come from the previous ReLU.">
+<rect x="330" y="342" width="170" height="42" rx="8" fill="#10141a" stroke="#3b82f6" stroke-width="1.8" stroke-dasharray="6 4"/>
+<text x="415" y="368" text-anchor="middle" fill="#93c5fd" font-size="13">identity layer</text>
+</g>
+<text class="cons-s7" opacity="1" x="415" y="412" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="700">training error is still E</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="The constructed solution" data-tip="The paper: there exists a solution by construction to the deeper model, the added layers are identity mapping, and the other layers are copied from the learned shallower model.">
+<rect x="560" y="60" width="560" height="180" rx="12" fill="#151515" stroke="#20304a" stroke-width="1.6"/>
+<text x="586" y="94" fill="#3b82f6" font-size="15.5" font-weight="700">What the construction proves</text>
+<text x="586" y="126" class="cons-d" font-size="13.5">A deeper model is at least as expressive: the shallower model's</text>
+<text x="586" y="150" class="cons-d" font-size="13.5">solution space is a subspace of the deeper model's. So a deeper</text>
+<text x="586" y="174" class="cons-d" font-size="13.5">model should produce no higher training error than its shallower</text>
+<text x="586" y="198" class="cons-d" font-size="13.5">counterpart. Representational capacity cannot be the obstacle,</text>
+<text x="586" y="222" class="cons-d" font-size="13.5">because the good solution provably exists inside the deeper net.</text>
+</a>
+<a class="cons-s8" opacity="1" href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="What experiments find" data-tip="The paper: experiments show that our current solvers on hand are unable to find solutions that are comparably good or better than the constructed solution, or unable to do so in feasible time.">
+<rect x="560" y="258" width="560" height="150" rx="12" fill="#1a1113" stroke="#f85149" stroke-width="1.6"/>
+<text x="586" y="292" fill="#f85149" font-size="15.5" font-weight="700">What actually happens</text>
+<text x="586" y="324" class="cons-d" font-size="13.5">SGD does not find that solution. The paper is careful about the</text>
+<text x="586" y="348" class="cons-d" font-size="13.5">wording: solvers are unable to find solutions comparably good or</text>
+<text x="586" y="372" class="cons-d" font-size="13.5">better than the constructed one, or unable to do so in feasible</text>
+<text x="586" y="396" class="cons-d" font-size="13.5">time. Note that this is a claim about search, not about capacity.</text>
+</a>
+<a class="cons-s9" opacity="1" href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS1" target="_blank" data-tiphead="Why this motivates residual learning" data-tip="If the useful thing is hard to reach because it sits near an identity mapping, change the parameterisation so that identity is what you get when the weights are zero.">
+<rect x="40" y="446" width="1080" height="140" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="476" class="cons-t" font-size="16">The gap between those two boxes is the entire motivation for residual learning</text>
+<text x="66" y="502" class="cons-d" font-size="13.5">The good solution exists and the solver cannot reach it. The paper suspects solvers have difficulty approximating identity with</text>
+<text x="66" y="524" class="cons-d" font-size="13.5">several nonlinear layers. One way to see why (illustrative): conv, BN and ReLU copy their input only at one exact setting — a single</text>
+<text x="66" y="546" class="cons-d" font-size="13.5">centred 1 per channel in each 3x3 kernel, BN tuned to undo itself. The paper's response is to change the parameterisation instead,</text>
+<text x="66" y="568" class="cons-d" font-size="13.5">so that identity becomes the easy default: drive the weights toward zero and the block passes its input through.</text>
+</a>
+</svg>

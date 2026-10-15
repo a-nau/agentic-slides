@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.qkvl-t{fill:#f0f0f0;font-weight:700}.qkvl-m{font-family:'JetBrains Mono',monospace}.qkvl-d{fill:#a0a0a0}.qkvl-hd{fill:#3b82f6;font-weight:700;letter-spacing:.08em}.qkvl-anim{animation-duration:10s;animation-iteration-count:infinite;animation-timing-function:linear}.qkvl-q{stroke-dasharray:140;animation-name:qkvl-q}@keyframes qkvl-q{0%{stroke-dashoffset:140}12%,100%{stroke-dashoffset:0}}.qkvl-bar{transform-box:fill-box;transform-origin:left;animation-name:qkvl-bar}@keyframes qkvl-bar{0%,16%{transform:scaleX(0)}30%,100%{transform:scaleX(1)}}.qkvl-v{stroke-dasharray:70;animation-name:qkvl-v}@keyframes qkvl-v{0%,34%{stroke-dashoffset:70}44%,100%{stroke-dashoffset:0}}.qkvl-o{animation-name:qkvl-o}@keyframes qkvl-o{0%,48%{opacity:0}56%,100%{opacity:1}}</style>
+<defs>
+<marker id="ag" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+<marker id="ab" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3fb950"/></marker>
+<marker id="av" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#bc8cff"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="125" y="128" text-anchor="middle" class="qkvl-hd" font-size="13">QUERY</text>
+<text x="375" y="128" text-anchor="middle" class="qkvl-hd" font-size="13">KEYS</text>
+<text x="650" y="106" text-anchor="middle" class="qkvl-d" font-size="12">score = q . k / sqrt(d_k)</text>
+<text x="650" y="128" text-anchor="middle" class="qkvl-hd" font-size="13">SOFTMAX WEIGHT</text>
+<text x="920" y="128" text-anchor="middle" class="qkvl-hd" font-size="13">VALUES</text>
+<path d="M210,266 C245,240 250,200 272,190" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ag)" class="qkvl-anim qkvl-q"/>
+<path d="M210,275 L272,275" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ag)" class="qkvl-anim qkvl-q"/>
+<path d="M210,284 C245,310 250,352 272,361" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ag)" class="qkvl-anim qkvl-q"/>
+<path d="M470,189 L532,189" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#ab)"/>
+<path d="M470,275 L532,275" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#ab)"/>
+<path d="M470,361 L532,361" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#ab)"/>
+<path d="M760,189 L822,189" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#av)" class="qkvl-anim qkvl-v"/>
+<path d="M760,275 L822,275" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#av)" class="qkvl-anim qkvl-v"/>
+<path d="M760,361 L822,361" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#av)" class="qkvl-anim qkvl-v"/>
+<path d="M1010,189 L1070,189" stroke="#bc8cff" stroke-width="1.8" fill="none"/>
+<path d="M1010,275 L1070,275" stroke="#bc8cff" stroke-width="1.8" fill="none"/>
+<path d="M1010,361 L1070,361" stroke="#bc8cff" stroke-width="1.8" fill="none"/>
+<path d="M1070,189 L1070,502 L988,502" stroke="#bc8cff" stroke-width="2" fill="none" marker-end="url(#av)" class="qkvl-anim qkvl-v"/>
+<text x="791" y="180" text-anchor="middle" fill="#bc8cff" font-size="15" font-weight="700">x</text>
+<text x="791" y="266" text-anchor="middle" fill="#bc8cff" font-size="15" font-weight="700">x</text>
+<text x="791" y="352" text-anchor="middle" fill="#bc8cff" font-size="15" font-weight="700">x</text>
+<rect x="612" y="183" width="138" height="12" rx="6" fill="#232323"/>
+<rect x="612" y="269" width="138" height="12" rx="6" fill="#232323"/>
+<rect x="612" y="355" width="138" height="12" rx="6" fill="#232323"/>
+<rect x="612" y="183" width="69" height="12" rx="6" fill="#3b82f6" class="qkvl-anim qkvl-bar"/>
+<rect x="612" y="269" width="55" height="12" rx="6" fill="#3b82f6" class="qkvl-anim qkvl-bar"/>
+<rect x="612" y="355" width="14" height="12" rx="6" fill="#3b82f6" class="qkvl-anim qkvl-bar"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2" target="_blank" data-tiphead="The query" data-tip="One row of Q. It is a learned linear projection of the current representation of the position that is doing the reading, here the word making from Figure 3 of the paper.">
+<rect x="40" y="246" width="170" height="58" rx="10" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="125" y="270" text-anchor="middle" class="qkvl-t" font-size="15">query of 'making'</text>
+<text x="125" y="290" text-anchor="middle" class="qkvl-m" fill="#93c5fd" font-size="10.5">one row of Q</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2" target="_blank" data-tiphead="A key" data-tip="One row of K, a second learned projection of a position. The dot product of the query with this key is the compatibility score that decides how much of this position gets read.">
+<rect x="280" y="160" width="190" height="58" rx="10" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="375" y="184" text-anchor="middle" class="qkvl-t" font-size="15">key of 'more'</text>
+<text x="375" y="204" text-anchor="middle" class="qkvl-m" fill="#3fb950" font-size="10.5">one row of K</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2" target="_blank" data-tiphead="A key" data-tip="Keys and values are separate projections of the same position, so a position can advertise one thing and deliver another.">
+<rect x="280" y="246" width="190" height="58" rx="10" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="375" y="270" text-anchor="middle" class="qkvl-t" font-size="15">key of 'difficult'</text>
+<text x="375" y="290" text-anchor="middle" class="qkvl-m" fill="#3fb950" font-size="10.5">one row of K</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2" target="_blank" data-tiphead="A key" data-tip="Every position in the sequence contributes a key, so the query is scored against all of them at once rather than scanned one at a time.">
+<rect x="280" y="332" width="190" height="58" rx="10" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="375" y="356" text-anchor="middle" class="qkvl-t" font-size="15">key of 'the'</text>
+<text x="375" y="376" text-anchor="middle" class="qkvl-m" fill="#3fb950" font-size="10.5">one row of K</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E1" target="_blank" data-tiphead="Softmax weight" data-tip="The scaled score after softmax. Weights are non-negative and sum to one across the row, so the read-out is an average and never a hard pick. This value is illustrative, not measured.">
+<rect x="540" y="167" width="220" height="44" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="562" y="196" class="qkvl-m" fill="#3b82f6" font-size="15" font-weight="700">0.50</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E1" target="_blank" data-tiphead="Softmax weight" data-tip="Figure 3 of the paper shows heads at layer 5 attending from making to the distant words that complete the phrase making more difficult. This value is illustrative, not measured.">
+<rect x="540" y="253" width="220" height="44" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="562" y="282" class="qkvl-m" fill="#3b82f6" font-size="15" font-weight="700">0.40</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E1" target="_blank" data-tiphead="Softmax weight" data-tip="A near-zero weight still contributes: attention never truly drops a position, it only shrinks its share. This value is illustrative, not measured.">
+<rect x="540" y="339" width="220" height="44" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="562" y="368" class="qkvl-m" fill="#3b82f6" font-size="15" font-weight="700">0.10</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2" target="_blank" data-tiphead="A value" data-tip="One row of V, the content that is actually summed into the output. Values have width d_v, set to 64 in the base model.">
+<rect x="830" y="160" width="180" height="58" rx="10" fill="#1a1a1a" stroke="#bc8cff" stroke-width="2"/>
+<text x="920" y="184" text-anchor="middle" class="qkvl-t" font-size="14">value of 'more'</text>
+<text x="920" y="204" text-anchor="middle" class="qkvl-m" fill="#bc8cff" font-size="10.5">one row of V</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2" target="_blank" data-tiphead="A value" data-tip="Values carry what gets copied forward. Changing which value a position exposes changes what its neighbours can read, without changing how much they attend to it.">
+<rect x="830" y="246" width="180" height="58" rx="10" fill="#1a1a1a" stroke="#bc8cff" stroke-width="2"/>
+<text x="920" y="270" text-anchor="middle" class="qkvl-t" font-size="14">value of 'difficult'</text>
+<text x="920" y="290" text-anchor="middle" class="qkvl-m" fill="#bc8cff" font-size="10.5">one row of V</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2" target="_blank" data-tiphead="A value" data-tip="Every position supplies a value, so the output is a blend over the whole sequence rather than a choice of one neighbour.">
+<rect x="830" y="332" width="180" height="58" rx="10" fill="#1a1a1a" stroke="#bc8cff" stroke-width="2"/>
+<text x="920" y="356" text-anchor="middle" class="qkvl-t" font-size="14">value of 'the'</text>
+<text x="920" y="376" text-anchor="middle" class="qkvl-m" fill="#bc8cff" font-size="10.5">one row of V</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2" target="_blank" data-tiphead="The output" data-tip="The weighted sum of every value in the sequence. One such vector comes out per position, and it replaces that position s representation for the next sub-layer.">
+<rect x="320" y="470" width="668" height="64" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/><rect class="qkvl-anim qkvl-o" x="320" y="470" width="668" height="64" rx="10" fill="#3b82f6" fill-opacity=".12" opacity="1"/>
+<text x="342" y="496" class="qkvl-t" font-size="15.5">output for 'making' = the weighted sum of every value</text>
+<text x="342" y="520" class="qkvl-m" fill="#93c5fd" font-size="13">0.50 x v(more) + 0.40 x v(difficult) + 0.10 x v(the)</text>
+</a>
+<text x="20" y="578" class="qkvl-d" font-size="12.5">Q, K and V stack one such row per position, so the matrix form computes every output row at once.</text>
+<text x="1140" y="578" text-anchor="end" fill="#f0883e" font-size="12">weights illustrative</text>
+</svg>

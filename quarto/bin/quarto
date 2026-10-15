@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Quarto from quarto/.dist (quarto/scripts/setup.sh). Cache/data dirs are
+# kept inside quarto/.state so it also runs where ~/.cache is read-only.
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME_QUARTO:-$ROOT/.state/cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME_QUARTO:-$ROOT/.state/data}"
+mkdir -p "$XDG_CACHE_HOME" "$XDG_DATA_HOME"
+# Decks never run code: a {python} chunk would otherwise start a Jupyter kernel.
+[ "${1:-}" = render ] && set -- "$@" --no-execute
+exec "$ROOT/.dist/quarto/bin/quarto" "$@"

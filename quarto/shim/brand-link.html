@@ -1,0 +1,49 @@
+<script>
+/* agentic-slides brand link + favicon (replaces the former Marp engine plugin
+ * scripts/brand-link.js). Every slide gets an empty <a class="brand-link"> as
+ * a direct child; the agentic theme sizes it over the logo it draws
+ * bottom-right (section::before), so the logo links to the project repo on
+ * every slide — in the served deck, exported HTML, the PDF and the editable
+ * PPTX (both are built from the rendered page). Slides swapped in place (live
+ * update, edit-pane preview) get it back through the observer. The tab icon
+ * is themes/favicon.svg, added once unless the deck sets its own. */
+(function () {
+  var REPO = "https://github.com/a-nau/agentic-slides";
+  var ICON_SVG =
+    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 60'>" +
+    "<path d='M38 14 H11 a6 6 0 0 0 -6 6 v26 a6 6 0 0 0 6 6 h40 a6 6 0 0 0 6 -6 V30' fill='none' stroke='#3b82f6' stroke-width='3.5' stroke-linecap='round'/>" +
+    "<rect x='13' y='27' width='20' height='3.5' rx='1.75' fill='#93c5fd' opacity='.7'/>" +
+    "<rect x='13' y='35' width='28' height='3.5' rx='1.75' fill='#93c5fd' opacity='.45'/>" +
+    "<path d='M50 4 C51.5 13 53 14.5 62 16 C53 17.5 51.5 19 50 28 C48.5 19 47 17.5 38 16 C47 14.5 48.5 13 50 4Z' fill='#3b82f6'/>" +
+    "<circle cx='40' cy='5' r='2' fill='#93c5fd'/></svg>";
+  if (!document.querySelector('link[rel~="icon"]')) {
+    var l = document.createElement("link");
+    l.rel = "icon";
+    l.href = "data:image/svg+xml," + encodeURIComponent(ICON_SVG);
+    document.head.appendChild(l);
+  }
+  function link() {
+    document.querySelectorAll(".reveal .slides section.slide").forEach(function (sec) {
+      if (sec.querySelector(":scope > a.brand-link")) return;
+      var a = document.createElement("a");
+      a.className = "brand-link";
+      a.href = REPO;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.setAttribute("aria-label", "agentic-slides on GitHub");
+      a.title = "Made with agentic-slides";
+      sec.insertBefore(a, sec.firstChild);
+    });
+  }
+  link();
+  var slides = document.querySelector(".reveal .slides");
+  if (slides && window.MutationObserver) {
+    new MutationObserver(function (muts) {
+      for (var i = 0; i < muts.length; i++) {
+        if (muts[i].type === "childList" && muts[i].target.matches &&
+            muts[i].target.matches("section.slide")) return link();
+      }
+    }).observe(slides, { childList: true, subtree: true });
+  }
+})();
+</script>

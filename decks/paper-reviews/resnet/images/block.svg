@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.bloc-t{fill:#f0f0f0;font-weight:700}.bloc-m{font-family:'JetBrains Mono',monospace;fill:#93c5fd}.bloc-d{fill:#a0a0a0}.bloc-dot-id{animation:bloc-id 4s linear infinite}.bloc-dot-res{animation:bloc-res 4s linear infinite}.bloc-sum{animation:bloc-sum 4s linear infinite}@keyframes bloc-id{0%{opacity:1;transform:translate(0,0)}14%{transform:translate(0,-102px)}80%{transform:translate(631px,-102px)}94%{opacity:1;transform:translate(631px,8px)}100%{opacity:0;transform:translate(631px,8px)}}@keyframes bloc-res{0%{opacity:1;transform:translate(0,0)}94%{opacity:1;transform:translate(556px,0)}100%{opacity:0;transform:translate(556px,0)}}@keyframes bloc-sum{0%,90%{stroke-width:2.4;fill:#1a1a1a}96%{stroke-width:6;fill:#163a22}100%{stroke-width:2.4;fill:#1a1a1a}}</style>
+<defs>
+<marker id="bg" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+<marker id="bb" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3fb950"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="36" class="bloc-t" font-size="17">Figure 2 redrawn — the identity path in green, the residual branch in blue</text>
+<path d="M95,262 L95,168 Q95,158 105,158 L716,158 Q726,158 726,168 L726,270" stroke="#3fb950" stroke-width="3" fill="none" marker-end="url(#bb)"/>
+<g data-tiphead="The identity shortcut" data-tip="The input is carried around the weight layers unchanged and added back. It holds no matrix, so it adds no parameter and no convolution: the paper says identity shortcut connections add neither extra parameter nor computational complexity.">
+<text x="410" y="140" text-anchor="middle" fill="#3fb950" font-size="14.5" font-weight="700">identity shortcut — x carried through unchanged, parameter-free</text>
+</g>
+<g data-tiphead="Block input x" data-tip="The input to this group of layers. It is used twice: once as the input to the weight layers and once, unmodified, on the shortcut.">
+<rect x="50" y="268" width="90" height="64" rx="10" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="95" y="308" text-anchor="middle" class="bloc-m" font-size="22">x</text>
+</g>
+<circle class="bloc-dot-res" cx="144" cy="300" r="7" fill="#3b82f6" opacity="0"/>
+<path d="M144,300 L166,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="First weight layer" data-tip="A convolution, with batch normalisation right after it. In the paper's notation this contributes the W1 in F = W2 sigma(W1 x); biases are omitted to simplify the notation.">
+<rect x="170" y="268" width="170" height="64" rx="10" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="255" y="294" text-anchor="middle" class="bloc-t" font-size="14">weight layer</text>
+<text x="255" y="317" text-anchor="middle" class="bloc-m" font-size="13">3x3 conv + BN</text>
+</a>
+<path d="M344,300 L366,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<g data-tiphead="Inner ReLU" data-tip="The sigma in F = W2 sigma(W1 x). This nonlinearity sits inside the residual branch, between the two weight layers.">
+<rect x="370" y="268" width="100" height="64" rx="10" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="420" y="306" text-anchor="middle" class="bloc-t" font-size="15">ReLU</text>
+</g>
+<path d="M474,300 L496,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="Second weight layer" data-tip="The W2 of the residual branch. Its output is what gets added to x, so it must have the same shape as x for the addition to be defined.">
+<rect x="500" y="268" width="170" height="64" rx="10" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="585" y="294" text-anchor="middle" class="bloc-t" font-size="14">weight layer</text>
+<text x="585" y="317" text-anchor="middle" class="bloc-m" font-size="13">3x3 conv + BN</text>
+</a>
+<path d="M674,300 L700,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<g data-tiphead="Element-wise addition" data-tip="Not a concatenation and not a gate. The two feature maps are added channel by channel, position by position, with no learned weight anywhere in the operation.">
+<circle class="bloc-sum" cx="726" cy="300" r="26" fill="#1a1a1a" stroke="#3fb950" stroke-width="2.4"/>
+<text x="726" y="309" text-anchor="middle" fill="#f0f0f0" font-size="24" font-weight="700">+</text>
+</g>
+<path d="M756,300 L778,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<g data-tiphead="Outer ReLU" data-tip="The paper adopts the second nonlinearity after the addition. That ordering is the one the same authors revisited a few months later in Identity Mappings in Deep Residual Networks.">
+<rect x="782" y="268" width="100" height="64" rx="10" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="832" y="306" text-anchor="middle" class="bloc-t" font-size="15">ReLU</text>
+</g>
+<path d="M886,300 L908,300" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#bg)"/>
+<g data-tiphead="Block output" data-tip="The block computes H(x) = F(x) + x and passes it through the outer ReLU. The layers were asked to fit F, the residual, rather than H, the full mapping.">
+<rect x="912" y="268" width="208" height="64" rx="10" fill="#0d1117" stroke="#3fb950" stroke-width="2"/>
+<text x="1016" y="307" text-anchor="middle" class="bloc-m" font-size="17">ReLU(F(x) + x)</text>
+</g>
+<circle class="bloc-dot-id" cx="95" cy="262" r="7" fill="#3fb950" opacity="0"/>
+<path d="M170,346 L170,362 L670,362 L670,346" stroke="#3b82f6" stroke-width="1.8" fill="none"/>
+<text x="420" y="386" text-anchor="middle" fill="#3b82f6" font-size="14.5" font-weight="700">F(x) — the residual function; every parameter of the block is in here</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="Reading the block" data-tip="The block is defined in Section 3.2 of the paper as y = F(x, {Wi}) + x, where F is the residual mapping to be learned.">
+<rect x="40" y="406" width="530" height="176" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="64" y="438" class="bloc-t" font-size="15.5">Every piece, named</text>
+<text x="64" y="468" class="bloc-d" font-size="13">x — the block input, and the thing the shortcut carries</text>
+<text x="64" y="492" class="bloc-d" font-size="13">weight layer — a convolution with batch normalisation after it</text>
+<text x="64" y="516" class="bloc-d" font-size="13">F(x) — what the two weight layers compute, biases omitted</text>
+<text x="64" y="540" class="bloc-d" font-size="13">+ — element-wise addition of two feature maps, channel by channel</text>
+<text x="64" y="564" class="bloc-d" font-size="13">the second ReLU is applied after the addition, not before it</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S3.SS2" target="_blank" data-tiphead="Why parameter-free matters" data-tip="Because the shortcut costs nothing, a plain net and a residual net can be built with identical depth, width, parameter count and FLOPs. Without that, the comparison in Table 2 would be confounded.">
+<rect x="590" y="406" width="530" height="176" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="614" y="438" fill="#3b82f6" font-size="15.5" font-weight="700">What the shortcut costs, and why that matters</text>
+<text x="614" y="468" class="bloc-d" font-size="13">Parameters added: none — there is no matrix on the identity path.</text>
+<text x="614" y="492" class="bloc-d" font-size="13">Computation added: one element-wise add per activation, which the</text>
+<text x="614" y="516" class="bloc-d" font-size="13">paper calls negligible next to the convolutions.</text>
+<text x="614" y="540" class="bloc-d" font-size="13">So plain and residual nets can be matched on depth, width, parameter</text>
+<text x="614" y="564" class="bloc-d" font-size="13">count and FLOPs — which is what makes the Table 2 comparison fair.</text>
+</a>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.thre-t{fill:#f0f0f0;font-weight:700}.thre-d{fill:#a0a0a0}.thre-ax{fill:#6e6e6e;font-size:11}.thre-v{fill:#8a8a8a;font-size:12}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="38" class="thre-t" font-size="17">One symptom on a loss curve, three different diagnoses — and three different fixes</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="Overfitting" data-tip="The model memorises the training set. Training error keeps falling, held-out error turns back up, and the gap between them widens. This is the failure ResNet is NOT about.">
+<rect x="40" y="58" width="345" height="512" rx="12" fill="#151515" stroke="#4a3520" stroke-width="1.6"/>
+<text x="64" y="92" fill="#f0883e" font-size="16" font-weight="700">1. Overfitting</text>
+<text x="64" y="114" class="thre-v">too much capacity for the data</text>
+<text x="64" y="330" fill="#f0f0f0" font-size="12.5">Training error keeps falling, held-out</text>
+<text x="64" y="352" fill="#f0f0f0" font-size="12.5">error turns back up. The gap is it.</text>
+<text x="64" y="374" class="thre-d" font-size="12.5">Fix: more data, augmentation, dropout.</text>
+<text x="64" y="440" fill="#f0883e" font-size="12.5" font-weight="700">Not what Figure 1 shows.</text>
+<text x="64" y="466" class="thre-d" font-size="12.5">Figure 1 has the deeper net WORSE on</text>
+<text x="64" y="488" class="thre-d" font-size="12.5">training data. No amount of regularising</text>
+<text x="64" y="510" class="thre-d" font-size="12.5">fixes a model that underfits.</text>
+</a>
+<path d="M72,160 L72,285 L352,285" stroke="#2a2a2a" stroke-width="1.4" fill="none"/>
+<path d="M72,172 L140,214 L200,242 L260,260 L352,272" stroke="#3fb950" stroke-width="2.4" fill="none"/>
+<path d="M72,178 L140,208 L200,222 L260,216 L352,198" stroke="#f0883e" stroke-width="2.4" fill="none"/>
+<text x="356" y="276" fill="#3fb950" font-size="11">train</text>
+<text x="356" y="202" fill="#f0883e" font-size="11">test</text>
+<text x="212" y="306" text-anchor="middle" class="thre-ax">iterations, error on the y axis</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="Vanishing or exploding gradients" data-tip="The signal dies on its way through the stack and the network never starts converging. The paper's introduction says this had been largely addressed by normalized initialization and intermediate normalization layers.">
+<rect x="407" y="58" width="345" height="512" rx="12" fill="#151515" stroke="#3a3a55" stroke-width="1.6"/>
+<text x="431" y="92" fill="#bc8cff" font-size="16" font-weight="700">2. Vanishing gradients</text>
+<text x="431" y="114" class="thre-v">the signal dies on the way through</text>
+<text x="431" y="330" fill="#f0f0f0" font-size="12.5">The net never starts converging at all.</text>
+<text x="431" y="352" class="thre-d" font-size="12.5">Fix: normalized init and BN. The intro</text>
+<text x="431" y="374" class="thre-d" font-size="12.5">calls this largely addressed already.</text>
+<text x="431" y="440" fill="#bc8cff" font-size="12.5" font-weight="700">Largely solved before this paper.</text>
+<text x="431" y="466" class="thre-d" font-size="12.5">Every plain and residual net here is</text>
+<text x="431" y="488" class="thre-d" font-size="12.5">trained with batch normalisation, and</text>
+<text x="431" y="510" class="thre-d" font-size="12.5">all of them converge. See slide 18.</text>
+</a>
+<path d="M439,160 L439,285 L719,285" stroke="#2a2a2a" stroke-width="1.4" fill="none"/>
+<path d="M439,174 L500,171 L560,173 L640,170 L719,172" stroke="#bc8cff" stroke-width="2.4" fill="none"/>
+<text x="579" y="200" text-anchor="middle" fill="#bc8cff" font-size="11">error never moves</text>
+<text x="579" y="306" text-anchor="middle" class="thre-ax">iterations, error on the y axis</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="Degradation" data-tip="The network converges perfectly happily, and still lands at a higher training error than a shallower version of itself. This is the failure the paper isolates and the one residual learning is aimed at.">
+<rect x="774" y="58" width="345" height="512" rx="12" fill="#151515" stroke="#20304a" stroke-width="1.6"/>
+<text x="798" y="92" fill="#3b82f6" font-size="16" font-weight="700">3. Degradation</text>
+<text x="798" y="114" class="thre-v">converges fine, converges worse</text>
+<text x="798" y="330" fill="#f0f0f0" font-size="12.5">The net converges, but the deeper one</text>
+<text x="798" y="352" fill="#f0f0f0" font-size="12.5">lands at HIGHER training error.</text>
+<text x="798" y="374" class="thre-d" font-size="12.5">Fix: nobody had one. Hence this paper.</text>
+<text x="798" y="440" fill="#3b82f6" font-size="12.5" font-weight="700">This is the paper's target.</text>
+<text x="798" y="466" class="thre-d" font-size="12.5">Saturation with depth might be dull.</text>
+<text x="798" y="488" class="thre-d" font-size="12.5">Getting rapidly worse while the solver</text>
+<text x="798" y="510" class="thre-d" font-size="12.5">is still working is not.</text>
+</a>
+<path d="M806,160 L806,285 L1086,285" stroke="#2a2a2a" stroke-width="1.4" fill="none"/>
+<path d="M806,172 L860,220 L920,246 L1000,262 L1086,270" stroke="#3fb950" stroke-width="2.4" fill="none"/>
+<path d="M806,172 L860,202 L920,220 L1000,232 L1086,238" stroke="#f0883e" stroke-width="2.4" fill="none"/>
+<text x="1090" y="274" fill="#3fb950" font-size="11">20</text>
+<text x="1090" y="242" fill="#f0883e" font-size="11">56</text>
+<text x="946" y="306" text-anchor="middle" class="thre-ax">both curves are TRAINING error</text>
+</svg>

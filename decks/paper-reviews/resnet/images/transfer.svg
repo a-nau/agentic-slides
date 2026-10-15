@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.tran-t{fill:#f0f0f0;font-weight:700}.tran-m{font-family:'JetBrains Mono',monospace}.tran-d{fill:#a0a0a0}.tran-ax{fill:#6e6e6e;font-size:11.5}.tran-g{fill:#7a7a7a;font-size:12.5}</style>
+<defs>
+<marker id="tg" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#4a4a4a"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="tran-t" font-size="17">The same detector twice, with the backbone replaced — and the head reattached</text>
+<text x="40" y="62" class="tran-ax">baseline Faster R-CNN; the paper: the detection implementation of using both models is the same, so the gains can only be attributed to better networks</text>
+<text x="60" y="100" fill="#7a7a7a" font-size="13" font-weight="700">with the old backbone</text>
+<rect x="60" y="112" width="110" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="115" y="143" text-anchor="middle" class="tran-g">image</text>
+<g data-tiphead="VGG-16 backbone" data-tip="The convolutional trunk used by the original Faster R-CNN. The detection pipeline around it is kept the same in this comparison.">
+<rect x="204" y="112" width="200" height="52" rx="8" fill="#1a1a1a" stroke="#f0883e" stroke-width="2"/>
+<text x="304" y="143" text-anchor="middle" fill="#f0883e" font-size="14" font-weight="700">VGG-16 trunk</text>
+</g>
+<rect x="438" y="112" width="210" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="543" y="136" text-anchor="middle" class="tran-g">shared conv</text>
+<text x="543" y="154" text-anchor="middle" class="tran-g">feature maps</text>
+<rect x="682" y="112" width="190" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="777" y="136" text-anchor="middle" class="tran-g">region proposal net</text>
+<text x="777" y="154" text-anchor="middle" class="tran-g">300 proposals</text>
+<rect x="906" y="112" width="190" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="1001" y="143" text-anchor="middle" class="tran-g">Fast R-CNN head</text>
+<path d="M174,138 L200,138" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M408,138 L434,138" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M652,138 L678,138" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M876,138 L902,138" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<text x="60" y="200" fill="#3b82f6" font-size="13" font-weight="700">with the new backbone — same detector code, head attached the NoC way</text>
+<rect x="60" y="212" width="110" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="115" y="243" text-anchor="middle" class="tran-g">image</text>
+<g data-tiphead="ResNet-101 backbone" data-tip="The same detection system with the trunk swapped. The paper notes ResNet has no hidden fully-connected layers, so it adopts the Networks on Conv feature maps idea to keep the two systems comparable.">
+<rect x="204" y="212" width="200" height="52" rx="8" fill="#0d1117" stroke="#3b82f6" stroke-width="2.4"/>
+<text x="304" y="243" text-anchor="middle" fill="#3b82f6" font-size="14" font-weight="700">ResNet-101 trunk</text>
+</g>
+<rect x="438" y="212" width="210" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="543" y="236" text-anchor="middle" class="tran-g">shared conv</text>
+<text x="543" y="254" text-anchor="middle" class="tran-g">feature maps</text>
+<rect x="682" y="212" width="190" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="777" y="236" text-anchor="middle" class="tran-g">region proposal net</text>
+<text x="777" y="254" text-anchor="middle" class="tran-g">300 proposals</text>
+<rect x="906" y="212" width="190" height="52" rx="8" fill="#151515" stroke="#333" stroke-width="1.5"/>
+<text x="1001" y="243" text-anchor="middle" class="tran-g">Fast R-CNN head</text>
+<path d="M174,238 L200,238" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M408,238 L434,238" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M652,238 L678,238" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<path d="M876,238 L902,238" stroke="#4a4a4a" stroke-width="1.8" fill="none" marker-end="url(#tg)"/>
+<text x="304" y="290" text-anchor="middle" fill="#3b82f6" font-size="12.5" font-weight="700">the swapped component</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS3" target="_blank" data-tiphead="Tables 7 and 8" data-tip="Object detection mAP in percent using baseline Faster R-CNN, on the PASCAL VOC 2007 and 2012 test sets and on the COCO validation set. The paper says the gain is solely due to the learned representations.">
+<rect x="40" y="312" width="1080" height="274" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="344" fill="#3b82f6" font-size="15.5" font-weight="700">Tables 7 and 8 — baseline Faster R-CNN, backbone swapped</text>
+<text x="66" y="376" class="tran-d" font-size="12.5">benchmark and metric</text>
+<text x="700" y="376" text-anchor="end" class="tran-d" font-size="12.5">VGG-16</text>
+<text x="860" y="376" text-anchor="end" class="tran-d" font-size="12.5">ResNet-101</text>
+<text x="66" y="408" class="tran-d" font-size="13.5">PASCAL VOC 2007 test, trained on 07+12, mAP</text>
+<text x="700" y="408" text-anchor="end" class="tran-m" fill="#a0a0a0" font-size="14">73.2</text>
+<text x="860" y="408" text-anchor="end" class="tran-m" fill="#3b82f6" font-size="14">76.4</text>
+<text x="66" y="438" class="tran-d" font-size="13.5">PASCAL VOC 2012 test, trained on 07++12, mAP</text>
+<text x="700" y="438" text-anchor="end" class="tran-m" fill="#a0a0a0" font-size="14">70.4</text>
+<text x="860" y="438" text-anchor="end" class="tran-m" fill="#3b82f6" font-size="14">73.8</text>
+<text x="66" y="468" class="tran-d" font-size="13.5">COCO validation, mAP at IoU 0.5</text>
+<text x="700" y="468" text-anchor="end" class="tran-m" fill="#a0a0a0" font-size="14">41.5</text>
+<text x="860" y="468" text-anchor="end" class="tran-m" fill="#3b82f6" font-size="14">48.4</text>
+<text x="66" y="498" fill="#f0f0f0" font-size="13.5">COCO validation, mAP@[.5, .95] — over ten IoU thresholds</text>
+<text x="700" y="498" text-anchor="end" class="tran-m" fill="#a0a0a0" font-size="15">21.2</text>
+<text x="860" y="498" text-anchor="end" class="tran-m" fill="#3b82f6" font-size="15">27.2</text>
+<text x="890" y="498" fill="#3b82f6" font-size="12.5" font-weight="700">+6.0 absolute, 28% relative</text>
+<text x="66" y="534" fill="#f0f0f0" font-size="13.5">Same detection code, same hyper-parameters, same proposal setup: under that setup the paper says the gain is solely due to the</text>
+<text x="66" y="556" fill="#f0f0f0" font-size="13.5">learned representations. That isolates the backbone as a whole — depth, FLOPs and ImageNet accuracy change with it — not the shortcut.</text>
+<text x="66" y="578" class="tran-ax">These are the baseline rows. The competition entries add box refinement, global context and multi-scale testing on top of them.</text>
+</a>
+</svg>

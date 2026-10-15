@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Before a commit, for each template deck with staged changes: assign stable
+# UUID permalinks to any new slides in slides.tpl.qmd, then regenerate the
+# committed slides.qmd from the template so it stays in sync with the template
+# and figures. (Marp-sourced decks: slides.tpl.md -> slides.md.)
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+rebuilt=()
+# Depth 4 covers category decks (decks/<category>/<deck>/), flat ones
+# (decks/<deck>/) and archived MR decks (decks/mrs/archive/mr-<iid>/).
+while IFS= read -r build; do
+    deck_dir="$(dirname "$build")"
+
+    # Skip decks with nothing staged — avoids restaging unrelated generated files.
+    if git diff --cached --quiet -- "$deck_dir"; then
+        continue
+    fi
+    ext=qmd
+    [ -f "$deck_dir/slides.tpl.md" ] && ext=md
+
+    # Give any new slide a permanent UUID anchor (idempotent: existing ids are
+    # preserved, so permalinks stay stable). Re-stage the template if touched.
+    tpl="$deck_dir/slides.tpl.$ext"
+    if [ -f "$tpl" ]; then
+        python3 scripts/assign_slide_ids.py "$tpl" >/dev/null
+        if ! git diff --quiet -- "$tpl"; then
+            git add "$tpl"
+            echo "pre-commit: assigned slide ids in $tpl"
+        fi
+    fi
+
+    python3 "$build" >/dev/null
+
+    if ! git diff --quiet -- "$deck_dir/slides.$ext" \
+        || ! git diff --cached --quiet -- "$deck_dir/slides.$ext"; then
+        git add "$deck_dir/slides.$ext"
+        rebuilt+=("$deck_dir/slides.$ext")
+    fi
+done < <(find decks -maxdepth 4 -name build_deck.py)
+
+if [ "${#rebuilt[@]}" -gt 0 ]; then
+    echo "pre-commit: regenerated and staged: ${rebuilt[*]}"
+fi

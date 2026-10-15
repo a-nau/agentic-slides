@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<defs>
+<pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#141414"/><line x1="0" y1="0" x2="0" y2="8" stroke="#333333" stroke-width="3"/></pattern>
+<marker id="more" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#bc8cff"/></marker>
+</defs>
+<style>.rank-rk-cap{fill:#8a8a8a;font-size:14px}.rank-rk-ing{fill:#f0f0f0;font-weight:700;font-size:15px}.rank-rk-hd{fill:#3b82f6;font-size:14px;font-weight:700;letter-spacing:0.06em}.rank-rk-val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">Reported top-1 reduction, in the order the paper presents the ingredients — not a ranking</text>
+<text x="24" y="58" class="rank-rk-cap">Bar length is the top-1 error reduction, in percentage points, reported for that ingredient alone. Hatched rows: called necessary, never measured.</text>
+<text x="40" y="104" class="rank-rk-hd">INGREDIENT</text>
+<text x="340" y="104" class="rank-rk-hd">REPORTED TOP-1 REDUCTION</text>
+<text x="670" y="104" class="rank-rk-hd">MEASURED AGAINST WHAT</text>
+<path d="M24,114 L1136,114" stroke="#2a2a2a" stroke-width="1.5"/>
+<g data-tiphead="ReLU" data-tip="Not on this axis at all. Its evidence is Figure 1: six times fewer epochs to reach 25% training error on CIFAR-10 with a four-layer net. A speed claim, not an accuracy claim.">
+<g><rect x="340" y="118" width="240" height="22" rx="4" fill="#151b1f" stroke="#3fb950" stroke-width="1.5" stroke-dasharray="5 4"/></g>
+<text x="40" y="134" class="rank-rk-ing">ReLU <tspan fill="#8a8a8a" font-weight="400">§3.1</tspan></text>
+<text x="592" y="134" class="rank-rk-val" fill="#3fb950">speed</text>
+<text x="670" y="134" class="rank-rk-cap">6× fewer epochs to 25% train error — speed, not accuracy</text>
+</g>
+<g data-tiphead="Two-GPU split" data-tip="Compared against a one-GPU net with half as many kernels per convolutional layer, except its last conv and fc layers, which footnote 2 says were left full size. Read the 1.7% as the gain of a bigger net, not of the split topology (slide 10).">
+<g><rect x="340" y="164" width="204" height="22" rx="4" fill="#3b82f6"/></g>
+<text x="40" y="180" class="rank-rk-ing">two-GPU split <tspan fill="#8a8a8a" font-weight="400">§3.2</tspan></text>
+<text x="556" y="180" class="rank-rk-val" fill="#93c5fd">1.7%</text>
+<text x="670" y="180" class="rank-rk-cap">vs one GPU, half the kernels; fn. 2: baseline not fully halved</text>
+</g>
+<g data-tiphead="Local response normalization" data-tip="Reported as 1.4% top-1 and 1.2% top-5. Its four hyper-parameters were selected on a validation set, and the gain comes with no seeds or error bars.">
+<g><rect x="340" y="210" width="168" height="22" rx="4" fill="#f0883e"/></g>
+<text x="40" y="226" class="rank-rk-ing">local response normalization <tspan fill="#8a8a8a" font-weight="400">§3.3</tspan></text>
+<text x="520" y="226" class="rank-rk-val" fill="#f0883e">1.4%</text>
+<text x="670" y="226" class="rank-rk-cap">vs the same net without it; k, n, α, β tuned on validation</text>
+</g>
+<g data-tiphead="Overlapping pooling" data-tip="0.4% top-1 and 0.3% top-5 against s = 2, z = 2, which produces output of equivalent dimensions. That equality is what makes it the cleanest comparison in the paper.">
+<g><rect x="340" y="256" width="48" height="22" rx="4" fill="#3b82f6"/></g>
+<text x="40" y="272" class="rank-rk-ing">overlapping pooling <tspan fill="#8a8a8a" font-weight="400">§3.4</tspan></text>
+<text x="400" y="272" class="rank-rk-val" fill="#93c5fd">0.4%</text>
+<text x="670" y="272" class="rank-rk-cap">vs s = 2, z = 2 at identical output size — the cleanest one</text>
+</g>
+<g data-tiphead="Crops and reflections" data-tip="Also unmeasured. The paper says only that without this scheme the network suffers substantial overfitting, which would have forced much smaller networks.">
+<g><rect x="340" y="302" width="240" height="22" rx="4" fill="url(#hatch)" stroke="#444444" stroke-width="1.2"/></g>
+<text x="40" y="318" class="rank-rk-ing">crops + reflections <tspan fill="#8a8a8a" font-weight="400">§4.1</tspan></text>
+<text x="592" y="318" class="rank-rk-val" fill="#7f8a99">none</text>
+<text x="670" y="318" class="rank-rk-cap">no number — without it, substantial overfitting</text>
+</g>
+<g data-tiphead="PCA colour jitter" data-tip="The paper says this scheme reduces the top-1 error rate by over 1%. It is the only augmentation number in the paper, and the bound is one-sided.">
+<g><rect x="340" y="348" width="120" height="22" rx="4" fill="#3b82f6"/></g>
+<path d="M462,359 L494,359" stroke="#bc8cff" stroke-width="2.5" marker-end="url(#more)"/>
+<text x="40" y="364" class="rank-rk-ing">PCA colour jitter <tspan fill="#8a8a8a" font-weight="400">§4.1</tspan></text>
+<text x="506" y="364" class="rank-rk-val" fill="#bc8cff">&gt; 1%</text>
+<text x="670" y="364" class="rank-rk-cap">vs no colour jitter — a lower bound, not a measurement</text>
+</g>
+<g data-tiphead="Dropout" data-tip="No error number is reported. The paper says only that without dropout the network exhibits substantial overfitting, and that dropout roughly doubles the iterations to converge.">
+<g><rect x="340" y="394" width="240" height="22" rx="4" fill="url(#hatch)" stroke="#444444" stroke-width="1.2"/></g>
+<text x="40" y="410" class="rank-rk-ing">dropout <tspan fill="#8a8a8a" font-weight="400">§4.2</tspan></text>
+<text x="592" y="410" class="rank-rk-val" fill="#7f8a99">none</text>
+<text x="670" y="410" class="rank-rk-cap">no number — without it, substantial overfitting</text>
+</g>
+<g data-tiphead="Depth" data-tip="§7 reports that removing any of the middle layers costs about 2% of top-1 performance. One deletion, one number, no seeds and no reported re-tuning.">
+<g><rect x="340" y="440" width="240" height="22" rx="4" fill="#3b82f6"/></g>
+<text x="40" y="456" class="rank-rk-ing">depth of the stack <tspan fill="#8a8a8a" font-weight="400">§7</tspan></text>
+<text x="592" y="456" class="rank-rk-val" fill="#93c5fd">≈ 2%</text>
+<text x="670" y="456" class="rank-rk-cap">removing any one middle layer, Sec 7 — a single probe</text>
+</g>
+<rect x="24" y="478" width="1112" height="100" rx="12" fill="#0d1117" stroke="#f0883e" stroke-width="1.5"/>
+<text x="46" y="508" fill="#f0883e" font-size="16" font-weight="700">Why the bar lengths cannot be compared</text>
+<text x="46" y="538" class="rank-rk-cap">Each bar has its own baseline, dataset and scope, and no experiment varies two ingredients together — so the bars cannot be added or ordered.</text>
+<text x="46" y="562" class="rank-rk-cap">And the two ingredients the authors call necessary — dropout and the crops — are exactly the two with no bar at all.</text>
+</svg>

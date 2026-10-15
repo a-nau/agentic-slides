@@ -1,0 +1,621 @@
+---
+pagetitle: alexnet
+sources:
+- https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf
+description: Krizhevsky, Sutskever & Hinton, NIPS 2012 — the paper that made GPU-trained deep nets the default
+css:
+- ../../../quarto/themes/base.css
+- ../../../quarto/themes/agentic.css
+---
+
+<!-- paginate: true -->
+
+
+<a class="slide-id" id="f3549d23-0672-43cc-abaa-22a13ed1156a"></a>
+
+<!--
+  DECK BRIEF
+  Subject: Krizhevsky, Sutskever & Hinton, ImageNet Classification with Deep
+  Convolutional Neural Networks (NIPS 2012) -- AlexNet.
+  Audience: ML engineers in 2026 who know modern CNNs and have never read this paper.
+  Reader promise: by the end they can say why the net is split across two GPUs and
+  exactly which layers cross, what LRN computes and why it is gone, which ingredient
+  deltas are trustworthy and which are not, and which number is the actual result.
+  Source of truth: the frozen NIPS PDF.
+  Figure 2 of the source PDF is CROPPED -- the top of the upper GPU stream runs off
+  the page. Every architecture visual here is hand-authored SVG, never the original.
+-->
+
+<!-- HOVER TOOLKIT — body-level tooltip card + affordance styles. Keep this block;
+     it is inert until an element carries data-tip. -->
+<style>
+.term { border-bottom: 1px dashed #45536a; cursor: help; }
+.finfo { display: inline-block; margin-left: 12px; padding: 1px 12px 2px; border: 1px solid #20304a; border-radius: 999px; color: #3b82f6; font-size: 15px; font-weight: 600; letter-spacing: 0.06em; vertical-align: middle; cursor: help; }
+.finfo:hover { border-color: #3b82f6; background: rgba(59,130,246,0.08); }
+.ev { color: #8f979e; font-size: 16px; }
+.hotspot { position: absolute; top: 0; height: 100%; cursor: help; }
+.hotspot:hover { background: rgba(59,130,246,0.16); outline: 1px solid #3b82f6; outline-offset: -1px; }
+span:has(> .hotspot) > img { display: block; }
+section p.credit { color: #777; font-size: 14px; text-align: center; margin: 6px 0 8px; }
+section p.credit a { color: #999; }
+/* The slide-id anchor is markdown-wrapped in a <p>; that empty line box eats
+   34px at the top of every slide. Hide it — the anchor still resolves. */
+section > p:has(> a.slide-id) { display: none; }
+section.fs-lg ul, section.fs-lg ol, section.fs-lg p { font-size: 21px; }
+section.fs-sm, section.fs-xs { padding-top: 2.4rem; padding-bottom: 1.8rem; }
+section.fs-sm ul, section.fs-sm ol, section.fs-sm p { font-size: 16px; }
+section.fs-sm table { font-size: 16px; }
+section.fs-xs ul, section.fs-xs ol, section.fs-xs p { font-size: 16px; }
+section.fs-xs table { font-size: 14px; }
+section.fs-xs table th { padding: 0.3rem 0.7rem; }
+section.fs-xs table td { padding: 0.24rem 0.7rem; }
+section .dq { border-left: 3px solid #3b82f6; background: rgba(59,130,246,0.05); border-radius: 0 8px 8px 0; padding: 4px 20px; margin: 14px 0; }
+section .dq p { margin: 6px 0; font-size: 19px; }
+</style>
+<script>
+(function () {
+  if (document.getElementById('tipcard')) return;
+  const css = document.createElement('style');
+  css.textContent = `
+    #tipcard { position: fixed; display: none; max-width: 460px; background: #0a0c0f; border: 1px solid #2a2a2a; border-left: 3px solid #3b82f6; border-radius: 10px; padding: 12px 16px; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.65); pointer-events: none; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    #tipcard .tip-head { color: #3b82f6; font-size: 14px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; margin-bottom: 5px; }
+    #tipcard .tip-body { color: #d6d9dc; font-size: 15px; line-height: 1.5; font-weight: 400; }
+    body.tips-off #tipcard { display: none !important; }
+    body.tips-off [data-tip] { border-bottom-color: transparent !important; text-decoration: none !important; cursor: default !important; }
+    #tip-toggle { position: fixed; top: 12px; left: 56px; z-index: 9999; font: 600 12px/1 system-ui, sans-serif; letter-spacing: 0.05em; padding: 7px 14px; border-radius: 999px; border: 1px solid #2a2a2a; background: rgba(17,17,17,0.92); color: #3b82f6; cursor: pointer; opacity: 0.3; transition: opacity 0.15s ease; }
+    #tip-toggle:hover { opacity: 1; }
+    #tip-toggle.tips-off { text-decoration: line-through; }
+    @media print { #tip-toggle { display: none !important; } }`;
+  document.head.appendChild(css);
+  const card = document.createElement('div');
+  card.id = 'tipcard';
+  card.innerHTML = '<div class="tip-head"></div><div class="tip-body"></div>';
+  document.body.appendChild(card);
+  const btn = document.createElement('button');
+  btn.id = 'tip-toggle'; btn.type = 'button'; btn.textContent = 'Tips';
+  btn.title = 'Hover tooltips are on — click to disable';
+  btn.addEventListener('click', () => {
+    const off = document.body.classList.toggle('tips-off');
+    btn.classList.toggle('tips-off', off);
+    btn.textContent = off ? 'Tips off' : 'Tips';
+    btn.title = off ? 'Hover tooltips are off — click to enable' : 'Hover tooltips are on — click to disable';
+  });
+  document.body.appendChild(btn);
+  const head = card.firstChild, body = card.lastChild;
+  const place = (ev) => {
+    const pad = 16, r = card.getBoundingClientRect();
+    let x = ev.clientX + pad, y = ev.clientY + pad;
+    if (x + r.width > innerWidth - 10) x = ev.clientX - r.width - pad;
+    if (y + r.height > innerHeight - 10) y = ev.clientY - r.height - pad;
+    card.style.left = Math.max(8, x) + 'px'; card.style.top = Math.max(8, y) + 'px';
+  };
+  document.addEventListener('mousemove', (ev) => {
+    const t = ev.target.closest && ev.target.closest('[data-tip]');
+    if (t) {
+      head.textContent = t.getAttribute('data-tiphead') || 'Explanation';
+      body.textContent = t.getAttribute('data-tip');
+      card.style.display = 'block';
+      place(ev);
+    } else {
+      card.style.display = 'none';
+    }
+  });
+})();
+</script>
+
+<!-- _class: title paper -->
+
+<p class="kicker">Paper deep dive</p>
+
+# **Krizhevsky et al. (2012):** ImageNet Classification with Deep Convolutional Neural Networks
+
+## Train one CNN bigger than a single GPU could hold — two cards were the price of that size, not the goal — and win at **15.3%** top-5 error against the runner-up's 26.2%
+
+<p class="byline"><strong>Krizhevsky, Sutskever &amp; Hinton</strong> · University of Toronto · NIPS 2012, winner of ILSVRC-2012</p>
+
+<p class="links"><a href="https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">paper (PDF)</a><a href="https://papers.nips.cc/paper_files/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html">NIPS page</a><a href="https://code.google.com/archive/p/cuda-convnet/">code</a><a class="website" href="https://www.image-net.org/challenges/LSVRC/2012/">ILSVRC 2012</a><a href="https://github.com/pytorch/vision/blob/main/torchvision/models/alexnet.py">torchvision port</a></p>
+
+<p class="byline"><em>Underlines in review mode are fact-checked against the paper — click one to open the passage.</em></p>
+
+---
+
+<a class="slide-id" id="17074b91-af7d-4c2f-9644-cd44b9604439"></a>
+
+<!-- _class: fs-sm -->
+
+## TL;DR
+
+- **One eight-layer CNN** — five conv, three fully-connected — trained end to end on **1.2M photographs** for a **1000-way** choice.
+- The bet: **a net too big for one card** — 60M parameters, split across **two GTX 580 3 GB GPUs** because one could not hold them — with non-saturating <span class="term" data-tiphead="ReLU" data-tip="Rectified Linear Unit, f(x) = max(0, x). Unlike tanh it never flattens for positive inputs, so its gradient never vanishes there and training does not stall.">**ReLUs**</span> so it trains in days.
+- The stabiliser: **dropout at 0.5** (half the units of the two big layers silenced at random on every step), **2048× crop-and-reflect** augmentation (32 × 32 positions of a 224×224 window in the 256×256 image, each also mirrored) and PCA colour jitter (one random shift of each image's overall colour) — without dropout or the crops it **overfits substantially**.
+- **37.5% / 17.0%** top-1/top-5 *error* — lower is better — on ILSVRC-2010 against **45.7% / 25.7%** best published, for one net **averaging ten test crops** (four corners, centre, and their mirrors); the contest entry, a seven-net ensemble, won 2012 at **15.3%** vs **26.2%**.
+- **ReLU, dropout, augmentation and GPU training are still defaults**; <span class="term" data-tiphead="LRN — local response normalization" data-tip="A fixed, hand-designed rescaling: each unit is divided by a term that grows with the squared activity of the same pixel in neighbouring channels. Its hyper-parameters are chosen on a validation set, not learned.">LRN</span>, the hand-split topology, overlapping pooling (bar one 3×3/2 max-pool in some network stems) and ten-crop testing are not (slide 22).
+
+---
+
+<a class="slide-id" id="e9b8c7f5-23f0-4530-9116-5085bfd7110d"></a>
+
+<!-- _class: fs-sm -->
+
+## The result, before any of the method — a photograph in, a ranked list out
+
+<!--FIGSM:task-->
+
+*One 224×224 crop of the 256×256 image in — a random one during training — and a probability over **1000 classes** out. On ILSVRC-2010 this single network reaches **17.0% top-5 error** where the best published result was **25.7%** — a number that already averages the softmax over **ten test crops** (four corners and the centre, each also mirrored); without that averaging it is 18.3%. The contest variant won ILSVRC-2012 at **15.3%** against the runner-up's **26.2%** — after **five to six days on two GTX 580 3 GB cards**.*
+
+---
+
+<a class="slide-id" id="9e9f08e3-3a02-4a52-bd76-3548cd04ef84"></a>
+
+<!-- _class: fs-sm -->
+
+## The paper's own test images: the ranked list is sensible, and the features behind it are semantic
+
+<p style="text-align:center; margin:0"><span style="position:relative; display:inline-block"><img src="images/paper/fig4-predictions.jpg" width="900"/><span class="hotspot" data-tiphead="Left panel — eight test images, top-5 each" data-tip="Eight ILSVRC-2010 test images and the five labels the model considers most probable. The correct label is written under each image; its probability is the red bar when it makes the top five. The mite in the top-left corner is off-centre and still recognised; for grille and cherry the paper concedes genuine ambiguity about the intended focus." style="left:0%; width:46%"></span><span class="hotspot" data-tiphead="Right panel, first column — the queries" data-tip="Five test images. For each one the query is its 4096-dimensional activation vector in the last hidden layer, not its pixels." style="left:47%; width:7.5%"></span><span class="hotspot" data-tiphead="Right panel — six nearest training images" data-tip="The six training images whose last-hidden-layer feature vectors have the smallest Euclidean distance to the query. At the pixel level they are generally not close in L2: the dogs and elephants come back in a variety of poses." style="left:54.5%; width:45.5%"></span></span></p>
+
+<p class="credit">Figure 4 from <a href="https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html" target="_blank">Krizhevsky et al. 2012</a>, p. 8 — left: eight ILSVRC-2010 test images with the model's top-5; right: five test images and their six nearest training images in the last hidden layer.</p>
+
+- **Red bar = the correct label** whenever it makes the top five — and the off-centre **mite** is still found
+- Neighbours are nearest in **4096-d feature space, not pixel space** — the elephants and dogs come back **across poses**. Qualitative only: selected examples, no retrieval metric
+
+---
+
+<a class="slide-id" id="b965b2d3-8ee9-4337-ba2f-30a7c002ec16"></a>
+
+## The core idea — buy scale instead of designing features
+
+- **Why care:** the 2010 winner averaged **six <span class="term" data-tiphead="Sparse coding (background)" data-tip="Background, not from the paper: encode each local descriptor (e.g. SIFT) as a sparse mix of learned basis vectors, pool the codes per image, classify linearly.">sparse-coding</span> models** over hand-designed features, and still missed **28.2%** (top-5 error).
+- **Prior work:** CNNs worked, but were **"prohibitively expensive to apply in large scale to high-resolution images"**.
+- **This paper instead:** trains **one very large CNN end to end on raw RGB**, purely supervised, **across two 3 GB cards**.
+- **The enabling fact:** ImageNet's **15 million labelled images** — its **1.2M-image** contest subset is enough to train **a net too big for one card** without severe overfitting — and GPUs fast enough to train it.
+- **Borrowed:** the rectifier (Nair & Hinton), dropout ([2012 preprint](https://arxiv.org/abs/1207.0580)), a <span class="term" data-tiphead="Columnar CNN" data-tip="A CNN built as parallel stacks of layers, called columns. The paper calls its own architecture somewhat similar to the columnar CNN of Cireşan et al., except that its columns are not independent: the two GPU halves exchange activations at conv 3 and the fully-connected layers.">columnar</span> layout ([Cireşan et al.](https://arxiv.org/abs/1102.0183))
+
+---
+
+<a class="slide-id" id="efd34681-75c3-4097-b89b-f62d7c2839b9"></a>
+
+## The five Cs, in one look
+
+Five Cs — a standard first-pass checklist for a paper: Category, Context, Correctness, Contributions, Clarity.
+
+| | |
+|---|---|
+| **Category** | an **empirical systems paper** — one architecture, one dataset, choices each carrying a measured delta |
+| **Context** | displaces **hand-engineered features** (sparse coding, <span class="term" data-tiphead="Fisher vectors (background)" data-tip="Background, not from the paper: describe an image by how its local descriptors (e.g. SIFT) deviate from a Gaussian mixture fitted to the training set, then classify linearly.">Fisher vectors</span>) and extends the columnar CNN of [Cireşan et al.](https://arxiv.org/abs/1102.0183); [VGG](https://arxiv.org/abs/1409.1556) and [ResNet](https://arxiv.org/abs/1512.03385) answered what it left open |
+| **Correctness** | headline is a **contest test-set score** — the 2012 test labels were never public, so the organisers scored the submission (background); the *explanations* rest on **per-ingredient deltas against different baselines** |
+| **Contributions** | the result; a **public GPU convolution implementation** (cuda-convnet, every training operation on the GPU); a checklist — ReLU, LRN, pooling, dropout, augmentation — the field mined for years |
+| **Clarity** | plain prose, **one broken figure**: Figure 2 is cropped in the proceedings PDF |
+
+---
+
+<a class="slide-id" id="12a492c0-a716-40a6-8ea6-e4c70de1483b"></a>
+
+## Should you read further?
+
+- **Read the paper if** you train vision models and want a case study of a hardware limit shaping an architecture: §3 is the architecture (the two-GPU split is §3.2), §4 the fight against overfitting (augmentation, dropout). The evidence for that reading is on slides 9–10 and 20.
+- **Skim §3.2, §6 and Table 2 if** you only need which layers cross between the GPUs (§3.2) and what the winning 15.3% is made of (§6 is the results; Table 2 lists the ILSVRC-2012 single nets and ensembles) — slides 10 and 17.
+- **Skip it if** you want a modern recipe — slides 16–22 show which ingredients survived; go to [VGG](https://arxiv.org/abs/1409.1556) for the depth study, [batch normalization](https://arxiv.org/abs/1502.03167) for what replaced LRN, [ResNet](https://arxiv.org/abs/1512.03385) for what replaced the rest.
+
+---
+
+<a class="slide-id" id="de74c8ef-9d90-4f38-9d24-04a1756528ba"></a>
+
+## Background — 1000 classes, and only one year with public test labels
+
+| | |
+|---|---|
+| ImageNet, all of it | over 15 million labelled images, roughly 22,000 categories — its Fall 2011 release is the extra pre-training data on slide 17 |
+| the ILSVRC subset | 1000 categories, about 1000 images each |
+| splits | 1.2M train · 50,000 validation · 150,000 test |
+| pre-processing | down-sample to 256×256, subtract the mean pixel, nothing else |
+
+- <span class="term" data-tiphead="Top-5 error" data-tip="The fraction of test images for which the correct label is not among the five labels the model considers most probable. Top-1 error is the same thing with a list of one.">Top-5 error</span> is the fraction of images whose correct label is **not among the five most probable** — every number in this deck is an **error rate, so lower is better**
+- **ILSVRC-2010 is the only version with public test labels** — which is why almost every experiment lives there. For 2012 the paper mostly reports validation error and uses it interchangeably with test error, which "in our experience" differ by no more than 0.1% — Table 2 has two such pairs (16.4 / 16.4, 15.4 / 15.3)
+
+---
+
+<a class="slide-id" id="fc9c6b1a-6e3b-476f-8ce3-17f144ac81a7"></a>
+
+<!-- _class: fs-sm -->
+
+## Eight layers, their shapes, and the two places the GPUs talk
+
+<!--FIGSM:arch-->
+
+- **Redrawn: the published Figure 2 is cropped** (original: slide 27). ReLU follows every layer; LRN then max-pooling follow conv 1 and conv 2, and max-pooling follows conv 5
+- **The shapes do not derive cleanly**: (224 − 11)/4 + 1 = 54.25, so 55×55 needs a 227×227 input or 2 pixels of padding. **For reimplementers (later practice):** common ports crop 227 or pad; torchvision keeps 224 with padding 2. Trust **55×55×96 = 290,400** conv 1 neurons: the caption's 253,440 cannot be reproduced from the printed shapes (its other counts check out)
+
+---
+
+<a class="slide-id" id="e1c01124-107a-41e6-9448-a79678fb0a79"></a>
+
+<!-- _class: fs-sm -->
+
+## Kernel depth shows why only conv 3 and the fc layers cross GPUs
+
+<!--FIGSM:split-rule-->
+
+- A kernel of depth 48 can only see 48 <span class="term" data-tiphead="Kernel map" data-tip="One output channel of a convolutional layer: the whole spatial response of a single learned filter. AlexNet splits the kernel maps of each layer half-and-half between the two cards.">kernel maps</span>, which is exactly **one GPU's half of conv 1**. Depth 256 is **every conv 2 map on both cards**
+- **Why two cards:** 1.2M examples were enough to train a net too big for one **GTX 580's 3 GB**. The paper gives **no memory breakdown**; illustratively, 60M float32 weights are 240 MB, tripled by gradients and momentum, plus a 128-image batch's activations kept for backprop
+- **Where to cross** was **chosen by cross-validation**, until communication was "an acceptable fraction of the amount of computation". Patterns tried and traffic cost are not reported; the two-GPU net trains slightly faster than the one-GPU baseline
+
+---
+
+<a class="slide-id" id="742f1fc4-7dda-4ea1-ba98-13170b558977"></a>
+
+<!-- _class: fs-sm -->
+
+## ReLU trains six times faster — not six times better
+
+<!--FIGSM:relu-->
+
+- The measurement is **epochs to 25% training error on CIFAR-10** with a four-layer net, **ReLU against tanh only**: about 6 against about 36, read off Figure 1 — no printed numbers, runs or seeds
+- **No accuracy is measured**. The authors' own framing: without <span class="term" data-tiphead="Saturating nonlinearity" data-tip="A unit like tanh or the logistic sigmoid, whose output flattens at both extremes. Once it saturates its gradient is nearly zero, so learning in that unit almost stops.">non-saturating</span> units they **could not have experimented with networks this large** — a claim about the schedule, not the score
+
+---
+
+<a class="slide-id" id="51f87dc5-c5fb-4fa9-a09b-f540683a552c"></a>
+
+<!-- _class: fs-sm -->
+
+## LRN divides each unit by how loudly its neighbouring kernels fired
+
+<!--FIGSM:lrn-->
+
+- A hand-built form of <span class="term" data-tiphead="Lateral inhibition" data-tip="A pattern borrowed from real neurons: an active cell suppresses its neighbours, so only the strongest response in a neighbourhood survives. Here the neighbourhood is adjacent kernel maps, not adjacent pixels.">lateral inhibition</span> — competition for big activations among kernels at the **same pixel**: **bⁱ = aⁱ / (k + α · Σⱼ (aʲ)²)^β**, j from max(0, i − n/2) to min(N − 1, i + n/2) of the layer's N maps — so at the first and last maps the window is **clipped**, not wrapped. The map order is "arbitrary and determined before training": adjacency is consistent, but means nothing
+- Applied after the ReLU of **conv 1 and conv 2** only: **1.4 / 1.2 points lower top-1 / top-5 error** than without it. [VGG](https://arxiv.org/abs/1409.1556) found it gives **no improvement on ILSVRC**; later normalisation layers such as [batch normalization](https://arxiv.org/abs/1502.03167) replaced it (background)
+
+---
+
+<a class="slide-id" id="8d6fe529-10b1-4fd2-9a7b-46ede7844c85"></a>
+
+<!-- _class: fs-sm -->
+
+## Overlapping pooling is one hyper-parameter: make the window wider than the step
+
+<!--FIGSM:pooling-->
+
+- Pooling units `s = 2` pixels apart over `z × z = 3 × 3` windows, instead of `s = z = 2`, everywhere in the network: **0.4% top-1 / 0.3% top-5**
+- It is the **cleanest comparison in the paper** — both settings produce output of equivalent dimensions, so nothing else moves — and also the **smallest gain**
+
+---
+
+<a class="slide-id" id="d280695d-4ad3-4d00-9a01-6e5896a1259a"></a>
+
+<!-- _class: fs-sm -->
+
+## Dropout on two layers roughly doubles the iterations
+
+<!--FIGSM:dropout-->
+
+- **First two fully-connected layers only**, where most of the 60M parameters and the overfitting sit. Cost: **dropout roughly doubles the iterations to converge**
+- At test time **every output is multiplied by 0.5** — its expected value under dropout — which the paper calls a reasonable approximation to the **geometric mean** of all sampled nets' predictive distributions (multiply their class probabilities, take the root, renormalise)
+- **Later practice:** inverted dropout (PyTorch's `nn.Dropout(0.5)`) scales kept units ×2 in training instead, so the test net runs unscaled
+
+---
+
+<a class="slide-id" id="6a1b8bf7-ef26-44be-8321-e2381d2a4256"></a>
+
+<!-- _class: fs-sm -->
+
+## Free augmentations — and one is in the headline
+
+<!--FIGSM:augment-->
+
+- Random 224×224 crops and their reflections enlarge the training set by **2048 = 32 × 32 positions × 2 mirror images**, counting 256 − 224 = 32 shifts per axis (strictly 33 fit). Crops are drawn at random on the fly, and crops of one photo share most pixels and their label — **highly interdependent**, so the effective data grows far less than 2048×
+- PCA colour jitter adds **one random RGB offset per image**, Σ αᵢλᵢpᵢ, with pᵢ, λᵢ the eigenvectors and eigenvalues of the 3×3 covariance of training-set RGB pixel values and αᵢ a unitless Gaussian factor, std 0.1 — pixel units unstated: **over 1% top-1**
+
+---
+
+<a class="slide-id" id="809d4366-3147-437d-9f2c-36701d6ca193"></a>
+
+<!-- _class: fs-sm -->
+
+## Each gain has its own baseline <span class="finfo" data-tiphead="Figure forensics" data-tip="Every delta on this axis was measured against its own baseline, one ingredient at a time — the paper never runs a factorial ablation, so the bars cannot be added, subtracted or ranked against one another. Two of the ingredients the paper calls necessary, dropout and crop augmentation, carry no number at all. Single runs, no seeds, no error bars.">ⓘ forensics</span>
+
+<!--FIGSM:ranking-->
+
+- **Verdict: no ingredient can be ranked from this paper.** The like-for-like deletions — LRN, overlapping pooling, colour jitter, one middle layer — are single runs, each against its own variant of the net; the split's baseline is a smaller net (slide 10)
+- Dropout and crop augmentation, which the paper calls **necessary**, carry **no number at all**; the largest bar, depth's ≈ 2%, is a one-sentence deletion probe (slide 19)
+
+---
+
+<a class="slide-id" id="780fcbff-1c98-463d-aa07-c81cdfce53c0"></a>
+
+<!-- _class: fs-sm -->
+
+## The winning 15.3% is not the paper's network <span class="finfo" data-tiphead="Figure forensics" data-tip="The two competitions are different splits and are not interchangeable: ILSVRC-2010 rows are test error, ILSVRC-2012 rows are mostly validation error because the 2012 test labels were never released. Ensemble rows average five or seven networks; two of the seven also saw the 15-million-image Fall 2011 release and have a sixth convolutional layer. Only the single-CNN rows, 37.5% / 17.0% on ILSVRC-2010 and 18.2% on ILSVRC-2012, are the model drawn in Figure 2.">ⓘ forensics</span>
+
+<!--FIGSM:results-->
+
+- **37.5% / 17.0%** (2010 **test**, ten-patch averaged) is the eight-layer net in Figure 2; **15.3%** (2012 **test**, scored by the organisers — background) is an <span class="term" data-tiphead="Ensemble" data-tip="Several independently trained networks whose softmax outputs are averaged into one prediction. It reliably buys accuracy and reliably costs that many times more compute at inference.">ensemble</span> of seven nets, two with a **sixth convolutional layer and pre-training on the 15M-image Fall 2011 release**. One net scores **18.2% (validation)**
+- **18.2% (val) beside 26.2% (test) mixes splits**: the paper treats them as interchangeable — "in our experience they do not differ by more than 0.1%", with two val/test pairs in Table 2. The runner-up averages "several" Fisher-vector classifiers; no count is given
+
+---
+
+<a class="slide-id" id="513cd7eb-991b-48fa-87a4-a620854cba1f"></a>
+
+<!-- _class: fs-sm -->
+
+## The whole training bill fits on one slide
+
+| | |
+|---|---|
+| hardware | two NVIDIA GTX 580, 3 GB each |
+| wall clock | five to six days for "roughly 90 cycles through the training set" — a dropout net, so this already pays dropout's roughly doubled iterations (slide 14) |
+| optimiser | SGD · batch 128 · <span class="term" data-tiphead="Momentum" data-tip="The update keeps a running average of past gradients and follows that instead of the raw gradient, which damps oscillation across steep directions and speeds progress along shallow ones.">momentum</span> 0.9 · <span class="term" data-tiphead="Weight decay" data-tip="A penalty proportional to the squared size of the weights, added to the loss. Normally it trades training error for generalisation; here the authors report it lowered training error too.">weight decay</span> 0.0005 |
+| learning rate | 0.01, divided by 10 **by hand** "when the validation error rate stopped improving" — three times before termination, at epochs the paper does not give |
+| initialisation | Gaussian, standard deviation 0.01; bias 1 in conv 2, 4, 5 and the hidden fc layers |
+
+- **Weight decay mattered for training itself**: the paper found this small amount "was important for the model to learn" — it lowered *training* error, so it was not acting purely as a regulariser. No mechanism is offered
+- **Bias 1** "accelerates the early stages of learning by providing the ReLUs with positive inputs" — the paper's stated reason. It gives none for which layers get it; all other biases start at 0
+
+---
+
+<a class="slide-id" id="917f7f05-9d9e-49ba-8fe4-701876c48ffc"></a>
+
+<!-- _class: fs-sm -->
+
+## Depth: boldest claim, thinnest experiment <span class="finfo" data-tiphead="Figure forensics" data-tip="One deletion experiment, reported in a single sentence of the discussion. The paper does not say which middle layers were removed, how many were tried, whether anything was re-tuned afterwards, or how many seeds were run — and its only deeper nets, the six-conv-layer variants in §6, also change the training data, so nothing here speaks to the direction of the depth-accuracy curve.">ⓘ forensics</span>
+
+<!--FIGSM:depth-->
+
+- The whole evidence: **one deleted middle layer costs about 2% top-1**, split and protocol unstated. A deletion leaves later layers expecting inputs they no longer get, so each probe needs a **retrained** net; the paper does not say how it was trained. Each conv layer holds **under 1% of the parameters**, so what matters is the extra processing stage, not the parameter count
+- What it does **not** show: that *more* depth is better. No controlled deeper variant, no reported re-tuning, one number, no seeds — [VGG](https://arxiv.org/abs/1409.1556) and [ResNet](https://arxiv.org/abs/1512.03385) ran that sweep
+
+---
+
+<a class="slide-id" id="d13840a5-2902-4293-a571-fea39a9f20d6"></a>
+
+<!-- _class: fs-sm -->
+
+## GPU 1 learned colour-agnostic kernels, GPU 2 colour-specific
+
+<!--FIGSM:gpu-kernels-->
+
+- **GPU 1's first-layer kernels come out largely colour-agnostic, GPU 2's largely colour-specific** — judged by eye from Figure 3, no metric — "during every run" (count not given), "modulo a renumbering of the GPUs": which card gets the colour kernels can swap
+- Nobody designed a colour stream and a shape stream — **a 3 GB card did**. The paper credits the restricted connectivity but trains **no unsplit control**; read the 1.7% as the gain of a bigger net, not of the split topology (slide 10)
+
+---
+
+<a class="slide-id" id="f538da8c-bd89-4512-91c8-85383514a042"></a>
+
+<!-- _class: fs-sm -->
+
+## Challenge the assumptions — what the paper asserts, and what it establishes
+
+<!--FIGSM:critique-->
+
+- None of these claims is wrong. Each is **asserted more broadly than its experiment supports** — a deletion is read as a depth curve, a CIFAR-10 speed-up as a unit comparison
+- The authors' **own importance order has aged badly**: §3.1–3.4 put the hand-split GPUs second and LRN third, and neither was kept
+
+---
+
+<a class="slide-id" id="04048c7e-e75e-40e0-abbc-7360a0b824f7"></a>
+
+<!-- _class: fs-sm -->
+
+## Steal list — five things to keep, five to file under history
+
+<!--FIGSM:survived-->
+
+- **Survived**: rectifiers, dropout, aggressive augmentation, betting on GPUs, end-to-end supervised depth
+- **Did not**: local response normalization, the hand-split two-GPU topology, overlapping pooling as a design lever (one 3×3/2 max-pool lingers in some stems), hand-driven learning-rate steps, ten-crop test averaging
+
+---
+
+<a class="slide-id" id="e074eb59-ddf8-4ea1-8652-e18c508bb219"></a>
+
+<!-- _class: fs-lg -->
+
+## Where to check any of this yourself
+
+| claim in this deck | where it lives |
+|---|---|
+| the split, and which layers cross | [§3.2, p. 3](https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf#page=3) · [§3.5, p. 4](https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf#page=4) |
+| LRN, and its 1.4% / 1.2% | [§3.3, p. 4](https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf#page=4) |
+| overlapping pooling, 0.4% / 0.3% | [§3.4, p. 4](https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf#page=4) |
+| augmentation, and the ten-patch footnote | [§4.1, p. 5](https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf#page=5) · [footnote 5, p. 7](https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf#page=7) |
+| dropout, and the doubled iterations | [§4.2, p. 6](https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf#page=6) · [dropout preprint](https://arxiv.org/abs/1207.0580) |
+| Tables 1 and 2, and the ensemble rows | [§6, p. 7](https://papers.nips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf#page=7) |
+| the code the authors released | [cuda-convnet](https://code.google.com/archive/p/cuda-convnet/) · successor [cuda-convnet2](https://github.com/akrizhevsky/cuda-convnet2) · modern [torchvision port](https://github.com/pytorch/vision/blob/main/torchvision/models/alexnet.py) |
+
+---
+
+<a class="slide-id" id="356fc7f9-dcb5-4fcd-a966-bda8a9f2a65d"></a>
+
+## What to keep from this paper
+
+- **Size the model to the data, and plan the fight against overfitting from the start**: this net only worked because crops, reflections and dropout held its overfitting back (slides 14–15).
+- **Ablate against one shared baseline, with repeated runs**: single-run deltas, each against a different baseline, left LRN's value open until VGG re-tested it (slides 12, 16).
+- **Treat a hardware-shaped architecture as a workaround, not a design**: the two-GPU split and its colour/shape specialisation came from 3 GB cards (slides 10, 20).
+- **Later practice (background): keep ReLU-family units, strong augmentation and GPU-scale training; use normalisation layers instead of LRN, and data or model parallelism instead of a hand split.**
+
+**If you do one thing: quote the number that matches the claim** — 17.0% (one net, 2010 test, ten crops), 18.2% (one net, 2012 validation) and 15.3% (seven nets, extra data, 2012 test) are three different results (slide 17).
+
+---
+
+<a class="slide-id" id="afe5208f-6775-4f72-9772-06b12ee93cd9"></a>
+
+## Discussion
+
+Open questions for the group — the paper settles none of them.
+
+<div class="dq">
+
+**Is the two-GPU gain the topology, or just more convolutional kernels?**
+<span class="ev">The 1.7% / 1.2% is measured against a one-GPU net with half the kernels per conv layer, but full-size last conv and fc layers. Read it as the gain of a bigger net, not of the split topology (slide 10) — what would isolate the topology?</span>
+
+</div>
+
+<div class="dq">
+
+**Would LRN have died sooner under a factorial ablation?**
+<span class="ev">Ranked third in importance on one 1.4% delta; [VGG](https://arxiv.org/abs/1409.1556) later found no improvement at all on ILSVRC.</span>
+
+</div>
+
+<div class="dq">
+
+**What in today's stack is a memory workaround that nobody has noticed yet?**
+<span class="ev">AlexNet's hand split was exactly this — a 3 GB workaround that read as architecture. Tensor and pipeline splits, sequence caps, activation checkpointing — which will read in 2040 the way the hand-split topology reads now?</span>
+
+</div>
+
+---
+
+<a class="slide-id" id="03464b73-e9a7-4cbe-9591-a6fd6abf66a3"></a>
+
+<!-- _class: invert -->
+
+# Appendix
+
+Reference for review: every hover note and term, restated in print. Not presented.
+
+---
+
+<a class="slide-id" id="b8053e1c-5554-4df1-88fa-96400f038e4d"></a>
+
+<!-- _class: fs-sm -->
+
+## Appendix — Figure 2 as printed, with the upper GPU's lane cut off at the top of the page
+
+<p style="text-align:center; margin:0"><span style="position:relative; display:inline-block"><img src="images/paper/fig2-architecture.png" width="1040" style="background:#fff; border-radius:6px"/><span class="hotspot" data-tiphead="Input · conv 1 · conv 2" data-tip="224×224×3 crop read by both GPUs. conv 1: 96 kernels of 11×11×3, stride 4, 48 per GPU → 55×55×48 per lane (the lane the page clips). conv 2 after LRN and overlapping max-pool: 27×27, 128 maps per GPU from 5×5×48 kernels that read only their own lane." style="left:0%; width:34.5%"></span><span class="hotspot" data-tiphead="conv 3 · conv 4 · conv 5" data-tip="conv 3 is the one convolutional crossing: 384 kernels of 3×3×256 read every conv 2 map on both GPUs. conv 4: 384 kernels of 3×3×192 at 13×13, same-GPU only. conv 5: 256 kernels of 3×3×192, 128 per GPU, then the third max-pool." style="left:34.5%; width:40%"></span><span class="hotspot" data-tiphead="fc 6, fc 7 · fc 8" data-tip="4096 units each, drawn as 2048 per GPU; the crossing arrows mean every unit reads the whole previous layer on both cards — the two dropout layers. fc 8: 1000 outputs feeding the softmax." style="left:74.5%; width:25.5%"></span></span></span></p>
+
+<p class="credit">Figure 2 from <a href="https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html" target="_blank">Krizhevsky et al. 2012</a>, p. 5, as printed — the missing top edge is in the published PDF, not in this crop.</p>
+
+- **Read the dashed lines**: every kernel reaches into its own GPU's maps, except at **conv 3** and the **dense layers**, where the lines cross lanes
+- The depths on the boxes (**48, 128, 192, 192, 128**) are per-GPU halves of 96, 256, 384, 384, 256; the caption's neuron counts sum both lanes
+
+---
+
+<a class="slide-id" id="83472cb6-7341-452b-a96c-ce4b717fcb23"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 1/5: the task, and the architecture to conv 2 (reviewable record)
+
+| hover target | note |
+|---|---|
+| [s3](#3) **The input** | Variable-resolution web photo, shorter side rescaled to 256 and centre-cropped to 256×256. The only other pre-processing is subtracting the training-set mean pixel; the net sees centred raw RGB. |
+| [s3](#3) **The network, in one block** | Eight learned layers — five conv, three fully-connected — ending in a 1000-way softmax. 60 million parameters, 650,000 neurons, plain supervised backprop, no unsupervised pre-training. |
+| [s3](#3) **The output, and how it is graded** | A probability for each of the 1000 classes. Top-1 counts an image wrong when the argmax is not the true class; top-5 only when the true class is absent from the five most probable. |
+| [s9](#9) **Input crop** | A random 224×224 crop of a 256×256 image, mean-subtracted raw RGB. Both GPUs read the same crop; the split starts one layer later. |
+| [s9](#9) **conv 1 — GPU 1 half** | 96 kernels of 11×11×3 at stride 4, split 48 per GPU. Kernel depth 3 means each half reads the whole RGB image, so nothing is shared yet. |
+| [s9](#9) **conv 1 — GPU 2 half** | The mirror half. Figure 3 shows these two halves reliably specialise: one learns colour-agnostic edges, the other colour blobs. |
+| [s9](#9) **conv 2 — GPU 1 half** | 256 kernels of 5×5×48, split 128 per GPU. Depth 48 is exactly half of conv 1's 96 maps, so this layer reads only its own GPU. |
+| [s9](#9) **conv 2 — GPU 2 half** | Same shape on the other card. No cross edge enters conv 2, so the two halves have not exchanged a single activation yet. |
+
+---
+
+<a class="slide-id" id="f0ceee5a-768a-4029-b5c7-54de7f9c6930"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 2/5: the architecture, conv 3 to the classifier (reviewable record)
+
+| hover target | note |
+|---|---|
+| [s9](#9) **conv 3 — the one cross-connected layer** | 384 kernels of 3×3×256, split 192 per GPU. Depth 256 is ALL of conv 2's maps, so every conv 3 kernel reads across both cards. The single cross-GPU convolution in the network. |
+| [s9](#9) **conv 3 — GPU 2 half** | Also reads all 256 conv 2 maps. Cross-GPU traffic happens exactly here, and the paper says the connectivity pattern was picked by cross-validation to keep it cheap. |
+| [s9](#9) **conv 4** | 384 kernels of 3×3×192, split 192 per GPU. Depth 192 is half of conv 3's 384 maps, so the streams separate again immediately after conv 3. |
+| [s9](#9) **conv 4 — GPU 2 half** | Same-GPU only. conv 3, 4 and 5 run back to back with no pooling or normalisation between them. |
+| [s9](#9) **conv 5** | 256 kernels of 3×3×192, split 128 per GPU. Depth 192 is half of conv 4's 384 maps: same GPU. Its output is max-pooled before the fully-connected stack. |
+| [s9](#9) **conv 5 — GPU 2 half** | The last convolutional layer. After its max-pool the representation is small enough that the fully-connected layers can afford to be all-to-all. |
+| [s9](#9) **fc 6** | 4096 neurons, drawn in Figure 2 as 2048 per GPU. Fully connected to every neuron of the previous layer, so it reads across both cards. Dropout at 0.5 applies here. |
+| [s9](#9) **fc 6 — GPU 2 half** | The second 2048. Most of the 60 million parameters sit in this layer and its neighbours, which is also why dropout is applied here and nowhere else. |
+| [s9](#9) **fc 7** | The second 4096-wide layer, also with dropout at 0.5. Its activations are the 4096-dimensional feature vector used for nearest-neighbour retrieval in Figure 4. |
+| [s9](#9) **fc 7 — GPU 2 half** | Dropout covers the first two fully-connected layers only. The final classifier layer is left untouched. |
+| [s9](#9) **fc 8 — the classifier** | 1000 outputs feeding a 1000-way softmax, trained by maximising the multinomial logistic regression objective. One output per ILSVRC class. |
+
+---
+
+<a class="slide-id" id="790cdf91-b63c-4b46-bcee-f89573a552d4"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 3/5: the cross-GPU rule, depth, and the critique (reviewable record)
+
+| hover target | note |
+|---|---|
+| [s10](#10) **conv 1** | Kernel depth 3 is the full RGB image, so both halves see the same input. The 96 kernels are simply dealt 48 to each card. |
+| [s10](#10) **conv 2** | Depth 48 is exactly half of conv 1's 96 maps. The kernel cannot reach the other card's half even in principle. |
+| [s10](#10) **conv 3 — the exception** | Depth 256 is every conv 2 map on both cards. The only convolutional layer whose kernels read across the link, and the paper calls the choice of pattern a problem for cross-validation. |
+| [s10](#10) **conv 4** | Back to half depth: 192 of conv 3's 384 maps. The streams separate again one layer after they met. |
+| [s10](#10) **conv 5** | Half depth again: 192 of conv 4's 384 maps. conv 3, 4 and 5 run back to back with no pooling or normalisation between them. |
+| [s10](#10) **fc 6, fc 7, fc 8** | Fully connected means connected to all neurons of the previous layer, so all three classifier layers exchange activations across both cards every forward and backward pass. |
+| [s19](#19) **The deleted layer** | The paper says removing ANY middle layer costs about 2% top-1. It does not report which layers were tried, how many, or whether anything was re-tuned afterwards. |
+| [s19](#19) **Figure forensics** | One deletion experiment, reported in a single sentence of the discussion. The paper does not say which middle layers were removed, how many were tried, whether anything was re-tuned afterwards, or how many seeds were run — and its only deeper nets, the six-conv-layer variants in §6, also change the training data, so nothing here speaks to the direction of the depth-accuracy curve. |
+| [s21](#21) **Depth** | A deletion experiment shows the layers are not redundant. It is not evidence about the direction of the depth-accuracy curve, which is what the sentence is usually quoted for. |
+| [s21](#21) **The two-GPU split** | The baseline is a net with half as many kernels per conv layer, except the last conv and fc layers, left at full size. That makes 1.7% understate the two-GPU net's gain and overstate the split's own: read it as the gain of a bigger net, not of the split topology (slide 10). |
+| [s21](#21) **Local response normalization** | Four hyper-parameters chosen on a validation set, then a gain reported against the version without them. Later work could not reproduce a benefit on ILSVRC at all. |
+| [s21](#21) **ReLU** | The entire ReLU experiment lives on CIFAR-10 with a four-layer network. The paper never measures what the choice of nonlinearity does to ImageNet accuracy. |
+| [s21](#21) **The headline** | The abstract puts 15.3% next to the runner-up's 26.2%. Both are ensembles — the runner-up averages several Fisher-vector classifiers — but two of the seven networks also trained on twelve times more data. |
+
+---
+
+<a class="slide-id" id="06a56cba-20bf-4564-81c4-83a1f6dd3c9f"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 4/5: the per-ingredient gains and the results (reviewable record)
+
+| hover target | note |
+|---|---|
+| [s16](#16) **Depth** | §7 reports that removing any of the middle layers costs about 2% of top-1 performance. One deletion, one number, no seeds and no reported re-tuning. |
+| [s16](#16) **Two-GPU split** | Compared against a one-GPU net with half as many kernels per convolutional layer, except its last conv and fc layers, which footnote 2 says were left full size. Read the 1.7% as the gain of a bigger net, not of the split topology (slide 10). |
+| [s16](#16) **Local response normalization** | Reported as 1.4% top-1 and 1.2% top-5. Its four hyper-parameters were selected on a validation set, and the gain comes with no seeds or error bars. |
+| [s16](#16) **PCA colour jitter** | The paper says this scheme reduces the top-1 error rate by over 1%. It is the only augmentation number in the paper, and the bound is one-sided. |
+| [s16](#16) **Overlapping pooling** | 0.4% top-1 and 0.3% top-5 against s = 2, z = 2, which produces output of equivalent dimensions. That equality is what makes it the cleanest comparison in the paper. |
+| [s16](#16) **Dropout** | No error number is reported. The paper says only that without dropout the network exhibits substantial overfitting, and that dropout roughly doubles the iterations to converge. |
+| [s16](#16) **Crops and reflections** | Also unmeasured. The paper says only that without this scheme the network suffers substantial overfitting, which would have forced much smaller networks. |
+| [s16](#16) **ReLU** | Not on this axis at all. Its evidence is Figure 1: six times fewer epochs to reach 25% training error on CIFAR-10 with a four-layer net. A speed claim, not an accuracy claim. |
+| [s16](#16) **Figure forensics** | Every delta on this axis was measured against its own baseline, one ingredient at a time — the paper never runs a factorial ablation, so the bars cannot be added, subtracted or ranked against one another. Two of the ingredients the paper calls necessary, dropout and crop augmentation, carry no number at all. Single runs, no seeds, no error bars. |
+| [s17](#17) **Figure forensics** | The two competitions are different splits and are not interchangeable: ILSVRC-2010 rows are test error, ILSVRC-2012 rows are mostly validation error because the 2012 test labels were never released. Ensemble rows average five or seven networks; two of the seven also saw the 15-million-image Fall 2011 release and have a sixth convolutional layer. Only the single-CNN rows, 37.5% / 17.0% on ILSVRC-2010 and 18.2% on ILSVRC-2012, are the model drawn in Figure 2. |
+
+---
+
+<a class="slide-id" id="373519be-8fd8-4004-a7bc-a93b9028841c"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — figure hover notes 5/5: the paper's own figures (reviewable record)
+
+| hover target | note |
+|---|---|
+| [s4](#4) **Left panel — eight test images, top-5 each** | Eight ILSVRC-2010 test images and the five labels the model considers most probable. The correct label is written under each image; its probability is the red bar when it makes the top five. The mite in the top-left corner is off-centre and still recognised; for grille and cherry the paper concedes genuine ambiguity about the intended focus. |
+| [s4](#4) **Right panel, first column — the queries** | Five test images. For each one the query is its 4096-dimensional activation vector in the last hidden layer, not its pixels. |
+| [s4](#4) **Right panel — six nearest training images** | The six training images whose last-hidden-layer feature vectors have the smallest Euclidean distance to the query. At the pixel level they are generally not close in L2: the dogs and elephants come back in a variety of poses. |
+| [s27](#27) **Input · conv 1 · conv 2** | 224×224×3 crop read by both GPUs. conv 1: 96 kernels of 11×11×3, stride 4, 48 per GPU → 55×55×48 per lane (the lane the page clips). conv 2 after LRN and overlapping max-pool: 27×27, 128 maps per GPU from 5×5×48 kernels that read only their own lane. |
+| [s27](#27) **conv 3 · conv 4 · conv 5** | conv 3 is the one convolutional crossing: 384 kernels of 3×3×256 read every conv 2 map on both GPUs. conv 4: 384 kernels of 3×3×192 at 13×13, same-GPU only. conv 5: 256 kernels of 3×3×192, 128 per GPU, then the third max-pool. |
+| [s27](#27) **fc 6, fc 7 · fc 8** | 4096 units each, drawn as 2048 per GPU; the crossing arrows mean every unit reads the whole previous layer on both cards — the two dropout layers. fc 8: 1000 outputs feeding the softmax. |
+| [s11](#11) **What Figure 1 actually measures** | Epochs to reach 25% training error on CIFAR-10 with a four-layer conv net. Not ImageNet, not test accuracy. Learning rates were tuned separately for each network to make training as fast as possible, and no regularisation of any kind was used. One curve per condition, no seeds, no error bars; the paper concedes the size of the effect varies with architecture. |
+| [s20](#20) **GPU 1 — rows 1 to 3** | Frequency- and orientation-selective kernels with almost no colour: oriented edges and gratings at several scales. These 48 kernels were learned on GPU 1 and never read a GPU 2 activation. |
+| [s20](#20) **GPU 2 — rows 4 to 6** | Colour-specific kernels: coloured blobs and colour-opponent patches, with a few high-frequency gratings. The paper reports this specialisation in every run, independent of the random initialisation, modulo which GPU is which. |
+
+---
+
+<a class="slide-id" id="7c9875f7-2255-48d0-96e7-291c20f4f85f"></a>
+
+<!-- _class: fs-xs -->
+
+## Appendix — glossary of the underlined terms
+
+| term | plain-language meaning |
+|---|---|
+| [s2](#2) ReLU | Rectified Linear Unit, f(x) = max(0, x). Unlike tanh it never flattens for positive inputs, so its gradient never vanishes there and training does not stall. |
+| [s2](#2) LRN — local response normalization | A fixed, hand-designed rescaling: each unit is divided by a term that grows with the squared activity of the same pixel in neighbouring channels. Its hyper-parameters are chosen on a validation set, not learned. |
+| [s5](#5) Sparse coding (background) | Background, not from the paper: encode each local descriptor (e.g. SIFT) as a sparse mix of learned basis vectors, pool the codes per image, classify linearly. |
+| [s5](#5) Columnar CNN | A CNN built as parallel stacks of layers, called columns. The paper calls its own architecture somewhat similar to the columnar CNN of Cireşan et al., except that its columns are not independent: the two GPU halves exchange activations at conv 3 and the fully-connected layers. |
+| [s6](#6) Fisher vectors (background) | Background, not from the paper: describe an image by how its local descriptors (e.g. SIFT) deviate from a Gaussian mixture fitted to the training set, then classify linearly. |
+| [s8](#8) Top-5 error | The fraction of test images for which the correct label is not among the five labels the model considers most probable. Top-1 error is the same thing with a list of one. |
+| [s10](#10) Kernel map | One output channel of a convolutional layer: the whole spatial response of a single learned filter. AlexNet splits the kernel maps of each layer half-and-half between the two cards. |
+| [s11](#11) Saturating nonlinearity | A unit like tanh or the logistic sigmoid, whose output flattens at both extremes. Once it saturates its gradient is nearly zero, so learning in that unit almost stops. |
+| [s12](#12) Lateral inhibition | A pattern borrowed from real neurons: an active cell suppresses its neighbours, so only the strongest response in a neighbourhood survives. Here the neighbourhood is adjacent kernel maps, not adjacent pixels. |
+| [s17](#17) Ensemble | Several independently trained networks whose softmax outputs are averaged into one prediction. It reliably buys accuracy and reliably costs that many times more compute at inference. |
+| [s18](#18) Momentum | The update keeps a running average of past gradients and follows that instead of the raw gradient, which damps oscillation across steep directions and speeds progress along shallow ones. |
+| [s18](#18) Weight decay | A penalty proportional to the squared size of the weights, added to the loss. Normally it trades training error for generalisation; here the authors report it lowered training error too. |
+
+<!-- sr:review-include -->
+<script src="../../_assets/review.js"></script>
+<link rel="stylesheet" href="../../_assets/review.css">

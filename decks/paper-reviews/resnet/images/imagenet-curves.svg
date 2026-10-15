@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.imag-t{fill:#f0f0f0;font-weight:700}.imag-m{font-family:'JetBrains Mono',monospace}.imag-d{fill:#a0a0a0}.imag-ax{fill:#6e6e6e;font-size:11.5}.imag-c1{animation:imag-f1 10s linear infinite}.imag-l1{animation:imag-f1 10s linear infinite}.imag-c2{animation:imag-f2 10s linear infinite}.imag-l2{animation:imag-f2 10s linear infinite}.imag-c3{animation:imag-f3 10s linear infinite}.imag-l3{animation:imag-f3 10s linear infinite}.imag-c4{animation:imag-f4 10s linear infinite}.imag-l4{animation:imag-f4 10s linear infinite}@keyframes imag-f1{0%,6%{opacity:0.25}14%{opacity:1}100%{opacity:1}}@keyframes imag-f2{0%,26%{opacity:0.25}34%{opacity:1}100%{opacity:1}}@keyframes imag-f3{0%,50%{opacity:0.25}58%{opacity:1}100%{opacity:1}}@keyframes imag-f4{0%,72%{opacity:0.25}80%{opacity:1}100%{opacity:1}}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="100" y="36" class="imag-t" font-size="16.5">Plain nets on ImageNet — deeper is worse</text>
+<text x="100" y="58" fill="#f0883e" font-size="12.5">the same degradation as CIFAR-10, at 18 and 34 layers</text>
+<text x="660" y="36" class="imag-t" font-size="16.5">Same nets, shortcuts added — deeper is better</text>
+<text x="660" y="58" fill="#3b82f6" font-size="12.5">identical depth, width and parameter count; option A shortcuts</text>
+<path d="M100,80 L100,330 L540,330" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M660,80 L660,330 L1100,330" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M100,205 L540,205" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+<path d="M660,205 L1100,205" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+<text x="92" y="85" text-anchor="end" class="imag-ax">60</text>
+<text x="92" y="210" text-anchor="end" class="imag-ax">40</text>
+<text x="92" y="335" text-anchor="end" class="imag-ax">20</text>
+<text x="652" y="85" text-anchor="end" class="imag-ax">60</text>
+<text x="652" y="210" text-anchor="end" class="imag-ax">40</text>
+<text x="652" y="335" text-anchor="end" class="imag-ax">20</text>
+<text x="320" y="352" text-anchor="middle" class="imag-ax">iterations (1e4), error (%) on the y axis</text>
+<text x="880" y="352" text-anchor="middle" class="imag-ax">iterations (1e4), error (%) on the y axis</text>
+<g data-tiphead="plain-18" data-tip="Thin curve is training error, bold curve is validation error on the center crops. The steps are the learning rate being divided by ten when the error plateaus.">
+<path class="imag-c1" opacity="1" d="M109,80 L126,124 L153,155 L188,180 L223,196 L258,208 L294,218 L329,225 L360,230 L364,261 L399,271 L434,275 L448,278 L452,289 L496,294 L540,296" stroke="#3fb950" stroke-width="1.5" fill="none"/>
+<path class="imag-c1" opacity="1" d="M109,80 L126,111 L153,139 L188,164 L223,180 L258,189 L294,196 L329,200 L360,204 L364,246 L399,252 L434,255 L448,256 L452,266 L496,269 L540,270" stroke="#3fb950" stroke-width="3" fill="none"/>
+</g>
+<g data-tiphead="plain-34" data-tip="Both of its curves sit above plain-18 for the entire run. The paper: the 34-layer plain net has higher training error throughout the whole training procedure.">
+<path class="imag-c2" opacity="1" d="M109,80 L126,111 L153,142 L188,168 L223,183 L258,196 L294,205 L329,212 L360,218 L364,249 L399,258 L434,262 L448,265 L452,277 L496,281 L540,283" stroke="#f0883e" stroke-width="1.5" fill="none"/>
+<path class="imag-c2" opacity="1" d="M109,80 L126,102 L153,130 L188,155 L223,171 L258,180 L294,186 L329,191 L360,194 L364,238 L399,244 L434,247 L448,248 L452,261 L496,264 L540,266" stroke="#f0883e" stroke-width="3" fill="none"/>
+</g>
+<text class="imag-l1" opacity="1" x="548" y="274" fill="#3fb950" font-size="12.5" font-weight="700">18</text>
+<text class="imag-l2" opacity="1" x="548" y="252" fill="#f0883e" font-size="12.5" font-weight="700">34</text>
+<g data-tiphead="ResNet-18" data-tip="Comparably accurate to plain-18 in the end, but it converges faster. The paper: when the net is not overly deep, the current SGD solver is still able to find good solutions to the plain net.">
+<path class="imag-c3" opacity="1" d="M669,80 L686,130 L713,161 L748,186 L783,202 L818,214 L854,224 L889,231 L920,236 L924,268 L959,277 L994,281 L1008,284 L1012,296 L1056,300 L1100,302" stroke="#3fb950" stroke-width="1.5" fill="none"/>
+<path class="imag-c3" opacity="1" d="M669,80 L686,118 L713,146 L748,171 L783,186 L818,196 L854,202 L889,206 L920,210 L924,252 L959,258 L994,261 L1008,262 L1012,270 L1056,272 L1100,272" stroke="#3fb950" stroke-width="3" fill="none"/>
+</g>
+<g data-tiphead="ResNet-34" data-tip="Below ResNet-18 on both curves. The paper: the 34-layer ResNet exhibits considerably lower training error and is generalizable to the validation data.">
+<path class="imag-c4" opacity="1" d="M669,80 L686,136 L713,171 L748,199 L783,218 L818,230 L854,239 L889,247 L920,252 L924,283 L959,292 L994,298 L1008,300 L1012,312 L1056,318 L1100,319" stroke="#3b82f6" stroke-width="1.5" fill="none"/>
+<path class="imag-c4" opacity="1" d="M669,80 L686,124 L713,155 L748,183 L783,200 L818,211 L854,219 L889,224 L920,228 L924,268 L959,274 L994,277 L1008,278 L1012,288 L1056,290 L1100,291" stroke="#3b82f6" stroke-width="3" fill="none"/>
+</g>
+<text class="imag-l3" opacity="1" x="1108" y="276" fill="#3fb950" font-size="12.5" font-weight="700">18</text>
+<text class="imag-l4" opacity="1" x="1108" y="296" fill="#3b82f6" font-size="12.5" font-weight="700">34</text>
+<text x="100" y="372" class="imag-ax">thin = training error · bold = validation error (center crops) · redrawn from Figure 4, curve shapes schematic</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="Table 2" data-tip="Top-1 error in percent with 10-crop testing on the ImageNet validation set. In this table the ResNets have no extra parameter compared to their plain counterparts, because they use the zero-padded option A shortcuts.">
+<rect x="40" y="392" width="1080" height="192" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="422" fill="#3b82f6" font-size="15.5" font-weight="700">Table 2 — top-1 error (%), 10-crop testing, ImageNet validation · gaps in points of top-1</text>
+<text x="300" y="450" text-anchor="middle" class="imag-d" font-size="13">plain</text>
+<text x="440" y="450" text-anchor="middle" class="imag-d" font-size="13">ResNet</text>
+<text x="66" y="478" class="imag-d" font-size="13.5">18 layers</text>
+<text x="300" y="478" text-anchor="middle" class="imag-m" fill="#f0f0f0" font-size="15">27.94</text>
+<text x="440" y="478" text-anchor="middle" class="imag-m" fill="#f0f0f0" font-size="15">27.88</text>
+<text x="66" y="508" class="imag-d" font-size="13.5">34 layers</text>
+<text x="300" y="508" text-anchor="middle" class="imag-m" fill="#f0883e" font-size="15">28.54</text>
+<text x="440" y="508" text-anchor="middle" class="imag-m" fill="#3b82f6" font-size="15">25.03</text>
+<text x="66" y="540" class="imag-d" font-size="13.5">18 → 34 layers</text>
+<text class="imag-l2" opacity="1" x="300" y="540" text-anchor="middle" fill="#f0883e" font-size="13" font-weight="700">worse by 0.6</text>
+<text class="imag-l4" opacity="1" x="440" y="540" text-anchor="middle" fill="#3b82f6" font-size="13" font-weight="700">better by 2.8</text>
+<text x="560" y="450" fill="#f0f0f0" font-size="13.5">One column goes the wrong way and the other goes the right way. That</text>
+<text x="560" y="474" class="imag-d" font-size="13.5">reversal is the evidence — more than any single error rate in the table.</text>
+<text x="560" y="504" class="imag-d" font-size="13.5">Same depth, same width, same parameter count on both sides: these ResNets</text>
+<text x="560" y="528" class="imag-d" font-size="13.5">use zero-padded shortcuts, so nothing but the wiring differs.</text>
+<text x="560" y="558" class="imag-d" font-size="13.5">Against plain-34, ResNet-34 cuts top-1 error by 3.5 points, 28.54 → 25.03,</text>
+<text x="560" y="576" class="imag-d" font-size="13.5">which the paper traces to the successfully reduced training error.</text>
+</a>
+</svg>

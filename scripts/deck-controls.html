@@ -1,0 +1,156 @@
+<!-- Deck control bar: HTML / PPTX download buttons (wired to the :8094 export
+     server) and the hover-tooltip toggle. Injected after client-common.js into
+     every deck by quarto/scripts/gen_client.py. Hidden when the export server
+     is down; never prints. -->
+<style>
+  .bespoke-marp-osc button.dl-export{display:inline-flex;align-items:center;gap:5px;height:26px;margin:3px 2px;padding:0 10px!important;border:1px solid rgba(255,255,255,.4)!important;border-radius:999px;background:transparent;color:#fff;font:600 11px/1 Inter,system-ui,sans-serif;letter-spacing:.06em;cursor:pointer;vertical-align:middle;white-space:nowrap}
+  .bespoke-marp-osc button.dl-export svg{flex:none}
+  .bespoke-marp-osc a.dl-export{display:inline-flex;align-items:center;gap:5px;height:26px;margin:3px 2px;padding:0 10px;border:1px solid rgba(255,255,255,.4);border-radius:999px;color:#fff;font:600 11px/1 Inter,system-ui,sans-serif;letter-spacing:.06em;text-decoration:none;white-space:nowrap}
+  .bespoke-marp-osc a.dl-export:hover{background-color:rgba(255,255,255,.15);border-color:#fff}
+  .bespoke-marp-osc button.dl-export:hover{background-color:rgba(255,255,255,.15);border-color:#fff}
+  .bespoke-marp-osc button.dl-export.exporting{animation:dl-pulse 1s ease-in-out infinite}
+  @keyframes dl-pulse{50%{opacity:.25}}
+  #dl-export-ctl{position:fixed;top:14px;right:14px;z-index:2147483647;display:flex;gap:8px;opacity:.3;transition:opacity .15s ease}
+  #dl-export-ctl:hover{opacity:1}
+  #dl-export-ctl a{display:flex;align-items:center;gap:6px;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#3b82f6;border-radius:999px;padding:7px 14px;font:600 12px/1 Inter,system-ui,sans-serif;letter-spacing:.05em;text-decoration:none}
+  #dl-export-ctl a:hover{border-color:#3b82f6}
+  @media print{#dl-export-ctl,.bespoke-marp-osc button.dl-export{display:none!important}}
+  body.tips-off #tipcard{display:none!important}
+  body.tips-off [data-tip]{border-bottom-color:transparent!important;text-decoration:none!important;cursor:default!important}
+  .bespoke-marp-osc button.dl-export.tips-off{opacity:.45;text-decoration:line-through}
+  #tip-toggle.floating{position:fixed;bottom:14px;left:14px;z-index:2147483647;display:flex;align-items:center;gap:6px;background:rgba(17,17,17,.92);border:1px solid #2a2a2a;color:#3b82f6;border-radius:999px;padding:7px 14px;font:600 12px/1 Inter,system-ui,sans-serif;letter-spacing:.05em;cursor:pointer;opacity:.3;transition:opacity .15s ease}
+  #tip-toggle.floating:hover{opacity:1}
+  #tip-toggle.floating.tips-off{text-decoration:line-through}
+  @media print{#tip-toggle{display:none!important}}
+  @media (max-width:900px){
+    /* our added buttons widen the OSC past narrow screens, which expands the
+       mobile layout viewport and misplaces every fixed overlay — let it wrap
+       (bespoke sets display:block + white-space:nowrap on it) */
+    .bespoke-marp-osc{white-space:normal!important;text-align:center;max-width:calc(100vw - 12px)}
+  }
+</style>
+<script>
+  (function () {
+    // Static site: plain links to the exports prebuilt by scripts/build_site.sh
+    // (window.DECK_STATIC = {html, pptx, pdf}: URLs relative to the deck page).
+    var files = window.DECK_STATIC
+    if (!files) return
+    var DL_SVG = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8m0 0l-3.5-3.5M8 10l3.5-3.5M2.5 13.5h11"/></svg>'
+    var KINDS = [['html', 'HTML', 'Download as single self-contained HTML file'],
+      ['pptx', 'PPTX', 'Download as editable PowerPoint'], ['pdf', 'PDF', 'Download as PDF']]
+    function links (box, cls) {
+      KINDS.forEach(function (k) {
+        if (!files[k[0]]) return
+        var a = document.createElement('a')
+        a.className = cls
+        a.href = files[k[0]]
+        a.setAttribute('download', '')
+        a.title = k[2]
+        a.innerHTML = DL_SVG + '<span>' + k[1] + '</span>'
+        box.appendChild(a)
+      })
+    }
+    DeckClient.onOsc(function (osc) { links(osc, 'dl-export') }, function () {
+      var ctl = document.createElement('div')
+      ctl.id = 'dl-export-ctl'
+      links(ctl, '')
+      document.body.appendChild(ctl)
+    })
+  })()
+</script>
+<script>
+  (function () {
+    var info = DeckClient.deckInfo()
+    if (!info || info.exported) return // no downloads from inside an export
+    var deck = info.deck
+    var base = info.base
+    var KINDS = [
+      { route: 'html', cls: 'html-export', label: 'HTML', title: 'Download as single self-contained HTML file' },
+      { route: 'pptx', cls: 'pptx-export', label: 'PPTX', title: 'Download as editable PowerPoint' },
+      { route: 'pdf', cls: 'pdf-export', label: 'PDF', title: 'Download as PDF' },
+    ]
+    var DL_SVG = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8m0 0l-3.5-3.5M8 10l3.5-3.5M2.5 13.5h11"/></svg>'
+
+    function wire (el, route, onBusy, onIdle) {
+      el.addEventListener('click', function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        onBusy()
+        location.href = base + '/' + route + '/' + deck
+        setTimeout(onIdle, 45000)
+      })
+    }
+
+    function oscButton (osc, kind) {
+      var btn = document.createElement('button')
+      btn.className = 'dl-export ' + kind.cls
+      btn.tabIndex = -1
+      btn.title = kind.title
+      btn.setAttribute('aria-label', kind.title)
+      btn.innerHTML = DL_SVG + '<span>' + kind.label + '</span>'
+      var label = btn.querySelector('span')
+      wire(btn, kind.route,
+        function () { btn.classList.add('exporting'); label.textContent = 'exporting\u2026'; btn.title = 'Exporting\u2026' },
+        function () { btn.classList.remove('exporting'); label.textContent = kind.label; btn.title = kind.title })
+      osc.appendChild(btn)
+    }
+
+    function pill (ctl, kind) {
+      var a = document.createElement('a')
+      a.href = '#'
+      a.title = kind.title
+      a.innerHTML = DL_SVG + '<span>' + kind.label + '</span>'
+      var label = a.querySelector('span')
+      wire(a, kind.route,
+        function () { label.textContent = 'exporting\u2026' },
+        function () { label.textContent = kind.label })
+      ctl.appendChild(a)
+    }
+
+    fetch(base + '/healthz', { mode: 'no-cors' }).then(function () {
+      DeckClient.onOsc(function (osc) {
+        KINDS.forEach(function (k) { oscButton(osc, k) })
+      }, function () {
+        var ctl = document.createElement('div')
+        ctl.id = 'dl-export-ctl'
+        KINDS.forEach(function (k) { pill(ctl, k) })
+        document.body.appendChild(ctl)
+      })
+    }).catch(function () {})
+  })()
+</script>
+<script>
+  (function () {
+    // Hover-tooltip toggle (on by default). Works with every embedded #tipcard
+    // variant: the body class hides the card via CSS, no deck edits needed.
+    if (!document.querySelector('[data-tip]')) return
+    if (document.getElementById('tip-toggle')) return // deck embeds its own toggle
+    var TIP_SVG = '<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5h12v7H8.5L5.5 13v-2.5H2z"/></svg>'
+    function setState (btn, off) {
+      document.body.classList.toggle('tips-off', off)
+      btn.classList.toggle('tips-off', off)
+      btn.querySelector('span').textContent = off ? 'Tips off' : 'Tips'
+      btn.title = off ? 'Hover tooltips are off \u2014 click to enable' : 'Hover tooltips are on \u2014 click to disable'
+    }
+    function makeButton (floating) {
+      var btn = document.createElement('button')
+      btn.id = 'tip-toggle'
+      btn.type = 'button'
+      btn.className = floating ? 'floating' : 'dl-export'
+      btn.tabIndex = -1
+      btn.innerHTML = TIP_SVG + '<span></span>'
+      btn.addEventListener('click', function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        setState(btn, !document.body.classList.contains('tips-off'))
+      })
+      setState(btn, false)
+      return btn
+    }
+    DeckClient.onOsc(function (osc) {
+      osc.appendChild(makeButton(false))
+    }, function () {
+      document.body.appendChild(makeButton(true))
+    })
+  })()
+</script>

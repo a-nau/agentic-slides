@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.shor-t{fill:#f0f0f0;font-weight:700}.shor-m{font-family:'JetBrains Mono',monospace}.shor-d{fill:#a0a0a0}.shor-n{font-family:'JetBrains Mono',monospace;fill:#f0f0f0;font-size:14}</style>
+<defs>
+<marker id="sg" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3b82f6"/></marker>
+<marker id="sb" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3fb950"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="shor-t" font-size="17">One stage boundary, three wirings — measured on ResNet-34 with everything else held fixed</text>
+<g data-tiphead="Option A — zero-padded identity" data-tip="The shortcut still performs identity mapping, with extra zero entries padded for increasing dimensions, and across the stage boundary it is performed with a stride of 2. This option introduces no extra parameter. It is what Table 2 and Figure 4 use, and what every CIFAR-10 model in the paper uses.">
+<rect x="40" y="52" width="345" height="398" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="64" y="86" class="shor-t" font-size="16">A — pad with zeros</text>
+<text x="64" y="108" class="shor-d" font-size="12.5">parameter-free everywhere</text>
+<circle cx="175" cy="288" r="19" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="175" y="295" text-anchor="middle" fill="#f0f0f0" font-size="19" font-weight="700">+</text>
+<text x="175" y="326" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700">28x28x128 out</text>
+<text x="64" y="352" class="shor-d" font-size="12.5">Identity at stride 2 keeps every other</text>
+<text x="64" y="372" class="shor-d" font-size="12.5">position; the 64 new channels get zeros</text>
+<text x="64" y="392" class="shor-d" font-size="12.5">from it, so they have no residual learning.</text>
+<text x="64" y="414" fill="#7a7a7a" font-size="12">Table 3, ResNet-34 A · 10-crop, val</text>
+<text x="64" y="436" class="shor-d" font-size="13">top-1</text>
+<text x="150" y="436" class="shor-n">25.03</text>
+<text x="228" y="436" class="shor-d" font-size="13">top-5</text>
+<text x="314" y="436" class="shor-n">7.76</text>
+</g>
+<g data-tiphead="Block input" data-tip="The feature map arriving at this block: 56x56 positions, 64 channels.">
+<rect x="90" y="140" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="175" y="164" text-anchor="middle" fill="#f0f0f0" font-size="12.5">x, 56x56x64</text>
+</g>
+<g data-tiphead="The residual branch" data-tip="Two 3x3 convolutions; the first has a stride of 2, so the map halves to 28x28 while the width doubles to 128. Both changes break the shapes apart.">
+<rect x="90" y="208" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="175" y="232" text-anchor="middle" fill="#f0f0f0" font-size="11.5">two 3x3, 128; first stride 2</text>
+</g>
+<path d="M175,182 L175,204" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M175,250 L175,265" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M264,159 L330,159 L330,288 L198,288" stroke="#3fb950" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#sb)"/>
+<g data-tiphead="Option B — project only on mismatch" data-tip="The projection shortcut of Eqn 2 is used to match dimensions, done by 1x1 convolutions with a stride of 2 across the stage boundary; all other shortcuts stay identity. This is the option ResNet-50, ResNet-101 and ResNet-152 are built with.">
+<rect x="407" y="52" width="345" height="398" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="2"/>
+<text x="431" y="86" fill="#3b82f6" font-size="16" font-weight="700">B — project here only</text>
+<text x="431" y="108" class="shor-d" font-size="12.5">what the paper actually ships</text>
+<circle cx="542" cy="288" r="19" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="542" y="295" text-anchor="middle" fill="#f0f0f0" font-size="19" font-weight="700">+</text>
+<text x="542" y="326" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700">28x28x128 out</text>
+<text x="431" y="352" class="shor-d" font-size="12.5">1x1 projection only where dimensions</text>
+<text x="431" y="372" class="shor-d" font-size="12.5">increase, at stride 2. All other</text>
+<text x="431" y="392" class="shor-d" font-size="12.5">shortcuts identity: 3 projections.</text>
+<text x="431" y="414" fill="#7a7a7a" font-size="12">Table 3, ResNet-34 B · 10-crop, val</text>
+<text x="431" y="436" class="shor-d" font-size="13">top-1</text>
+<text x="517" y="436" class="shor-n">24.52</text>
+<text x="595" y="436" class="shor-d" font-size="13">top-5</text>
+<text x="681" y="436" class="shor-n">7.46</text>
+</g>
+<g data-tiphead="Block input" data-tip="The feature map arriving at this block: 56x56 positions, 64 channels.">
+<rect x="457" y="140" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="542" y="164" text-anchor="middle" fill="#f0f0f0" font-size="12.5">x, 56x56x64</text>
+</g>
+<g data-tiphead="The residual branch" data-tip="Two 3x3 convolutions; the first has a stride of 2, so the map halves to 28x28 while the width doubles to 128. Both changes break the shapes apart.">
+<rect x="457" y="208" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="542" y="232" text-anchor="middle" fill="#f0f0f0" font-size="11.5">two 3x3, 128; first stride 2</text>
+</g>
+<path d="M542,182 L542,204" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M542,250 L542,265" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M631,159 L697,159 L697,288 L565,288" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#sb)"/>
+<rect x="667" y="206" width="60" height="34" rx="7" fill="#10141a" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="697" y="228" text-anchor="middle" class="shor-m" fill="#93c5fd" font-size="12">1x1</text>
+<g data-tiphead="Option C — project everywhere" data-tip="All shortcuts are projections, including the ones where nothing changes shape. Best of the three by a fraction of a point, and the paper attributes even that to the extra parameters introduced by many, thirteen, projection shortcuts: ResNet-34 has 16 shortcuts, B already projects the 3 at stage boundaries, and C turns the other 13 into projections too.">
+<rect x="774" y="52" width="345" height="398" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="798" y="86" class="shor-t" font-size="16">C — project everywhere</text>
+<text x="798" y="108" class="shor-d" font-size="12.5">best number, not used</text>
+<circle cx="909" cy="288" r="19" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="909" y="295" text-anchor="middle" fill="#f0f0f0" font-size="19" font-weight="700">+</text>
+<text x="909" y="326" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700">28x28x128 out</text>
+<text x="798" y="352" class="shor-d" font-size="12.5">Every shortcut is a projection, even</text>
+<text x="798" y="372" class="shor-d" font-size="12.5">where nothing changes shape: all 16,</text>
+<text x="798" y="392" class="shor-d" font-size="12.5">13 more than B.</text>
+<text x="798" y="414" fill="#7a7a7a" font-size="12">Table 3, ResNet-34 C · 10-crop, val</text>
+<text x="798" y="436" class="shor-d" font-size="13">top-1</text>
+<text x="884" y="436" class="shor-n">24.19</text>
+<text x="962" y="436" class="shor-d" font-size="13">top-5</text>
+<text x="1048" y="436" class="shor-n">7.40</text>
+</g>
+<g data-tiphead="Block input" data-tip="The feature map arriving at this block: 56x56 positions, 64 channels.">
+<rect x="824" y="140" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="909" y="164" text-anchor="middle" fill="#f0f0f0" font-size="12.5">x, 56x56x64</text>
+</g>
+<g data-tiphead="The residual branch" data-tip="Two 3x3 convolutions; the first has a stride of 2, so the map halves to 28x28 while the width doubles to 128. Both changes break the shapes apart.">
+<rect x="824" y="208" width="170" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="909" y="232" text-anchor="middle" fill="#f0f0f0" font-size="11.5">two 3x3, 128; first stride 2</text>
+</g>
+<path d="M909,182 L909,204" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M909,250 L909,265" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#sg)"/>
+<path d="M998,159 L1064,159 L1064,288 L932,288" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#sb)"/>
+<rect x="1034" y="206" width="60" height="34" rx="7" fill="#10141a" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="1064" y="228" text-anchor="middle" class="shor-m" fill="#93c5fd" font-size="12">1x1</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="Why B and not C" data-tip="The paper: the small differences among A/B/C indicate that projection shortcuts are not essential for addressing the degradation problem, so we do not use option C in the rest of this paper, to reduce memory/time complexity and model sizes.">
+<rect x="40" y="464" width="1080" height="122" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="492" class="shor-t" font-size="15.5">C scores best and B wins the paper — because the deciding criterion is cost, not accuracy</text>
+<text x="66" y="518" class="shor-d" font-size="13">All three beat plain-34 by a wide margin. B is slightly better than A — the paper argues because the zero-padded channels in A do no residual learning;</text>
+<text x="66" y="542" class="shor-d" font-size="13">C is only marginally better than B, which the paper puts down to the extra parameters in its thirteen projection shortcuts. ResNet-50/101/152 use B.</text>
+<text x="66" y="568" fill="#f0f0f0" font-size="13">Reported without repeats or error bars, these gaps are 0.33 to 0.84 points of top-1: the ranking A, B, C is suggestive, not established.</text>
+</a>
+</svg>

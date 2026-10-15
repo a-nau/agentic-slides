@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.inte-t{fill:#f0f0f0;font-weight:700}.inte-m{font-family:'JetBrains Mono',monospace}.inte-d{fill:#a0a0a0}.inte-hd{fill:#3b82f6;font-weight:700;letter-spacing:.05em}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="18" y="28" class="inte-hd" font-size="16">EQUATION 1 &#8212; the expected colour of one camera ray</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4.E1" target="_blank"><text x="1142" y="28" text-anchor="end" class="inte-d" font-size="14">Sec. 4, Eq. 1</text></a>
+<text x="42" y="102" class="inte-t" font-size="30">C(r)</text>
+<text x="106" y="102" class="inte-d" font-size="30">=</text>
+<text x="148" y="110" fill="#3b82f6" font-size="46" font-weight="700">&#8747;</text>
+<text x="150" y="130" fill="#3b82f6" font-size="15" font-weight="700">near</text>
+<text x="150" y="68" fill="#3b82f6" font-size="15" font-weight="700">far</text>
+<text x="196" y="102" fill="#3fb950" font-size="30" font-weight="700">T(t)</text>
+<text x="278" y="102" fill="#f0883e" font-size="30" font-weight="700">&#963;(r(t))</text>
+<text x="410" y="102" fill="#bc8cff" font-size="30" font-weight="700">c(r(t), d)</text>
+<text x="576" y="102" class="inte-d" font-size="30">dt</text>
+<path d="M192,118 L268,118 M192,118 L192,126 M268,118 L268,126" stroke="#3fb950" stroke-width="2" fill="none"/>
+<path d="M274,118 L402,118 M274,118 L274,126 M402,118 L402,126" stroke="#f0883e" stroke-width="2" fill="none"/>
+<path d="M406,118 L566,118 M406,118 L406,126 M566,118 L566,126" stroke="#bc8cff" stroke-width="2" fill="none"/>
+<text x="230" y="146" text-anchor="middle" fill="#3fb950" font-size="15" font-weight="700">how much light</text>
+<text x="230" y="165" text-anchor="middle" fill="#3fb950" font-size="15" font-weight="700">still gets here</text>
+<text x="338" y="146" text-anchor="middle" fill="#f0883e" font-size="15" font-weight="700">how much of it</text>
+<text x="338" y="165" text-anchor="middle" fill="#f0883e" font-size="15" font-weight="700">stops here</text>
+<text x="486" y="146" text-anchor="middle" fill="#bc8cff" font-size="15" font-weight="700">what colour</text>
+<text x="486" y="165" text-anchor="middle" fill="#bc8cff" font-size="15" font-weight="700">this point emits</text>
+<rect x="622" y="52" width="518" height="132" rx="10" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="644" y="82" class="inte-t" font-size="17">Read it as an expectation</text>
+<text x="644" y="110" class="inte-d" font-size="15">Walk the ray. At every point ask: is light still</text>
+<text x="644" y="132" class="inte-d" font-size="15">travelling, does it stop here, what colour is here?</text>
+<text x="644" y="162" fill="#93c5fd" font-size="15" font-weight="700">The pixel is the average colour where it stops.</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4" target="_blank" data-tiphead="T(t), accumulated transmittance" data-tip="The probability that the ray travels from the near bound to t without hitting any other particle. It starts at exactly 1 at the near bound and can only fall, because the integral in its exponent only grows. This is the occlusion term: it is why a wall hides what is behind it, and it is the only part of Equation 1 that looks backwards along the ray.">
+<rect x="18" y="200" width="1122" height="136" rx="10" fill="#151515" stroke="#3fb950" stroke-width="1.6"/>
+<text x="42" y="230" fill="#3fb950" font-size="19" font-weight="700">T(t)</text>
+<text x="112" y="230" class="inte-t" font-size="17">accumulated transmittance &#8212; the term you cannot guess</text>
+<text x="42" y="264" class="inte-m" fill="#3fb950" font-size="17">T(t) = exp( - &#8747; from near to t of &#963;(r(s)) ds )</text>
+<text x="42" y="294" class="inte-d" font-size="15">The probability the ray survives from the near bound to t un-occluded.</text>
+<text x="42" y="316" class="inte-d" font-size="15">Starts at 1, only ever falls, and mutes everything behind the first opaque thing.</text>
+<g data-tiphead="The shape of T along a ray" data-tip="Flat and near 1 through empty space, then a cliff at the first opaque surface, then flat and near zero for the rest of the ray.">
+<rect x="928" y="216" width="196" height="104" rx="8" fill="#0d1117" stroke="#3fb950" stroke-width="1.2"/>
+<path d="M948,306 L1108,306" stroke="#3a3a3a" stroke-width="1.2"/>
+<path d="M948,232 L948,306" stroke="#3a3a3a" stroke-width="1.2"/>
+<path d="M948,238 L1014,244 L1042,298 L1108,302" stroke="#3fb950" stroke-width="2.4" fill="none"/>
+<text x="958" y="262" class="inte-d" font-size="14">T = 1</text>
+<text x="1102" y="288" text-anchor="end" class="inte-d" font-size="14">T = 0</text>
+</g>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4" target="_blank" data-tiphead="Sigma, volume density" data-tip="The differential probability of a ray terminating at an infinitesimal particle at that location. Not a colour and not an opacity by itself: it is a rate, so what a slab of thickness delta actually blocks is 1 minus exp of minus sigma times delta. It is a function of position alone.">
+<rect x="18" y="352" width="551" height="110" rx="10" fill="#151515" stroke="#f0883e" stroke-width="1.6"/>
+<text x="42" y="380" fill="#f0883e" font-size="19" font-weight="700">&#963;(r(t))</text>
+<text x="132" y="380" class="inte-t" font-size="17">volume density here</text>
+<text x="42" y="408" class="inte-d" font-size="15">The differential probability of a ray terminating at an</text>
+<text x="42" y="428" class="inte-d" font-size="15">infinitesimal particle there &#8212; a rate, not an opacity, and it</text>
+<text x="42" y="448" fill="#93c5fd" font-size="15" font-weight="700">depends on position only, never on direction.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S3" target="_blank" data-tiphead="c, emitted colour" data-tip="The RGB the point sends back along direction d. Because it takes the direction as an input, the same point can look white to one camera and orange to another, which is how the model reproduces highlights and reflections. There is no light source in the model: the colour is emitted, so the lighting is baked in.">
+<rect x="589" y="352" width="551" height="110" rx="10" fill="#151515" stroke="#bc8cff" stroke-width="1.6"/>
+<text x="613" y="380" fill="#bc8cff" font-size="19" font-weight="700">c(r(t), d)</text>
+<text x="736" y="380" class="inte-t" font-size="17">colour toward the camera</text>
+<text x="613" y="408" class="inte-d" font-size="15">Takes the viewing direction, so one point can look white</text>
+<text x="613" y="428" class="inte-d" font-size="15">from here and orange from there. No light source exists:</text>
+<text x="613" y="448" fill="#93c5fd" font-size="15" font-weight="700">the lighting is baked into the emitted radiance.</text>
+</a>
+<rect x="18" y="478" width="1122" height="104" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="42" y="508" class="inte-t" font-size="17">What is actually being accumulated</text>
+<text x="42" y="536" class="inte-d" font-size="15">T(t)&#183;&#963;(t) is a density over where along the ray the light stops. It integrates to at most 1: the rest is transmitted past the far bound.</text>
+<text x="42" y="560" class="inte-d" font-size="15">Integrate colour against that density and you get the pixel. Slide 17 works it through, including what fills the remainder.</text>
+</svg>

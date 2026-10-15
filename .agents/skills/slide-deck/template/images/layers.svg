@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+  <defs>
+    <marker id="lg" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+  <style>.t{fill:#f0f0f0;font-weight:700}.m{font-family:'JetBrains Mono',monospace;fill:#93c5fd}.d{fill:#a0a0a0}.p{fill:#bc8cff;font-weight:700}</style>
+  <text x="40" y="46" class="t" font-size="18">Dependency rule: each layer talks only to the one below it</text>
+  <a href="https://your.gitlab/org/repo/-/tree/COMMIT/src/cli" target="_blank">
+    <rect x="40" y="74" width="805" height="92" rx="12" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="70" y="112" class="t" font-size="19">CLI &amp; UX</text>
+    <text x="70" y="140" class="m" font-size="13">src/cli/</text>
+    <text x="455" y="125" class="d" font-size="14.5">arg parsing · help · rendering — no business logic</text>
+  </a>
+  <path d="M442,166 L442,196" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#lg)"/>
+  <a href="https://your.gitlab/org/repo/-/tree/COMMIT/src/api" target="_blank">
+    <rect x="40" y="198" width="805" height="92" rx="12" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="70" y="236" class="t" font-size="19">Application / API</text>
+    <text x="70" y="264" class="m" font-size="13">src/api/</text>
+    <text x="455" y="249" class="d" font-size="14.5">use-cases that orchestrate the domain</text>
+  </a>
+  <path d="M442,290 L442,320" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#lg)"/>
+  <a href="https://your.gitlab/org/repo/-/tree/COMMIT/src/domain" target="_blank">
+    <rect x="40" y="322" width="805" height="92" rx="12" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+    <text x="70" y="360" class="t" font-size="19">Domain</text>
+    <text x="70" y="388" class="m" font-size="13">src/domain/</text>
+    <text x="455" y="373" class="d" font-size="14.5">pure logic &amp; types — no I/O, fully testable</text>
+  </a>
+  <path d="M442,414 L442,444" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#lg)"/>
+  <a href="https://your.gitlab/org/repo/-/tree/COMMIT/src/infra" target="_blank">
+    <rect x="40" y="446" width="805" height="92" rx="12" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+    <text x="70" y="484" class="t" font-size="19">Infrastructure</text>
+    <text x="70" y="512" class="m" font-size="13">src/infra/</text>
+    <text x="455" y="497" class="d" font-size="14.5">filesystem · network · the Store adapters</text>
+  </a>
+  <a href="https://your.gitlab/org/repo/-/tree/COMMIT/src/observability" target="_blank">
+    <rect x="885" y="74" width="235" height="464" rx="12" fill="#0d1117" stroke="#bc8cff" stroke-width="2"/>
+    <text x="910" y="122" class="p" font-size="18">Observability</text>
+    <text x="910" y="154" class="d" font-size="13.5">Cross-cuts every layer:</text>
+    <text x="910" y="184" class="d" font-size="13.5">logging</text>
+    <text x="910" y="212" class="d" font-size="13.5">metrics</text>
+    <text x="910" y="240" class="d" font-size="13.5">tracing</text>
+    <path d="M885,120 C855,120 855,120 845,120" fill="none" stroke="#bc8cff" stroke-width="1.8"/>
+    <path d="M885,244 C855,244 855,244 845,244" fill="none" stroke="#bc8cff" stroke-width="1.8"/>
+    <path d="M885,368 C855,368 855,368 845,368" fill="none" stroke="#bc8cff" stroke-width="1.8"/>
+    <path d="M885,492 C855,492 855,492 845,492" fill="none" stroke="#bc8cff" stroke-width="1.8"/>
+  </a>
+</svg>

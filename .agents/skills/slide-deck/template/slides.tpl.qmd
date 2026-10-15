@@ -1,0 +1,352 @@
+---
+pagetitle: Forge deck
+css:
+- ../../../quarto/themes/base.css
+- ../../../quarto/themes/agentic.css
+---
+
+<!-- paginate: true -->
+
+<a class="slide-id" id="94703f4a-4e79-4ed2-974a-187ca6fbeba9"></a>
+
+<!--
+  DECK BRIEF
+  Audience: newcomer or reviewer who needs a fast mental model.
+  Reader promise: after 15 minutes, they can run Forge, explain the hot path,
+  and know which files/tests to open first.
+  Story mode: repo-intro. For an MR walkthrough, replace sections with
+  problem -> before/after -> diff map -> new flow -> tests/risks -> reviewer path.
+  Source of truth: https://your.gitlab/org/repo pinned to COMMIT.
+  Required link targets: CLI, parser, engine, store, domain, observability, tests.
+
+  EDITORIAL CHECKLIST
+  - Every slide title states the point, not just the topic.
+  - Every major claim has a link, command, or diagram box that lets the reader verify it.
+  - Every diagram box and file name links to pinned source.
+  - Replace every Forge, your.gitlab/org/repo, and COMMIT before final export.
+  - Build with: python3 build_deck.py
+-->
+
+
+<!-- HOVER TOOLKIT — body-level tooltip card + affordance styles. Keep this block;
+     it is inert until an element carries data-tip. Usage:
+       term:      <span class="term" data-tiphead="Flow matching" data-tip="Plain-language explanation.">flow matching</span>
+       forensics: <span class="finfo" data-tiphead="Figure forensics" data-tip="No error bars; log axis compresses divergence.">ⓘ forensics</span>
+       SVG box:   <g data-tiphead="Codec encoder" data-tip="What this component does.">…</g>
+       figure overlay: transparent absolutely-positioned <span data-tip=…> over an <img> region.
+     Rules: no double quotes inside data-tip values; the card must stay appended to
+     document.body — reveal.js scales the slide container with a CSS transform, where
+     position:fixed and CSS-only popovers break. -->
+<style>
+.term { border-bottom: 1px dashed #3d5a8c; cursor: help; }
+.finfo { display: inline-block; margin-left: 12px; padding: 1px 12px 2px; border: 1px solid #1e3a66; border-radius: 999px; color: #3b82f6; font-size: 0.42em; font-weight: 600; letter-spacing: 0.06em; vertical-align: middle; cursor: help; }
+.finfo:hover { border-color: #3b82f6; background: rgba(59,130,246,0.08); }
+</style>
+<script>
+(function () {
+  if (document.getElementById('tipcard')) return;
+  const css = document.createElement('style');
+  css.textContent = `
+    #tipcard { position: fixed; display: none; max-width: 460px; background: #0a0e17; border: 1px solid #2a2a2a; border-left: 3px solid #3b82f6; border-radius: 10px; padding: 12px 16px; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.65); pointer-events: none; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    #tipcard .tip-head { color: #3b82f6; font-size: 12px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; margin-bottom: 5px; }
+    #tipcard .tip-body { color: #d6d9dc; font-size: 15px; line-height: 1.5; font-weight: 400; }
+    body.tips-off #tipcard { display: none !important; }
+    body.tips-off [data-tip] { border-bottom-color: transparent !important; text-decoration: none !important; cursor: default !important; }
+    #tip-toggle { position: fixed; top: 12px; left: 56px; z-index: 9999; font: 600 12px/1 system-ui, sans-serif; letter-spacing: 0.05em; padding: 7px 14px; border-radius: 999px; border: 1px solid #2a2a2a; background: rgba(17,17,17,0.92); color: #3b82f6; cursor: pointer; opacity: 0.3; transition: opacity 0.15s ease; }
+    #tip-toggle:hover { opacity: 1; }
+    #tip-toggle.tips-off { text-decoration: line-through; }
+    @media print { #tip-toggle { display: none !important; } }`;
+  document.head.appendChild(css);
+  const card = document.createElement('div');
+  card.id = 'tipcard';
+  card.innerHTML = '<div class="tip-head"></div><div class="tip-body"></div>';
+  document.body.appendChild(card);
+  const btn = document.createElement('button');
+  btn.id = 'tip-toggle'; btn.type = 'button'; btn.textContent = 'Tips';
+  btn.title = 'Hover tooltips are on — click to disable';
+  btn.addEventListener('click', () => {
+    const off = document.body.classList.toggle('tips-off');
+    btn.classList.toggle('tips-off', off);
+    btn.textContent = off ? 'Tips off' : 'Tips';
+    btn.title = off ? 'Hover tooltips are off — click to enable' : 'Hover tooltips are on — click to disable';
+  });
+  document.body.appendChild(btn);
+  const head = card.firstChild, body = card.lastChild;
+  const place = (ev) => {
+    const pad = 16, r = card.getBoundingClientRect();
+    let x = ev.clientX + pad, y = ev.clientY + pad;
+    if (x + r.width > innerWidth - 10) x = ev.clientX - r.width - pad;
+    if (y + r.height > innerHeight - 10) y = ev.clientY - r.height - pad;
+    card.style.left = Math.max(8, x) + 'px'; card.style.top = Math.max(8, y) + 'px';
+  };
+  document.addEventListener('mousemove', (ev) => {
+    const t = ev.target.closest && ev.target.closest('[data-tip]');
+    if (t) {
+      head.textContent = t.getAttribute('data-tiphead') || 'Explanation';
+      body.textContent = t.getAttribute('data-tip');
+      card.style.display = 'block';
+      place(ev);
+    } else {
+      card.style.display = 'none';
+    }
+  });
+})();
+</script>
+
+<!-- _class: title repo -->
+
+<p class="kicker">Repo tour</p>
+
+# **Forge**
+
+## Fast builds by default: parse once, cache the work, ship the artifacts
+
+<p class="byline">A guided code tour for people who need the mental model before the details</p>
+
+<p class="links"><a href="https://your.gitlab/org/repo">your.gitlab/org/repo</a></p>
+
+---
+
+<a class="slide-id" id="ea58ee63-d173-4e06-860a-815b83391e55"></a>
+
+<!-- _class: lead -->
+
+## What this deck gives you
+
+**Forge** is a cache-aware build engine. This tour gives you a mental model of the **CLI -> Engine -> Store** pipeline, then points you at the files and tests that prove the model.
+
+Every diagram box and file name is a **clickable link** into [`your.gitlab/org/repo`](https://your.gitlab/org/repo), pinned to commit `COMMIT` so you can verify each claim as you go.
+
+---
+
+<a class="slide-id" id="c17fa862-ec01-446a-b9b1-1574e54ff78b"></a>
+
+## Agenda
+
+<div class="columns">
+<div>
+
+1. [**The Big Picture**](#the-big-picture) — the three boundaries
+2. [**Run It**](#run-it) — prove the cache in two commands
+3. [**The Layers**](#the-layers) — where code belongs
+4. [**A Request, End to End**](#a-request-end-to-end) — the hot path
+
+</div>
+<div>
+
+5. [**Key Terms**](#key-terms) — the vocabulary
+6. [**Design Guardrails**](#design-guardrails) — how reviews stay fast
+7. [**Where To Look**](#where-to-look) — the clickable file map
+
+</div>
+</div>
+
+---
+
+<a class="slide-id" id="3bc7d163-5bc9-4661-b01e-11a8125c1536"></a>
+
+<!-- _class: invert -->
+
+# The Big **Picture**
+
+---
+
+<a class="slide-id" id="8c226908-49d4-43ea-9c08-a28383e720d7"></a>
+
+## Forge turns rebuilds into change decisions
+
+> **Forge** parses a project into a typed program, runs only the work that changed, and persists artifacts so the next build can skip repeated work.
+
+<div class="columns">
+<div>
+
+### The shape
+
+- **CLI** accepts user intent and config
+- **Engine** evaluates the typed build plan
+- **Store** owns cache reads, writes, and artifacts
+
+</div>
+<div>
+
+### The payoff
+
+- No daemon required for incremental builds
+- Pure core logic stays easy to test
+- <span class="tag tag-accent">Warm cache</span> should feel almost idle
+
+</div>
+</div>
+
+---
+
+<a class="slide-id" id="724281b4-72f7-4fb3-8cff-508514cfc57c"></a>
+
+## The architecture is three boundaries, not three folders
+
+The CLI turns text into intent, the Engine makes deterministic decisions, and the Store isolates all filesystem/cache behavior.
+
+<!--FIG:arch-hero-->
+
+<span class="tag tag-blue">Tap any box</span> CLI -> [`cli.py`](https://your.gitlab/org/repo/-/blob/COMMIT/src/cli.py) · Parser -> [`parser.py`](https://your.gitlab/org/repo/-/blob/COMMIT/src/parser.py) · Engine -> [`engine.py`](https://your.gitlab/org/repo/-/blob/COMMIT/src/engine.py) · Store -> [`store.py`](https://your.gitlab/org/repo/-/blob/COMMIT/src/infra/store.py)
+
+---
+
+<a class="slide-id" id="57a2aec5-edc0-4ba1-b170-3490f40d699c"></a>
+
+<!-- _class: invert -->
+
+# Run **It**
+
+---
+
+<a class="slide-id" id="6724a7b7-88b4-4ade-aeee-105e48ce83e4"></a>
+
+## Run twice: the second build should mostly disappear
+
+```bash
+git clone https://your.gitlab/org/repo && cd repo
+pip install -e .
+
+forge run ./examples/hello     # cold cache: parse, compute, store
+forge run ./examples/hello     # warm cache: reuse stored artifacts
+```
+
+<div class="columns">
+<div>
+
+### What to notice
+
+- The command path starts in [`src/cli.py`](https://your.gitlab/org/repo/-/blob/COMMIT/src/cli.py)
+- The Engine receives a typed plan, not raw files
+- Cache hits should bypass compute work
+
+</div>
+<div>
+
+### What to open next
+
+- [`examples/hello`](https://your.gitlab/org/repo/-/tree/COMMIT/examples/hello)
+- [`tests/test_cache.py`](https://your.gitlab/org/repo/-/blob/COMMIT/tests/test_cache.py)
+- [`src/infra/store.py`](https://your.gitlab/org/repo/-/blob/COMMIT/src/infra/store.py)
+
+</div>
+</div>
+
+---
+
+<a class="slide-id" id="5a9937cf-c1d3-4651-afd2-b1c8e5716993"></a>
+
+<!-- _class: invert -->
+
+# The **Layers**
+
+---
+
+<a class="slide-id" id="65ce97fc-31c8-4c37-96b0-d14002e7252b"></a>
+
+## The dependency rule keeps the domain small
+
+Each layer only depends on the one below it. The Domain is pure, so most behavior can be tested without touching the filesystem.
+
+<!--FIG:layers-->
+
+---
+
+<a class="slide-id" id="8d3587b9-0dfc-4ff9-8a27-99a5235888a4"></a>
+
+<!-- _class: invert -->
+
+# A Request, **End to End**
+
+---
+
+<a class="slide-id" id="93fbf818-3fca-4f64-b5f5-01adbe2355a3"></a>
+
+## The Store boundary is the hot path
+
+The Engine never reaches into the filesystem directly. Cache lookup, compute-on-miss, and artifact writes all go through the Store.
+
+<!--FIGSM:request-flow-->
+
+---
+
+<a class="slide-id" id="089b706b-8ed9-4903-9a19-eada51ae155a"></a>
+
+## Key terms
+
+<div class="columns">
+<div class="card">
+
+### AST
+The typed tree the **Parser** produces from raw source; the Engine never sees loose text.
+
+### Step
+One cacheable unit of work in the Engine.
+
+</div>
+<div class="card">
+
+### Cache key
+A content hash of a step's inputs. Same key means the artifact can be reused.
+
+### Artifact
+A persisted output owned by the **Store** and keyed for later reuse.
+
+</div>
+</div>
+
+---
+
+<a class="slide-id" id="205cdba8-153d-4d33-a16a-cfbb14bdf746"></a>
+
+<!-- _class: invert -->
+
+# Design **Guardrails**
+
+---
+
+<a class="slide-id" id="d23c5a99-28ce-4963-b828-f9196598b944"></a>
+
+## The design rules keep reviews fast
+
+<div class="columns">
+<div>
+
+- **Pure core, I/O at the edges** — Domain code never imports `os`
+- **Types are the spec** — `mypy --strict` catches interface drift
+- **Every bug gets a test first** — reproduce, then patch
+
+</div>
+<div>
+
+- **Small PRs, fast review** — <span class="tag tag-accent">&lt; 400 lines</span> is the norm
+- **Interfaces over implementations** — one Store protocol, many backends
+- **Docs live next to code** — stale docs are treated as bugs
+
+</div>
+</div>
+
+---
+
+<a class="slide-id" id="29e4e62d-6d9d-4792-b2c0-44d3c3909773"></a>
+
+## Where to look
+
+| You want to... | Start here |
+|--------------|------------|
+| Add a CLI flag | [`src/cli.py`](https://your.gitlab/org/repo/-/blob/COMMIT/src/cli.py) |
+| Change how input is parsed | [`src/parser.py`](https://your.gitlab/org/repo/-/blob/COMMIT/src/parser.py) |
+| Add a build step | [`src/domain/`](https://your.gitlab/org/repo/-/tree/COMMIT/src/domain) + [`tests/test_engine.py`](https://your.gitlab/org/repo/-/blob/COMMIT/tests/test_engine.py) |
+| Add a cache backend | [`src/infra/store.py`](https://your.gitlab/org/repo/-/blob/COMMIT/src/infra/store.py) |
+| Understand a failing build | [`src/observability/`](https://your.gitlab/org/repo/-/tree/COMMIT/src/observability) + [`tests/test_logging.py`](https://your.gitlab/org/repo/-/blob/COMMIT/tests/test_logging.py) |
+
+---
+
+<a class="slide-id" id="420f685a-1912-495b-9df8-e3f36320b436"></a>
+
+<!-- _class: lead -->
+
+# Thank You
+
+Questions? · [`your.gitlab/org/repo`](https://your.gitlab/org/repo)

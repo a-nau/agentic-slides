@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.tran-t{fill:#f0f0f0;font-weight:700}.tran-m{font-family:'JetBrains Mono',monospace}.tran-d{fill:#a0a0a0}.tran-hd{fill:#3b82f6;font-weight:700;letter-spacing:.05em}@keyframes tran-a-ball{0.0%{transform:translateX(0);opacity:1}70.0%{transform:translateX(1004px);opacity:1}73.0%{opacity:0}100.0%{transform:translateX(1004px);opacity:0}}.tran-a-ball{animation:tran-a-ball 9s linear infinite}.tran-a-T{stroke-dasharray:419}@keyframes tran-a-T{0.0%{stroke-dashoffset:419}70.0%{stroke-dashoffset:0}100.0%{stroke-dashoffset:0}}.tran-a-T{animation:tran-a-T 9s linear infinite}@keyframes tran-a-b0{0.0%{opacity:0.25}6.2%{opacity:0.25}9.2%{opacity:1}100.0%{opacity:1}}.tran-a-b0{animation:tran-a-b0 9s linear infinite}@keyframes tran-a-b1{0.0%{opacity:0.25}16.0%{opacity:0.25}19.0%{opacity:1}100.0%{opacity:1}}.tran-a-b1{animation:tran-a-b1 9s linear infinite}@keyframes tran-a-b2{0.0%{opacity:0.25}25.6%{opacity:0.25}28.6%{opacity:1}100.0%{opacity:1}}.tran-a-b2{animation:tran-a-b2 9s linear infinite}@keyframes tran-a-b3{0.0%{opacity:0.25}40.6%{opacity:0.25}43.6%{opacity:1}100.0%{opacity:1}}.tran-a-b3{animation:tran-a-b3 9s linear infinite}@keyframes tran-a-b4{0.0%{opacity:0.25}53.6%{opacity:0.25}56.6%{opacity:1}100.0%{opacity:1}}.tran-a-b4{animation:tran-a-b4 9s linear infinite}@keyframes tran-a-b5{0.0%{opacity:0.25}62.0%{opacity:0.25}65.0%{opacity:1}100.0%{opacity:1}}.tran-a-b5{animation:tran-a-b5 9s linear infinite}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="18" y="28" class="tran-hd" font-size="16">ONE RAY, THREE CURVES &#8212; why T(t) does the occluding</text>
+<text x="1142" y="28" text-anchor="end" fill="#f0883e" font-size="14">illustrative ray, not a measurement from the paper</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4" target="_blank" data-tiphead="The scene along one ray" data-tip="A ray leaves the camera, crosses empty air, grazes a thin translucent surface, then meets an opaque wall. Everything past the wall is still in the volume and the MLP still has an opinion about its colour, but no light from it reaches the camera.">
+<rect x="18" y="44" width="1122" height="112" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="42" y="72" class="tran-t" font-size="16">The ray</text>
+<g data-tiphead="What the ray passes through" data-tip="Empty air, then a thin translucent pane, then an opaque wall, and finally solid content that the wall completely hides.">
+<path d="M120,116 L1108,116" stroke="#666666" stroke-width="2"/>
+<path d="M104,106 L104,126 L124,116 z" fill="#3b82f6"/>
+<rect x="470" y="88" width="18" height="56" rx="3" fill="#3fb950" opacity="0.35"/>
+<rect x="676" y="76" width="34" height="80" rx="3" fill="#f0883e" opacity="0.55"/>
+<rect x="828" y="88" width="200" height="56" rx="3" fill="#666666" opacity="0.28"/>
+</g>
+<g data-tiphead="Reading the three panels together" data-tip="Follow the ray from the camera: each sample adds its density bar, T(t) falls by what that sample absorbed, and the pixel weight is whatever T was still left times the opacity of that sample. Illustrative values, not a measurement."><circle class="tran-a-ball" cx="104" cy="116" r="8" fill="#f0f0f0" opacity="0"/></g>
+<text x="104" y="96" class="tran-d" font-size="14">camera</text>
+<text x="479" y="82" text-anchor="middle" fill="#3fb950" font-size="14">thin glass</text>
+<text x="693" y="70" text-anchor="middle" fill="#f0883e" font-size="14">opaque wall</text>
+<text x="928" y="82" text-anchor="middle" class="tran-d" font-size="14">solid, but hidden behind the wall</text>
+<circle cx="200" cy="116" r="5" fill="#93c5fd"/>
+<circle cx="340" cy="116" r="5" fill="#93c5fd"/>
+<circle cx="479" cy="116" r="5" fill="#93c5fd"/>
+<circle cx="693" cy="116" r="5" fill="#93c5fd"/>
+<circle cx="880" cy="116" r="5" fill="#93c5fd"/>
+<circle cx="1000" cy="116" r="5" fill="#93c5fd"/>
+<text x="200" y="142" text-anchor="middle" class="tran-d" font-size="14">1</text>
+<text x="340" y="142" text-anchor="middle" class="tran-d" font-size="14">2</text>
+<text x="479" y="142" text-anchor="middle" class="tran-d" font-size="14">3</text>
+<text x="693" y="142" text-anchor="middle" class="tran-d" font-size="14">4</text>
+<text x="880" y="142" text-anchor="middle" class="tran-d" font-size="14">5</text>
+<text x="1000" y="142" text-anchor="middle" class="tran-d" font-size="14">6</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4" target="_blank" data-tiphead="Density along the ray" data-tip="Sigma is what the MLP outputs at each sample. It is near zero in air, moderate in the glass and large in the wall. On its own it says nothing about visibility: the wall and the object hidden behind it both have high density.">
+<rect x="18" y="172" width="366" height="188" rx="10" fill="#151515" stroke="#f0883e" stroke-width="1.6"/>
+<text x="42" y="200" fill="#f0883e" font-size="17" font-weight="700">&#963;(t): what the MLP says is there</text>
+<g data-tiphead="Density bars" data-tip="One bar per sample. The two bars on the right are inside solid content that sits behind the wall, and their density is just as high as the wall itself.">
+<path d="M46,330 L360,330" stroke="#3a3a3a" stroke-width="1.2"/>
+<path d="M46,216 L46,330" stroke="#3a3a3a" stroke-width="1.2"/>
+<rect opacity="0.25" class="tran-a-b0" x="66" y="327" width="18" height="3" fill="#f0883e"/>
+<rect opacity="0.25" class="tran-a-b1" x="110" y="327" width="18" height="3" fill="#f0883e"/>
+<rect opacity="0.25" class="tran-a-b2" x="154" y="306" width="18" height="24" fill="#f0883e"/>
+<rect opacity="0.25" class="tran-a-b3" x="222" y="240" width="18" height="90" fill="#f0883e"/>
+<rect opacity="0.25" class="tran-a-b4" x="280" y="228" width="18" height="102" fill="#f0883e"/>
+<rect opacity="0.25" class="tran-a-b5" x="324" y="228" width="18" height="102" fill="#f0883e"/>
+</g>
+<text x="52" y="346" class="tran-d" font-size="14">air</text>
+<text x="163" y="346" text-anchor="middle" class="tran-d" font-size="14">glass</text>
+<text x="231" y="346" text-anchor="middle" class="tran-d" font-size="14">wall</text>
+<text x="333" y="346" text-anchor="middle" class="tran-d" font-size="14">behind</text>
+<text x="60" y="236" class="tran-d" font-size="14">high &#963; behind the wall too</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4" target="_blank" data-tiphead="Transmittance along the ray" data-tip="T is the running product of what got through so far. It leaves the camera at 1, dips slightly in the glass and collapses at the wall. Past the wall it is essentially zero, so whatever the MLP claims is back there is multiplied away.">
+<rect x="396" y="172" width="366" height="188" rx="10" fill="#151515" stroke="#3fb950" stroke-width="1.6"/>
+<text x="418" y="200" fill="#3fb950" font-size="17" font-weight="700">T(t): how much light arrives</text>
+<g data-tiphead="The transmittance curve" data-tip="Monotone by construction: the exponent only accumulates, so T can never recover once it has fallen.">
+<path d="M424,330 L738,330" stroke="#3a3a3a" stroke-width="1.2"/>
+<path d="M424,216 L424,330" stroke="#3a3a3a" stroke-width="1.2"/>
+<path opacity="0.25" d="M424,224 L544,224 L544,246 L600,246 L600,318 L660,318 L660,329 L738,329" stroke="#3fb950" stroke-width="2.6" fill="none"/>
+<path class="tran-a-T" d="M424,224 L544,224 L544,246 L600,246 L600,318 L660,318 L660,329 L738,329" stroke="#3fb950" stroke-width="2.6" fill="none"/>
+</g>
+<text x="432" y="244" fill="#3fb950" font-size="14">T = 1.00</text>
+<text x="732" y="314" text-anchor="end" fill="#3fb950" font-size="14">T = 0.00</text>
+<text x="418" y="346" class="tran-d" font-size="14">Monotone: it can only fall, never recover.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4.E3" target="_blank" data-tiphead="The weight the pixel actually uses" data-tip="The product of transmittance and opacity is the weight each sample gets in the final colour. Most of it lands on the first opaque surface, with a smaller share on the glass in front of it, which is exactly the behaviour you want and the same quantity the hierarchical sampler reuses as a distribution.">
+<rect x="774" y="172" width="366" height="188" rx="10" fill="#151515" stroke="#93c5fd" stroke-width="1.6"/>
+<text x="796" y="200" fill="#93c5fd" font-size="17" font-weight="700">w = T &#183; &#945;: the pixel weights</text>
+<g data-tiphead="The weight bars" data-tip="Most of the mass lands on the wall, the first opaque surface; the glass takes a smaller share. The two samples behind the wall are multiplied by a transmittance of nearly zero and vanish.">
+<path d="M802,330 L1116,330" stroke="#3a3a3a" stroke-width="1.2"/>
+<path d="M802,216 L802,330" stroke="#3a3a3a" stroke-width="1.2"/>
+<rect opacity="0.25" class="tran-a-b0" x="822" y="327" width="18" height="3" fill="#93c5fd"/>
+<rect opacity="0.25" class="tran-a-b1" x="866" y="327" width="18" height="3" fill="#93c5fd"/>
+<rect opacity="0.25" class="tran-a-b2" x="910" y="308" width="18" height="22" fill="#93c5fd"/>
+<rect opacity="0.25" class="tran-a-b3" x="978" y="252" width="18" height="78" fill="#93c5fd"/>
+<rect opacity="0.25" class="tran-a-b4" x="1036" y="321" width="18" height="9" fill="#93c5fd"/>
+<rect opacity="0.25" class="tran-a-b5" x="1080" y="329" width="18" height="1" fill="#93c5fd"/>
+</g>
+<text x="796" y="346" class="tran-d" font-size="14">Most weight on the wall; here weights sum to 1.</text>
+<text x="812" y="240" class="tran-d" font-size="14">the visible surface</text>
+</a>
+<rect x="18" y="376" width="551" height="96" rx="10" fill="#0d1117" stroke="#3fb950" stroke-width="1.6"/>
+<text x="42" y="406" class="tran-t" font-size="17">Why &#963; alone is not enough</text>
+<text x="42" y="434" class="tran-d" font-size="15">Sample 6 sits inside a solid object and has high density, so on</text>
+<text x="42" y="454" class="tran-d" font-size="15">its own it would contribute colour. T(t) is what silences it.</text>
+<rect x="589" y="376" width="551" height="96" rx="10" fill="#0d1117" stroke="#93c5fd" stroke-width="1.6"/>
+<text x="613" y="406" class="tran-t" font-size="17">Where the two roles split</text>
+<text x="613" y="434" class="tran-d" font-size="15">&#963; is local and looks only at this point. T is cumulative and</text>
+<text x="613" y="454" class="tran-d" font-size="15">looks at everything between the camera and this point.</text>
+<rect x="18" y="488" width="1122" height="94" rx="10" fill="#151515" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="42" y="516" class="tran-t" font-size="17">The consequence worth remembering</text>
+<text x="42" y="542" class="tran-d" font-size="15">Occlusion is not a special case in NeRF, and there is no visibility test anywhere in the code. It is one multiplication:</text>
+<text x="42" y="566" fill="#93c5fd" font-size="15" font-weight="700">once T has collapsed, everything further along the ray is multiplied by nearly zero and stops mattering.</text>
+</svg>

@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.bott-t{fill:#f0f0f0;font-weight:700}.bott-m{font-family:'JetBrains Mono',monospace}.bott-d{fill:#a0a0a0}</style>
+<defs>
+<marker id="ig" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3b82f6"/></marker>
+<marker id="ib" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#3fb950"/></marker>
+<marker id="ir" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L8,3.5 L0,7 z" fill="#f85149"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="bott-t" font-size="17">The same bottleneck twice, differing only in what sits on the shortcut</text>
+<g data-tiphead="Identity on a bottleneck shortcut" data-tip="The shortcut joins the 256-channel input to the 256-channel output. Left as identity it holds no weights at all, so the block costs exactly its three convolutions.">
+<rect x="40" y="50" width="530" height="330" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="64" y="82" fill="#3b82f6" font-size="15.5" font-weight="700">Identity shortcut — what the paper builds within a stage</text>
+<text x="305" y="112" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">256-d</text>
+<circle cx="305" cy="298" r="18" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="305" y="305" text-anchor="middle" fill="#f0f0f0" font-size="18" font-weight="700">+</text>
+<text x="305" y="344" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">256-d</text>
+<text x="64" y="364" fill="#93c5fd" font-size="13">weights on the shortcut: none — multiplies on the shortcut: none</text>
+</g>
+<g data-tiphead="1x1 down-projection" data-tip="Cuts the 256 incoming channels to 64 before the expensive 3x3 runs.">
+<rect x="215" y="124" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="305" y="148" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">1x1, 64</text>
+</g>
+<g data-tiphead="The bottleneck 3x3" data-tip="The expensive layer, running on the narrow 64-channel tensor.">
+<rect x="215" y="174" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="305" y="198" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">3x3, 64</text>
+</g>
+<g data-tiphead="1x1 up-projection" data-tip="Restores the width to 256 so the branch output matches what the shortcut is carrying.">
+<rect x="215" y="224" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="305" y="248" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">1x1, 256</text>
+</g>
+<path d="M305,116 L305,120" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M305,166 L305,170" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M305,216 L305,220" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M305,266 L305,276" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M305,118 L165,118 L165,298 L283,298" stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#ib)"/>
+<g data-tiphead="Projection on a bottleneck shortcut" data-tip="A 1x1 convolution mapping 256 channels to 256 channels. The paper: if the identity shortcut is replaced with projection, one can show that the time complexity and model size are doubled, as the shortcut is connected to the two high-dimensional ends.">
+<rect x="590" y="50" width="530" height="330" rx="12" fill="#1a1113" stroke="#f85149" stroke-width="1.8"/>
+<text x="614" y="82" fill="#f85149" font-size="15.5" font-weight="700">Projection shortcut — what it would cost</text>
+<text x="855" y="112" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">256-d</text>
+<circle cx="855" cy="298" r="18" fill="#1a1a1a" stroke="#f85149" stroke-width="2"/>
+<text x="855" y="305" text-anchor="middle" fill="#f0f0f0" font-size="18" font-weight="700">+</text>
+<text x="855" y="344" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">256-d</text>
+<text x="614" y="364" fill="#f85149" font-size="13">one 1x1 mapping 256 channels to 256 — the widest matrix in sight</text>
+</g>
+<g data-tiphead="1x1 down-projection" data-tip="Unchanged from the block on the left. Only the shortcut differs between the two panels.">
+<rect x="765" y="124" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="855" y="148" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">1x1, 64</text>
+</g>
+<g data-tiphead="The bottleneck 3x3" data-tip="Unchanged from the block on the left. Only the shortcut differs between the two panels.">
+<rect x="765" y="174" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="855" y="198" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">3x3, 64</text>
+</g>
+<g data-tiphead="1x1 up-projection" data-tip="Unchanged from the block on the left. Only the shortcut differs between the two panels.">
+<rect x="765" y="224" width="180" height="38" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="855" y="248" text-anchor="middle" class="bott-m" fill="#f0f0f0" font-size="13.5">1x1, 256</text>
+</g>
+<path d="M855,116 L855,120" stroke="#3b82f6" stroke-width="2" fill="none"/>
+<path d="M855,166 L855,170" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M855,216 L855,220" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M855,266 L855,276" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#ig)"/>
+<path d="M855,118 L715,118 L715,298 L833,298" stroke="#f85149" stroke-width="2" fill="none" marker-end="url(#ir)"/>
+<rect x="669" y="172" width="92" height="38" rx="8" fill="#2a1416" stroke="#f85149" stroke-width="1.8"/>
+<text x="715" y="196" text-anchor="middle" class="bott-m" fill="#f85149" font-size="13">1x1, 256</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="Where the shortcut sits decides everything" data-tip="On a two-layer block the shortcut connects 64-channel ends, so a projection there is sixteen times cheaper than on a bottleneck. The bottleneck moves its shortcut to the wide side of the block, and that is what makes identity load-bearing rather than merely elegant.">
+<rect x="40" y="398" width="1080" height="188" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="430" fill="#3b82f6" font-size="15.5" font-weight="700">Same arithmetic as the last slide, applied to the shortcut itself</text>
+<text x="66" y="462" class="bott-d" font-size="13.5">the three convolutions of the block</text>
+<text x="1094" y="462" text-anchor="end" class="bott-m" fill="#f0f0f0" font-size="14">256 x 64 + 9 x 64 x 64 + 64 x 256</text>
+<text x="66" y="490" class="bott-d" font-size="13.5">a projection on the bottleneck shortcut, 256 in and 256 out</text>
+<text x="1094" y="490" text-anchor="end" class="bott-m" fill="#f85149" font-size="14">256 x 256</text>
+<text x="66" y="518" class="bott-d" font-size="13.5">the same projection on a two-layer block, whose ends are 64-d</text>
+<text x="1094" y="518" text-anchor="end" class="bott-m" fill="#93c5fd" font-size="14">64 x 64</text>
+<text x="66" y="550" fill="#f0f0f0" font-size="13.5">The middle line is nearly the whole first line again. The paper: the time complexity and model size are doubled, as the shortcut is</text>
+<text x="66" y="572" class="bott-d" font-size="13.5">connected to the two high-dimensional ends. On a two-layer block the same choice is sixteen times cheaper and nobody would notice.</text>
+</a>
+</svg>

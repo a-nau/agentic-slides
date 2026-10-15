@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<defs>
+<marker id="ag" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+<marker id="ab" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3fb950"/></marker>
+<marker id="ao" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#f0883e"/></marker>
+</defs>
+<style>@keyframes an-arch-s0{0%,0.0%{opacity:0}5.1%{opacity:.28}10.7%,100%{opacity:0}}.an-arch-s0{animation:an-arch-s0 9s linear infinite}@keyframes an-arch-x0{0%,0.0%{stroke-width:2.2;opacity:.55}5.1%{stroke-width:5.5;opacity:1}10.7%,100%{stroke-width:2.2;opacity:.55}}.an-arch-x0{animation:an-arch-x0 9s linear infinite}@keyframes an-arch-s1{0%,11.2%{opacity:0}16.3%{opacity:.28}21.9%,100%{opacity:0}}.an-arch-s1{animation:an-arch-s1 9s linear infinite}@keyframes an-arch-x1{0%,11.2%{stroke-width:2.2;opacity:.55}16.3%{stroke-width:5.5;opacity:1}21.9%,100%{stroke-width:2.2;opacity:.55}}.an-arch-x1{animation:an-arch-x1 9s linear infinite}@keyframes an-arch-s2{0%,22.5%{opacity:0}27.6%{opacity:.28}33.2%,100%{opacity:0}}.an-arch-s2{animation:an-arch-s2 9s linear infinite}@keyframes an-arch-x2{0%,22.5%{stroke-width:2.2;opacity:.55}27.6%{stroke-width:5.5;opacity:1}33.2%,100%{stroke-width:2.2;opacity:.55}}.an-arch-x2{animation:an-arch-x2 9s linear infinite}@keyframes an-arch-s3{0%,33.8%{opacity:0}38.8%{opacity:.28}44.4%,100%{opacity:0}}.an-arch-s3{animation:an-arch-s3 9s linear infinite}@keyframes an-arch-x3{0%,33.8%{stroke-width:2.2;opacity:.55}38.8%{stroke-width:5.5;opacity:1}44.4%,100%{stroke-width:2.2;opacity:.55}}.an-arch-x3{animation:an-arch-x3 9s linear infinite}@keyframes an-arch-s4{0%,45.0%{opacity:0}50.1%{opacity:.28}55.7%,100%{opacity:0}}.an-arch-s4{animation:an-arch-s4 9s linear infinite}@keyframes an-arch-x4{0%,45.0%{stroke-width:2.2;opacity:.55}50.1%{stroke-width:5.5;opacity:1}55.7%,100%{stroke-width:2.2;opacity:.55}}.an-arch-x4{animation:an-arch-x4 9s linear infinite}@keyframes an-arch-s5{0%,56.2%{opacity:0}61.3%{opacity:.28}66.9%,100%{opacity:0}}.an-arch-s5{animation:an-arch-s5 9s linear infinite}@keyframes an-arch-x5{0%,56.2%{stroke-width:2.2;opacity:.55}61.3%{stroke-width:5.5;opacity:1}66.9%,100%{stroke-width:2.2;opacity:.55}}.an-arch-x5{animation:an-arch-x5 9s linear infinite}@keyframes an-arch-s6{0%,67.5%{opacity:0}72.6%{opacity:.28}78.2%,100%{opacity:0}}.an-arch-s6{animation:an-arch-s6 9s linear infinite}@keyframes an-arch-x6{0%,67.5%{stroke-width:2.2;opacity:.55}72.6%{stroke-width:5.5;opacity:1}78.2%,100%{stroke-width:2.2;opacity:.55}}.an-arch-x6{animation:an-arch-x6 9s linear infinite}@keyframes an-arch-s7{0%,78.8%{opacity:0}83.8%{opacity:.28}89.4%,100%{opacity:0}}.an-arch-s7{animation:an-arch-s7 9s linear infinite}@keyframes an-arch-x7{0%,78.8%{stroke-width:2.2;opacity:.55}83.8%{stroke-width:5.5;opacity:1}89.4%,100%{stroke-width:2.2;opacity:.55}}.an-arch-x7{animation:an-arch-x7 9s linear infinite}.arch-ar-t{fill:#f0f0f0;font-weight:700;font-size:15px}.arch-ar-m{font-family:'JetBrains Mono',monospace;fill:#93c5fd;font-size:14px}.arch-ar-mo{font-family:'JetBrains Mono',monospace;fill:#f0883e;font-weight:700;font-size:14px}.arch-ar-d{fill:#a0a0a0;font-size:14px}.arch-ar-h{fill:#f0f0f0;font-weight:700;font-size:15px}.arch-ar-s{font-family:'JetBrains Mono',monospace;fill:#7f8a99;font-size:14px}.arch-ar-cap{fill:#8a8a8a;font-size:14px}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="30" fill="#f0f0f0" font-size="21" font-weight="700">Per-layer tensor shapes and the exact cross-GPU connectivity</text>
+<text x="24" y="54" class="arch-ar-cap">Top lane and bottom lane are the two halves of the same network. Orange is the only place they talk.</text>
+<text x="24" y="162" fill="#3b82f6" font-size="15" font-weight="700">GPU 1</text>
+<text x="24" y="302" fill="#3fb950" font-size="15" font-weight="700">GPU 2</text>
+<text x="126" y="76" class="arch-ar-h" text-anchor="middle">input</text>
+<text x="242" y="76" class="arch-ar-h" text-anchor="middle">conv 1</text>
+<text x="356" y="76" class="arch-ar-h" text-anchor="middle">conv 2</text>
+<text x="498" y="76" class="arch-ar-h" text-anchor="middle">conv 3</text>
+<text x="612" y="76" class="arch-ar-h" text-anchor="middle">conv 4</text>
+<text x="726" y="76" class="arch-ar-h" text-anchor="middle">conv 5</text>
+<text x="860" y="76" class="arch-ar-h" text-anchor="middle">fc 6</text>
+<text x="980" y="76" class="arch-ar-h" text-anchor="middle">fc 7</text>
+<text x="1090" y="76" class="arch-ar-h" text-anchor="middle">fc 8</text>
+<text x="242" y="98" class="arch-ar-s" text-anchor="middle">55×55×96</text>
+<text x="356" y="98" class="arch-ar-s" text-anchor="middle">27×27×256</text>
+<text x="498" y="98" class="arch-ar-s" text-anchor="middle">13×13×384</text>
+<text x="612" y="98" class="arch-ar-s" text-anchor="middle">13×13×384</text>
+<text x="726" y="98" class="arch-ar-s" text-anchor="middle">13×13×256</text>
+<text x="860" y="98" class="arch-ar-s" text-anchor="middle">4096</text>
+<text x="980" y="98" class="arch-ar-s" text-anchor="middle">4096</text>
+<text x="1090" y="98" class="arch-ar-s" text-anchor="middle">1000</text>
+<g data-tiphead="Input crop" data-tip="A random 224×224 crop of a 256×256 image, mean-subtracted raw RGB. Both GPUs read the same crop; the split starts one layer later.">
+<rect x="88" y="178" width="76" height="96" rx="10" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="2"/>
+<text x="126" y="216" class="arch-ar-m" text-anchor="middle">224×224</text>
+<text x="126" y="240" class="arch-ar-d" text-anchor="middle">×3 RGB</text>
+</g>
+<g data-tiphead="conv 1 — GPU 1 half" data-tip="96 kernels of 11×11×3 at stride 4, split 48 per GPU. Kernel depth 3 means each half reads the whole RGB image, so nothing is shared yet.">
+<rect x="196" y="108" width="92" height="96" rx="10" fill="#10141a" stroke="#3b82f6" stroke-width="2"/>
+<text x="242" y="132" class="arch-ar-t" text-anchor="middle">48 maps</text>
+<text x="242" y="154" class="arch-ar-m" text-anchor="middle">11×11×3</text>
+<text x="242" y="176" class="arch-ar-d" text-anchor="middle">55×55×48</text>
+<text x="242" y="196" class="arch-ar-d" text-anchor="middle">stride 4</text>
+</g>
+<g data-tiphead="conv 1 — GPU 2 half" data-tip="The mirror half. Figure 3 shows these two halves reliably specialise: one learns colour-agnostic edges, the other colour blobs.">
+<rect x="196" y="248" width="92" height="96" rx="10" fill="#0f1620" stroke="#3fb950" stroke-width="2"/>
+<text x="242" y="272" class="arch-ar-t" text-anchor="middle">48 maps</text>
+<text x="242" y="294" class="arch-ar-m" text-anchor="middle">11×11×3</text>
+<text x="242" y="316" class="arch-ar-d" text-anchor="middle">55×55×48</text>
+<text x="242" y="336" class="arch-ar-d" text-anchor="middle">stride 4</text>
+</g>
+<g data-tiphead="conv 2 — GPU 1 half" data-tip="256 kernels of 5×5×48, split 128 per GPU. Depth 48 is exactly half of conv 1's 96 maps, so this layer reads only its own GPU.">
+<rect x="310" y="108" width="92" height="96" rx="10" fill="#10141a" stroke="#3b82f6" stroke-width="2"/>
+<text x="356" y="132" class="arch-ar-t" text-anchor="middle">128 maps</text>
+<text x="356" y="154" class="arch-ar-m" text-anchor="middle">5×5×48</text>
+<text x="356" y="176" class="arch-ar-d" text-anchor="middle">27×27×128</text>
+</g>
+<g data-tiphead="conv 2 — GPU 2 half" data-tip="Same shape on the other card. No cross edge enters conv 2, so the two halves have not exchanged a single activation yet.">
+<rect x="310" y="248" width="92" height="96" rx="10" fill="#0f1620" stroke="#3fb950" stroke-width="2"/>
+<text x="356" y="272" class="arch-ar-t" text-anchor="middle">128 maps</text>
+<text x="356" y="294" class="arch-ar-m" text-anchor="middle">5×5×48</text>
+<text x="356" y="316" class="arch-ar-d" text-anchor="middle">27×27×128</text>
+</g>
+<g data-tiphead="conv 3 — the one cross-connected layer" data-tip="384 kernels of 3×3×256, split 192 per GPU. Depth 256 is ALL of conv 2's maps, so every conv 3 kernel reads across both cards. The single cross-GPU convolution in the network.">
+<rect x="452" y="108" width="92" height="96" rx="10" fill="#1d1710" stroke="#f0883e" stroke-width="2.5"/>
+<text x="498" y="132" class="arch-ar-t" text-anchor="middle">192 maps</text>
+<text x="498" y="154" class="arch-ar-mo" text-anchor="middle">3×3×256</text>
+<text x="498" y="176" class="arch-ar-d" text-anchor="middle">13×13×192</text>
+</g>
+<g data-tiphead="conv 3 — GPU 2 half" data-tip="Also reads all 256 conv 2 maps. Cross-GPU traffic happens exactly here, and the paper says the connectivity pattern was picked by cross-validation to keep it cheap.">
+<rect x="452" y="248" width="92" height="96" rx="10" fill="#1d1710" stroke="#f0883e" stroke-width="2.5"/>
+<text x="498" y="272" class="arch-ar-t" text-anchor="middle">192 maps</text>
+<text x="498" y="294" class="arch-ar-mo" text-anchor="middle">3×3×256</text>
+<text x="498" y="316" class="arch-ar-d" text-anchor="middle">13×13×192</text>
+</g>
+<g data-tiphead="conv 4" data-tip="384 kernels of 3×3×192, split 192 per GPU. Depth 192 is half of conv 3's 384 maps, so the streams separate again immediately after conv 3.">
+<rect x="566" y="108" width="92" height="96" rx="10" fill="#10141a" stroke="#3b82f6" stroke-width="2"/>
+<text x="612" y="132" class="arch-ar-t" text-anchor="middle">192 maps</text>
+<text x="612" y="154" class="arch-ar-m" text-anchor="middle">3×3×192</text>
+<text x="612" y="176" class="arch-ar-d" text-anchor="middle">13×13×192</text>
+</g>
+<g data-tiphead="conv 4 — GPU 2 half" data-tip="Same-GPU only. conv 3, 4 and 5 run back to back with no pooling or normalisation between them.">
+<rect x="566" y="248" width="92" height="96" rx="10" fill="#0f1620" stroke="#3fb950" stroke-width="2"/>
+<text x="612" y="272" class="arch-ar-t" text-anchor="middle">192 maps</text>
+<text x="612" y="294" class="arch-ar-m" text-anchor="middle">3×3×192</text>
+<text x="612" y="316" class="arch-ar-d" text-anchor="middle">13×13×192</text>
+</g>
+<g data-tiphead="conv 5" data-tip="256 kernels of 3×3×192, split 128 per GPU. Depth 192 is half of conv 4's 384 maps: same GPU. Its output is max-pooled before the fully-connected stack.">
+<rect x="680" y="108" width="92" height="96" rx="10" fill="#10141a" stroke="#3b82f6" stroke-width="2"/>
+<text x="726" y="132" class="arch-ar-t" text-anchor="middle">128 maps</text>
+<text x="726" y="154" class="arch-ar-m" text-anchor="middle">3×3×192</text>
+<text x="726" y="176" class="arch-ar-d" text-anchor="middle">13×13×128</text>
+</g>
+<g data-tiphead="conv 5 — GPU 2 half" data-tip="The last convolutional layer. After its max-pool the representation is small enough that the fully-connected layers can afford to be all-to-all.">
+<rect x="680" y="248" width="92" height="96" rx="10" fill="#0f1620" stroke="#3fb950" stroke-width="2"/>
+<text x="726" y="272" class="arch-ar-t" text-anchor="middle">128 maps</text>
+<text x="726" y="294" class="arch-ar-m" text-anchor="middle">3×3×192</text>
+<text x="726" y="316" class="arch-ar-d" text-anchor="middle">13×13×128</text>
+</g>
+<g data-tiphead="fc 6" data-tip="4096 neurons, drawn in Figure 2 as 2048 per GPU. Fully connected to every neuron of the previous layer, so it reads across both cards. Dropout at 0.5 applies here.">
+<rect x="822" y="108" width="76" height="96" rx="10" fill="#1d1710" stroke="#f0883e" stroke-width="2.5"/>
+<text x="860" y="132" class="arch-ar-t" text-anchor="middle">2048</text>
+<text x="860" y="154" class="arch-ar-d" text-anchor="middle">dropout</text>
+<text x="860" y="176" class="arch-ar-m" text-anchor="middle">p = 0.5</text>
+</g>
+<g data-tiphead="fc 6 — GPU 2 half" data-tip="The second 2048. Most of the 60 million parameters sit in this layer and its neighbours, which is also why dropout is applied here and nowhere else.">
+<rect x="822" y="248" width="76" height="96" rx="10" fill="#1d1710" stroke="#f0883e" stroke-width="2.5"/>
+<text x="860" y="272" class="arch-ar-t" text-anchor="middle">2048</text>
+<text x="860" y="294" class="arch-ar-d" text-anchor="middle">dropout</text>
+<text x="860" y="316" class="arch-ar-m" text-anchor="middle">p = 0.5</text>
+</g>
+<g data-tiphead="fc 7" data-tip="The second 4096-wide layer, also with dropout at 0.5. Its activations are the 4096-dimensional feature vector used for nearest-neighbour retrieval in Figure 4.">
+<rect x="942" y="108" width="76" height="96" rx="10" fill="#1d1710" stroke="#f0883e" stroke-width="2.5"/>
+<text x="980" y="132" class="arch-ar-t" text-anchor="middle">2048</text>
+<text x="980" y="154" class="arch-ar-d" text-anchor="middle">dropout</text>
+<text x="980" y="176" class="arch-ar-m" text-anchor="middle">p = 0.5</text>
+</g>
+<g data-tiphead="fc 7 — GPU 2 half" data-tip="Dropout covers the first two fully-connected layers only. The final classifier layer is left untouched.">
+<rect x="942" y="248" width="76" height="96" rx="10" fill="#1d1710" stroke="#f0883e" stroke-width="2.5"/>
+<text x="980" y="272" class="arch-ar-t" text-anchor="middle">2048</text>
+<text x="980" y="294" class="arch-ar-d" text-anchor="middle">dropout</text>
+<text x="980" y="316" class="arch-ar-m" text-anchor="middle">p = 0.5</text>
+</g>
+<g data-tiphead="fc 8 — the classifier" data-tip="1000 outputs feeding a 1000-way softmax, trained by maximising the multinomial logistic regression objective. One output per ILSVRC class.">
+<rect x="1042" y="182" width="96" height="88" rx="10" fill="#1a1a1a" stroke="#f0f0f0" stroke-width="2"/>
+<text x="1090" y="214" class="arch-ar-t" text-anchor="middle">1000-way</text>
+<text x="1090" y="240" class="arch-ar-d" text-anchor="middle">softmax</text>
+</g>
+<path d="M164,206 C182,206 180,156 194,156" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)"/>
+<path d="M164,246 C182,246 180,296 194,296" fill="none" stroke="#3fb950" stroke-width="2.2" marker-end="url(#ab)"/>
+<path d="M288,156 L308,156" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)"/>
+<path d="M288,296 L308,296" fill="none" stroke="#3fb950" stroke-width="2.2" marker-end="url(#ab)"/>
+<path d="M402,150 L450,150" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)"/>
+<path d="M402,302 L450,302" fill="none" stroke="#3fb950" stroke-width="2.2" marker-end="url(#ab)"/>
+<path class="an-arch-x3" d="M402,172 C426,200 428,254 450,284" fill="none" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)"/>
+<path class="an-arch-x3" d="M402,280 C426,252 428,198 450,168" fill="none" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)"/>
+<path d="M544,156 L564,156" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)"/>
+<path d="M544,296 L564,296" fill="none" stroke="#3fb950" stroke-width="2.2" marker-end="url(#ab)"/>
+<path d="M658,156 L678,156" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)"/>
+<path d="M658,296 L678,296" fill="none" stroke="#3fb950" stroke-width="2.2" marker-end="url(#ab)"/>
+<path d="M772,150 L820,150" fill="none" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)"/>
+<path d="M772,302 L820,302" fill="none" stroke="#3fb950" stroke-width="2.2" marker-end="url(#ab)"/>
+<path class="an-arch-x6" d="M772,172 C796,200 798,254 820,284" fill="none" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)"/>
+<path class="an-arch-x6" d="M772,280 C796,252 798,198 820,168" fill="none" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)"/>
+<path class="an-arch-x7" d="M898,150 L940,150" fill="none" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)"/>
+<path class="an-arch-x7" d="M898,302 L940,302" fill="none" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)"/>
+<path class="an-arch-x7" d="M898,172 C918,200 920,254 940,284" fill="none" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)"/>
+<path class="an-arch-x7" d="M898,280 C918,252 920,198 940,168" fill="none" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)"/>
+<path class="an-arch-x7" d="M1018,160 C1032,180 1028,192 1040,204" fill="none" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)"/>
+<path class="an-arch-x7" d="M1018,292 C1032,272 1028,260 1040,248" fill="none" stroke="#f0883e" stroke-width="2.2" marker-end="url(#ao)"/>
+<text x="299" y="374" class="arch-ar-cap" text-anchor="middle">LRN → pool</text>
+<text x="427" y="374" class="arch-ar-cap" text-anchor="middle">LRN → pool</text>
+<text x="797" y="374" class="arch-ar-cap" text-anchor="middle">max-pool</text>
+<path d="M96,410 L136,410" fill="none" stroke="#3b82f6" stroke-width="2.2"/>
+<path d="M96,424 L136,424" fill="none" stroke="#3fb950" stroke-width="2.2"/>
+<text x="148" y="422" class="arch-ar-cap">parallel pair — each GPU reads only its own half (conv 2, 4, 5)</text>
+<path class="an-arch-x5" d="M600,408 C614,414 622,420 636,426" fill="none" stroke="#f0883e" stroke-width="2.2"/>
+<path class="an-arch-x5" d="M600,426 C614,420 622,414 636,408" fill="none" stroke="#f0883e" stroke-width="2.2"/>
+<text x="650" y="422" class="arch-ar-cap">crossing bundle — reads every map on both GPUs (conv 3, fc 6/7/8)</text>
+<text x="24" y="456" class="arch-ar-cap">Every max-pool is overlapping: window z = 3, stride s = 2. Spatial sizes assume a 227×227 input: with the paper's 224, conv 1 does not divide evenly.</text>
+<rect x="24" y="478" width="1112" height="92" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="46" y="508" fill="#f0883e" font-size="15" font-weight="700">The split is a memory workaround, not an architectural idea</text>
+<text x="46" y="534" class="arch-ar-cap">1.2 million examples could train, without severe overfitting, a net bigger than one 3 GB GTX 580 could hold — so it was split, not shrunk.</text>
+<text x="46" y="558" class="arch-ar-cap">Redrawn from Figure 2, p. 5 — whose upper GPU stream is clipped off the top of the page in the published PDF.</text>
+<rect class="an-arch-s0" opacity="0" x="88" y="178" width="76" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s1" opacity="0" x="196" y="108" width="92" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s1" opacity="0" x="196" y="248" width="92" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s2" opacity="0" x="310" y="108" width="92" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s2" opacity="0" x="310" y="248" width="92" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s3" opacity="0" x="452" y="108" width="92" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s3" opacity="0" x="452" y="248" width="92" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s4" opacity="0" x="566" y="108" width="92" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s4" opacity="0" x="566" y="248" width="92" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s5" opacity="0" x="680" y="108" width="92" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s5" opacity="0" x="680" y="248" width="92" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s6" opacity="0" x="822" y="108" width="76" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s6" opacity="0" x="822" y="248" width="76" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s7" opacity="0" x="942" y="108" width="76" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+<rect class="an-arch-s7" opacity="0" x="942" y="248" width="76" height="96" rx="10" fill="#ffffff" pointer-events="none"/>
+</svg>

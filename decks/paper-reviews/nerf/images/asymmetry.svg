@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.asym-t{fill:#f0f0f0;font-weight:700}.asym-m{font-family:'JetBrains Mono',monospace}.asym-d{fill:#a0a0a0}.asym-hd{fill:#3b82f6;font-weight:700;letter-spacing:.05em}</style>
+<defs>
+<marker id="ag2" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#3b82f6"/></marker>
+<marker id="ab2" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#3fb950"/></marker>
+<marker id="ap2" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#bc8cff"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="18" y="28" class="asym-hd" font-size="16">THE DIRECTION ARRIVES TOO LATE TO CHANGE THE GEOMETRY</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S3" target="_blank"><text x="1142" y="28" text-anchor="end" class="asym-d" font-size="14">Sec. 3, Fig. 2b and Fig. 3</text></a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S3" target="_blank" data-tiphead="Where the split happens inside the MLP" data-tip="The encoded position passes through eight 256-channel ReLU layers. Density branches off there, before the direction has been seen at all, so it structurally cannot depend on it. Only afterwards is the encoded direction concatenated to the 256-wide feature and pushed through one more 128-channel layer to produce RGB.">
+<rect x="18" y="44" width="1122" height="290" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<g data-tiphead="Encoded position" data-tip="The three spatial coordinates, each lifted to twenty sine and cosine values: sixty numbers in total.">
+<rect x="42" y="106" width="128" height="60" rx="8" fill="#1a1a1a" stroke="#f0883e" stroke-width="1.6"/>
+<text x="106" y="132" text-anchor="middle" class="asym-t" font-size="16">&#947;(x)</text>
+<text x="106" y="154" text-anchor="middle" class="asym-d" font-size="14">60 dims</text>
+</g>
+<path d="M176,136 L210,136" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag2)" fill="none"/>
+<g data-tiphead="The trunk" data-tip="Eight fully-connected layers, 256 channels each, ReLU activations. The viewing direction is nowhere near this part of the network.">
+<rect x="220" y="102" width="228" height="68" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.8"/>
+<text x="334" y="128" text-anchor="middle" class="asym-t" font-size="16">8 fully-connected layers</text>
+<text x="334" y="152" text-anchor="middle" class="asym-d" font-size="14">256 channels each, ReLU</text>
+</g>
+<path d="M454,120 L500,120" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag2)" fill="none"/>
+<g data-tiphead="Density output" data-tip="Volume density leaves the network here, and by that point the direction has not been supplied. It cannot depend on d even if the optimiser wanted it to.">
+<rect x="510" y="96" width="176" height="56" rx="8" fill="#0d1117" stroke="#3b82f6" stroke-width="2"/>
+<text x="598" y="118" text-anchor="middle" class="asym-t" font-size="16">&#963; leaves here</text>
+<text x="598" y="138" text-anchor="middle" fill="#93c5fd" font-size="14">d not seen yet</text>
+</g>
+<path d="M454,162 L500,162" stroke="#3fb950" stroke-width="2.2" marker-end="url(#225dbb)" fill="none"/>
+<g data-tiphead="Hidden feature" data-tip="A 256-wide vector that carries whatever the trunk learned about this point onward to the colour head.">
+<rect x="510" y="160" width="176" height="48" rx="8" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="598" y="190" text-anchor="middle" class="asym-t" font-size="15">256-wide feature</text>
+</g>
+<g data-tiphead="Encoded direction" data-tip="The unit viewing direction, lifted to twenty-four numbers with four octaves. It enters the network late and only affects colour.">
+<rect x="510" y="224" width="176" height="52" rx="8" fill="#1a1a1a" stroke="#f0883e" stroke-width="1.6"/>
+<text x="598" y="246" text-anchor="middle" class="asym-t" font-size="16">&#947;(d) joins late</text>
+<text x="598" y="266" text-anchor="middle" class="asym-d" font-size="14">24 dims</text>
+</g>
+<path d="M692,184 L732,184" stroke="#bc8cff" stroke-width="2.2" marker-end="url(#ap2)" fill="none"/>
+<path d="M692,250 C716,250 716,196 732,190" stroke="#bc8cff" stroke-width="2.2" marker-end="url(#ap2)" fill="none"/>
+<g data-tiphead="Colour head" data-tip="One fully-connected layer of 128 channels, the only place in the network where position and direction are combined.">
+<rect x="742" y="158" width="176" height="52" rx="8" fill="#1a1a1a" stroke="#bc8cff" stroke-width="1.8"/>
+<text x="830" y="180" text-anchor="middle" class="asym-t" font-size="16">1 layer of 128</text>
+<text x="830" y="200" text-anchor="middle" class="asym-d" font-size="14">position meets direction</text>
+</g>
+<path d="M924,184 L954,184" stroke="#bc8cff" stroke-width="2.2" marker-end="url(#ap2)" fill="none"/>
+<g data-tiphead="Colour output" data-tip="Emitted RGB toward the given direction. Two rays through the same point may legitimately receive different colours.">
+<rect x="964" y="158" width="152" height="52" rx="8" fill="#0d1117" stroke="#bc8cff" stroke-width="2"/>
+<text x="1040" y="180" text-anchor="middle" class="asym-t" font-size="16">c &#8212; RGB</text>
+<text x="1040" y="200" text-anchor="middle" fill="#bc8cff" font-size="14">depends on x and d</text>
+</g>
+<text x="42" y="308" class="asym-d" font-size="16">The wiring, not the training, is what enforces this: &#963; branches off <tspan class="asym-t">before</tspan> d exists, so no optimiser can make geometry view-dependent.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S3" target="_blank" data-tiphead="Why density must ignore direction" data-tip="If density could change with the viewing direction, every training camera could carve out its own private geometry that explains its own pixels and nothing else. The network would fit the training views perfectly and produce nonsense in between. Forcing one density field shared by all rays is what makes the reconstruction multi-view consistent.">
+<rect x="18" y="352" width="551" height="228" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="42" y="392" class="asym-t" font-size="19">&#963; shared &#8594; one 3D scene</text>
+<text x="42" y="432" class="asym-d" font-size="16">If geometry could vary with direction, every camera</text>
+<text x="42" y="458" class="asym-d" font-size="16">would invent its own private scene, fit its own pixels</text>
+<text x="42" y="484" class="asym-d" font-size="16">perfectly, and render garbage in between.</text>
+<text x="42" y="530" fill="#93c5fd" font-size="17" font-weight="700">Withholding d is the whole multi-view</text>
+<text x="42" y="556" fill="#93c5fd" font-size="17" font-weight="700">consistency mechanism.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S3.F3" target="_blank" data-tiphead="Why colour must see direction" data-tip="Real surfaces are not Lambertian. A wet floor, a glossy hull or a metal grille sends different colour to different cameras. Figure 3 visualises exactly this for two points on the Ship scene, and Figure 4 shows that a model trained without view dependence loses the specular reflection on the bulldozer tread.">
+<rect x="589" y="352" width="551" height="228" rx="10" fill="#0d1117" stroke="#bc8cff" stroke-width="1.8"/>
+<text x="613" y="392" class="asym-t" font-size="19">c free &#8594; specular surfaces</text>
+<path d="M636,486 L720,458" stroke="#bc8cff" stroke-width="2.4" marker-end="url(#ap2)" fill="none"/>
+<path d="M636,522 L720,474" stroke="#3fb950" stroke-width="2.4" marker-end="url(#225dbb)" fill="none"/>
+<circle cx="730" cy="466" r="10" fill="#93c5fd"/>
+<text x="752" y="456" fill="#bc8cff" font-size="16">camera A: a bright highlight</text>
+<text x="752" y="484" fill="#3fb950" font-size="16">camera B: dark wood</text>
+<text x="613" y="424" class="asym-d" font-size="16">One point, one &#963;, two honest colours.</text>
+<text x="613" y="556" fill="#93c5fd" font-size="17" font-weight="700">Drop it and Fig. 4 loses the tread highlight.</text>
+</a>
+</svg>

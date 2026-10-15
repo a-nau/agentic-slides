@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<defs>
+<marker id="ga" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+</defs>
+<style>.augm-au-cap{fill:#8a8a8a;font-size:14px}.augm-au-hh{font-size:15px;font-weight:700}.augm-au-lb{font-family:'JetBrains Mono',monospace;fill:#93c5fd;font-size:14px}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">Crops and reflections on the left, colour jitter on the right</text>
+<text x="24" y="58" class="augm-au-cap">Transformed images are produced in Python on the CPU while the GPU trains on the previous batch, so nothing is written to disk.</text>
+<rect x="24" y="86" width="366" height="348" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="46" y="118" class="augm-au-hh" fill="#3b82f6">1 · translations and reflections</text>
+<rect x="64" y="140" width="196" height="196" rx="4" fill="#1a1a1a" stroke="#4a4a4a" stroke-width="1.5"/>
+<rect x="78" y="158" width="171" height="171" rx="4" fill="#111824" stroke="#3b82f6" stroke-width="2"/>
+<text x="163" y="250" class="augm-au-lb" text-anchor="middle">224 × 224</text>
+<text x="163" y="272" class="augm-au-cap" text-anchor="middle">random position</text>
+<text x="64" y="356" class="augm-au-cap">256 × 256 source image</text>
+<path d="M268,232 L292,232" fill="none" stroke="#3b82f6" stroke-width="2" marker-end="url(#ga)"/>
+<text x="298" y="226" fill="#3b82f6" font-size="20" font-weight="700">×2048</text>
+<text x="298" y="250" class="augm-au-cap">bigger</text>
+<text x="46" y="384" class="augm-au-cap">32 × 32 offsets × 2 mirror images = 2048.</text>
+<text x="46" y="402" class="augm-au-cap">Crops of one photo share most pixels and</text>
+<text x="46" y="420" class="augm-au-cap">their label, so they are highly interdependent.</text>
+<rect x="410" y="86" width="366" height="348" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="432" y="118" class="augm-au-hh" fill="#3fb950">at test time, ten patches</text>
+<rect x="450" y="140" width="196" height="196" rx="4" fill="#1a1a1a" stroke="#4a4a4a" stroke-width="1.5"/>
+<rect x="455" y="145" width="60" height="60" rx="3" fill="#0f1620" stroke="#3fb950" stroke-width="2"/>
+<rect x="581" y="145" width="60" height="60" rx="3" fill="#0f1620" stroke="#3fb950" stroke-width="2"/>
+<rect x="455" y="271" width="60" height="60" rx="3" fill="#0f1620" stroke="#3fb950" stroke-width="2"/>
+<rect x="581" y="271" width="60" height="60" rx="3" fill="#0f1620" stroke="#3fb950" stroke-width="2"/>
+<rect x="518" y="208" width="60" height="60" rx="3" fill="#0f1620" stroke="#3fb950" stroke-width="2"/>
+<text x="548" y="356" class="augm-au-cap" text-anchor="middle">four corners plus the centre</text>
+<text x="432" y="384" class="augm-au-cap">Five positions × two reflections = ten.</text>
+<text x="432" y="402" class="augm-au-cap">The softmax outputs of all ten patches</text>
+<text x="432" y="420" class="augm-au-cap">are averaged into one prediction.</text>
+<rect x="796" y="86" width="340" height="348" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="818" y="118" class="augm-au-hh" fill="#bc8cff">2 · PCA colour jitter</text>
+<rect x="820" y="150" width="90" height="90" rx="6" fill="#6a5f3c" stroke="#3a3a3a" stroke-width="1.5"/>
+<rect x="920" y="150" width="90" height="90" rx="6" fill="#4c586a" stroke="#3a3a3a" stroke-width="1.5"/>
+<rect x="1020" y="150" width="90" height="90" rx="6" fill="#4c5f6a" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="865" y="262" class="augm-au-cap" text-anchor="middle">−α</text>
+<text x="965" y="262" class="augm-au-cap" text-anchor="middle">0</text>
+<text x="1065" y="262" class="augm-au-cap" text-anchor="middle">+α</text>
+<text x="818" y="296" class="augm-au-cap">Once: PCA of the 3×3 covariance of all</text>
+<text x="818" y="316" class="augm-au-cap">training-set RGB values → pᵢ, λᵢ.</text>
+<text x="818" y="336" class="augm-au-cap">Per image: add Σ αᵢλᵢpᵢ — one RGB offset,</text>
+<text x="818" y="356" class="augm-au-cap">the same for every pixel.</text>
+<text x="818" y="384" class="augm-au-cap">αᵢ ~ Gaussian, mean 0, std 0.1,</text>
+<text x="818" y="402" class="augm-au-cap">redrawn each time the image is used.</text>
+<text x="818" y="420" fill="#bc8cff" font-size="15" font-weight="700">Over 1% top-1 on its own.</text>
+<rect x="24" y="450" width="1112" height="128" rx="12" fill="#0d1117" stroke="#f0883e" stroke-width="1.5"/>
+<text x="46" y="480" fill="#f0883e" font-size="16" font-weight="700">How much of the headline rests on augmentation</text>
+<text x="46" y="506" class="augm-au-cap">By the authors' own account the crop scheme is necessary: without it the network suffers substantial overfitting, forcing much smaller networks.</text>
+<text x="46" y="530" class="augm-au-cap">Only the colour scheme carries a number — over 1% top-1. The crop scheme is justified qualitatively and never ablated.</text>
+<text x="46" y="554" class="augm-au-cap">And the headline is itself augmented: drop the ten-patch averaging and the ILSVRC-2010 result moves from 37.5% / 17.0% to 39.0% / 18.3%.</text>
+</svg>

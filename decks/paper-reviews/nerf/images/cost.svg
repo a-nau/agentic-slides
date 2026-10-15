@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.cost-t{fill:#f0f0f0;font-weight:700}.cost-m{font-family:'JetBrains Mono',monospace}.cost-d{fill:#a0a0a0}.cost-hd{fill:#3b82f6;font-weight:700;letter-spacing:.05em}</style>
+<defs>
+<marker id="cg" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="18" y="28" class="cost-hd" font-size="16">THE BILL &#8212; days to fit a scene, half a minute for every frame after</text>
+<text x="1142" y="28" text-anchor="end" class="cost-d" font-size="14">Sec. 5.3, Sec. 6.3, and the supplement</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.SS3" target="_blank" data-tiphead="Training cost" data-tip="Between 100 thousand and 300 thousand optimisation iterations, about one to two days on a single NVIDIA V100, for one scene. Each iteration renders 4096 rays with a coarse and a fine network. Adam, learning rate decaying exponentially over the run.">
+<rect x="18" y="44" width="551" height="224" rx="10" fill="#151515" stroke="#f0883e" stroke-width="1.6"/>
+<text x="42" y="74" fill="#f0883e" font-size="17" font-weight="700">Training, once per scene</text>
+<g data-tiphead="The training run" data-tip="One to two days of continuous optimisation on a single V100, for a single scene, before you can render anything at all.">
+<rect x="42" y="92" width="503" height="42" rx="7" fill="#0d1117" stroke="#f0883e" stroke-width="1.4"/>
+<text x="293" y="120" text-anchor="middle" class="cost-t" font-size="16">100k to 300k iterations, 1 to 2 days, one V100</text>
+</g>
+<text x="42" y="164" class="cost-d" font-size="15">Both numbers from Sec. 5.3. Each iteration: 4096 rays, coarse and fine.</text>
+<text x="42" y="190" class="cost-d" font-size="15">NV and SRN, the other per-scene methods, also take at least</text>
+<text x="42" y="212" class="cost-d" font-size="15">12 hours a scene; only LLFF, pretrained once, skips the fit.</text>
+<text x="42" y="240" fill="#93c5fd" font-size="15" font-weight="700">Output: about 5 MB of weights, roughly 3000 times</text>
+<text x="42" y="258" fill="#93c5fd" font-size="15" font-weight="700">smaller than the over 15 GB of grids LLFF stores per scene.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.SS2" target="_blank" data-tiphead="Render cost, and where it comes from" data-tip="Every pixel needs its own ray, and every ray needs 64 coarse queries plus 192 fine ones. At 800 by 800 that is 640 thousand rays for one frame. The paper reports between 150 and 200 million network queries per rendered image, taking about 30 seconds per frame on a V100. That figure lives in the supplementary implementation details, not the main body.">
+<rect x="589" y="44" width="551" height="224" rx="10" fill="#151515" stroke="#f85149" stroke-width="1.6"/>
+<text x="613" y="74" fill="#f85149" font-size="17" font-weight="700">Rendering, every single frame</text>
+<g data-tiphead="Rays per frame" data-tip="One ray per pixel. An 800 by 800 render needs 640 thousand of them; the real scenes need 762 thousand.">
+<rect x="613" y="92" width="112" height="50" rx="7" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="669" y="112" text-anchor="middle" class="cost-t" font-size="15">640k rays</text>
+<text x="669" y="130" text-anchor="middle" class="cost-d" font-size="14">one per pixel</text>
+</g>
+<path d="M731,117 L745,117" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#cg)" fill="none"/>
+<g data-tiphead="Queries per ray" data-tip="Sixty-four evaluations of the coarse network plus 192 of the fine network: 256 forward passes for a single pixel.">
+<rect x="755" y="92" width="150" height="50" rx="7" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="830" y="112" text-anchor="middle" class="cost-t" font-size="15">256 queries</text>
+<text x="830" y="130" text-anchor="middle" class="cost-d" font-size="14">64 + 192 per ray</text>
+</g>
+<path d="M911,117 L925,117" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#cg)" fill="none"/>
+<g data-tiphead="Queries per image" data-tip="Between 150 and 200 million network evaluations for one rendered image, which is what the wall-clock number reduces to.">
+<rect x="935" y="92" width="181" height="50" rx="7" fill="#0d1117" stroke="#f85149" stroke-width="1.6"/>
+<text x="1025" y="112" text-anchor="middle" class="cost-t" font-size="15">150 to 200M</text>
+<text x="1025" y="130" text-anchor="middle" class="cost-d" font-size="14">queries per image</text>
+</g>
+<text x="613" y="172" class="cost-t" font-size="20">about 30 seconds per frame on a V100</text>
+<text x="613" y="202" class="cost-d" font-size="15">Roughly 0.03 frames per second. A 10-second clip at 30 fps</text>
+<text x="613" y="224" class="cost-d" font-size="15">is about two and a half hours of rendering.</text>
+<text x="613" y="254" fill="#f0883e" font-size="15" font-weight="700">Provenance: this figure is in the supplement, not Sec. 6.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S6.SS3" target="_blank" data-tiphead="Time versus space" data-tip="The paper frames the comparison as time against space. LLFF processes a small dataset in under ten minutes but produces a voxel grid per input image, over 15 GB for one realistic synthetic scene. NeRF spends days up front and stores about 5 MB, which is less than its own input photographs.">
+<rect x="18" y="288" width="1122" height="140" rx="10" fill="#0d1117" stroke="#3fb950" stroke-width="1.6"/>
+<text x="42" y="318" class="cost-t" font-size="17">The paper frames it as time versus space, and wins on space</text>
+<text x="42" y="350" class="cost-d" font-size="15">LLFF: under 10 minutes to process a scene, then over 15 GB of grids for one realistic synthetic scene.</text>
+<text x="42" y="376" class="cost-d" font-size="15">NeRF: one to two days, then about 5 MB &#8212; less memory than the input images for a single scene from any of its datasets.</text>
+<text x="42" y="408" fill="#93c5fd" font-size="15" font-weight="700">What that framing quietly leaves out is the third axis: what it costs to look at the result, every time you look.</text>
+</a>
+<rect x="18" y="448" width="1122" height="134" rx="10" fill="#151515" stroke="#f85149" stroke-width="1.8"/>
+<text x="42" y="478" fill="#f85149" font-size="17" font-weight="700">Why this number, not the training time, is the one that mattered historically</text>
+<text x="42" y="508" class="cost-d" font-size="15">Training days are paid once per scene and can be left running overnight. Half a minute per frame is paid on every view,</text>
+<text x="42" y="530" class="cost-d" font-size="15">forever, which rules out anything interactive &#8212; and view synthesis is judged by moving the camera.</text>
+<text x="42" y="560" fill="#93c5fd" font-size="15" font-weight="700">The entire acceleration literature that followed NeRF is aimed at this one line of the paper.</text>
+</svg>

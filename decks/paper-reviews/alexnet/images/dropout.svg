@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>@keyframes an-drop-k000{0%,33.2%{opacity:0}33.3%,66.5%{opacity:0}66.6%,100%{opacity:0}}@keyframes an-drop-k001{0%,33.2%{opacity:0}33.3%,66.5%{opacity:0}66.6%,100%{opacity:1}}@keyframes an-drop-k010{0%,33.2%{opacity:0}33.3%,66.5%{opacity:1}66.6%,100%{opacity:0}}@keyframes an-drop-k011{0%,33.2%{opacity:0}33.3%,66.5%{opacity:1}66.6%,100%{opacity:1}}@keyframes an-drop-k100{0%,33.2%{opacity:1}33.3%,66.5%{opacity:0}66.6%,100%{opacity:0}}@keyframes an-drop-k101{0%,33.2%{opacity:1}33.3%,66.5%{opacity:0}66.6%,100%{opacity:1}}@keyframes an-drop-k110{0%,33.2%{opacity:1}33.3%,66.5%{opacity:1}66.6%,100%{opacity:0}}@keyframes an-drop-k111{0%,33.2%{opacity:1}33.3%,66.5%{opacity:1}66.6%,100%{opacity:1}}.an-drop-k000{animation:an-drop-k000 6s step-end infinite}.an-drop-k001{animation:an-drop-k001 6s step-end infinite}.an-drop-k010{animation:an-drop-k010 6s step-end infinite}.an-drop-k011{animation:an-drop-k011 6s step-end infinite}.an-drop-k100{animation:an-drop-k100 6s step-end infinite}.an-drop-k101{animation:an-drop-k101 6s step-end infinite}.an-drop-k110{animation:an-drop-k110 6s step-end infinite}.an-drop-k111{animation:an-drop-k111 6s step-end infinite}.drop-dr-cap{fill:#8a8a8a;font-size:14px}.drop-dr-cl{fill:#a0a0a0;font-size:14px}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">Two layers get dropout, and the bill arrives twice</text>
+<text x="24" y="58" class="drop-dr-cap">Each pass zeroes half of fc 6 and fc 7: a different sampled net per input, one shared set of weights. (Dropped units illustrative; rate 0.5 per the paper.)</text>
+<rect x="24" y="86" width="544" height="318" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="46" y="114" fill="#3b82f6" font-size="15" font-weight="700">TRAINING — half of each layer zeroed, resampled</text>
+<rect x="48" y="213" width="88" height="60" rx="8" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="92" y="239" class="drop-dr-cl" text-anchor="middle">conv 5</text>
+<text x="92" y="261" class="drop-dr-cl" text-anchor="middle">pooled</text>
+<path d="M136,243 L191,168" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M136,243 L191,228" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M136,243 L191,288" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M209,168 L301,198" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M209,168 L301,258" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M209,168 L301,318" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M209,228 L301,198" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M209,228 L301,258" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M209,228 L301,318" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M209,288 L301,198" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M209,288 L301,258" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M209,288 L301,318" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,198 L411,183" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,198 L411,228" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,198 L411,273" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,198 L411,318" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,258 L411,183" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,258 L411,228" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,258 L411,273" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,258 L411,318" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,318 L411,183" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,318 L411,228" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,318 L411,273" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<path d="M319,318 L411,318" stroke="#3b82f6" stroke-width="1.2" opacity="0.5" fill="none"/>
+<circle class="an-drop-k101" opacity="1" cx="200" cy="168" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k010" opacity="0"><circle cx="200" cy="168" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M196,164 L204,172 M204,164 L196,172" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k001" opacity="0" cx="200" cy="198" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k110" opacity="1"><circle cx="200" cy="198" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M196,194 L204,202 M204,194 L196,202" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k110" opacity="1" cx="200" cy="228" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k001" opacity="0"><circle cx="200" cy="228" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M196,224 L204,232 M204,224 L196,232" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k010" opacity="0" cx="200" cy="258" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k101" opacity="1"><circle cx="200" cy="258" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M196,254 L204,262 M204,254 L196,262" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k101" opacity="1" cx="200" cy="288" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k010" opacity="0"><circle cx="200" cy="288" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M196,284 L204,292 M204,284 L196,292" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k010" opacity="0" cx="200" cy="318" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k101" opacity="1"><circle cx="200" cy="318" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M196,314 L204,322 M204,314 L196,322" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k010" opacity="0" cx="310" cy="168" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k101" opacity="1"><circle cx="310" cy="168" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M306,164 L314,172 M314,164 L306,172" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k101" opacity="1" cx="310" cy="198" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k010" opacity="0"><circle cx="310" cy="198" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M306,194 L314,202 M314,194 L306,202" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k001" opacity="0" cx="310" cy="228" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k110" opacity="1"><circle cx="310" cy="228" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M306,224 L314,232 M314,224 L306,232" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k110" opacity="1" cx="310" cy="258" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k001" opacity="0"><circle cx="310" cy="258" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M306,254 L314,262 M314,254 L306,262" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k010" opacity="0" cx="310" cy="288" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k101" opacity="1"><circle cx="310" cy="288" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M306,284 L314,292 M314,284 L306,292" stroke="#666666" stroke-width="1.6"/></g>
+<circle class="an-drop-k101" opacity="1" cx="310" cy="318" r="9" fill="#3b82f6" stroke="#f0f0f0" stroke-width="1.5"/>
+<g class="an-drop-k010" opacity="0"><circle cx="310" cy="318" r="9" fill="#1a1a1a" stroke="#444444" stroke-width="1.5"/><path d="M306,314 L314,322 M314,314 L306,322" stroke="#666666" stroke-width="1.6"/></g>
+<circle cx="420" cy="183" r="9" fill="#1a1a1a" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="420" cy="228" r="9" fill="#1a1a1a" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="420" cy="273" r="9" fill="#1a1a1a" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="420" cy="318" r="9" fill="#1a1a1a" stroke="#f0f0f0" stroke-width="1.5"/>
+<text x="200" y="352" class="drop-dr-cl" text-anchor="middle">fc 6</text>
+<text x="310" y="352" class="drop-dr-cl" text-anchor="middle">fc 7</text>
+<text x="420" y="352" class="drop-dr-cl" text-anchor="middle">fc 8</text>
+<rect x="158" y="128" width="84" height="26" rx="13" fill="#10141a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="200" y="146" fill="#3b82f6" font-size="14" font-weight="700" text-anchor="middle">drop 0.5</text>
+<rect x="268" y="128" width="84" height="26" rx="13" fill="#10141a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="310" y="146" fill="#3b82f6" font-size="14" font-weight="700" text-anchor="middle">drop 0.5</text>
+<text class="an-drop-k100" opacity="1" x="200" y="384" fill="#3b82f6" font-size="14" font-weight="700" text-anchor="middle">pass 1 — one sampled net</text>
+<text class="an-drop-k010" opacity="0" x="200" y="384" fill="#3b82f6" font-size="14" font-weight="700" text-anchor="middle">pass 2 — a different half</text>
+<text class="an-drop-k001" opacity="0" x="200" y="384" fill="#3b82f6" font-size="14" font-weight="700" text-anchor="middle">pass 3 — resampled again</text>
+<text x="420" y="384" class="drop-dr-cap" text-anchor="middle">fc 8 is never dropped</text>
+<rect x="592" y="86" width="544" height="318" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="614" y="114" fill="#3fb950" font-size="15" font-weight="700">TEST — nothing is dropped; every output is halved</text>
+<rect x="616" y="213" width="88" height="60" rx="8" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="660" y="239" class="drop-dr-cl" text-anchor="middle">conv 5</text>
+<text x="660" y="261" class="drop-dr-cl" text-anchor="middle">pooled</text>
+<path d="M704,243 L759,168" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M704,243 L759,198" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M704,243 L759,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M704,243 L759,258" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M704,243 L759,288" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M704,243 L759,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,168 L869,168" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,168 L869,198" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,168 L869,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,168 L869,258" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,168 L869,288" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,168 L869,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,198 L869,168" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,198 L869,198" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,198 L869,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,198 L869,258" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,198 L869,288" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,198 L869,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,228 L869,168" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,228 L869,198" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,228 L869,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,228 L869,258" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,228 L869,288" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,228 L869,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,258 L869,168" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,258 L869,198" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,258 L869,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,258 L869,258" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,258 L869,288" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,258 L869,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,288 L869,168" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,288 L869,198" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,288 L869,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,288 L869,258" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,288 L869,288" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,288 L869,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,318 L869,168" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,318 L869,198" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,318 L869,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,318 L869,258" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,318 L869,288" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M777,318 L869,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,168 L979,183" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,168 L979,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,168 L979,273" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,168 L979,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,198 L979,183" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,198 L979,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,198 L979,273" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,198 L979,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,228 L979,183" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,228 L979,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,228 L979,273" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,228 L979,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,258 L979,183" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,258 L979,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,258 L979,273" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,258 L979,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,288 L979,183" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,288 L979,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,288 L979,273" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,288 L979,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,318 L979,183" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,318 L979,228" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,318 L979,273" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<path d="M887,318 L979,318" stroke="#3fb950" stroke-width="1.2" opacity="0.2" fill="none"/>
+<circle cx="768" cy="168" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="768" cy="198" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="768" cy="228" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="768" cy="258" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="768" cy="288" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="768" cy="318" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="878" cy="168" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="878" cy="198" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="878" cy="228" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="878" cy="258" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="878" cy="288" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="878" cy="318" r="9" fill="#3fb950" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="988" cy="183" r="9" fill="#1a1a1a" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="988" cy="228" r="9" fill="#1a1a1a" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="988" cy="273" r="9" fill="#1a1a1a" stroke="#f0f0f0" stroke-width="1.5"/>
+<circle cx="988" cy="318" r="9" fill="#1a1a1a" stroke="#f0f0f0" stroke-width="1.5"/>
+<text x="768" y="352" class="drop-dr-cl" text-anchor="middle">fc 6</text>
+<text x="878" y="352" class="drop-dr-cl" text-anchor="middle">fc 7</text>
+<text x="988" y="352" class="drop-dr-cl" text-anchor="middle">fc 8</text>
+<rect x="726" y="128" width="84" height="26" rx="13" fill="#0f1620" stroke="#3fb950" stroke-width="1.5"/>
+<text x="768" y="146" fill="#3fb950" font-size="14" font-weight="700" text-anchor="middle">× 0.5</text>
+<rect x="836" y="128" width="84" height="26" rx="13" fill="#0f1620" stroke="#3fb950" stroke-width="1.5"/>
+<text x="878" y="146" fill="#3fb950" font-size="14" font-weight="700" text-anchor="middle">× 0.5</text>
+<text x="878" y="384" class="drop-dr-cap" text-anchor="middle">approximates the geometric mean over all sampled nets</text>
+<rect x="24" y="416" width="1112" height="160" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="46" y="448" fill="#3b82f6" font-size="16" font-weight="700">Where it is applied, what it costs, and where it stands now</text>
+<text x="46" y="478" class="drop-dr-cap">Placement: the first two fully-connected layers only. Those layers hold the bulk of the 60 million parameters, which is where the overfitting was.</text>
+<text x="46" y="504" class="drop-dr-cap">Cost: dropout roughly doubles the number of iterations required to converge — the half of the trade that summaries usually drop.</text>
+<text x="46" y="530" class="drop-dr-cap">Evidence: qualitative only. The paper says that without dropout the network exhibits substantial overfitting, and never quantifies the gain.</text>
+<text x="46" y="556" class="drop-dr-cap">Later practice: inverted dropout doubles the kept units in training, so the test network runs unchanged; vision now leans on augmentation and normalisation.</text>
+</svg>

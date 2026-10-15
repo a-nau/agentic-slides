@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<defs>
+<marker id="la" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8a8a8a"/></marker>
+</defs>
+<style>.lrn-ln-cap{fill:#8a8a8a;font-size:14px}.lrn-ln-f{font-family:'JetBrains Mono',monospace;fill:#f0f0f0;font-size:26px}.lrn-ln-lbl{fill:#f0f0f0;font-weight:700;font-size:15px}.lrn-ln-sym{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">One unit, a window of five adjacent kernel maps, and one division</text>
+<text x="24" y="58" class="lrn-ln-cap">a: post-ReLU activity of kernel map i at pixel (x, y). b: its normalised value. j: the neighbouring maps, by an index order fixed arbitrarily before training.</text>
+<rect x="24" y="86" width="316" height="314" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="46" y="118" fill="#3b82f6" font-size="15" font-weight="700">The neighbourhood</text>
+<rect x="90" y="140" width="26" height="22" rx="4" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="1.5"/>
+<rect x="90" y="168" width="26" height="22" rx="4" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="1.5"/>
+<rect x="90" y="196" width="26" height="22" rx="4" fill="#111824" stroke="#3b82f6" stroke-width="1.8"/>
+<rect x="90" y="224" width="26" height="22" rx="4" fill="#111824" stroke="#3b82f6" stroke-width="1.8"/>
+<rect x="90" y="252" width="26" height="22" rx="4" fill="#3b82f6" stroke="#93c5fd" stroke-width="1.8"/>
+<rect x="90" y="280" width="26" height="22" rx="4" fill="#111824" stroke="#3b82f6" stroke-width="1.8"/>
+<rect x="90" y="308" width="26" height="22" rx="4" fill="#111824" stroke="#3b82f6" stroke-width="1.8"/>
+<rect x="90" y="336" width="26" height="22" rx="4" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="1.5"/>
+<text x="40" y="269" class="lrn-ln-cap">map i</text>
+<path d="M76,264 L86,264" fill="none" stroke="#8a8a8a" stroke-width="1.5" marker-end="url(#la)"/>
+<path d="M128,196 L136,196 L136,330 L128,330" fill="none" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="148" y="252" class="lrn-ln-lbl">n = 5 adjacent</text>
+<text x="148" y="274" class="lrn-ln-lbl">kernel maps</text>
+<text x="46" y="384" class="lrn-ln-cap">all at the very same pixel (x, y)</text>
+<text x="378" y="196" class="lrn-ln-f">b  =</text>
+<text x="631" y="172" class="lrn-ln-f" text-anchor="middle">a</text>
+<path d="M470,184 L792,184" stroke="#f0f0f0" stroke-width="2"/>
+<text x="478" y="222" class="lrn-ln-f">(</text>
+<text x="506" y="222" class="lrn-ln-f" fill="#3b82f6">k</text>
+<text x="534" y="222" class="lrn-ln-f">+</text>
+<text x="566" y="222" class="lrn-ln-f" fill="#3fb950">α</text>
+<text x="606" y="222" class="lrn-ln-f" fill="#f0883e">Σ</text>
+<text x="642" y="222" class="lrn-ln-f" fill="#f0883e">a(j)²</text>
+<text x="736" y="222" class="lrn-ln-f">)</text>
+<text x="764" y="206" font-family="'JetBrains Mono',monospace" font-size="19" fill="#bc8cff" font-weight="700">β</text>
+<text x="380" y="286" class="lrn-ln-sym" fill="#3b82f6">k = 2</text>
+<text x="560" y="286" class="lrn-ln-cap">a floor, so the divisor stays positive when the neighbours are silent</text>
+<text x="380" y="316" class="lrn-ln-sym" fill="#3fb950">α = 10⁻⁴</text>
+<text x="560" y="316" class="lrn-ln-cap">how hard the neighbours are allowed to suppress this unit</text>
+<text x="380" y="346" class="lrn-ln-sym" fill="#f0883e">Σ over n = 5</text>
+<text x="560" y="346" class="lrn-ln-cap">squared activations of the 5 adjacent kernel maps at the same pixel</text>
+<text x="380" y="376" class="lrn-ln-sym" fill="#bc8cff">β = 0.75</text>
+<text x="560" y="376" class="lrn-ln-cap">compresses the divisor — at 1 it would be plain division</text>
+<rect x="24" y="400" width="1112" height="176" rx="12" fill="#0d1117" stroke="#f0883e" stroke-width="1.5"/>
+<text x="46" y="432" fill="#f0883e" font-size="16" font-weight="700">Reported gain, and why nobody computes this in 2026</text>
+<text x="46" y="464" class="lrn-ln-cap">Paper's claim: 1.4 and 1.2 points lower top-1 / top-5 error than the same net without LRN, plus a four-layer CIFAR-10 net going from 13% to 11% test error.</text>
+<text x="46" y="492" class="lrn-ln-cap">Caveat: k, n, α and β were themselves tuned on a validation set, and the gain is reported from single runs, with no seeds or error bars.</text>
+<text x="46" y="520" class="lrn-ln-cap">Since then: the VGG authors report the same normalisation gives no improvement on ILSVRC while costing memory and compute, and later</text>
+<text x="46" y="548" class="lrn-ln-cap">normalisation layers such as batch norm replaced it (background) — data statistics, not a hand-tuned divisor over neighbouring kernels.</text>
+</svg>

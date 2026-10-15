@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<defs>
+<marker id="da" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#f0883e"/></marker>
+</defs>
+<style>.dept-dp-cap{fill:#8a8a8a;font-size:14px}.dept-dp-bt{fill:#f0f0f0;font-weight:700;font-size:15px}.dept-dp-bs{fill:#8a8a8a;font-size:14px}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">Delete one middle layer, lose about 2% top-1 — that is the whole study</text>
+<text x="24" y="58" class="dept-dp-cap">Section 7: removing any of the middle layers results in a loss of about 2% for the top-1 performance of the network. That is the whole experiment.</text>
+<rect x="40" y="100" width="120" height="70" rx="10" fill="#10141a" stroke="#3b82f6" stroke-width="2"/>
+<text x="100" y="128" class="dept-dp-bt" text-anchor="middle">conv 1</text>
+<text x="100" y="150" class="dept-dp-bs" text-anchor="middle">&lt;1% of params</text>
+<rect x="176" y="100" width="120" height="70" rx="10" fill="#10141a" stroke="#3b82f6" stroke-width="2"/>
+<text x="236" y="128" class="dept-dp-bt" text-anchor="middle">conv 2</text>
+<text x="236" y="150" class="dept-dp-bs" text-anchor="middle">&lt;1% of params</text>
+<rect x="312" y="100" width="120" height="70" rx="10" fill="#10141a" stroke="#3b82f6" stroke-width="2"/>
+<text x="372" y="128" class="dept-dp-bt" text-anchor="middle">conv 3</text>
+<text x="372" y="150" class="dept-dp-bs" text-anchor="middle">&lt;1% of params</text>
+<g data-tiphead="The deleted layer" data-tip="The paper says removing ANY middle layer costs about 2% top-1. It does not report which layers were tried, how many, or whether anything was re-tuned afterwards.">
+<g><rect x="448" y="100" width="120" height="70" rx="10" fill="#1a1a1a" stroke="#f0883e" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="508" y="128" fill="#8a8a8a" font-weight="700" font-size="15" text-anchor="middle">conv 4</text>
+<text x="508" y="150" fill="#6a6a6a" font-size="14" text-anchor="middle">&lt;1% of params</text>
+<path d="M458,110 L558,160 M558,110 L458,160" stroke="#f0883e" stroke-width="2" opacity="0.7"/></g>
+<text x="508" y="188" fill="#f0883e" font-size="14" font-weight="700" text-anchor="middle">removed</text>
+</g>
+<rect x="584" y="100" width="120" height="70" rx="10" fill="#10141a" stroke="#3b82f6" stroke-width="2"/>
+<text x="644" y="128" class="dept-dp-bt" text-anchor="middle">conv 5</text>
+<text x="644" y="150" class="dept-dp-bs" text-anchor="middle">&lt;1% of params</text>
+<rect x="720" y="100" width="120" height="70" rx="10" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="780" y="128" class="dept-dp-bt" text-anchor="middle">fc 6</text>
+<text x="780" y="150" class="dept-dp-bs" text-anchor="middle">most params</text>
+<rect x="856" y="100" width="120" height="70" rx="10" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="916" y="128" class="dept-dp-bt" text-anchor="middle">fc 7</text>
+<text x="916" y="150" class="dept-dp-bs" text-anchor="middle">most params</text>
+<rect x="992" y="100" width="120" height="70" rx="10" fill="#1a1a1a" stroke="#f0f0f0" stroke-width="2"/>
+<text x="1052" y="128" class="dept-dp-bt" text-anchor="middle">fc 8</text>
+<text x="1052" y="150" class="dept-dp-bs" text-anchor="middle">1000-way</text>
+<path d="M576,196 L640,222" fill="none" stroke="#f0883e" stroke-width="2" marker-end="url(#da)"/>
+<rect x="652" y="196" width="300" height="52" rx="10" fill="#241a10" stroke="#f0883e" stroke-width="1.5"/>
+<text x="672" y="228" fill="#f0883e" font-size="17" font-weight="700">about 2% worse top-1</text>
+<rect x="24" y="278" width="548" height="164" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="46" y="310" fill="#3b82f6" font-size="16" font-weight="700">Why the probe carries any weight at all</text>
+<text x="46" y="342" class="dept-dp-cap">Each convolutional layer holds no more than 1% of the model's</text>
+<text x="46" y="364" class="dept-dp-cap">parameters, so a 2% top-1 drop is not simply lost capacity.</text>
+<text x="46" y="396" class="dept-dp-cap">Deleting a layer costs far more than its parameter share —</text>
+<text x="46" y="418" class="dept-dp-cap">that asymmetry is the real content of the claim.</text>
+<rect x="592" y="278" width="544" height="164" rx="12" fill="#0d1117" stroke="#f0883e" stroke-width="1.5"/>
+<text x="614" y="310" fill="#f0883e" font-size="16" font-weight="700">Why it is not a depth study</text>
+<text x="614" y="342" class="dept-dp-cap">One layer deleted, one number, no seeds and no error bars.</text>
+<text x="614" y="364" class="dept-dp-cap">No re-tuning is reported, and the only deeper nets (§6)</text>
+<text x="614" y="386" class="dept-dp-cap">also change the training data — no controlled comparison.</text>
+<text x="614" y="418" class="dept-dp-cap">It licenses depth matters, not more depth is better.</text>
+<rect x="24" y="460" width="1112" height="118" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="46" y="490" fill="#3b82f6" font-size="16" font-weight="700">What settled it afterwards</text>
+<text x="46" y="520" class="dept-dp-cap">VGG ran the sweep this paper skipped — depth varied from eleven to nineteen weight layers with everything else fixed — and ResNet showed</text>
+<text x="46" y="548" class="dept-dp-cap">that plain stacks stop improving past a point without residual connections. Read the sentence as a hypothesis the field then tested.</text>
+</svg>

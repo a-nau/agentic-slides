@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<defs>
+<marker id="taskarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+</defs>
+<style>.task-tk-cap{fill:#8a8a8a;font-size:14px}.task-tk-lb{fill:#f0f0f0;font-weight:700;font-size:15px}.task-tk-hd{fill:#3b82f6;font-size:15px;font-weight:700}.task-tk-val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;fill:#93c5fd}.task-tk-sm{fill:#8a8a8a;font-size:14px}</style>
+<rect width="1160" height="600" fill="#111111"/>
+
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">The task: one photograph in, one ranked list of 1000 classes out</text>
+<text x="24" y="58" class="task-tk-cap">Labels follow the leopard example the paper singles out in Figure 4. Bar lengths are illustrative; the error rates are not.</text>
+
+<!-- ── INPUT ───────────────────────────────────────────────────────────── -->
+<g data-tiphead="The input" data-tip="Variable-resolution web photo, shorter side rescaled to 256 and centre-cropped to 256×256. The only other pre-processing is subtracting the training-set mean pixel; the net sees centred raw RGB.">
+<rect x="24" y="80" width="268" height="440" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/>
+<g>
+  <rect x="62" y="152" width="192" height="192" rx="6" fill="#1c2430"/>
+  <ellipse cx="158" cy="330" rx="96" ry="30" fill="#263040"/>
+  <path d="M112,214 L108,182 L136,200 Z" fill="#8a6a32"/>
+  <path d="M204,214 L208,182 L180,200 Z" fill="#8a6a32"/>
+  <ellipse cx="158" cy="252" rx="58" ry="52" fill="#a07c3c"/>
+  <ellipse cx="158" cy="316" rx="46" ry="34" fill="#8a6a32"/>
+  <ellipse cx="140" cy="246" rx="9" ry="11" fill="#0f1218"/>
+  <ellipse cx="176" cy="246" rx="9" ry="11" fill="#0f1218"/>
+  <ellipse cx="158" cy="276" rx="18" ry="12" fill="#d8c39a"/>
+  <path d="M150,270 L166,270 L158,278 Z" fill="#4a3a1c"/>
+  <circle cx="120" cy="222" r="6" fill="#5a4520"/><circle cx="196" cy="222" r="6" fill="#5a4520"/>
+  <circle cx="112" cy="256" r="6" fill="#5a4520"/><circle cx="204" cy="256" r="6" fill="#5a4520"/>
+  <circle cx="124" cy="288" r="6" fill="#5a4520"/><circle cx="192" cy="288" r="6" fill="#5a4520"/>
+  <circle cx="158" cy="216" r="6" fill="#5a4520"/><circle cx="136" cy="318" r="6" fill="#5a4520"/>
+  <circle cx="180" cy="318" r="6" fill="#5a4520"/>
+  <rect x="82" y="172" width="152" height="152" rx="4" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6 5"/>
+</g>
+<text x="46" y="112" class="task-tk-hd">INPUT — one image</text>
+<text x="46" y="134" class="task-tk-cap">an ILSVRC test photograph</text>
+<text x="46" y="368" class="task-tk-sm">dashed = the 224×224 crop</text>
+<text x="46" y="410" class="task-tk-lb">256×256, mean removed</text>
+<text x="46" y="432" class="task-tk-cap">no other pre-processing</text>
+<text x="46" y="470" class="task-tk-lb">150,528 numbers</text>
+<text x="46" y="492" class="task-tk-cap">224 × 224 × 3 raw values</text>
+</g>
+
+<path d="M300,300 L336,300" fill="none" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#taskarrow)"/>
+
+<!-- ── THE NETWORK ─────────────────────────────────────────────────────── -->
+<g data-tiphead="The network, in one block" data-tip="Eight learned layers — five conv, three fully-connected — ending in a 1000-way softmax. 60 million parameters, 650,000 neurons, plain supervised backprop, no unsupervised pre-training.">
+<rect x="348" y="80" width="404" height="440" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<g>
+  <rect x="372" y="160" width="54" height="118" rx="5" fill="#141c2a" stroke="#3b82f6" stroke-width="1.3"/>
+  <rect x="434" y="168" width="50" height="102" rx="5" fill="#141c2a" stroke="#3b82f6" stroke-width="1.3"/>
+  <rect x="492" y="176" width="46" height="86" rx="5" fill="#141c2a" stroke="#3b82f6" stroke-width="1.3"/>
+  <rect x="546" y="176" width="46" height="86" rx="5" fill="#141c2a" stroke="#3b82f6" stroke-width="1.3"/>
+  <rect x="600" y="180" width="42" height="78" rx="5" fill="#141c2a" stroke="#3b82f6" stroke-width="1.3"/>
+  <rect x="656" y="188" width="20" height="62" rx="4" fill="#2a2a2a" stroke="#8a8a8a" stroke-width="1.2"/>
+  <rect x="684" y="188" width="20" height="62" rx="4" fill="#2a2a2a" stroke="#8a8a8a" stroke-width="1.2"/>
+  <rect x="712" y="200" width="14" height="38" rx="4" fill="#20304a" stroke="#3b82f6" stroke-width="1.2"/>
+</g>
+<text x="370" y="112" class="task-tk-hd">ONE NETWORK — eight learned layers</text>
+<text x="370" y="134" class="task-tk-cap">five convolutional, then three fully-connected</text>
+<text x="370" y="296" class="task-tk-cap">conv 1 – 5 in green · fc 6, 7, 8 in grey</text>
+<text x="370" y="336" class="task-tk-lb">60 million parameters · 650,000 neurons</text>
+<text x="370" y="358" class="task-tk-cap">purely supervised, no pre-training</text>
+<text x="370" y="396" class="task-tk-lb">two NVIDIA GTX 580, 3 GB each</text>
+<text x="370" y="418" class="task-tk-cap">that memory limit is why the net is cut in half</text>
+<text x="370" y="456" class="task-tk-lb">five to six days, about 90 epochs</text>
+<text x="370" y="478" class="task-tk-cap">over the 1.2 million training images</text>
+</g>
+
+<path d="M760,300 L796,300" fill="none" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#taskarrow)"/>
+
+<!-- ── OUTPUT ──────────────────────────────────────────────────────────── -->
+<g data-tiphead="The output, and how it is graded" data-tip="A probability for each of the 1000 classes. Top-1 counts an image wrong when the argmax is not the true class; top-5 only when the true class is absent from the five most probable.">
+<rect x="808" y="80" width="328" height="440" rx="12" fill="#0d1117" stroke="#f0883e" stroke-width="1.5"/>
+<g>
+  <rect x="830" y="182" width="242" height="18" rx="4" fill="#3b82f6"/>
+  <rect x="830" y="266" width="120" height="14" rx="4" fill="#3a3a3a"/>
+  <rect x="830" y="314" width="86" height="14" rx="4" fill="#3a3a3a"/>
+  <rect x="830" y="362" width="58" height="14" rx="4" fill="#3a3a3a"/>
+  <rect x="830" y="410" width="36" height="14" rx="4" fill="#3a3a3a"/>
+</g>
+<path d="M830,440 L1114,440" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="830" y="112" fill="#f0883e" font-size="15" font-weight="700">OUTPUT — 1000-way softmax</text>
+<text x="830" y="134" class="task-tk-cap">the five most probable labels</text>
+<text x="830" y="172" class="task-tk-lb">leopard</text>
+<text x="830" y="220" class="task-tk-sm">the correct label — inside the top five</text>
+<text x="830" y="256" class="task-tk-cap">jaguar</text>
+<text x="830" y="304" class="task-tk-cap">cheetah</text>
+<text x="830" y="352" class="task-tk-cap">snow leopard</text>
+<text x="830" y="400" class="task-tk-cap">Egyptian cat</text>
+<text x="830" y="468" class="task-tk-lb">top-5 error — true label absent</text>
+<text x="830" y="492" class="task-tk-val">17.0%<tspan class="task-tk-cap" font-weight="400" dx="8">this CNN, ILSVRC-2010</tspan></text>
+<text x="830" y="512" class="task-tk-cap">25.7% for the best published result</text>
+</g>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.tf-tok{fill:#f0f0f0;font-size:15px;font-weight:600}.tf-d{fill:#a0a0a0}.tf-lab{font-weight:700;letter-spacing:.06em;font-size:12.5px}.tf-m{font-family:'JetBrains Mono',monospace}.tf-anim{animation-duration:12s;animation-iteration-count:infinite;animation-timing-function:linear}.tf-s1{animation-name:tf-s1}.tf-s2{animation-name:tf-s2}.tf-s3{animation-name:tf-s3}.tf-s4{animation-name:tf-s4}.tf-s5{animation-name:tf-s5}@keyframes tf-s1{0%,4%{opacity:.12}8%,92%{opacity:1}97%,100%{opacity:.12}}@keyframes tf-s2{0%,18%{opacity:.12}22%,92%{opacity:1}97%,100%{opacity:.12}}@keyframes tf-s3{0%,32%{opacity:.12}36%,92%{opacity:1}97%,100%{opacity:.12}}@keyframes tf-s4{0%,46%{opacity:.12}50%,92%{opacity:1}97%,100%{opacity:.12}}@keyframes tf-s5{0%,60%{opacity:.12}64%,92%{opacity:1}97%,100%{opacity:.12}}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<defs><marker id="tf-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3b82f6"/></marker><marker id="tf-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#3fb950"/></marker></defs>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank">
+<rect x="16" y="16" width="628" height="568" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="40" y="48" class="tf-lab" fill="#3b82f6">TRAINING: THE WHOLE REFERENCE, ONE PASS</text>
+<text x="40" y="80" class="tf-d" font-size="12">trained to predict</text>
+<rect x="60" y="88" width="96" height="34" rx="6" fill="#0f1f16" stroke="#3fb950"/><text x="108" y="111" text-anchor="middle" class="tf-tok">Das</text>
+<rect x="172" y="88" width="96" height="34" rx="6" fill="#0f1f16" stroke="#3fb950"/><text x="220" y="111" text-anchor="middle" class="tf-tok">Gesetz</text>
+<rect x="284" y="88" width="96" height="34" rx="6" fill="#0f1f16" stroke="#3fb950"/><text x="332" y="111" text-anchor="middle" class="tf-tok">wird</text>
+<rect x="396" y="88" width="96" height="34" rx="6" fill="#0f1f16" stroke="#3fb950"/><text x="444" y="111" text-anchor="middle" class="tf-tok">nie</text>
+<rect x="508" y="88" width="96" height="34" rx="6" fill="#0f1f16" stroke="#3fb950"/><text x="556" y="111" text-anchor="middle" class="tf-tok">perfekt</text>
+<line x1="108" y1="174" x2="108" y2="126" stroke="#3fb950" stroke-width="1.6" marker-end="url(#tf-ag)"/>
+<line x1="220" y1="174" x2="220" y2="126" stroke="#3fb950" stroke-width="1.6" marker-end="url(#tf-ag)"/>
+<line x1="332" y1="174" x2="332" y2="126" stroke="#3fb950" stroke-width="1.6" marker-end="url(#tf-ag)"/>
+<line x1="444" y1="174" x2="444" y2="126" stroke="#3fb950" stroke-width="1.6" marker-end="url(#tf-ag)"/>
+<line x1="556" y1="174" x2="556" y2="126" stroke="#3fb950" stroke-width="1.6" marker-end="url(#tf-ag)"/>
+<text x="116" y="154" class="tf-d tf-m" font-size="11">i=1</text><text x="228" y="154" class="tf-d tf-m" font-size="11">i=2</text><text x="340" y="154" class="tf-d tf-m" font-size="11">i=3</text><text x="452" y="154" class="tf-d tf-m" font-size="11">i=4</text><text x="564" y="154" class="tf-d tf-m" font-size="11">i=5</text>
+<rect x="60" y="178" width="96" height="34" rx="6" fill="#101824" stroke="#20304a"/><text x="108" y="201" text-anchor="middle" class="tf-tok tf-m" fill="#93c5fd">&lt;s&gt;</text>
+<rect x="172" y="178" width="96" height="34" rx="6" fill="#101824" stroke="#20304a"/><text x="220" y="201" text-anchor="middle" class="tf-tok">Das</text>
+<rect x="284" y="178" width="96" height="34" rx="6" fill="#101824" stroke="#20304a"/><text x="332" y="201" text-anchor="middle" class="tf-tok">Gesetz</text>
+<rect x="396" y="178" width="96" height="34" rx="6" fill="#101824" stroke="#20304a"/><text x="444" y="201" text-anchor="middle" class="tf-tok">wird</text>
+<rect x="508" y="178" width="96" height="34" rx="6" fill="#101824" stroke="#20304a"/><text x="556" y="201" text-anchor="middle" class="tf-tok">nie</text>
+<text x="40" y="234" class="tf-d" font-size="12">decoder input = the reference shifted right by one</text>
+<text x="40" y="276" class="tf-lab" fill="#f0883e">THE MASK: WHICH INPUTS POSITION i MAY READ</text>
+<text x="248" y="306" text-anchor="middle" class="tf-d tf-m" font-size="11">&lt;s&gt;</text><text x="284" y="306" text-anchor="middle" class="tf-d" font-size="11">Das</text><text x="320" y="306" text-anchor="middle" class="tf-d" font-size="11">Gesetz</text><text x="356" y="306" text-anchor="middle" class="tf-d" font-size="11">wird</text><text x="392" y="306" text-anchor="middle" class="tf-d" font-size="11">nie</text>
+<text x="222" y="337" text-anchor="end" class="tf-d tf-m" font-size="11">i=1</text><text x="222" y="373" text-anchor="end" class="tf-d tf-m" font-size="11">i=2</text><text x="222" y="409" text-anchor="end" class="tf-d tf-m" font-size="11">i=3</text><text x="222" y="445" text-anchor="end" class="tf-d tf-m" font-size="11">i=4</text><text x="222" y="481" text-anchor="end" class="tf-d tf-m" font-size="11">i=5</text>
+<g stroke="#111111" stroke-width="2">
+<rect x="230" y="316" width="36" height="36" fill="#1d3b66"/><rect x="266" y="316" width="36" height="36" fill="#2a1414"/><rect x="302" y="316" width="36" height="36" fill="#2a1414"/><rect x="338" y="316" width="36" height="36" fill="#2a1414"/><rect x="374" y="316" width="36" height="36" fill="#2a1414"/>
+<rect x="230" y="352" width="36" height="36" fill="#1d3b66"/><rect x="266" y="352" width="36" height="36" fill="#1d3b66"/><rect x="302" y="352" width="36" height="36" fill="#2a1414" stroke="#f85149"/><rect x="338" y="352" width="36" height="36" fill="#2a1414"/><rect x="374" y="352" width="36" height="36" fill="#2a1414"/>
+<rect x="230" y="388" width="36" height="36" fill="#1d3b66"/><rect x="266" y="388" width="36" height="36" fill="#1d3b66"/><rect x="302" y="388" width="36" height="36" fill="#1d3b66"/><rect x="338" y="388" width="36" height="36" fill="#2a1414"/><rect x="374" y="388" width="36" height="36" fill="#2a1414"/>
+<rect x="230" y="424" width="36" height="36" fill="#1d3b66"/><rect x="266" y="424" width="36" height="36" fill="#1d3b66"/><rect x="302" y="424" width="36" height="36" fill="#1d3b66"/><rect x="338" y="424" width="36" height="36" fill="#1d3b66"/><rect x="374" y="424" width="36" height="36" fill="#2a1414"/>
+<rect x="230" y="460" width="36" height="36" fill="#1d3b66"/><rect x="266" y="460" width="36" height="36" fill="#1d3b66"/><rect x="302" y="460" width="36" height="36" fill="#1d3b66"/><rect x="338" y="460" width="36" height="36" fill="#1d3b66"/><rect x="374" y="460" width="36" height="36" fill="#1d3b66"/>
+</g>
+<g fill="#f85149" font-size="13" text-anchor="middle"><text x="284" y="339">x</text><text x="320" y="339">x</text><text x="356" y="339">x</text><text x="392" y="339">x</text><text x="320" y="375" font-weight="700">x</text><text x="356" y="375">x</text><text x="392" y="375">x</text><text x="356" y="411">x</text><text x="392" y="411">x</text><text x="392" y="447">x</text></g>
+<text x="430" y="340" class="tf-d" font-size="12"><tspan fill="#3b82f6">blue</tspan>: allowed, may read</text>
+<text x="430" y="360" class="tf-d" font-size="12"><tspan fill="#f85149">x</tspan>: blocked, masked out</text>
+<text x="430" y="388" class="tf-d" font-size="12">diagonal: its own input,</text>
+<text x="430" y="406" class="tf-d" font-size="12">token i-1, safe to read</text>
+<text x="40" y="530" class="tf-d" font-size="13">Without the mask, position 2 could read Gesetz at input 3, the very</text>
+<text x="40" y="550" class="tf-d" font-size="13">word it is trained to predict, and learn to copy instead of translate.</text>
+<text x="40" y="570" class="tf-d" font-size="13">With it, one pass trains all five predictions without leaking answers.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3" target="_blank">
+<rect x="660" y="16" width="484" height="568" rx="12" fill="#0d1117" stroke="#3fb950" stroke-width="1.6"/>
+<text x="684" y="48" class="tf-lab" fill="#3fb950">INFERENCE: NO REFERENCE, ONE TOKEN PER STEP</text>
+<text x="684" y="80" class="tf-d" font-size="12">written so far</text><text x="1040" y="80" class="tf-d" font-size="12">next token</text>
+<g class="tf-anim tf-s1" opacity="1"><text x="684" y="113" class="tf-d tf-m" font-size="11">step 1</text><rect x="736" y="92" width="270" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="750" y="113" class="tf-m" fill="#f0f0f0" font-size="13">&lt;s&gt;</text><line x1="1010" y1="108" x2="1036" y2="108" stroke="#3fb950" stroke-width="1.6" marker-end="url(#tf-ag)"/><rect x="1040" y="92" width="88" height="32" rx="6" fill="#0f1f16" stroke="#3fb950"/><text x="1084" y="113" text-anchor="middle" class="tf-tok" font-size="13">Das</text></g>
+<g class="tf-anim tf-s2" opacity="1"><text x="684" y="169" class="tf-d tf-m" font-size="11">step 2</text><rect x="736" y="148" width="270" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="750" y="169" class="tf-m" fill="#f0f0f0" font-size="13">&lt;s&gt; Das</text><line x1="1010" y1="164" x2="1036" y2="164" stroke="#3fb950" stroke-width="1.6" marker-end="url(#tf-ag)"/><rect x="1040" y="148" width="88" height="32" rx="6" fill="#0f1f16" stroke="#3fb950"/><text x="1084" y="169" text-anchor="middle" class="tf-tok" font-size="13">Gesetz</text></g>
+<g class="tf-anim tf-s3" opacity="1"><text x="684" y="225" class="tf-d tf-m" font-size="11">step 3</text><rect x="736" y="204" width="270" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="750" y="225" class="tf-m" fill="#f0f0f0" font-size="13">&lt;s&gt; Das Gesetz</text><line x1="1010" y1="220" x2="1036" y2="220" stroke="#3fb950" stroke-width="1.6" marker-end="url(#tf-ag)"/><rect x="1040" y="204" width="88" height="32" rx="6" fill="#0f1f16" stroke="#3fb950"/><text x="1084" y="225" text-anchor="middle" class="tf-tok" font-size="13">wird</text></g>
+<g class="tf-anim tf-s4" opacity="1"><text x="684" y="281" class="tf-d tf-m" font-size="11">step 4</text><rect x="736" y="260" width="270" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="750" y="281" class="tf-m" fill="#f0f0f0" font-size="13">&lt;s&gt; Das Gesetz wird</text><line x1="1010" y1="276" x2="1036" y2="276" stroke="#3fb950" stroke-width="1.6" marker-end="url(#tf-ag)"/><rect x="1040" y="260" width="88" height="32" rx="6" fill="#0f1f16" stroke="#3fb950"/><text x="1084" y="281" text-anchor="middle" class="tf-tok" font-size="13">nie</text></g>
+<g class="tf-anim tf-s5" opacity="1"><text x="684" y="337" class="tf-d tf-m" font-size="11">step 5</text><rect x="736" y="316" width="270" height="32" rx="6" fill="#101824" stroke="#20304a"/><text x="750" y="337" class="tf-m" fill="#f0f0f0" font-size="13">&lt;s&gt; Das Gesetz wird nie</text><line x1="1010" y1="332" x2="1036" y2="332" stroke="#3fb950" stroke-width="1.6" marker-end="url(#tf-ag)"/><rect x="1040" y="316" width="88" height="32" rx="6" fill="#0f1f16" stroke="#3fb950"/><text x="1084" y="337" text-anchor="middle" class="tf-tok" font-size="13">perfekt</text></g>
+<text x="684" y="400" class="tf-d" font-size="13">Each step runs the decoder again and feeds the</text>
+<text x="684" y="420" class="tf-d" font-size="13">new token back in. The paper: at each step the</text>
+<text x="684" y="440" class="tf-d" font-size="13">model consumes the previously generated symbols</text>
+<text x="684" y="460" class="tf-d" font-size="13">as additional input when generating the next.</text>
+<text x="684" y="500" fill="#f0f0f0" font-size="13" font-weight="700">So decoding stays sequential in the output length;</text>
+<text x="684" y="520" fill="#f0f0f0" font-size="13" font-weight="700">the one-pass shortcut exists only in training,</text>
+<text x="684" y="540" fill="#f0f0f0" font-size="13" font-weight="700">where the reference translation is known.</text>
+</a>
+<text x="1136" y="576" text-anchor="end" fill="#f0883e" font-size="11.5">German tokens illustrative; &lt;s&gt; marks the start of the output</text>
+</svg>

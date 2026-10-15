@@ -1,0 +1,141 @@
+<script>
+/* Marp directive compatibility for Quarto/reveal.js decks (slide-level 0).
+ *
+ * Pandoc keeps HTML comments in the output, so Marp's comment directives are
+ * still in each slide's <section>. Apply them at load:
+ *   _class / class (global from here on), _paginate / paginate,
+ *   _header / header, _footer / footer
+ * Every other comment becomes reveal speaker notes (Marp's behaviour).
+ * Slides also get Marp's numeric ids, so `section[id]` tooling keeps working. */
+(function () {
+  // Quarto 1.10's reveal math plugin drives MathJax through the v2 API
+  // (MathJax.Hub.Config/Queue) even for MathJax 3/4, which throws on load
+  // (also with Quarto's own default MathJax 4). MathJax 3+ typesets the
+  // whole page itself, so a no-op Hub that only runs queued functions (the
+  // plugin's relayout) is enough. MathJax loads after this script runs.
+  var mj = window.MathJax;
+  Object.defineProperty(window, "MathJax", {
+    configurable: true,
+    get: function () { return mj; },
+    set: function (v) {
+      mj = v;
+      if (v && v.version && !v.Hub) v.Hub = {
+        Config: function () {},
+        Queue: function () {
+          for (var i = 0; i < arguments.length; i++) if (typeof arguments[i] === "function") arguments[i]();
+        },
+      };
+    },
+  });
+})();
+var MarpCompat = (function () {
+  var DIRECTIVE = /^\s*(_?)(class|paginate|header|footer)\s*:\s*(.*?)\s*$/;
+  // (Re)apply directives to every slide; idempotent, so it can run again after
+  // slides are swapped in place (live update) — what it added last time
+  // (classes, header/footer, notes) is removed first.
+  function apply() {
+    var slides = document.querySelectorAll('.reveal .slides section.slide');
+    var global = { class: '', paginate: 'false', header: '', footer: '' };
+    slides.forEach(function (sec, i) {
+      (sec.dataset.mcClasses || '').split(' ').filter(Boolean).forEach(function (c) { sec.classList.remove(c); });
+      sec.querySelectorAll(':scope > [data-mc]').forEach(function (el) { el.remove(); });
+      sec.removeAttribute('data-marpit-pagination');
+      var local = {}, notes = [];
+      sec.childNodes.forEach(function (n) {
+        if (n.nodeType !== Node.COMMENT_NODE) return;
+        var lines = n.data.trim().split('\n'), hit = false;
+        lines.forEach(function (line) {
+          var m = line.match(DIRECTIVE);
+          if (m) { hit = true; (m[1] ? local : global)[m[2]] = m[3].replace(/^["']|["']$/g, ''); }
+        });
+        if (!hit && n.data.trim()) notes.push(n.data.trim());
+      });
+      var get = function (k) { return k in local ? local[k] : global[k]; };
+      var added = get('class').split(/\s+/).filter(function (c) { return c && !sec.classList.contains(c); });
+      added.forEach(function (c) { sec.classList.add(c); });
+      sec.dataset.mcClasses = added.join(' ');
+      if (get('paginate') === 'true') {
+        sec.setAttribute('data-marpit-pagination', i + 1);
+        sec.setAttribute('data-marpit-pagination-total', slides.length);
+      }
+      ['header', 'footer'].forEach(function (k) {
+        if (!get(k)) return;
+        var el = document.createElement(k);
+        el.textContent = get(k);
+        el.setAttribute('data-mc', '');
+        sec.appendChild(el);
+      });
+      if (!sec.id) sec.id = String(i + 1);
+      if (notes.length && !sec.querySelector('aside.notes')) {
+        var aside = document.createElement('aside');
+        aside.className = 'notes';
+        aside.setAttribute('data-mc', '');
+        aside.textContent = notes.join('\n\n');
+        sec.appendChild(aside);
+      }
+    });
+    // Marp page links (`[slide 7](#7)`) -> reveal's `#/7` (hash-one-based-index).
+    document.querySelectorAll('.reveal .slides a[href^="#"]').forEach(function (a) {
+      var m = a.getAttribute('href').match(/^#(\d+)$/);
+      if (m) a.setAttribute('href', '#/' + m[1]);
+    });
+  }
+  return { apply: apply };
+})();
+MarpCompat.apply();
+(function () {
+  var slides = document.querySelectorAll('.reveal .slides section.slide');
+  // Quarto's own `.reveal .slide .columns:nth-child(3)` margin (for its native
+  // column layout) outranks the themes' `.columns` grid; Marp has no such rule.
+  // (Quarto inlines it, so it is reachable even from file://.)
+  var DROP = /^\.reveal \.slide \.columns:nth-child\(3\)$/;
+  Array.prototype.forEach.call(document.styleSheets, function (sh) {
+    var rules; try { rules = sh.cssRules; } catch (e) { return; }
+    for (var r = rules.length - 1; r >= 0; r--) {
+      if (DROP.test(rules[r].selectorText || "")) sh.deleteRule(r);
+    }
+  });
+
+  // marp-core shrinks code blocks to fit the slide (downscale only): same here.
+  function fitCode(root) {
+    root.querySelectorAll("pre").forEach(function (pre) {
+      pre.style.fontSize = "";
+      for (var k = 0; k < 5 && pre.clientWidth > 0 && pre.scrollWidth > pre.clientWidth + 1; k++) {
+        var fs = parseFloat(getComputedStyle(pre).fontSize);
+        pre.style.fontSize = (fs * pre.clientWidth / pre.scrollWidth) + "px";
+      }
+    });
+  }
+  function fitVisible() {
+    var print = document.documentElement.classList.contains("reveal-print");
+    var cur = window.Reveal && Reveal.getCurrentSlide && Reveal.getCurrentSlide();
+    if (print || !cur) slides.forEach(fitCode); else fitCode(cur);
+  }
+  if (window.Reveal && Reveal.on) {
+    Reveal.on("ready", fitVisible);
+    Reveal.on("slidechanged", fitVisible);
+    if (Reveal.isReady && Reveal.isReady()) fitVisible();
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitVisible);
+  window.addEventListener("deck:updated", fitVisible);
+
+  // reveal ignores the overview keys in scroll view: there O / Esc go back to
+  // slides (as Quarto's R toggle does, ?view=scroll dropped too) and open it.
+  document.addEventListener("keydown", function (e) {
+    if (!window.Reveal || !Reveal.isScrollView || !Reveal.isScrollView()) return;
+    if (e.ctrlKey || e.metaKey || e.altKey || !/^(o|O|Escape)$/.test(e.key)) return;
+    if (e.target.closest && e.target.closest("input, textarea, select, [contenteditable]")) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    var u = new URL(location.href);
+    if (u.searchParams.get("view") === "scroll") {
+      u.searchParams.delete("view");
+      history.replaceState(history.state, "", u);
+    }
+    Reveal.toggleScrollView(false);
+    setTimeout(function () { Reveal.toggleOverview(true); }, 50);
+  }, true);
+
+  if (window.Reveal && Reveal.isReady && Reveal.isReady()) Reveal.layout();
+})();
+</script>

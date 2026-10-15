@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.subl-t{fill:#f0f0f0;font-weight:700}.subl-m{font-family:'JetBrains Mono',monospace}.subl-d{fill:#a0a0a0}</style>
+<defs>
+<marker id="ag" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+<marker id="am" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#666"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="200" y="70" text-anchor="middle" fill="#3b82f6" font-size="15" font-weight="700">Every sub-layer is wrapped identically</text>
+<text x="580" y="70" text-anchor="middle" fill="#3fb950" font-size="15" font-weight="700">The feed-forward net is per position</text>
+<text x="960" y="70" text-anchor="middle" fill="#bc8cff" font-size="15" font-weight="700">One weight matrix does three jobs</text>
+<path d="M205,516 L205,498" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M205,436 L205,418" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M205,386 L205,368" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M205,318 L205,290" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M140,534 L34,534 L34,400 L185,400" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#am)"/>
+<text x="40" y="390" class="subl-d" font-size="11">residual</text>
+<text x="248" y="428" class="subl-d" font-size="11">dropout 0.1</text>
+<circle cx="205" cy="400" r="14" fill="#111111" stroke="#3b82f6" stroke-width="2"/>
+<text x="205" y="406" text-anchor="middle" fill="#3b82f6" font-size="16" font-weight="700">+</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Sub-layer input" data-tip="The representation coming out of the layer below, 512 dimensions per position.">
+<rect x="140" y="516" width="120" height="36" rx="8" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="200" y="540" text-anchor="middle" class="subl-m subl-t" font-size="15">x</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="The sub-layer itself" data-tip="Either a multi-head attention block or the position-wise feed-forward network. The wrapper around it is identical in both cases.">
+<rect x="50" y="436" width="300" height="56" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="200" y="460" text-anchor="middle" class="subl-t" font-size="14.5">Sublayer(x)</text>
+<text x="200" y="480" text-anchor="middle" class="subl-d" font-size="11.5">attention or feed-forward</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Layer normalisation" data-tip="The paper writes the whole wrapper as LayerNorm of x plus Sublayer of x. Note the ordering: the norm comes after the addition, which is the post-norm arrangement.">
+<rect x="50" y="318" width="300" height="46" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="200" y="347" text-anchor="middle" class="subl-t" font-size="14.5">LayerNorm</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Sub-layer output" data-tip="Fed straight into the next sub-layer. Six such layers on the encoder side, six on the decoder side.">
+<rect x="140" y="248" width="120" height="36" rx="8" fill="#0d1117" stroke="#93c5fd" stroke-width="1.6"/>
+<text x="200" y="272" text-anchor="middle" class="subl-m subl-t" font-size="13">output</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Why the shapes always line up" data-tip="To facilitate the residual connections, all sub-layers in the model as well as the embedding layers produce outputs of dimension 512.">
+<rect x="20" y="110" width="360" height="110" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="42" y="136" class="subl-t" font-size="13.5">Why the shapes always line up</text>
+<text x="42" y="162" class="subl-d" font-size="11.5">Every sub-layer and every embedding</text>
+<text x="42" y="182" class="subl-d" font-size="11.5">layer emits 512 dimensions, so x and</text>
+<text x="42" y="202" class="subl-d" font-size="11.5">Sublayer(x) can always be added.</text>
+</a>
+<text x="415" y="102" class="subl-m" fill="#f0f0f0" font-size="13.5">FFN(x) = max(0, x W1 + b1) W2 + b2</text>
+<path d="M580,512 L580,494" stroke="#3fb950" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<path d="M580,430 L580,396" stroke="#3fb950" stroke-width="2.2" marker-end="url(#ag)" fill="none"/>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS3" target="_blank" data-tiphead="Input to the feed-forward net" data-tip="One 512-dimensional vector per position, taken from the attention sub-layer below.">
+<rect x="450" y="512" width="260" height="40" rx="8" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="580" y="538" text-anchor="middle" class="subl-d" font-size="12.5">input: 512 per position</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E2" target="_blank" data-tiphead="Inner layer" data-tip="A linear map up to 2048 followed by a ReLU. This is where most of the parameters of a Transformer layer live.">
+<rect x="450" y="430" width="260" height="56" rx="9" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="580" y="454" text-anchor="middle" class="subl-t" font-size="14.5">Linear to 2048</text>
+<text x="580" y="474" text-anchor="middle" class="subl-d" font-size="11.5">then ReLU</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.E2" target="_blank" data-tiphead="Output layer" data-tip="A second linear map back down to 512, so the result can go through the residual addition unchanged in shape.">
+<rect x="450" y="348" width="260" height="40" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="580" y="374" text-anchor="middle" class="subl-t" font-size="13.5">Linear back to 512</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS3" target="_blank" data-tiphead="Three things people skip" data-tip="The feed-forward network is where each position digests what it just read; nothing here moves information between positions. That job belongs entirely to attention.">
+<rect x="400" y="130" width="360" height="170" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="422" y="156" class="subl-t" font-size="13.5">Three things worth noticing</text>
+<text x="422" y="180" class="subl-d" font-size="11.5">Applied to each position separately</text>
+<text x="422" y="200" class="subl-d" font-size="11.5">and identically: nothing mixes across</text>
+<text x="422" y="220" class="subl-d" font-size="11.5">positions here, only attention does.</text>
+<text x="422" y="244" class="subl-d" font-size="11.5">Same weights across positions in one</text>
+<text x="422" y="264" class="subl-d" font-size="11.5">layer, different weights per layer.</text>
+<text x="422" y="288" class="subl-d" font-size="11.5">Equivalently two convolutions, kernel 1.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS4" target="_blank" data-tiphead="Shared embedding weights" data-tip="The same weight matrix is shared between the two embedding layers and the pre-softmax linear transformation, and in the embedding layers those weights are multiplied by the square root of d_model. Sharing one matrix between input and output embeddings needs one vocabulary for both languages: the paper states a shared source-target vocabulary for English-German, and only a 32000 word-piece vocabulary for English-French. It gives no reason for the square-root scaling.">
+<rect x="780" y="100" width="360" height="170" rx="10" fill="#151515" stroke="#3d2f52" stroke-width="1.6"/>
+<text x="802" y="126" fill="#bc8cff" font-size="13.5" font-weight="700">Shared embedding weights</text>
+<text x="802" y="150" class="subl-d" font-size="11.5">One matrix serves the input embedding,</text>
+<text x="802" y="168" class="subl-d" font-size="11.5">the output embedding and the linear layer</text>
+<text x="802" y="186" class="subl-d" font-size="11.5">before the softmax, so source and target</text>
+<text x="802" y="204" class="subl-d" font-size="11.5">must share one vocabulary: the paper says</text>
+<text x="802" y="222" class="subl-d" font-size="11.5">so for En-De (37000 BPE tokens), not for</text>
+<text x="802" y="240" class="subl-d" font-size="11.5">En-Fr. In the embeddings the weights are</text>
+<text x="802" y="258" class="subl-d" font-size="11.5">multiplied by sqrt(512), about 22.6.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S5.SS4" target="_blank" data-tiphead="Where dropout is applied" data-tip="Dropout is applied to the output of each sub-layer before it is added to the sub-layer input and normalised, and to the sums of the embeddings and the positional encodings in both stacks.">
+<rect x="780" y="290" width="360" height="170" rx="10" fill="#151515" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="802" y="316" class="subl-t" font-size="13.5">Where dropout is applied</text>
+<text x="802" y="342" class="subl-d" font-size="11.5">To the output of every sub-layer, before</text>
+<text x="802" y="362" class="subl-d" font-size="11.5">it is added to the sub-layer input and</text>
+<text x="802" y="382" class="subl-d" font-size="11.5">normalised.</text>
+<text x="802" y="408" class="subl-d" font-size="11.5">Also to the sums of the embeddings and</text>
+<text x="802" y="428" class="subl-d" font-size="11.5">the positional encodings in both stacks.</text>
+<text x="802" y="448" class="subl-d" font-size="11.5">Rate 0.1 for base, 0.3 for the big model.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S6.T3" target="_blank" data-tiphead="Base model shape" data-tip="The base configuration is the top row of Table 3: 6 layers, d_model 512, d_ff 2048, 8 heads, 65 million parameters.">
+<rect x="780" y="480" width="360" height="96" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="802" y="506" class="subl-t" font-size="13.5">Base model shape, from Table 3</text>
+<text x="802" y="532" class="subl-d" font-size="11.5">N = 6 layers, d_model = 512, d_ff = 2048,</text>
+<text x="802" y="552" class="subl-d" font-size="11.5">h = 8 heads, d_k = d_v = 64.</text>
+<text x="802" y="568" class="subl-d" font-size="11.5">65 million parameters.</text>
+</a>
+</svg>

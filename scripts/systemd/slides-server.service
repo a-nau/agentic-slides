@@ -1,0 +1,32 @@
+# Per-user systemd unit for the deck server: serves the rendered Quarto decks at
+# their /<category>/<deck>/slides.md URLs on :8093, re-renders on save, and
+# answers the comments/export API (also on :8094, where exported HTML posts).
+# Install with:  scripts/install_services.sh
+#
+# Why a unit: as a nohup'd child of whichever shell started it, anything that
+# reaps that shell's process group (an agent harness ending a tool call, a pane
+# closing) killed it silently, and deck comments queued in the browser until
+# someone noticed. Under systemd it restarts on any exit and journald records why.
+[Unit]
+Description=slides deck server (:8093 decks + live re-render, :8094 comments/export API)
+After=network.target
+
+[Service]
+Type=simple
+# @REPO@, @BIND@ and @AUTH@ are filled in by scripts/install_services.sh
+WorkingDirectory=@REPO@
+ExecStartPre=/usr/bin/python3 quarto/scripts/gen_client.py
+ExecStart=@REPO@/.venv/bin/python -u quarto/scripts/serve.py --port 8093 --api-port 8094
+Restart=always
+RestartSec=2
+KillMode=process
+Environment=PYTHONUNBUFFERED=1
+NoNewPrivileges=yes
+# Bind address, filled in by install_services.sh from $SLIDES_HOST
+# (default 127.0.0.1; use 0.0.0.0 to reach it from other machines).
+Environment=SLIDES_HOST=@BIND@
+# Token login (on; off only on a single-user machine, see SECURITY.md), from $SLIDES_AUTH.
+Environment=SLIDES_AUTH=@AUTH@
+
+[Install]
+WantedBy=default.target

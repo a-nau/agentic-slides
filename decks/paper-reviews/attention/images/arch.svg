@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.arch-t{fill:#f0f0f0;font-weight:700}.arch-m{font-family:'JetBrains Mono',monospace;fill:#93c5fd}.arch-d{fill:#a0a0a0}.arch-hd{fill:#3b82f6;font-weight:700;letter-spacing:.08em}</style>
+<defs>
+<marker id="ag" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+<marker id="ap" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#bc8cff"/></marker>
+<marker id="am" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#666"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="205" y="230" text-anchor="middle" class="arch-hd" font-size="13">ENCODER</text>
+<text x="888" y="122" text-anchor="middle" class="arch-hd" font-size="13">DECODER</text>
+<rect x="155" y="238" width="290" height="220" rx="12" fill="none" stroke="#2a2a2a" stroke-width="1.5" stroke-dasharray="5 5"/>
+<rect x="615" y="130" width="330" height="328" rx="12" fill="none" stroke="#2a2a2a" stroke-width="1.5" stroke-dasharray="5 5"/>
+<text x="452" y="352" class="arch-m" font-size="13">x N = 6</text>
+<text x="955" y="298" class="arch-m" font-size="13">x N = 6</text>
+<path d="M300,466 L300,456" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M300,504 L300,492" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M300,402 L300,392" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M300,356 L300,346" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M300,294 L300,284" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M780,466 L780,456" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M780,504 L780,492" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M780,402 L780,392" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M780,356 L780,346" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M780,294 L780,284" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M780,248 L780,238" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M780,186 L780,176" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M780,140 L780,104" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M780,62 L780,50" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#ag)" fill="none"/>
+<path d="M870,27 L900,27" stroke="#3b82f6" stroke-width="2" marker-end="url(#ag)" fill="none"/>
+<path d="M147,478 L282,478" stroke="#666" stroke-width="2" marker-end="url(#am)" fill="none"/>
+<path d="M1013,478 L798,478" stroke="#666" stroke-width="2" marker-end="url(#am)" fill="none"/>
+<path d="M300,238 L300,208 L600,208 L600,318 L622,318" stroke="#bc8cff" stroke-width="2.5" marker-end="url(#ap)" fill="none"/>
+<text x="466" y="234" fill="#bc8cff" font-size="12">final encoder</text>
+<text x="466" y="250" fill="#bc8cff" font-size="12">output (layer 6)</text>
+<text x="466" y="266" fill="#bc8cff" font-size="12">is K and V in all</text>
+<text x="466" y="282" fill="#bc8cff" font-size="12">6 decoder layers</text>
+<path d="M176,450 C150,440 150,398 176,388" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#am)"/>
+<path d="M176,342 C150,332 150,290 176,280" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#am)"/>
+<path d="M636,450 C610,440 610,398 636,388" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#am)"/>
+<path d="M636,342 C610,332 610,290 636,280" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#am)"/>
+<path d="M636,234 C610,224 610,182 636,172" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#am)"/>
+<text x="132" y="416" class="arch-d" font-size="11" text-anchor="end">residual</text>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS3" target="_blank" data-tiphead="Encoder self-attention" data-tip="All three inputs come from one place: the output of the previous encoder layer. Q, K and V are three different learned linear projections of that same matrix, so every position may attend to every position of the layer below it.">
+<rect x="170" y="402" width="260" height="48" rx="9" fill="#1a1a1a" stroke="#3b82f6" stroke-width="2"/>
+<text x="300" y="422" text-anchor="middle" class="arch-t" font-size="15.5">Multi-Head Attention</text>
+<text x="300" y="440" text-anchor="middle" class="arch-m" font-size="11">Q, K, V: encoder layer below</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Add and Norm" data-tip="A residual connection adds the sub-layer input back to its output, then layer normalisation rescales it. The paper writes this as LayerNorm of x plus Sublayer of x. Every sub-layer and every embedding emits 512 dimensions so the addition is always shape-compatible.">
+<rect x="170" y="356" width="260" height="32" rx="8" fill="#141414" stroke="#20304a" stroke-width="1.6"/>
+<text x="300" y="377" text-anchor="middle" class="arch-d" font-size="13">Add &amp; Norm</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS3" target="_blank" data-tiphead="Position-wise feed-forward" data-tip="Two linear layers with a ReLU between them, applied to each position separately and identically. Inner width is 2048, outer width 512. Same weights across positions inside one layer, different weights in every layer.">
+<rect x="170" y="294" width="260" height="48" rx="9" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="300" y="314" text-anchor="middle" class="arch-t" font-size="15.5">Feed Forward</text>
+<text x="300" y="332" text-anchor="middle" class="arch-m" font-size="11">512 -&gt; 2048 -&gt; 512</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Add and Norm" data-tip="The second residual plus layer-norm of the encoder layer, wrapped around the feed-forward sub-layer. Dropout with rate 0.1 is applied to the sub-layer output before the addition.">
+<rect x="170" y="248" width="260" height="32" rx="8" fill="#141414" stroke="#20304a" stroke-width="1.6"/>
+<text x="300" y="269" text-anchor="middle" class="arch-d" font-size="13">Add &amp; Norm</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS4" target="_blank" data-tiphead="Input embedding" data-tip="A learned lookup table turning each byte-pair token id into a 512-dimensional vector. Its weight matrix is shared with the output embedding and with the pre-softmax linear layer, and is multiplied by the square root of 512.">
+<rect x="170" y="504" width="260" height="48" rx="9" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="300" y="524" text-anchor="middle" class="arch-t" font-size="14.5">Input Embedding</text>
+<text x="300" y="542" text-anchor="middle" class="arch-m" font-size="10.5">token ids to 512-dim</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS3" target="_blank" data-tiphead="Masked decoder self-attention" data-tip="All three inputs come from the output of the previous decoder layer, but every score for a future position is set to minus infinity before the softmax, so position i can only see positions up to and including i.">
+<rect x="630" y="402" width="300" height="48" rx="9" fill="#1a1a1a" stroke="#f0883e" stroke-width="2"/>
+<text x="780" y="422" text-anchor="middle" class="arch-t" font-size="15.5">Masked Multi-Head Attention</text>
+<text x="780" y="440" text-anchor="middle" class="arch-m" font-size="11">Q, K, V: decoder layer below</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Add and Norm" data-tip="Residual plus layer normalisation around the masked self-attention sub-layer of the decoder.">
+<rect x="630" y="356" width="300" height="32" rx="8" fill="#141414" stroke="#20304a" stroke-width="1.6"/>
+<text x="780" y="377" text-anchor="middle" class="arch-d" font-size="13">Add &amp; Norm</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS2.SSS3" target="_blank" data-tiphead="Encoder-decoder attention" data-tip="The only place where the two stacks meet. Queries come from the previous decoder layer; keys and values come from the output of the encoder stack, meaning its final layer, and the same encoder output feeds this sub-layer in all six decoder layers. Every decoder position can attend over every input position.">
+<rect x="630" y="294" width="300" height="48" rx="9" fill="#1a1a1a" stroke="#bc8cff" stroke-width="2"/>
+<text x="780" y="314" text-anchor="middle" class="arch-t" font-size="15.5">Multi-Head Attention</text>
+<text x="780" y="332" text-anchor="middle" class="arch-m" font-size="11">Q: decoder | K, V: encoder</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Add and Norm" data-tip="Residual plus layer normalisation around the encoder-decoder attention sub-layer.">
+<rect x="630" y="248" width="300" height="32" rx="8" fill="#141414" stroke="#20304a" stroke-width="1.6"/>
+<text x="780" y="269" text-anchor="middle" class="arch-d" font-size="13">Add &amp; Norm</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS3" target="_blank" data-tiphead="Position-wise feed-forward" data-tip="Identical in form to the encoder feed-forward sub-layer: 512 in, 2048 hidden with ReLU, 512 out, applied at each position independently.">
+<rect x="630" y="186" width="300" height="48" rx="9" fill="#1a1a1a" stroke="#3fb950" stroke-width="2"/>
+<text x="780" y="206" text-anchor="middle" class="arch-t" font-size="15.5">Feed Forward</text>
+<text x="780" y="224" text-anchor="middle" class="arch-m" font-size="11">512 -&gt; 2048 -&gt; 512</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS1" target="_blank" data-tiphead="Add and Norm" data-tip="Residual plus layer normalisation around the decoder feed-forward sub-layer. This is the third such wrapper in every decoder layer, against two in every encoder layer.">
+<rect x="630" y="140" width="300" height="32" rx="8" fill="#141414" stroke="#20304a" stroke-width="1.6"/>
+<text x="780" y="161" text-anchor="middle" class="arch-d" font-size="13">Add &amp; Norm</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS4" target="_blank" data-tiphead="Output embedding" data-tip="The same kind of lookup table as on the encoder side, applied to the tokens generated so far. The sequence is offset by one position so that the prediction for position i never consumes the token at position i.">
+<rect x="630" y="504" width="300" height="48" rx="9" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="780" y="524" text-anchor="middle" class="arch-t" font-size="14.5">Output Embedding</text>
+<text x="780" y="542" text-anchor="middle" class="arch-m" font-size="10.5">shifted right by one</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS4" target="_blank" data-tiphead="Linear projection" data-tip="Projects the 512-dimensional decoder output onto the vocabulary. Its weight matrix is tied to both embedding tables, which is why the same matrix appears three times in the model.">
+<rect x="690" y="62" width="180" height="38" rx="9" fill="#1a1a1a" stroke="#93c5fd" stroke-width="1.8"/>
+<text x="780" y="86" text-anchor="middle" class="arch-t" font-size="15">Linear</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS4" target="_blank" data-tiphead="Softmax" data-tip="Turns vocabulary logits into next-token probabilities. At inference the model is decoded with beam search of width 4 and length penalty 0.6.">
+<rect x="690" y="8" width="180" height="38" rx="9" fill="#1a1a1a" stroke="#93c5fd" stroke-width="1.8"/>
+<text x="780" y="32" text-anchor="middle" class="arch-t" font-size="15">Softmax</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS5" target="_blank" data-tiphead="Positional encoding" data-tip="Fixed sine and cosine waves of geometrically spaced wavelengths, added to the embeddings. Without them the model has no notion of order at all, because attention is a set operation.">
+<rect x="20" y="452" width="125" height="52" rx="9" fill="#0d1117" stroke="#666" stroke-width="1.6"/>
+<text x="82" y="474" text-anchor="middle" class="arch-d" font-size="13">Positional</text>
+<text x="82" y="492" text-anchor="middle" class="arch-d" font-size="13">Encoding</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/1706.03762#S3.SS5" target="_blank" data-tiphead="Positional encoding" data-tip="The same fixed sinusoids are added at the bottom of the decoder stack. They are parameter-free, so nothing about position has to be learned.">
+<rect x="1015" y="452" width="125" height="52" rx="9" fill="#0d1117" stroke="#666" stroke-width="1.6"/>
+<text x="1077" y="474" text-anchor="middle" class="arch-d" font-size="13">Positional</text>
+<text x="1077" y="492" text-anchor="middle" class="arch-d" font-size="13">Encoding</text>
+</a>
+<circle cx="300" cy="478" r="12" fill="#111111" stroke="#3b82f6" stroke-width="2"/>
+<circle cx="780" cy="478" r="12" fill="#111111" stroke="#3b82f6" stroke-width="2"/>
+<text x="300" y="483" text-anchor="middle" fill="#3b82f6" font-size="15" font-weight="700">+</text>
+<text x="780" y="483" text-anchor="middle" fill="#3b82f6" font-size="15" font-weight="700">+</text>
+<text x="300" y="576" text-anchor="middle" class="arch-d" font-size="13">source tokens</text>
+<text x="780" y="576" text-anchor="middle" class="arch-d" font-size="13">tokens generated so far</text>
+<text x="905" y="31" class="arch-d" font-size="12.5">next-token probabilities</text>
+</svg>

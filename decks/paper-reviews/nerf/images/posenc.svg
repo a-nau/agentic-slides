@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.pose-t{fill:#f0f0f0;font-weight:700}.pose-m{font-family:'JetBrains Mono',monospace}.pose-d{fill:#a0a0a0}.pose-hd{fill:#3b82f6;font-weight:700;letter-spacing:.05em}</style>
+<defs>
+<marker id="eg" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="18" y="28" class="pose-hd" font-size="16">POSITIONAL ENCODING &#8212; the MLP was never the bottleneck</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.SS1" target="_blank"><text x="1142" y="28" text-anchor="end" class="pose-d" font-size="14">Sec. 5.1, Eq. 4</text></a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.SS1" target="_blank" data-tiphead="The failure that motivates it" data-tip="Feeding raw coordinates in, the network must express a rapidly varying function of a slowly varying input. Rahaman et al. showed deep networks are biased towards learning lower frequency functions, so what comes out is a smooth blur: correct at low frequency, missing every edge and texture.">
+<rect x="18" y="44" width="551" height="200" rx="10" fill="#151515" stroke="#f85149" stroke-width="1.6"/>
+<text x="42" y="74" fill="#f85149" font-size="17" font-weight="700">Feed raw (x, y, z) and you get a blur</text>
+<g data-tiphead="Raw coordinates" data-tip="A position normalised to the range minus 1 to 1, plus the viewing direction. Two points a hair apart look almost identical to the first layer.">
+<rect x="42" y="90" width="114" height="48" rx="8" fill="#1a1a1a" stroke="#2a2a2a" stroke-width="1.4"/>
+<text x="99" y="120" text-anchor="middle" class="pose-t" font-size="15">(x,y,z,&#952;,&#966;)</text>
+</g>
+<path d="M162,114 L186,114" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#eg)" fill="none"/>
+<g data-tiphead="The same MLP" data-tip="Nothing is wrong with the network. It is a universal approximator; it is simply biased toward the low-frequency end.">
+<rect x="196" y="90" width="100" height="48" rx="8" fill="#1a1a1a" stroke="#3fb950" stroke-width="1.4"/>
+<text x="246" y="120" text-anchor="middle" class="pose-t" font-size="15">MLP</text>
+</g>
+<path d="M302,114 L326,114" stroke="#3b82f6" stroke-width="2.2" marker-end="url(#eg)" fill="none"/>
+<g data-tiphead="The result" data-tip="Right in the large and wrong at every edge. Figure 4 shows geometry and texture washing out into a soft blob.">
+<rect x="340" y="90" width="206" height="48" rx="8" fill="#1a1a1a" stroke="#f85149" stroke-width="1.4"/>
+<text x="443" y="120" text-anchor="middle" fill="#f85149" font-size="15" font-weight="700">oversmoothed render</text>
+</g>
+<text x="42" y="168" class="pose-d" font-size="15">Positions are first scaled to [&#8722;1, 1]. Deep networks are biased</text>
+<text x="42" y="190" class="pose-d" font-size="15">towards lower frequency functions, so the fit is right in the</text>
+<text x="42" y="212" class="pose-d" font-size="15">large and wrong at every edge. Table 2 row 2: 28.77 PSNR</text>
+<text x="42" y="232" class="pose-d" font-size="15">against 31.01, and Fig. 4 shows what that looks like.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.E4" target="_blank" data-tiphead="Equation 4: the encoding itself" data-tip="Gamma maps one scalar to a ladder of sines and cosines at frequencies that double: 2 to the 0, 2 to the 1, up to 2 to the L minus 1, each times pi times the coordinate. It has no parameters and learns nothing. Nearby coordinates that a network would otherwise struggle to separate get very different high-frequency components, so the MLP can turn a sharp corner over a tiny change in position.">
+<rect x="589" y="44" width="551" height="200" rx="10" fill="#151515" stroke="#f0883e" stroke-width="1.6"/>
+<text x="613" y="74" fill="#f0883e" font-size="17" font-weight="700">Lift the coordinate first, then learn</text>
+<text x="613" y="112" class="pose-m" fill="#f0883e" font-size="17">&#947;(p) = ( sin(2&#8304;&#960;p), cos(2&#8304;&#960;p), &#8230; ,</text>
+<text x="661" y="138" class="pose-m" fill="#f0883e" font-size="17">sin(2&#7488;&#8315;&#185;&#960;p), cos(2&#7488;&#8315;&#185;&#960;p) )</text>
+<path d="M613,180 q14,-24 28,0 q14,24 28,0 q14,-24 28,0 q14,24 28,0" stroke="#a0a0a0" stroke-width="1.6" fill="none"/>
+<path d="M741,180 q7,-24 14,0 q7,24 14,0 q7,-24 14,0 q7,24 14,0 q7,-24 14,0 q7,24 14,0" stroke="#93c5fd" stroke-width="1.6" fill="none"/>
+<path d="M869,180 q3.5,-24 7,0 q3.5,24 7,0 q3.5,-24 7,0 q3.5,24 7,0 q3.5,-24 7,0 q3.5,24 7,0 q3.5,-24 7,0 q3.5,24 7,0 q3.5,-24 7,0 q3.5,24 7,0" stroke="#f0883e" stroke-width="1.6" fill="none"/>
+<text x="613" y="212" class="pose-d" font-size="15">No parameters, nothing learned: a fixed change of variables.</text>
+<text x="613" y="232" class="pose-d" font-size="15">Two nearby points become far apart in the encoded space.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.SS1" target="_blank" data-tiphead="Why L differs for position and direction" data-tip="Position must carry texture and sharp geometric edges, so it gets ten octaves. Viewing direction only has to describe how appearance drifts as you walk around an object, which is a smooth function of angle, so four octaves are enough. Each scalar becomes 2L numbers, applied to all three components.">
+<rect x="18" y="260" width="551" height="152" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="42" y="290" class="pose-t" font-size="17">Two different budgets, for a reason</text>
+<g data-tiphead="Position budget" data-tip="Ten octaves per coordinate, so each of x, y and z becomes twenty numbers: sixty in total.">
+<rect x="42" y="306" width="240" height="48" rx="8" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.4"/>
+<text x="162" y="336" text-anchor="middle" class="pose-t" font-size="15">&#947;(x): L = 10, 3 &#8594; 60</text>
+</g>
+<g data-tiphead="Direction budget" data-tip="Four octaves per component, so the unit direction vector becomes twenty-four numbers.">
+<rect x="302" y="306" width="240" height="48" rx="8" fill="#1a1a1a" stroke="#bc8cff" stroke-width="1.4"/>
+<text x="422" y="336" text-anchor="middle" class="pose-t" font-size="15">&#947;(d): L = 4, 3 &#8594; 24</text>
+</g>
+<text x="42" y="380" class="pose-d" font-size="15">Position carries texture and hard edges. Direction only has</text>
+<text x="42" y="400" class="pose-d" font-size="15">to describe smooth drift, so it needs far fewer octaves.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S6.T2" target="_blank" data-tiphead="Where L stops paying" data-tip="Rows 7 and 8 of Table 2 sweep the number of frequencies for position. Five is too few and costs quality; fifteen buys nothing over ten. The paper attributes the ceiling to two to the L exceeding the maximum frequency present in the input images, roughly 1024 in their data. Positions are normalised to the range minus 1 to 1 before encoding, so the frequencies are relative to the scene volume; the paper gives no units for the 1024.">
+<rect x="589" y="260" width="551" height="152" rx="10" fill="#0d1117" stroke="#3fb950" stroke-width="1.6"/>
+<text x="613" y="290" class="pose-t" font-size="17">More frequencies stop helping, and why</text>
+<text x="613" y="320" class="pose-d" font-size="15">Table 2, rows 7 to 9, on the realistic synthetic scenes:</text>
+<text x="613" y="352" class="pose-m" fill="#a0a0a0" font-size="16">L = 5: 30.59&#160;&#160;&#160;L = 10: 31.01&#160;&#160;&#160;L = 15: 30.81</text>
+<text x="613" y="380" class="pose-d" font-size="14">Paper: the gain stops once 2 to the L passes the highest frequency</text>
+<text x="613" y="400" class="pose-d" font-size="14">in the images, roughly 1024 = 2 to the 10: L = 10 is the ceiling.</text>
+</a>
+<rect x="18" y="428" width="1122" height="154" rx="10" fill="#151515" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="42" y="456" class="pose-t" font-size="17">The idea underneath, worth stealing on its own</text>
+<text x="42" y="484" class="pose-d" font-size="15">The network was never the bottleneck. A coordinate MLP fed raw coordinates must represent a high-frequency function of a</text>
+<text x="42" y="506" class="pose-d" font-size="15">low-frequency input &#8212; exactly the regime it is biased against. Changing the input basis moves the problem into a regime</text>
+<text x="42" y="528" class="pose-d" font-size="15">the same network handles easily: no extra depth, no extra width, no extra parameters.</text>
+<text x="42" y="554" fill="#93c5fd" font-size="15" font-weight="700">Same trigonometric family as the Transformer positional encoding, used for an unrelated purpose. There it injects</text>
+<text x="42" y="574" fill="#93c5fd" font-size="15" font-weight="700">discrete order into an order-blind architecture; here it lifts continuous coordinates so an MLP can fit sharp detail.</text>
+</svg>

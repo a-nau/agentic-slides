@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.surv-sv-cap{fill:#8a8a8a;font-size:14px}.surv-sv-lb{fill:#f0f0f0;font-weight:700;font-size:16px}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">The 2012 ingredient list, re-sorted by what happened next</text>
+<text x="24" y="58" class="surv-sv-cap">The paper orders Sections 3.1 to 3.4 by its own estimate of importance. Fourteen years later only the first of the four survives.</text>
+<rect x="24" y="86" width="548" height="470" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="46" y="122" fill="#3b82f6" font-size="16" font-weight="700">SURVIVED — and why it stayed</text>
+<rect x="30" y="150" width="4" height="46" rx="2" fill="#3b82f6"/>
+<text x="46" y="164" class="surv-sv-lb">ReLU and its descendants</text>
+<text x="46" y="188" class="surv-sv-cap">Rectifiers are the default. The 2012 argument was wall-clock;</text>
+<text x="46" y="208" class="surv-sv-cap">what kept them is gradient flow through depth.</text>
+<rect x="30" y="226" width="4" height="46" rx="2" fill="#3b82f6"/>
+<text x="46" y="240" class="surv-sv-lb">Dropout</text>
+<text x="46" y="264" class="surv-sv-cap">Still in transformer blocks and classifier heads. In vision it has</text>
+<text x="46" y="284" class="surv-sv-cap">been pushed aside by stronger augmentation and normalisation.</text>
+<rect x="30" y="302" width="4" height="46" rx="2" fill="#3b82f6"/>
+<text x="46" y="316" class="surv-sv-lb">Aggressive data augmentation</text>
+<text x="46" y="340" class="surv-sv-cap">Crops, flips and colour jitter are table stakes, and the modern</text>
+<text x="46" y="360" class="surv-sv-cap">recipes are far more aggressive than the two schemes here.</text>
+<rect x="30" y="378" width="4" height="46" rx="2" fill="#3b82f6"/>
+<text x="46" y="392" class="surv-sv-lb">Betting on GPUs</text>
+<text x="46" y="416" class="surv-sv-cap">The most durable sentence in the paper: results can be improved</text>
+<text x="46" y="436" class="surv-sv-cap">simply by waiting for faster GPUs and bigger datasets.</text>
+<rect x="30" y="454" width="4" height="46" rx="2" fill="#3b82f6"/>
+<text x="46" y="468" class="surv-sv-lb">End-to-end supervised depth</text>
+<text x="46" y="492" class="surv-sv-cap">No unsupervised pre-training, no hand-designed features. Removing</text>
+<text x="46" y="512" class="surv-sv-cap">any middle layer cost about 2% top-1 — depth was the point.</text>
+<rect x="592" y="86" width="544" height="470" rx="12" fill="#0d1117" stroke="#f0883e" stroke-width="1.5"/>
+<text x="614" y="122" fill="#f0883e" font-size="16" font-weight="700">DID NOT SURVIVE — and what replaced it</text>
+<rect x="598" y="150" width="4" height="46" rx="2" fill="#f0883e"/>
+<text x="614" y="164" class="surv-sv-lb">Local response normalization</text>
+<text x="614" y="188" class="surv-sv-cap">The reported 1.4% top-1 gain did not reproduce in VGG. Later</text>
+<text x="614" y="208" class="surv-sv-cap">normalisation layers (batch, layer norm) replaced it.</text>
+<rect x="598" y="226" width="4" height="46" rx="2" fill="#f0883e"/>
+<text x="614" y="240" class="surv-sv-lb">The hand-split two-GPU topology</text>
+<text x="614" y="264" class="surv-sv-cap">A 3 GB memory workaround, not a design. The follow-up work drops</text>
+<text x="614" y="284" class="surv-sv-cap">it for data and model parallelism chosen per layer type.</text>
+<rect x="598" y="302" width="4" height="46" rx="2" fill="#f0883e"/>
+<text x="614" y="316" class="surv-sv-lb">Overlapping pooling, as a design lever</text>
+<text x="614" y="340" class="surv-sv-cap">Worth 0.4% top-1 in 2012. Strided convolutions and global average</text>
+<text x="614" y="360" class="surv-sv-cap">pooling took over; one 3×3/2 max-pool lingers in some stems.</text>
+<rect x="598" y="378" width="4" height="46" rx="2" fill="#f0883e"/>
+<text x="614" y="392" class="surv-sv-lb">Hand-driven learning-rate steps</text>
+<text x="614" y="416" class="surv-sv-cap">Divide the rate by 10 whenever validation error stalls, manually,</text>
+<text x="614" y="436" class="surv-sv-cap">three times. Replaced by warmup plus a schedule fixed in advance.</text>
+<rect x="598" y="454" width="4" height="46" rx="2" fill="#f0883e"/>
+<text x="614" y="468" class="surv-sv-lb">Ten-crop test-time averaging</text>
+<text x="614" y="492" class="surv-sv-cap">Worth more than a point of top-1 here, which makes the headline</text>
+<text x="614" y="512" class="surv-sv-cap">hard to compare. Single-crop evaluation is now the convention.</text>
+<text x="24" y="582" class="surv-sv-cap">Left column: claims of the paper that later work confirmed. Right column: this deck’s reading of what happened next — the paper itself makes none of these predictions.</text>
+</svg>

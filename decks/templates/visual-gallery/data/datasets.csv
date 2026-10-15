@@ -1,0 +1,16 @@
+dataset,family,year,org,locations,hours,scenes,images,license,primary_use,points
+KITTI,perception,2012,KIT,"Karlsruhe, Germany",6,,15000,CC BY-NC-SA 3.0,3D detection,karlsruhe
+KITTI-360,perception,2021,MPI/Tübingen,"Karlsruhe, Germany",,,320000,CC BY-NC-SA 3.0,segmentation,karlsruhe
+Cityscapes,perception,2016,Daimler/MPI,50 cities (mostly Germany),,,25000,Custom (NC),segmentation,germany
+nuScenes,perception,2019,Motional,"Boston, Singapore",5.5,1000,1400000,CC BY-NC-SA 4.0,3D detection,boston singapore
+Waymo Open,perception,2019,Waymo,"SF, Phoenix, Mountain View",6.4,1150,1000000,Waymo NC,3D detection,sf phoenix mtv
+Argoverse 2,perception,2021,Argo AI,6 US cities,4.2,1000,,CC BY-NC-SA 4.0,3D detection,austin detroit miami pitt palo dc
+A2D2,perception,2020,Audi,"Gaimersheim, Munich, Ingolstadt",,,41277,CC BY-ND 4.0,segmentation,ingolstadt munich
+PandaSet,perception,2020,Hesai/Scale,"San Francisco, Palo Alto",0.23,103,49000,CC BY 4.0,3D detection,sf palo
+ONCE,perception,2021,Huawei,China,144,1000000,7000000,CC BY-NC-SA 4.0,3D detection,china
+ZOD,perception,2023,Zenseact,14 EU countries,55.6,1473,100000,CC BY-SA 4.0,3D detection,europe
+Argoverse 1,prediction,2019,Argo AI,"Pittsburgh, Miami",320,324557,,CC BY-NC-SA 4.0,forecasting,pitt miami
+Lyft Level 5,prediction,2020,Lyft,Palo Alto,1118,170000,,Non-commercial,forecasting,palo
+nuPlan,planning,2021,Motional,"Boston, Pittsburgh, Las Vegas, Singapore",1500,,,NC (comm. on req.),planning,boston pitt vegas singapore
+BDD100K,e2e,2018,UC Berkeley,US (crowd-sourced),1000,,100000,Custom (members),multitask,ny bayarea
+WayveScenes101,simulation,2024,Wayve,"London, SF Bay Area",0.56,101,101000,Research license,reconstruction,london bayarea

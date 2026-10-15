@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.spli-sr-hd{fill:#3b82f6;font-size:14px;font-weight:700;letter-spacing:0.06em}.spli-sr-l{fill:#f0f0f0;font-weight:700;font-size:15px}.spli-sr-m{font-family:'JetBrains Mono',monospace;fill:#93c5fd;font-size:14px}.spli-sr-mo{font-family:'JetBrains Mono',monospace;fill:#f0883e;font-weight:700;font-size:15px}.spli-sr-d{fill:#a0a0a0;font-size:14px}.spli-sr-no{fill:#7f8a99;font-size:14px}.spli-sr-yes{fill:#f0883e;font-weight:700;font-size:14px}.spli-sr-cap{fill:#8a8a8a;font-size:14px}</style>
+<rect width="1160" height="600" fill="#111111"/>
+<text x="24" y="32" fill="#f0f0f0" font-size="21" font-weight="700">Kernel depth, layer by layer — the receipt for the split</text>
+<text x="24" y="58" class="spli-sr-cap">A kernel that is only half as deep as the previous layer can physically see only its own GPU. Read the third column and the split reads itself.</text>
+<text x="40" y="104" class="spli-sr-hd">LAYER</text>
+<text x="196" y="104" class="spli-sr-hd">KERNELS</text>
+<text x="376" y="104" class="spli-sr-hd">DEPTH</text>
+<text x="496" y="104" class="spli-sr-hd">MAPS AVAILABLE UPSTREAM</text>
+<text x="886" y="104" class="spli-sr-hd">CROSSES GPUs?</text>
+<path d="M24,116 L1136,116" stroke="#2a2a2a" stroke-width="1.5"/>
+<g data-tiphead="conv 1" data-tip="Kernel depth 3 is the full RGB image, so both halves see the same input. The 96 kernels are simply dealt 48 to each card.">
+<rect x="24" y="125" width="1112" height="36" rx="7" fill="#161616"/>
+<text x="40" y="150" class="spli-sr-l">conv 1</text>
+<text x="196" y="150" class="spli-sr-m">96 of 11×11</text>
+<text x="376" y="150" class="spli-sr-m">× 3</text>
+<text x="496" y="150" class="spli-sr-d">3 RGB channels of the input</text>
+<text x="886" y="150" class="spli-sr-no">not split yet</text>
+</g>
+<g data-tiphead="conv 2" data-tip="Depth 48 is exactly half of conv 1's 96 maps. The kernel cannot reach the other card's half even in principle.">
+<rect x="24" y="167" width="1112" height="36" rx="7" fill="#141414"/>
+<text x="40" y="192" class="spli-sr-l">conv 2</text>
+<text x="196" y="192" class="spli-sr-m">256 of 5×5</text>
+<text x="376" y="192" class="spli-sr-m">× 48</text>
+<text x="496" y="192" class="spli-sr-d">conv 1 has 96 maps, 48 per GPU</text>
+<text x="886" y="192" class="spli-sr-no">no — its own half only</text>
+</g>
+<g data-tiphead="conv 3 — the exception" data-tip="Depth 256 is every conv 2 map on both cards. The only convolutional layer whose kernels read across the link, and the paper calls the choice of pattern a problem for cross-validation.">
+<rect x="24" y="209" width="1112" height="36" rx="7" fill="#241a10" stroke="#f0883e" stroke-width="1.5"/>
+<text x="40" y="234" class="spli-sr-l">conv 3</text>
+<text x="196" y="234" class="spli-sr-m">384 of 3×3</text>
+<text x="376" y="234" class="spli-sr-mo">× 256</text>
+<text x="496" y="234" class="spli-sr-d">conv 2 has 256 maps, 128 per GPU</text>
+<text x="886" y="234" class="spli-sr-yes">YES — the one cross-GPU conv</text>
+</g>
+<g data-tiphead="conv 4" data-tip="Back to half depth: 192 of conv 3's 384 maps. The streams separate again one layer after they met.">
+<rect x="24" y="251" width="1112" height="36" rx="7" fill="#141414"/>
+<text x="40" y="276" class="spli-sr-l">conv 4</text>
+<text x="196" y="276" class="spli-sr-m">384 of 3×3</text>
+<text x="376" y="276" class="spli-sr-m">× 192</text>
+<text x="496" y="276" class="spli-sr-d">conv 3 has 384 maps, 192 per GPU</text>
+<text x="886" y="276" class="spli-sr-no">no — its own half only</text>
+</g>
+<g data-tiphead="conv 5" data-tip="Half depth again: 192 of conv 4's 384 maps. conv 3, 4 and 5 run back to back with no pooling or normalisation between them.">
+<rect x="24" y="293" width="1112" height="36" rx="7" fill="#161616"/>
+<text x="40" y="318" class="spli-sr-l">conv 5</text>
+<text x="196" y="318" class="spli-sr-m">256 of 3×3</text>
+<text x="376" y="318" class="spli-sr-m">× 192</text>
+<text x="496" y="318" class="spli-sr-d">conv 4 has 384 maps, 192 per GPU</text>
+<text x="886" y="318" class="spli-sr-no">no — its own half only</text>
+</g>
+<g data-tiphead="fc 6, fc 7, fc 8" data-tip="Fully connected means connected to all neurons of the previous layer, so all three classifier layers exchange activations across both cards every forward and backward pass.">
+<rect x="24" y="335" width="1112" height="36" rx="7" fill="#241a10" stroke="#f0883e" stroke-width="1.5"/>
+<text x="40" y="360" class="spli-sr-l">fc 6 · 7 · 8</text>
+<text x="196" y="360" class="spli-sr-m">4096 / 4096 / 1000</text>
+<text x="376" y="360" class="spli-sr-mo">all</text>
+<text x="496" y="360" class="spli-sr-d">every neuron of the layer before</text>
+<text x="886" y="360" class="spli-sr-yes">YES — all-to-all</text>
+</g>
+<rect x="24" y="404" width="1112" height="182" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.5"/>
+<text x="46" y="436" fill="#3b82f6" font-size="16" font-weight="700">Why two cards at all — and what the split was worth</text>
+<text x="46" y="462" class="spli-sr-cap">More data lets a bigger net train without severe overfitting; 1.2M examples sufficed for nets too big for one 3 GB GTX 580.</text>
+<text x="46" y="488" class="spli-sr-cap">Half the kernels live on each card. At conv 3 and fc 6–8 the GPUs read one another's memory directly, without going through host memory.</text>
+<text x="46" y="514" class="spli-sr-cap">Reported gain: 1.7% top-1 / 1.2% top-5 vs a one-GPU net with half the kernels per conv layer, except its last conv and fc layers (footnote 2).</text>
+<text x="46" y="540" fill="#d6d9dc" font-size="14">Two biases pull opposite ways: the larger-than-half baseline makes 1.7% understate the two-GPU net's gain, while twice the kernels</text>
+<text x="46" y="566" fill="#d6d9dc" font-size="14">make it overstate what the split itself buys. Net reading: 1.7% is the gain of a bigger net, not of the split topology.</text>
+</svg>

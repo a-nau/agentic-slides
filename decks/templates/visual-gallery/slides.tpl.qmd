@@ -1,0 +1,413 @@
+---
+pagetitle: visual-gallery
+description: Example deck — animated and interactive figures you can copy into your own decks
+css:
+- ../../../quarto/themes/base.css
+- ../../../quarto/themes/agentic.css
+---
+
+<!-- paginate: true -->
+
+<a class="slide-id" id="7f98041c-7a63-4c01-8738-9a0dfa939b81"></a>
+
+<!--
+  DECK BRIEF
+  Audience: someone about to build a deck with this repo.
+  Reader promise: they see what the figures can do (hover, linked highlight,
+  timelines, animated mechanisms, driving scenes) and know which generator to copy.
+  Source of truth: data/datasets.csv (facts from the datasets' public papers),
+  data/land.json (Natural Earth, public domain).
+  Build: python3 make_figures.py && python3 build_deck.py
+-->
+
+<!-- HOVER TOOLKIT — body-level tooltip card + affordance styles. Keep this block;
+     it is inert until an element carries data-tip. Usage:
+       term:      <span class="term" data-tiphead="Flow matching" data-tip="Plain-language explanation.">flow matching</span>
+       forensics: <span class="finfo" data-tiphead="Figure forensics" data-tip="No error bars; log axis compresses divergence.">ⓘ forensics</span>
+       SVG box:   <g data-tiphead="Codec encoder" data-tip="What this component does.">…</g>
+       figure overlay: transparent absolutely-positioned <span data-tip=…> over an <img> region.
+     Rules: no double quotes inside data-tip values; the card must stay appended to
+     document.body — Marp renders slides in scaled foreignObjects where position:fixed
+     and CSS-only popovers break. -->
+<style>
+.term { border-bottom: 1px dashed #3d5a8c; cursor: help; }
+.finfo { display: inline-block; margin-left: 12px; padding: 1px 12px 2px; border: 1px solid #1e3a66; border-radius: 999px; color: #3b82f6; font-size: 0.42em; font-weight: 600; letter-spacing: 0.06em; vertical-align: middle; cursor: help; }
+.finfo:hover { border-color: #3b82f6; background: rgba(59,130,246,0.08); }
+</style>
+<script>
+(function () {
+  if (document.getElementById('tipcard')) return;
+  const css = document.createElement('style');
+  css.textContent = `
+    #tipcard { position: fixed; display: none; max-width: 460px; background: #0a0e17; border: 1px solid #2a2a2a; border-left: 3px solid #3b82f6; border-radius: 10px; padding: 12px 16px; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.65); pointer-events: none; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    #tipcard .tip-head { color: #3b82f6; font-size: 12px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; margin-bottom: 5px; }
+    #tipcard .tip-body { color: #d6d9dc; font-size: 15px; line-height: 1.5; font-weight: 400; }
+    body.tips-off #tipcard { display: none !important; }
+    body.tips-off [data-tip] { border-bottom-color: transparent !important; text-decoration: none !important; cursor: default !important; }
+    #tip-toggle { position: fixed; top: 12px; left: 56px; z-index: 9999; font: 600 12px/1 system-ui, sans-serif; letter-spacing: 0.05em; padding: 7px 14px; border-radius: 999px; border: 1px solid #2a2a2a; background: rgba(17,17,17,0.92); color: #3b82f6; cursor: pointer; opacity: 0.3; transition: opacity 0.15s ease; }
+    #tip-toggle:hover { opacity: 1; }
+    #tip-toggle.tips-off { text-decoration: line-through; }
+    @media print { #tip-toggle { display: none !important; } }`;
+  document.head.appendChild(css);
+  const card = document.createElement('div');
+  card.id = 'tipcard';
+  card.innerHTML = '<div class="tip-head"></div><div class="tip-body"></div>';
+  document.body.appendChild(card);
+  const btn = document.createElement('button');
+  btn.id = 'tip-toggle'; btn.type = 'button'; btn.textContent = 'Tips';
+  btn.title = 'Hover tooltips are on — click to disable';
+  btn.addEventListener('click', () => {
+    const off = document.body.classList.toggle('tips-off');
+    btn.classList.toggle('tips-off', off);
+    btn.textContent = off ? 'Tips off' : 'Tips';
+    btn.title = off ? 'Hover tooltips are off — click to enable' : 'Hover tooltips are on — click to disable';
+  });
+  document.body.appendChild(btn);
+  const head = card.firstChild, body = card.lastChild;
+  const place = (ev) => {
+    const pad = 16, r = card.getBoundingClientRect();
+    let x = ev.clientX + pad, y = ev.clientY + pad;
+    if (x + r.width > innerWidth - 10) x = ev.clientX - r.width - pad;
+    if (y + r.height > innerHeight - 10) y = ev.clientY - r.height - pad;
+    card.style.left = Math.max(8, x) + 'px'; card.style.top = Math.max(8, y) + 'px';
+  };
+  document.addEventListener('mousemove', (ev) => {
+    const t = ev.target.closest && ev.target.closest('[data-tip]');
+    if (t) {
+      head.textContent = t.getAttribute('data-tiphead') || 'Explanation';
+      body.textContent = t.getAttribute('data-tip');
+      card.style.display = 'block';
+      place(ev);
+    } else {
+      card.style.display = 'none';
+    }
+  });
+})();
+</script>
+
+<!-- _class: title -->
+
+<p class="kicker">Example deck</p>
+
+# Visual **gallery**
+
+## Title pages, overviews, and animated figures, all generated from data
+
+<p class="stats"><span>hover</span><span>CSS animation</span><span>maps · timelines · charts</span><span>mechanisms</span></p>
+
+<p class="links"><a class="repo-link" href="https://github.com/a-nau/agentic-slides">a-nau/agentic-slides</a></p>
+
+---
+
+<a class="slide-id" id="0090cfe0-bb60-4000-a07d-931f2dcedfff"></a>
+
+## One script draws every figure; the data figures read `data/`
+
+<div class="columns">
+<div class="card">
+
+**What you get**
+
+- **Hover cards** on any shape, with linked highlights
+- **Loops** that explain a process step by step
+- A complete **static frame**: the still picture PDF and PPTX exports show, since they drop all motion
+
+</div>
+<div class="card">
+
+**Where it lives**
+
+- `make_figures.py`: one function per figure
+- `data/`: dataset facts (`datasets.csv`) and the map outline (`land.json`)
+- Concept figures (planner, diffusion, attention, tooling) are drawn by hand in the script
+- `build_deck.py`: inlines the SVGs into the slides
+
+</div>
+</div>
+
+> Hover anything that looks interactive. The **Tips** button (top left) turns the cards off.
+
+---
+
+<a class="slide-id" id="b472252a-6823-4368-a485-e1d99db35e2b"></a>
+
+<!-- _class: invert -->
+
+# Title pages, one per **deck type**
+
+Five kinds of deck, one title layout: paper deep dive, MR (merge request) review, repo tour, tool demo, research overview. The colour and the faint icon on the right name the type.
+
+The paper and dataset pages carry real facts; the MR page's numbers are placeholders.
+
+---
+
+<a class="slide-id" id="7091d538-6061-4164-90a2-29d65bde19b0"></a>
+
+<!-- _class: title paper -->
+
+<p class="kicker">Paper deep dive</p>
+
+# **Vaswani et al. (2017):** Attention Is All You Need
+
+## Drop recurrence: every word reads every other in one step, and **28.4 BLEU** after 3.5 days on 8 GPUs
+
+<p class="byline">Google Brain, Google Research, University of Toronto · NIPS 2017</p>
+
+<p class="links"><a href="https://arxiv.org/abs/1706.03762">arXiv</a><a href="https://arxiv.org/pdf/1706.03762v7">PDF</a><a href="https://github.com/tensorflow/tensor2tensor">code</a></p>
+
+---
+
+<a class="slide-id" id="0eb05094-e1fc-415d-bb3a-ccb6f7629ae1"></a>
+
+<!-- _class: title mr -->
+
+<p class="kicker">MR review</p>
+
+# Cache rendered **figures**
+
+## Rebuilds skip figures whose source and data did not change, so a one-line edit renders in seconds
+
+<p class="byline"><strong>Example MR</strong> · title, numbers and link are placeholders for the real ones</p>
+
+<p class="stats"><span class="add">+214</span><span class="del">−38</span><span>6 files</span><span>4 commits</span><span>head 1a2b3c4</span></p>
+
+<p class="links"><a class="mr" href="https://github.com/a-nau/agentic-slides">MR !42</a><a class="diff" href="https://github.com/a-nau/agentic-slides">diff base…head</a></p>
+
+---
+
+<a class="slide-id" id="0d6022d7-7722-4222-a052-c5f61c1ee708"></a>
+
+<!-- _class: title repo -->
+
+<p class="kicker">Repo tour</p>
+
+# agentic-**slides**
+
+## Slide decks written with coding agents: Markdown in, live server, comments back to the agent, PDF and PPTX out
+
+<p class="byline"><strong>Start here:</strong> <code>scripts/start.sh</code>, then open the index page</p>
+
+<p class="links"><a class="repo-link" href="https://github.com/a-nau/agentic-slides">a-nau/agentic-slides</a></p>
+
+---
+
+<a class="slide-id" id="1ff423d4-a366-480e-ac9e-097d196afbc8"></a>
+
+<!-- _class: title tool -->
+
+<p class="kicker">Tool demo</p>
+
+# **export.sh**
+
+## One deck in, a PDF, an editable PowerPoint, or a single self-contained HTML file out
+
+<p class="byline"><strong>In this repo:</strong> <code>scripts/export.sh &lt;category&gt;/&lt;deck&gt; pdf,pptx</code></p>
+
+---
+
+<a class="slide-id" id="070222f6-3384-4e00-9d8f-fd0be4bbcac1"></a>
+
+<!-- _class: title research -->
+
+<p class="kicker">Research overview</p>
+
+# Public driving datasets since **2012**
+
+## Fifteen datasets from three continents: what each one recorded, for which task, and under which license
+
+<p class="byline"><strong>Sources:</strong> each dataset's paper, listed in <code>data/README.md</code></p>
+
+---
+
+<a class="slide-id" id="366bf6d9-a49e-4da2-9419-3d14b9706825"></a>
+
+<!-- _class: invert -->
+
+# Data you can **explore**
+
+---
+
+<a class="slide-id" id="96ecd120-7fe3-4d39-a24a-3d4b055cd337"></a>
+
+## Fifteen public driving datasets, three continents
+
+<!--FIG:map-->
+
+---
+
+<a class="slide-id" id="1cbdcbf3-64ef-4a90-b6d5-1c61186e2733"></a>
+
+## Ten of fifteen datasets arrived between 2019 and 2021
+
+<!--FIG:timeline-->
+
+---
+
+<a class="slide-id" id="55a77bcc-5f37-4bda-b8a6-a8159ee9a6b6"></a>
+
+## Recorded hours span nearly four orders of magnitude
+
+<!--FIG:hours-->
+
+---
+
+<a class="slide-id" id="c933f09f-5a32-4de4-ba30-840043e15483"></a>
+
+<!-- _class: invert -->
+
+# Overviews that **stand still**
+
+One frame, no animation: the whole comparison at a glance, with hover for detail.
+
+---
+
+<a class="slide-id" id="0d765873-16f4-4e6a-9cbb-192040a8d060"></a>
+
+## Three of fifteen licenses allow commercial use
+
+<!--FIG:licenses-->
+
+---
+
+<a class="slide-id" id="df7e1e17-7f38-43b7-b706-713146d03954"></a>
+
+## All three commercially usable datasets are perception sets
+
+<!--FIG:composition-->
+
+---
+
+<a class="slide-id" id="31440585-ddc5-44ab-bef8-675b3e2dbd70"></a>
+
+## ONCE reports over twice the images of the other ten combined
+
+<!--FIG:images-->
+
+---
+
+<a class="slide-id" id="f58d92d4-5b55-416e-a86d-67ccbf24d57f"></a>
+
+## Four papers, each of which replaced a default
+
+<!--FIG:lineage-->
+
+---
+
+<a class="slide-id" id="bc1fa70d-7cbd-4142-9db5-46889d2a662b"></a>
+
+## One local server sits between the source and the reader
+
+<!--FIG:architecture-->
+
+---
+
+<a class="slide-id" id="0a3d0687-e3e6-474e-9916-905f18574b77"></a>
+
+## Decks are most of the repo; one shared stack serves them all
+
+<!--FIG:stack-->
+
+---
+
+<a class="slide-id" id="171f1f9a-1795-4507-b83e-96bd81125381"></a>
+
+## One token in the source becomes the whole figure on the slide
+
+<!--FIG:token-->
+
+---
+
+<a class="slide-id" id="ebb8655c-7006-4283-8112-2f3412beb84d"></a>
+
+## Five deck types, placed by scope and subject
+
+<!--FIG:deck-types-->
+
+---
+
+<a class="slide-id" id="0d87e4ae-838e-4b49-b898-e110ea689c8f"></a>
+
+<!-- _class: invert -->
+
+# Mechanisms that **move**
+
+---
+
+<a class="slide-id" id="a51f8793-35f2-4fce-9a1b-e52f0d010699"></a>
+
+## A planner rolls out each candidate path before it drives
+
+<!--FIG:intersection-->
+
+---
+
+<a class="slide-id" id="e9c596f5-a904-4ffd-aadc-0dd700f45a47"></a>
+
+## Diffusion turns noise into data, one small step at a time
+
+<!--FIG:diffusion-->
+
+---
+
+<a class="slide-id" id="9210f7b6-c871-424a-987f-ed643cb2700e"></a>
+
+## Attention: each word gathers what it needs from the others
+
+<!--FIG:attention-->
+
+---
+
+<a class="slide-id" id="30052103-295d-41df-bf80-7aba86e23a5d"></a>
+
+<!-- _class: invert -->
+
+# How decks get **built**
+
+---
+
+<a class="slide-id" id="f4ed1f8b-79f4-42ec-a2be-b5668599104b"></a>
+
+## From source to three export formats
+
+<!--FIG:pipeline-->
+
+---
+
+<a class="slide-id" id="13cb7d4b-cf57-47de-bca2-44891e99fea0"></a>
+
+## Feedback runs in a loop, not a handoff
+
+<!--FIG:loop-->
+
+---
+
+<a class="slide-id" id="c9ea236e-7900-4d23-b937-34509df69ad4"></a>
+
+## Four techniques cover every figure in this deck
+
+| Technique | Used for | In `make_figures.py` |
+|---|---|---|
+| `data-tip` hover card | map points, timeline cards, hours chart, pipeline boxes | `tip()`, `ds_tip()` |
+| CSS `:hover` on a group | linked highlight: list entry ↔ map points, one dataset across columns | `fig_map`, `fig_composition` |
+| Keyframes per element | particles converging, steps lighting up in turn | `fig_diffusion`, `fig_loop` |
+| `stroke-dashoffset` / `offset-path` | edges drawing in, packets and cars travelling | `fig_pipeline`, `fig_attention`, `fig_intersection` |
+
+> Write the static frame first, then animate **toward** it. Exports never see the motion.
+
+---
+
+<a class="slide-id" id="adf980c0-051d-4502-9d60-f88b372a97a4"></a>
+
+<!-- _class: lead -->
+
+# Copy a function, swap the **data**
+
+<div style="text-align:left;width:fit-content;margin:0 auto">
+
+1. Copy this folder, `decks/templates/visual-gallery/`, to `decks/<category>/<name>/`
+2. In `make_figures.py`, keep the `fig_…` you need (`fig_map`, `fig_hours`, …); point it at your `data/`
+3. Put <code style="font-variant-ligatures:none">&lt;!--FIG:name--&gt;</code> in `slides.tpl.qmd`; run `make_figures.py`, then `build_deck.py`
+
+</div>
+
+Rules behind every figure: `.agents/skills/slide-deck/references/animating-figures.md`

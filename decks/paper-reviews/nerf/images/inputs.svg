@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.inpu-t{fill:#f0f0f0;font-weight:700}.inpu-m{font-family:'JetBrains Mono',monospace}.inpu-d{fill:#a0a0a0}.inpu-hd{fill:#3b82f6;font-weight:700;letter-spacing:.05em}</style>
+<defs>
+<marker id="ig" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="18" y="28" class="inpu-hd" font-size="16">WHAT YOU HAVE TO FEED IT &#8212; and the poses are not free</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.SS3" target="_blank"><text x="1142" y="28" text-anchor="end" class="inpu-d" font-size="14">Sec. 5.3 and Sec. 6.1</text></a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S6.SS1" target="_blank" data-tiphead="The capture" data-tip="The real scenes are eight handheld forward-facing captures taken with a cellphone, with 20 to 62 images each and one eighth held out for testing. The synthetic scenes are pathtraced renderings, 100 views in and 200 held out for testing at 800 by 800 pixels.">
+<rect x="18" y="44" width="266" height="180" rx="10" fill="#151515" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="42" y="74" class="inpu-t" font-size="17">1 &#183; Photographs</text>
+<text x="42" y="106" class="inpu-d" font-size="15">Real: 8 handheld cellphone</text>
+<text x="42" y="128" class="inpu-d" font-size="15">captures, 20 to 62 images</text>
+<text x="42" y="150" class="inpu-d" font-size="15">each, at 1008 by 756.</text>
+<text x="42" y="180" class="inpu-d" font-size="15">Synthetic: 100 views in,</text>
+<text x="42" y="202" class="inpu-d" font-size="15">200 held out, 800 by 800.</text>
+</a>
+<path d="M292,134 L322,134" stroke="#3b82f6" stroke-width="2.4" marker-end="url(#ig)" fill="none"/>
+<a href="https://colmap.github.io/" target="_blank" data-tiphead="COLMAP" data-tip="An open-source structure-from-motion and multi-view stereo package. It matches features across the photographs, then solves jointly for where each camera was, what its intrinsics are and a sparse point cloud. NeRF uses it on the real captures to recover poses, intrinsics and scene bounds.">
+<rect x="332" y="44" width="266" height="180" rx="10" fill="#151515" stroke="#3fb950" stroke-width="1.6"/>
+<text x="356" y="74" class="inpu-t" font-size="17">2 &#183; COLMAP</text>
+<text x="356" y="106" class="inpu-d" font-size="15">Structure from motion, run on</text>
+<text x="356" y="128" class="inpu-d" font-size="15">the real captures to estimate</text>
+<text x="356" y="150" class="inpu-d" font-size="15">camera poses, intrinsics and</text>
+<text x="356" y="172" class="inpu-d" font-size="15">scene bounds.</text>
+<text x="356" y="202" fill="#3fb950" font-size="15" font-weight="700">A separate system entirely.</text>
+</a>
+<path d="M606,134 L636,134" stroke="#3b82f6" stroke-width="2.4" marker-end="url(#ig)" fill="none"/>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S5.SS3" target="_blank" data-tiphead="What the optimiser is handed" data-tip="A set of RGB images, one camera pose and intrinsics per image, and near and far bounds for the scene. On the synthetic data these are exact by construction; on the real captures they are COLMAP estimates, and the paper says so.">
+<rect x="646" y="44" width="266" height="180" rx="10" fill="#151515" stroke="#93c5fd" stroke-width="1.6"/>
+<text x="670" y="74" class="inpu-t" font-size="17">3 &#183; The actual input</text>
+<text x="670" y="106" class="inpu-d" font-size="15">RGB images</text>
+<text x="670" y="128" class="inpu-d" font-size="15">camera poses</text>
+<text x="670" y="150" class="inpu-d" font-size="15">camera intrinsics</text>
+<text x="670" y="172" class="inpu-d" font-size="15">near and far scene bounds</text>
+<text x="670" y="202" class="inpu-d" font-size="15">Exact only for synthetic data.</text>
+</a>
+<path d="M920,134 L950,134" stroke="#3b82f6" stroke-width="2.4" marker-end="url(#ig)" fill="none"/>
+<rect x="960" y="44" width="180" height="180" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="984" y="74" class="inpu-t" font-size="17">4 &#183; Optimise</text>
+<text x="984" y="106" class="inpu-d" font-size="15">1 to 2 days on one</text>
+<text x="984" y="128" class="inpu-d" font-size="15">V100, per scene.</text>
+<text x="984" y="164" class="inpu-t" font-size="15">Out: about 5 MB</text>
+<text x="984" y="186" class="inpu-d" font-size="15">of weights, which</text>
+<text x="984" y="208" class="inpu-d" font-size="15">are the scene.</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S6.SS1" target="_blank" data-tiphead="Where the pose requirement bites" data-tip="A pose error is not noise the optimiser can average away. Two cameras that disagree about where they were disagree about where the surface is, and the only way to satisfy both is to smear the density field. The paper does not measure sensitivity to pose error.">
+<rect x="18" y="244" width="1122" height="150" rx="10" fill="#151515" stroke="#f85149" stroke-width="1.8"/>
+<text x="42" y="274" fill="#f85149" font-size="17" font-weight="700">Just some photos is the wrong takeaway</text>
+<text x="42" y="304" class="inpu-d" font-size="15">A pose error is not noise that averages out. Two cameras that disagree about where they stood disagree about where the</text>
+<text x="42" y="326" class="inpu-d" font-size="15">surface is, and the only density field that satisfies both is a smeared one. Pose accuracy enters the result as geometry error.</text>
+<text x="42" y="356" class="inpu-d" font-size="15">The synthetic results use exact poses; the real ones use COLMAP estimates. But Table 1&#8217;s columns are different scenes and</text>
+<text x="42" y="378" fill="#93c5fd" font-size="15" font-weight="700">captures, so they cannot isolate pose error; that would need a pose-perturbation study, which the paper lacks.</text>
+</a>
+<rect x="18" y="412" width="551" height="170" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="42" y="442" class="inpu-t" font-size="17">Capture checklist</text>
+<text x="545" y="442" text-anchor="end" class="inpu-d" font-size="13">P = paper, A = presenter&#8217;s advice</text>
+<text x="42" y="474" class="inpu-d" font-size="15">P&#160; tens of views, not thousands: 100 for synthetic scenes</text>
+<text x="42" y="500" class="inpu-d" font-size="15">A&#160; enough overlap for feature matching to succeed</text>
+<text x="42" y="526" class="inpu-d" font-size="15">P&#160; a static scene: nothing may move between shots</text>
+<text x="42" y="550" class="inpu-d" font-size="15">A&#160; fixed exposure and white balance</text>
+<text x="42" y="572" class="inpu-d" font-size="15">P&#160; known near and far bounds for the volume</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S6.T2" target="_blank" data-tiphead="How far the view count can drop" data-tip="Rows 5 and 6 of Table 2 cut the input set. With 50 views quality falls from 31.01 to 29.79, and with 25 it falls to 27.78. The paper notes that its 25-view result still beats the three baselines given 100 views each, citing the supplementary material.">
+<rect x="589" y="412" width="551" height="170" rx="10" fill="#0d1117" stroke="#3fb950" stroke-width="1.6"/>
+<text x="613" y="442" class="inpu-t" font-size="17">How much does the view count matter?</text>
+<text x="613" y="474" class="inpu-d" font-size="15">Table 2 rows 5 and 6, realistic synthetic scenes:</text>
+<text x="613" y="506" class="inpu-m" fill="#a0a0a0" font-size="16">100 views: 31.01&#160;&#160;&#160;50: 29.79&#160;&#160;&#160;25: 27.78</text>
+<text x="613" y="536" class="inpu-d" font-size="15">Graceful, not brittle. The paper adds that 25 views still</text>
+<text x="613" y="556" class="inpu-d" font-size="15">beat all three baselines given 100 &#8212; but cites the</text>
+<text x="613" y="572" class="inpu-d" font-size="15">supplement, so it is not shown in the main body.</text>
+</a>
+</svg>

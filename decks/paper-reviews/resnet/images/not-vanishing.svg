@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.notv-t{fill:#f0f0f0;font-weight:700}.notv-m{font-family:'JetBrains Mono',monospace}.notv-d{fill:#a0a0a0}.notv-b{fill:#f0f0f0;font-size:12}</style>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="32" class="notv-t" font-size="17">Four independent observations, all pointing away from the same explanation</text>
+<g data-tiphead="The claim being ruled out" data-tip="The paper argues this optimization difficulty is unlikely to be caused by vanishing gradients, and gives four separate reasons. Vanishing gradients were the obstacle before this paper, and the introduction says they had been largely addressed by normalized initialization and intermediate normalization layers.">
+<rect x="40" y="48" width="1080" height="76" rx="12" fill="#1a1113" stroke="#f85149" stroke-width="1.8"/>
+<text x="66" y="82" fill="#f85149" font-size="11.5" font-weight="700">THE ANSWER MOST PEOPLE GIVE</text>
+<text x="66" y="108" fill="#c8c8c8" font-size="18">Deep plain nets fail because the gradient vanishes on the way back, and the shortcut gives it a highway</text>
+<path d="M62,101 L1004,101" stroke="#f85149" stroke-width="2.4"/>
+<text x="1094" y="86" text-anchor="end" fill="#f85149" font-size="13" font-weight="700">the paper: unlikely</text>
+</g>
+<g data-tiphead="Batch normalisation is already there" data-tip="Section 3.4: batch normalisation is adopted right after each convolution and before activation, in the plain networks as well as the residual ones. That is what keeps the forward signal alive.">
+<rect x="40" y="144" width="258" height="256" rx="11" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="62" y="176" class="notv-t" font-size="13.5">1. BN is already everywhere</text>
+<text x="62" y="206" class="notv-b">BN sits right after every</text>
+<text x="62" y="226" class="notv-b">convolution and before the</text>
+<text x="62" y="246" class="notv-b">activation — in the plain</text>
+<text x="62" y="266" class="notv-b">networks too, not only the</text>
+<text x="62" y="286" class="notv-b">residual ones.</text>
+<path d="M62,308 L276,308" stroke="#2a2a2a" stroke-width="1.2"/>
+<text x="62" y="334" fill="#3b82f6" font-size="12.5">which ensures forward</text>
+<text x="62" y="354" fill="#3b82f6" font-size="12.5">propagated signals to have</text>
+<text x="62" y="374" fill="#3b82f6" font-size="12.5">non-zero variances</text>
+</g>
+<g data-tiphead="The gradients were checked" data-tip="Section 4.1, in one sentence: the authors verify that the backward propagated gradients exhibit healthy norms with BN, and conclude that neither forward nor backward signals vanish. No plot, number or definition of healthy is given, so this is the weakest of the four observations.">
+<rect x="314" y="144" width="258" height="256" rx="11" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="336" y="176" class="notv-t" font-size="13.5">2. They say they looked</text>
+<text x="336" y="206" class="notv-b">One sentence in Section 4.1:</text>
+<text x="336" y="226" class="notv-b">the backward gradients were</text>
+<text x="336" y="246" class="notv-b">checked and found healthy.</text>
+<text x="336" y="266" class="notv-b">No plot, number or definition</text>
+<text x="336" y="286" fill="#f0883e" font-size="12">— the weakest of the four.</text>
+<path d="M336,308 L550,308" stroke="#2a2a2a" stroke-width="1.2"/>
+<text x="336" y="334" fill="#3b82f6" font-size="12.5">gradients exhibit healthy</text>
+<text x="336" y="354" fill="#3b82f6" font-size="12.5">norms, so neither forward</text>
+<text x="336" y="374" fill="#3b82f6" font-size="12.5">nor backward signals vanish</text>
+</g>
+<g data-tiphead="The plain net is not dead" data-tip="A network whose gradients had vanished would not learn at all. plain-34 reaches accuracy in the same range as VGG-16, which the paper reads as the solver working to some extent.">
+<rect x="588" y="144" width="258" height="256" rx="11" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="610" y="176" class="notv-t" font-size="13.5">3. plain-34 still learns</text>
+<text x="610" y="206" class="notv-b">A net with dead gradients</text>
+<text x="610" y="226" class="notv-b">would not train at all. This</text>
+<text x="610" y="246" class="notv-b">one reaches competitive</text>
+<text x="610" y="266" class="notv-b">accuracy — it is worse than</text>
+<text x="610" y="286" class="notv-b">plain-18, not broken.</text>
+<path d="M610,308 L824,308" stroke="#2a2a2a" stroke-width="1.2"/>
+<text x="610" y="334" fill="#3b82f6" font-size="12.5">Table 3, top-1 / top-5, 10-crop</text>
+<text x="610" y="358" class="notv-m" fill="#f0f0f0" font-size="13.5">plain-34: 28.54 / 10.02</text>
+<text x="610" y="380" class="notv-m" fill="#a0a0a0" font-size="13.5">VGG-16: 28.07 / 9.33</text>
+</g>
+<g data-tiphead="It is not impatience either" data-tip="Footnote 3: the authors experimented with three times more training iterations and still observed the degradation problem, so it cannot feasibly be addressed by simply training for longer.">
+<rect x="862" y="144" width="258" height="256" rx="11" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="884" y="176" class="notv-t" font-size="13.5">4. Not a patience problem</text>
+<text x="884" y="206" class="notv-b">Footnote 3 reports running</text>
+<text x="884" y="226" class="notv-b">the same experiment with</text>
+<text x="884" y="246" class="notv-b">three times the iterations.</text>
+<text x="884" y="266" class="notv-b">The degradation was still</text>
+<text x="884" y="286" class="notv-b">there at the end.</text>
+<path d="M884,308 L1098,308" stroke="#2a2a2a" stroke-width="1.2"/>
+<text x="884" y="334" fill="#3b82f6" font-size="12.5">this problem cannot be</text>
+<text x="884" y="354" fill="#3b82f6" font-size="12.5">feasibly addressed by simply</text>
+<text x="884" y="374" fill="#3b82f6" font-size="12.5">using more iterations</text>
+</g>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S4.SS1" target="_blank" data-tiphead="What the paper offers instead" data-tip="Section 4.1 ends with a conjecture, not an explanation: the deep plain nets may have exponentially low convergence rates, which impact the reducing of the training error. The reason for such optimization difficulties will be studied in the future.">
+<rect x="40" y="422" width="1080" height="164" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="454" fill="#3b82f6" font-size="15.5" font-weight="700">So what does the paper put in its place? A conjecture, and an open question</text>
+<text x="66" y="482" class="notv-d" font-size="13.5">It conjectures that the deep plain nets may have exponentially low convergence rates, which impact the reducing of the training error,</text>
+<text x="66" y="504" class="notv-d" font-size="13.5">and then says plainly that the reason for such optimization difficulties will be studied in the future.</text>
+<text x="66" y="527" fill="#93c5fd" font-size="13">Read the conjecture as: training error keeps falling, but so slowly that no feasible schedule reaches the shallower net — footnote 3 tried 3x the iterations.</text>
+<text x="66" y="554" fill="#f0f0f0" font-size="13.5">Worth being blunt about: this paper demonstrates that residual learning fixes degradation. It does not explain why degradation</text>
+<text x="66" y="575" fill="#f0f0f0" font-size="13.5">happens, and it explicitly declines the explanation almost everyone repeats.</text>
+</a>
+</svg>

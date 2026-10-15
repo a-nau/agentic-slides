@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.msh-t{fill:#f0f0f0;font-weight:700}.msh-m{font-family:'JetBrains Mono',monospace}.msh-d{fill:#a0a0a0}.msh-g{fill:#3b82f6;font-weight:700}</style>
+<defs>
+<marker id="mg" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="40" y="34" class="msh-t" font-size="17">The task: one 224x224 crop in, a score over 1000 classes out</text>
+
+<g data-tiphead="The input" data-tip="One RGB image, a 224x224 crop. The models are trained on the 1.28 million ImageNet training images and evaluated on the 50k validation images; the final headline number comes from the 100k test images and is reported by the test server.">
+<rect x="40" y="52" width="252" height="248" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="62" y="80" class="msh-t" font-size="15">INPUT</text>
+<text x="62" y="243" class="msh-d" font-size="13">one RGB image, a 224x224 crop</text>
+<text x="62" y="264" class="msh-d" font-size="13">label: one of 1000 classes</text>
+<text x="62" y="285" class="msh-d" font-size="13">1.28 million training images</text>
+</g>
+<rect x="62" y="94" width="208" height="126" rx="6" fill="#1c2430" stroke="#3a4a5a" stroke-width="1.4"/>
+<rect x="63" y="171" width="206" height="48" fill="#232a20"/>
+<circle cx="228" cy="122" r="15" fill="#303a4a"/>
+<path d="M63,171 L118,127 L166,171 z" fill="#2f3a44"/>
+<path d="M140,171 L192,135 L241,171 z" fill="#3a4650"/>
+
+<path d="M300,176 L344,176" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#mg)"/>
+
+<g data-tiphead="The network" data-tip="ResNet-152: 152 layers, 11.3 billion FLOPs. The paper's framing is that this is 8 times deeper than VGG nets and still has lower complexity than VGG-16/19, which cost 15.3 and 19.6 billion FLOPs. Depth is cheap here because the layers are narrow and most 3x3 convolutions run inside bottleneck blocks at a quarter of the width, slide 14.">
+<rect x="352" y="52" width="244" height="248" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="372" y="80" class="msh-g" font-size="15">ResNet-152</text>
+<text x="372" y="252" class="msh-d" font-size="13">152 layers, 11.3 billion FLOPs</text>
+<text x="372" y="271" class="msh-d" font-size="13">8x deeper than VGG, yet cheaper:</text>
+<text x="372" y="290" class="msh-d" font-size="13">narrow layers, bottlenecks (slide 14)</text>
+</g>
+<rect x="414" y="94" width="120" height="28" rx="6" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="474" y="113" text-anchor="middle" class="msh-m" fill="#f0f0f0" font-size="12.5">residual block</text>
+<rect x="414" y="130" width="120" height="28" rx="6" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="474" y="149" text-anchor="middle" class="msh-m" fill="#f0f0f0" font-size="12.5">residual block</text>
+<rect x="414" y="166" width="120" height="28" rx="6" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="474" y="185" text-anchor="middle" class="msh-m" fill="#f0f0f0" font-size="12.5">x 48 more</text>
+<rect x="414" y="202" width="120" height="28" rx="6" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.5"/>
+<text x="474" y="221" text-anchor="middle" class="msh-m" fill="#f0f0f0" font-size="12.5">1000-way fc</text>
+<path d="M408,94 L396,94 L396,230 L408,230" stroke="#3fb950" stroke-width="1.8" fill="none"/>
+
+<path d="M604,176 L648,176" stroke="#3b82f6" stroke-width="2.4" fill="none" marker-end="url(#mg)"/>
+
+<g data-tiphead="The output" data-tip="A score for every one of the 1000 ImageNet classes. Top-1 error counts an image as wrong when the highest-scoring class is not the truth; top-5 error counts it as wrong only when the truth is outside the five highest-scoring classes. Lower is better in both cases.">
+<rect x="656" y="52" width="464" height="248" rx="12" fill="#151515" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="678" y="80" class="msh-t" font-size="15">OUTPUT — a score for each of 1000 classes</text>
+<text x="678" y="252" fill="#f0f0f0" font-size="13">top-1 error: the truth is not rank 1</text>
+<text x="678" y="272" fill="#f0f0f0" font-size="13">top-5 error: the truth is nowhere in this list</text>
+<text x="678" y="291" class="msh-d" font-size="12.5">every number on the next slides is one of these two</text>
+</g>
+<rect x="678" y="88" width="330" height="26" rx="4" fill="#1a1a1a" stroke="#3b82f6" stroke-width="1.4"/>
+<text x="692" y="106" fill="#f0f0f0" font-size="12.5">rank 1 — highest-scoring class</text>
+<rect x="678" y="118" width="290" height="26" rx="4" fill="#1a1a1a" stroke="#20304a" stroke-width="1.2"/>
+<text x="692" y="136" class="msh-d" font-size="12.5">rank 2</text>
+<rect x="678" y="148" width="256" height="26" rx="4" fill="#1a1a1a" stroke="#20304a" stroke-width="1.2"/>
+<text x="692" y="166" class="msh-d" font-size="12.5">rank 3</text>
+<rect x="678" y="178" width="228" height="26" rx="4" fill="#1a1a1a" stroke="#20304a" stroke-width="1.2"/>
+<text x="692" y="196" class="msh-d" font-size="12.5">rank 4</text>
+<rect x="678" y="208" width="204" height="26" rx="4" fill="#1a1a1a" stroke="#20304a" stroke-width="1.2"/>
+<text x="692" y="226" class="msh-d" font-size="12.5">rank 5</text>
+
+<g data-tiphead="Two protocols in one chart" data-tip="The 4.49% row is a single model scored on the 50k validation images. The other rows are test-set numbers reported by the evaluation server on the 100k test images. The paper reports both, and mixing them is the easiest mistake to make with this paper.">
+<rect x="40" y="316" width="1080" height="268" rx="12" fill="#0d1117" stroke="#2a2a2a" stroke-width="1.6"/>
+<text x="66" y="346" class="msh-g" font-size="15.5">ImageNet top-5 error — the leaderboard this paper entered</text>
+<text x="66" y="367" class="msh-d" font-size="12.5">Tables 4 and 5. Bars are test-set numbers from the evaluation server; the single-model row is validation.</text>
+</g>
+
+<text x="66" y="398" class="msh-d" font-size="13.5">VGG (ILSVRC'14) — ensemble, test</text>
+<rect x="420" y="386" width="549" height="16" rx="3" fill="#3a4a5a"/>
+<text x="979" y="399" class="msh-m" fill="#a0a0a0" font-size="13.5">7.32</text>
+
+<text x="66" y="430" class="msh-d" font-size="13.5">GoogLeNet (ILSVRC'14) — ensemble, test</text>
+<rect x="420" y="418" width="500" height="16" rx="3" fill="#3a4a5a"/>
+<text x="930" y="431" class="msh-m" fill="#a0a0a0" font-size="13.5">6.66</text>
+
+<text x="66" y="462" class="msh-d" font-size="13.5">BN-inception — ensemble, test</text>
+<rect x="420" y="450" width="362" height="16" rx="3" fill="#3a4a5a"/>
+<text x="792" y="463" class="msh-m" fill="#a0a0a0" font-size="13.5">4.82</text>
+
+<text x="66" y="494" class="msh-d" font-size="13.5">ResNet-152, single model (validation, Table 4)</text>
+<rect x="420" y="482" width="337" height="16" rx="3" fill="#1f3c6b"/>
+<text x="767" y="495" class="msh-m" fill="#93c5fd" font-size="13.5">4.49</text>
+
+<rect x="420" y="514" width="268" height="16" rx="3" fill="#3b82f6"/>
+<g data-tiphead="The headline bar" data-tip="3.57% top-5 error on the ImageNet test set, from an ensemble of six models of different depth — only two of them 152-layer at the time of submission. This entry won 1st place in ILSVRC 2015. It is not a single-model number.">
+<text x="66" y="526" fill="#f0f0f0" font-size="13.5" font-weight="700">ResNet ensemble of 6, test — ILSVRC'15 winner</text>
+<text x="698" y="527" class="msh-m" fill="#3b82f6" font-size="13.5" font-weight="700">3.57</text>
+</g>
+
+<text x="66" y="552" fill="#f0f0f0" font-size="13.5">The famous 3.57% is an ensemble on the test set; the best single model in the paper is 4.49% on validation.</text>
+<text x="66" y="572" class="msh-d" font-size="12.5">Everything after this slide is the argument for why depth was allowed to help at all, and the caveats the authors put on it themselves.</text>
+</svg>

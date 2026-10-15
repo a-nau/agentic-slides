@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.degr-t{fill:#f0f0f0;font-weight:700}.degr-m{font-family:'JetBrains Mono',monospace}.degr-d{fill:#a0a0a0}.degr-ax{fill:#7a7a7a;font-size:12}.degr-c1{animation:degr-f1 8s linear infinite}.degr-c2{animation:degr-f2 8s linear infinite}.degr-c3{animation:degr-f3 8s linear infinite}.degr-l1{animation:degr-f1 8s linear infinite}.degr-l2{animation:degr-f2 8s linear infinite}.degr-l3{animation:degr-f3 8s linear infinite}.degr-call{animation:degr-f4 8s linear infinite}@keyframes degr-f1{0%,8%{opacity:0.25}18%{opacity:1}100%{opacity:1}}@keyframes degr-f2{0%,30%{opacity:0.25}40%{opacity:1}100%{opacity:1}}@keyframes degr-f3{0%,62%{opacity:0.25}72%{opacity:1}100%{opacity:1}}@keyframes degr-f4{0%,44%{opacity:0.25}52%{opacity:1}100%{opacity:1}}</style>
+<defs>
+<marker id="dg" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="110" y="40" class="degr-t" font-size="17">TRAINING error, CIFAR-10, plain nets</text>
+<text x="110" y="62" fill="#3b82f6" font-size="13.5" font-weight="600">the panel the whole paper turns on</text>
+<text x="680" y="40" class="degr-t" font-size="17">TEST error, same two runs</text>
+<text x="680" y="62" class="degr-d" font-size="13.5">same ordering, so it is not a generalisation gap</text>
+<path d="M110,80 L110,350 L540,350" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M680,80 L680,350 L1110,350" stroke="#2a2a2a" stroke-width="1.6" fill="none"/>
+<path d="M110,215 L540,215" stroke="#1e1e1e" stroke-width="1" fill="none"/>
+<path d="M680,215 L1110,215" stroke="#1e1e1e" stroke-width="1" fill="none"/>
+<text x="100" y="85" text-anchor="end" class="degr-ax">20</text>
+<text x="100" y="220" text-anchor="end" class="degr-ax">10</text>
+<text x="100" y="355" text-anchor="end" class="degr-ax">0</text>
+<text x="670" y="85" text-anchor="end" class="degr-ax">20</text>
+<text x="670" y="220" text-anchor="end" class="degr-ax">10</text>
+<text x="670" y="355" text-anchor="end" class="degr-ax">0</text>
+<text x="110" y="372" class="degr-ax">0</text>
+<text x="325" y="372" text-anchor="middle" class="degr-ax">3</text>
+<text x="540" y="372" text-anchor="middle" class="degr-ax">6</text>
+<text x="680" y="372" class="degr-ax">0</text>
+<text x="895" y="372" text-anchor="middle" class="degr-ax">3</text>
+<text x="1110" y="372" text-anchor="middle" class="degr-ax">6</text>
+<text x="325" y="390" text-anchor="middle" class="degr-ax">iterations (1e4)</text>
+<text x="895" y="390" text-anchor="middle" class="degr-ax">iterations (1e4)</text>
+<text x="52" y="215" text-anchor="middle" class="degr-ax" transform="rotate(-90 52 215)">error (%)</text>
+<text x="622" y="215" text-anchor="middle" class="degr-ax" transform="rotate(-90 622 215)">error (%)</text>
+<g data-tiphead="20-layer plain net, training error" data-tip="The shallower of the two. Its training error falls to the bottom of the panel: the solver fits this network well.">
+<path class="degr-c1" opacity="1" d="M117,80 L139,161 L167,208 L196,228 L225,239 L253,247 L282,254 L311,258 L339,262 L350,312 L397,320 L454,323 L465,328 L540,331" stroke="#3fb950" stroke-width="2.6" fill="none"/>
+<text class="degr-l1" opacity="1" x="548" y="335" fill="#3fb950" font-size="13.5" font-weight="700">20-layer</text>
+</g>
+<g data-tiphead="56-layer plain net, training error" data-tip="Nearly three times deeper and it never catches up. Its training error stays above the 20-layer curve for the whole run, so the extra capacity buys nothing.">
+<path class="degr-c2" opacity="1" d="M117,80 L139,134 L167,174 L196,195 L225,204 L253,212 L282,218 L311,222 L339,226 L350,269 L397,277 L454,281 L465,288 L540,291" stroke="#f0883e" stroke-width="2.6" fill="none"/>
+<text class="degr-l2" opacity="1" x="548" y="295" fill="#f0883e" font-size="13.5" font-weight="700">56-layer</text>
+</g>
+<g data-tiphead="20-layer plain net, test error" data-tip="Test error is higher than training error, as always. What matters is that the ordering between the two depths is the same in both panels.">
+<path class="degr-c3" opacity="1" d="M687,80 L709,134 L737,161 L766,174 L795,181 L823,188 L852,193 L881,196 L909,199 L920,223 L967,226 L1024,227 L1035,228 L1110,230" stroke="#3fb950" stroke-width="2.6" fill="none"/>
+<text class="degr-l3" opacity="1" x="1118" y="234" fill="#3fb950" font-size="13.5" font-weight="700">20</text>
+</g>
+<g data-tiphead="56-layer plain net, test error" data-tip="The paper's caption: the deeper network has higher training error, and thus test error. Test error is the consequence here, not the diagnosis.">
+<path class="degr-c3" opacity="1" d="M687,80 L709,114 L737,141 L766,154 L795,161 L823,166 L852,170 L881,173 L909,176 L920,196 L967,199 L1024,200 L1035,202 L1110,203" stroke="#f0883e" stroke-width="2.6" fill="none"/>
+<text class="degr-l3" opacity="1" x="1118" y="207" fill="#f0883e" font-size="13.5" font-weight="700">56</text>
+</g>
+<g class="degr-call" opacity="1" data-tiphead="The gap, in order" data-tip="The 20-layer curve lights up first, then the 56-layer curve settles above it, then the test panel repeats the ordering. The curve shapes are schematic; the ordering is the paper's."><path d="M300,300 C320,300 330,290 340,272" stroke="#3b82f6" stroke-width="2.2" fill="none" marker-end="url(#dg)"/>
+<text x="152" y="305" fill="#3b82f6" font-size="13.5" font-weight="700">deeper sits ABOVE shallower</text></g>
+<a href="https://ar5iv.labs.arxiv.org/html/1512.03385#S1" target="_blank" data-tiphead="Why this is not overfitting" data-tip="Overfitting means the model fits the training set too well and the test set worse. Here the deeper model fits the training set worse. Nothing about capacity or regularisation can explain a higher training error.">
+<rect x="40" y="410" width="1080" height="170" rx="12" fill="#0d1117" stroke="#3b82f6" stroke-width="1.8"/>
+<text x="66" y="442" class="degr-t" font-size="16">Read the left panel first, and the argument is finished before the right panel starts</text>
+<text x="66" y="472" class="degr-d" font-size="13.5">An overfitting model drives TRAINING error down and TEST error up. The 56-layer plain net does the opposite: it is worse on the</text>
+<text x="66" y="496" class="degr-d" font-size="13.5">data it is being optimised on. More data, more augmentation and more regularisation are all answers to a problem this net does</text>
+<text x="66" y="520" class="degr-d" font-size="13.5">not have. The paper's word for it is degradation, and it calls the effect unexpected and not caused by overfitting.</text>
+<text x="66" y="552" fill="#3b82f6" font-size="13" font-weight="600">Redrawn from Figure 1 (CIFAR-10). Curve shapes are schematic; the paper prints no endpoint values on this figure.</text>
+</a>
+</svg>

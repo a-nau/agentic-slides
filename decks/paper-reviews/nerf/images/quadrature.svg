@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 600" font-family="Inter, sans-serif">
+<style>.quad-t{fill:#f0f0f0;font-weight:700}.quad-m{font-family:'JetBrains Mono',monospace}.quad-d{fill:#a0a0a0}.quad-hd{fill:#3b82f6;font-weight:700;letter-spacing:.05em}</style>
+<defs>
+<marker id="qg" markerWidth="12" markerHeight="12" refX="9" refY="4.5" orient="auto"><path d="M0,0 L10,4.5 L0,9 z" fill="#3b82f6"/></marker>
+</defs>
+<rect x="0" y="0" width="1160" height="600" fill="#111111"/>
+<text x="18" y="28" class="quad-hd" font-size="16">FROM INTEGRAL TO CODE &#8212; stratified samples, then alpha compositing</text>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4.E3" target="_blank"><text x="1142" y="28" text-anchor="end" class="quad-d" font-size="14">Sec. 4, Eq. 2 and Eq. 3</text></a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4.E2" target="_blank" data-tiphead="Equation 2: stratified sampling" data-tip="The span between the near and far bounds is cut into N equal bins and one sample is drawn uniformly at random inside each bin. A fixed grid would pin the representation to a fixed resolution; randomising inside the bins means that across training steps the MLP is asked about every position in the interval, so the learned field stays continuous.">
+<rect x="18" y="44" width="1122" height="150" rx="10" fill="#151515" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="42" y="74" class="quad-t" font-size="17">Step 1 &#8212; cut the ray into N bins, then jitter one sample inside each</text>
+<g data-tiphead="One draw per bin" data-tip="The bin edges are fixed; the sample inside each bin is not. Over many steps every position in the interval gets queried.">
+<path d="M60,142 L1112,142" stroke="#666666" stroke-width="2"/>
+<path d="M60,126 L60,158 M235,126 L235,158 M410,126 L410,158 M585,126 L585,158 M760,126 L760,158 M935,126 L935,158 M1110,126 L1110,158" stroke="#3a3a3a" stroke-width="1.6"/>
+<circle cx="128" cy="142" r="6" fill="#93c5fd"/>
+<circle cx="368" cy="142" r="6" fill="#93c5fd"/>
+<circle cx="452" cy="142" r="6" fill="#93c5fd"/>
+<circle cx="672" cy="142" r="6" fill="#93c5fd"/>
+<circle cx="800" cy="142" r="6" fill="#93c5fd"/>
+<circle cx="1052" cy="142" r="6" fill="#93c5fd"/>
+</g>
+<text x="60" y="116" class="quad-d" font-size="14">near bound</text>
+<text x="1112" y="116" text-anchor="end" class="quad-d" font-size="14">far bound</text>
+<text x="42" y="180" class="quad-d" font-size="15">Random inside each bin, not a fixed grid, so the MLP is queried at continuous positions and the field it learns is continuous.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4.E3" target="_blank" data-tiphead="Equation 3: the quadrature rule" data-tip="Between two adjacent samples the density is treated as constant over a slab of thickness delta. The chance that the ray is stopped inside that slab is one minus exp of minus sigma delta, which is exactly an alpha value, and the running product of the alphas that came before it is the discrete transmittance.">
+<rect x="18" y="210" width="1122" height="176" rx="10" fill="#151515" stroke="#bc8cff" stroke-width="1.6"/>
+<text x="42" y="240" class="quad-t" font-size="17">Step 2 &#8212; treat each gap as a slab of constant density</text>
+<text x="42" y="284" class="quad-m" fill="#f0f0f0" font-size="22">&#264;(r) = &#931;&#7522; T&#7522; &#945;&#7522; c&#7522;</text>
+<g data-tiphead="Alpha, the opacity of one slab" data-tip="Density is a rate per unit length. Multiplying by the slab thickness and passing it through one minus exp gives the fraction of light the slab stops.">
+<rect x="352" y="256" width="252" height="76" rx="8" fill="#0d1117" stroke="#f0883e" stroke-width="1.4"/>
+<text x="372" y="284" class="quad-m" fill="#f0883e" font-size="17">&#945;&#7522; = 1 - exp(-&#963;&#7522; &#948;&#7522;)</text>
+<text x="372" y="312" class="quad-d" font-size="14">how opaque this slab is</text>
+</g>
+<g data-tiphead="Discrete transmittance" data-tip="The running product of one minus alpha over every earlier slab: how much light was still travelling when the ray reached this sample.">
+<rect x="622" y="256" width="252" height="76" rx="8" fill="#0d1117" stroke="#3fb950" stroke-width="1.4"/>
+<text x="642" y="284" class="quad-m" fill="#3fb950" font-size="17">T&#7522; = &#928; (1 - &#945;&#11002;)</text>
+<text x="642" y="312" class="quad-d" font-size="14">what survived the slabs before</text>
+</g>
+<g data-tiphead="Delta, the slab thickness" data-tip="The distance to the next sample along the ray. It is what converts a density into an opacity, and it is why a thin dense slab and a thick thin one can block the same light.">
+<rect x="892" y="256" width="230" height="76" rx="8" fill="#0d1117" stroke="#bc8cff" stroke-width="1.4"/>
+<text x="912" y="284" class="quad-m" fill="#bc8cff" font-size="17">&#948;&#7522; = t&#7522;&#8330;&#8321; - t&#7522;</text>
+<text x="912" y="312" class="quad-d" font-size="14">gap to the next sample</text>
+</g>
+<text x="42" y="356" class="quad-d" font-size="15">Density is a rate per unit length, so it only becomes an opacity once multiplied by a thickness. That is the job of &#948;&#7522;:</text>
+<text x="42" y="376" fill="#93c5fd" font-size="15" font-weight="700">a thin slab of dense fog and a thick slab of thin fog can block exactly the same amount of light.</text>
+</a>
+<a href="https://ar5iv.labs.arxiv.org/html/2003.08934#S4.E3" target="_blank" data-tiphead="It is alpha compositing" data-tip="Written this way the render is the front-to-back over operator that every graphics pipeline already implements. The paper says so explicitly: the function reduces to traditional alpha compositing with alpha values one minus exp of minus sigma delta.">
+<rect x="18" y="402" width="551" height="180" rx="10" fill="#0d1117" stroke="#93c5fd" stroke-width="1.6"/>
+<text x="42" y="432" class="quad-t" font-size="17">You have written this loop before</text>
+<text x="42" y="464" class="quad-m" fill="#93c5fd" font-size="15">C = 0; T = 1</text>
+<text x="42" y="488" class="quad-m" fill="#93c5fd" font-size="15">for each sample i, front to back:</text>
+<text x="42" y="512" class="quad-m" fill="#93c5fd" font-size="15">    C += T * &#945;&#7522; * c&#7522;</text>
+<text x="42" y="536" class="quad-m" fill="#93c5fd" font-size="15">    T *= (1 - &#945;&#7522;)</text>
+<text x="42" y="564" class="quad-d" font-size="15">Front-to-back alpha compositing, exactly as in Eq. 3.</text>
+</a>
+<rect x="589" y="402" width="551" height="180" rx="10" fill="#0d1117" stroke="#3b82f6" stroke-width="1.6"/>
+<text x="613" y="432" class="quad-t" font-size="17">Three consequences that matter</text>
+<text x="613" y="466" class="quad-d" font-size="15">&#183; Differentiable: sums, products, exponentials. The paper</text>
+<text x="629" y="486" class="quad-d" font-size="15">calls it trivially differentiable, so gradients reach &#920;.</text>
+<text x="613" y="514" class="quad-d" font-size="15">&#183; The weights T&#7522;&#945;&#7522; are reused as a sampling PDF (Eq. 5).</text>
+<text x="613" y="542" class="quad-d" font-size="15">&#183; Cost is linear in samples per ray, so rendering is slow:</text>
+<text x="629" y="562" class="quad-d" font-size="15">256 network queries for every single pixel.</text>
+</svg>

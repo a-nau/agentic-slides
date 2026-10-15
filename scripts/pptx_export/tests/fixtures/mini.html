@@ -1,0 +1,51 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  body { margin: 0; }
+  section { box-sizing: border-box; padding: 40px; font-family: Inter, sans-serif;
+            color: rgb(255, 255, 255); background: rgb(17, 17, 17);
+            position: relative; height: 720px;
+            border-top: 3px solid rgb(59, 130, 246); }
+  section::after { content: "9"; position: absolute; left: 48px; bottom: 20px;
+                   color: rgb(102, 102, 102); font-size: 14px; }
+  h1 { font-size: 51px; color: rgb(59, 130, 246); margin: 0; }
+  a  { color: rgb(59, 130, 246); }
+  code { font-family: monospace; }
+</style></head><body>
+<svg data-marpit-svg viewBox="0 0 1280 720"><foreignObject width="1280" height="720">
+<section id="1">
+  <h1 id="hello">Hello <strong>World</strong></h1>
+  <p>Visit <a href="https://example.com">the site</a> and run <code>make</code>.</p>
+  <img alt="browser visual" width="40" height="20"
+       src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20'%3E%3Crect width='40' height='20' fill='%233b82f6'/%3E%3C/svg%3E">
+  <div class="standalone-label">First line<br>Second line</div>
+  <p><span class="chip" style="display:inline-block; background:rgba(59,130,246,0.15);
+     border-radius:100px; padding:2px 8px; font-size:13px;">VLM</span></p>
+  <ul><li>first item</li><li>second item</li></ul>
+  <ol start="3"><li>alpha</li><li>beta</li></ol>
+  <blockquote style="background: rgb(26, 26, 26); border: 1px solid rgb(42, 42, 42);
+    border-left: 3px solid rgb(59, 130, 246); border-radius: 8px; padding: 10px;">
+    Callout text here
+  </blockquote>
+  <p style="font-size:20px">Body with <span style="font-size:13px">tinynote</span> inline.</p>
+  <h2 style="margin:0; font-size:24px">Results <span class="finfo" data-tiphead="Figure forensics"
+      data-tip="No error bars anywhere." style="display:inline-block; border:1px solid #1e3a66;
+      border-radius:999px; font-size:9px; padding:1px 8px; cursor:help">i forensics</span></h2>
+  <p style="margin:2px 0">Uses <span data-tiphead="Jargon" data-tip="A plain-language definition."
+      style="border-bottom:1px dashed #3d5a8c; cursor:help">jargon</span> here.</p>
+  <span style="position:relative; display:inline-block"><img alt="fig" width="60" height="30"
+       src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='30'%3E%3Crect width='60' height='30' fill='%23333333'/%3E%3C/svg%3E"><span
+       data-tiphead="Overlay region" data-tip="Explains this part of the figure."
+       style="position:absolute; left:10%; top:10%; width:50%; height:50%"></span></span>
+  <a href="https://example.com/imglink" style="position:absolute; right:60px; top:300px"><img
+       alt="linked fig" width="40" height="20"
+       src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20'%3E%3Crect width='40' height='20' fill='%23555555'/%3E%3C/svg%3E"></a>
+  <video src="https://example.com/demo.mp4" width="200" height="90" style="display:block"></video>
+  <iframe src="https://example.com/embed" width="200" height="60" style="border:0"></iframe>
+  <svg class="fig" viewBox="0 0 200 100" width="200" height="100">
+    <rect width="200" height="100" fill="#222222"/>
+    <text x="10" y="50" fill="#ffffff">box&nbsp;&nbsp;label</text>
+  </svg>
+</section>
+</foreignObject></svg>
+</body></html>
